@@ -24,5 +24,4 @@ module.exports = {
     'utils', // a utility folder
     __dirname, // the root directory
   ],
-  setupFilesAfterEnv: ['./jest-setup.ts'],
 };

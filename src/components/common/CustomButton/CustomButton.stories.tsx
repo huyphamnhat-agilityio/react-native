@@ -1,4 +1,3 @@
-import React from 'react';
 import type {Meta, StoryObj} from '@storybook/react';
 import CustomButton from '.';
 import {ActivityIndicator} from 'react-native';
