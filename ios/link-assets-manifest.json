@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Gelasio/Gelasio-Bold.ttf",
+      "sha1": "ba107cbbe86c42dc8fe9b38bcc783659439e11d2"
+    },
+    {
+      "path": "assets/fonts/Gelasio/Gelasio-Medium.ttf",
+      "sha1": "7c568e3cfe3efddf8de07f01334a900c59b595e7"
+    },
+    {
+      "path": "assets/fonts/Gelasio/Gelasio-Regular.ttf",
+      "sha1": "f563d68711a6637fea4a5758780752373055ffb4"
+    },
+    {
+      "path": "assets/fonts/Gelasio/Gelasio-SemiBold.ttf",
+      "sha1": "d894225a6deffe15df9a2c61006f9ebb0784c068"
+    }
+  ]
+}

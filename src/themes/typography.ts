@@ -1,0 +1,32 @@
+export const fontSizes = {
+  xs: 14,
+  sm: 16,
+  base: 18,
+  md: 20,
+  lg: 24,
+  xl: 30,
+  xxl: 36,
+} as const;
+
+export const fontWeights = {
+  light: '300',
+  normal: '400',
+  medium: '500',
+  semiBold: '600',
+  bold: '700',
+} as const;
+
+export const fontFamilies = {
+  GelasioNormal: 'Gelasio-Regular',
+  GelasioMedium: 'Gelasio-Medium',
+  GelasioSemiBold: 'Gelasio-SemiBold',
+  GelasioBold: 'Gelasio-Bold',
+  NunitoSansLight: 'NunitoSansLight',
+  NuniToSansNormal: 'NunitoSansRegular',
+  NuniToSansMedium: 'NunitoSansMedium',
+  NunitoSansSemiBold: 'NunitoSansSemiBold',
+  NunitoSansBold: 'NunitoSansBold',
+  MerriweatherLight: 'MerriweatherLight',
+  MerriweatherNormal: 'MerriweatherRegular',
+  MerriweatherBold: 'MerriweatherBold',
+} as const;

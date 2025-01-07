@@ -19,7 +19,7 @@ function App(): React.JSX.Element {
   }
   return (
     <SafeAreaView>
-      <Text>Hello world!</Text>
+      <Text>Hello World!</Text>
     </SafeAreaView>
   );
 }
