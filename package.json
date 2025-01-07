@@ -34,6 +34,7 @@
     "@react-native/typescript-config": "0.76.5",
     "@storybook/addon-ondevice-actions": "^8.4.4",
     "@storybook/addon-ondevice-controls": "^8.4.4",
+    "@storybook/react": "^8.4.7",
     "@storybook/react-native": "^8.4.4",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {DevSettings, SafeAreaView, Text} from 'react-native';
+import {DevSettings, SafeAreaView} from 'react-native';
+import CustomButton from 'src/components/common/CustomButton';
 
 function App(): React.JSX.Element {
   const [showStorybook, setShowStorybook] = useState(false);
@@ -19,7 +20,7 @@ function App(): React.JSX.Element {
   }
   return (
     <SafeAreaView>
-      <Text>Hello World!</Text>
+      <CustomButton title="ALO" />
     </SafeAreaView>
   );
 }

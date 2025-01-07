@@ -31,4 +31,4 @@ export const colors = {
     primary: '#8A959E33',
     secondary: '#30303040',
   },
-};
+} as const;
