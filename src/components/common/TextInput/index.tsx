@@ -102,6 +102,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     borderBottomWidth: 2,
+    alignItems: 'center',
   },
 
   input: {

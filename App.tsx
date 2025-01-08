@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, DevSettings, SafeAreaView} from 'react-native';
-import {TextInput} from 'src/components/common';
-
+import EyeIcon from 'assets/images/EyeIcon.svg';
+import {useEffect, useState} from 'react';
+import {DevSettings, SafeAreaView} from 'react-native';
+import {Button, TextInput} from 'src/components/common';
 function App(): React.JSX.Element {
   const [showStorybook, setShowStorybook] = useState(false);
 
@@ -28,8 +28,10 @@ function App(): React.JSX.Element {
         placeholder="Enter your email address..."
         isError
         errorMessage="Something went wrong"
-        RightContent={<ActivityIndicator />}
+        RightContent={<EyeIcon />}
       />
+
+      <Button title="test" />
     </SafeAreaView>
   );
 }
