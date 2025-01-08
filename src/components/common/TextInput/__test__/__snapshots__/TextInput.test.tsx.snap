@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextInput should render correctly 1`] = `
+<div>
+  <View
+    style={
+      [
+        {
+          "display": "flex",
+        },
+        {
+          "opacity": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "borderBottomWidth": 2,
+            "flexDirection": "row",
+          },
+          {
+            "borderBottomColor": "#e0e0e0",
+          },
+        ]
+      }
+    >
+      <TextInput
+        editable={true}
+        numberOfLines={1}
+        placeholderTextColor="#b3b3b3"
+        style={
+          [
+            {
+              "width": "94%",
+            },
+            {
+              "color": "#242424",
+              "fontFamily": "NunitoSansRegular",
+              "fontSize": 16,
+            },
+          ]
+        }
+      />
+    </View>
+  </View>
+</div>
+`;

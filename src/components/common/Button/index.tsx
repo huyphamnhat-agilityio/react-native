@@ -10,15 +10,18 @@ import {
   ViewStyle,
 } from 'react-native';
 
+// Type & Interfaces
+import {BorderRadius} from 'src/interfaces';
+
 // Themes
 import {borderRadius, colors} from 'src/themes';
 
 export interface ButtonProps extends TouchableOpacityProps {
   IconLeft?: React.ReactElement;
   IconRight?: React.ReactElement;
-  bgVariant?: 'primary' | 'outline';
+  bgVariant?: 'primary' | 'outline' | 'none';
   isLoading?: boolean;
-  rounded?: keyof typeof borderRadius;
+  rounded?: BorderRadius;
   style?: StyleProp<ViewStyle>;
   textVariant?: 'primary' | 'outline';
   title?: string;
@@ -28,6 +31,7 @@ export interface ButtonProps extends TouchableOpacityProps {
 const getBgVariantStyle = (variant: ButtonProps['bgVariant']) => {
   switch (variant) {
     case 'outline':
+    case 'none':
       return 'transparent';
 
     default:
@@ -42,6 +46,16 @@ const getTextVariantStyle = (variant: ButtonProps['textVariant']) => {
 
     default:
       return colors.white;
+  }
+};
+
+const getBorderVariantStyle = (variant: ButtonProps['bgVariant']) => {
+  switch (variant) {
+    case 'outline':
+      return colors.border.primary;
+
+    default:
+      return 'transparent';
   }
 };
 
@@ -64,6 +78,8 @@ const Button = ({
 
   const backgroundColor = getBgVariantStyle(bgVariant);
 
+  const borderColor = getBorderVariantStyle(bgVariant);
+
   const textColor = getTextVariantStyle(textVariant);
   return (
     <TouchableOpacity
@@ -74,6 +90,7 @@ const Button = ({
           borderRadius: borderRadius[rounded],
           opacity,
           width,
+          borderColor,
         },
         style,
       ]}
@@ -106,7 +123,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: 0.5,
+    borderWidth: 1,
   },
 
   wrapper: {

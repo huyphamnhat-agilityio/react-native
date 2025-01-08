@@ -14,11 +14,15 @@ export const colors = {
     tertiary: '#606060',
     quaternary: '#808080',
     alternative: '#909090',
+    placeholder: '#b3b3b3',
+    danger: '#6a1c1c',
   },
 
   border: {
-    primary: '#e0e0e0',
-    secondary: '#f0f0f0',
+    primary: '#303030',
+    secondary: '#e0e0e0',
+    tertiary: '#f0f0f0',
+    danger: '#6a1c1c',
   },
 
   background: {

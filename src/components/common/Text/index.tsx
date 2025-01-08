@@ -1,10 +1,14 @@
 import {Text as TextBase, TextProps as TextBaseProps} from 'react-native';
+import {FontFamily, FontSize} from 'src/interfaces';
+import {TextVariant} from 'src/interfaces/color';
+
+// Themes
 import {colors, fontFamilies, fontSizes} from 'src/themes';
 
 export interface TextProps extends TextBaseProps {
-  font?: keyof typeof fontFamilies;
-  size?: keyof typeof fontSizes;
-  textVariant?: keyof typeof colors.text;
+  font?: FontFamily;
+  size?: FontSize;
+  textVariant?: TextVariant;
 }
 
 const Text = ({
