@@ -1,79 +1,64 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Overview
+
+- This document is intended to describe the requirements for the React Native practice.
+- Design: [Figma](<https://www.figma.com/design/P2RYt2uLYGySkWTllqxAZP/Furniture-Shopping---Minimal-UI-Kit-(Community)?node-id=1-32&p=f&t=H9zGVqYEWZSXVxtj-0>)
+- Plan: [Note](https://docs.google.com/document/d/1faGDzItMvgDjfbZuVnnXzBS93w8v9SZvNAj9Coejnzk/edit?tab=t.0)
+
+# Target
+
+- Get familiar with React Native
+- Understand and apply React Navigation
+- Storybook is required
+- Unit test should coverage at least 80%
+- You can choose one platform Android or iOS, depending on your machine
+
+# Technical Stacks
+
+- [React Native](https://reactnative.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React Navigation](https://reactnavigation.org/)
+- [Mockapi](https://mockapi.io/)
+
+# Development Tools
+
+- [Eslint](https://eslint.org/docs/latest/)
+- [Prettier](https://prettier.io/docs/en/)
+- [Lint-staged](https://github.com/okonet/lint-staged)
+- [Husky](https://github.com/typicode/husky)
+- [Commitlint](https://commitlint.js.org/#/)
+- [Storybook](https://storybook.js.org/)
+
+# Timeline
+
+- Estimate time: 6 days (from Jan 7, 2025 to Jan 14, 2025).
+
+# Requirements
+
+- Build a React Native mobile application about Furniture shopping with features:
+  - User can see Boarding Screen
+  - User can log in
+  - User can view the list of product
+    - User can scroll horizontally to choose category
+  - User can view the product detail
+    - User can choose colors and the corresponding image will be shown
+    - User can add a product to cart
+  - User can view the cart
+  - User can update quantity/remove the product from cart
+  - User can checkout(mocking) the product and view the success board.
 
 # Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+| Command                                                               | Action                                |
+| --------------------------------------------------------------------- | ------------------------------------- |
+| `git clone git@gitlab.asoft-python.com:huy.phamnhat/react-native.git` | Clone repository from GitLab          |
+| `git checkout basic-practice`                                         | Checkout branch                       |
+| `npm i`                                                               | Install dependencies                  |
+| `npm run android`                                                     | Build and run app named BasicPractice |
+| `npm run storybook-generate`                                          | Generate storybook                    |
+| `npm run test`                                                        | Run all test cases                    |
+| `npm run coverage`                                                    | Coverage all test cases               |
 
-## Step 1: Start the Metro Server
+# Author
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Huy Pham Nhat.
+- Email: huy.phamnhat@asnet.com.vn.
