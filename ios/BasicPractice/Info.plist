@@ -49,10 +49,18 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Gelasio-Bold.ttf</string>
-		<string>Gelasio-Medium.ttf</string>
-		<string>Gelasio-Regular.ttf</string>
-		<string>Gelasio-SemiBold.ttf</string>
+		<string>GelasioBold.ttf</string>
+		<string>GelasioMedium.ttf</string>
+		<string>GelasioRegular.ttf</string>
+		<string>GelasioSemiBold.ttf</string>
+		<string>MerriweatherBold.ttf</string>
+		<string>MerriweatherLight.ttf</string>
+		<string>MerriweatherRegular.ttf</string>
+		<string>NunitoSansBold.ttf</string>
+		<string>NunitoSansLight.ttf</string>
+		<string>NunitoSansMedium.ttf</string>
+		<string>NunitoSansRegular.ttf</string>
+		<string>NunitoSansSemiBold.ttf</string>
 	</array>
 </dict>
 </plist>

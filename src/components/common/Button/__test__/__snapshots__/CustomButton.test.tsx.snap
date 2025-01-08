@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CustomButton should render correctly 1`] = `
+exports[`Button should render correctly 1`] = `
 <div>
   <View
     accessibilityState={

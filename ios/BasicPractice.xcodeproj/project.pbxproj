@@ -14,10 +14,18 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-BasicPractice-BasicPracticeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-BasicPractice-BasicPracticeTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		8F0771A8030346AAB2FA55BF /* Gelasio-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2AF33C3D3F11473F84F93DC1 /* Gelasio-Bold.ttf */; };
-		D1B78A09D95E478D9F18B6F3 /* Gelasio-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 671524B3D2554ED38492EC34 /* Gelasio-Medium.ttf */; };
-		CF9585E26FEF4DD7AEFB0C30 /* Gelasio-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F82F9D6EFDB4870899FADAF /* Gelasio-Regular.ttf */; };
-		FDDDD505D03E467D8B373056 /* Gelasio-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 674EC65784864A1881466F33 /* Gelasio-SemiBold.ttf */; };
+		420C3283351A4567AC4E8059 /* GelasioBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4460123FBBF411F809CE5AF /* GelasioBold.ttf */; };
+		56CD12FD591F441C8908E323 /* GelasioMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD44374E832B4FECADE95AFB /* GelasioMedium.ttf */; };
+		7B02315E063E4926AD09913D /* GelasioRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A536637046E947AAAEFFA241 /* GelasioRegular.ttf */; };
+		8E0B47D027864857B476247D /* GelasioSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63B759C6C0584DDDB343CE2F /* GelasioSemiBold.ttf */; };
+		EBA0979FA3194693845ACB82 /* MerriweatherBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3DA5AD112434028B21B6D1C /* MerriweatherBold.ttf */; };
+		0789CEC32281438DB8CE17AB /* MerriweatherLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4E54C7EFFA3145B6B41035F3 /* MerriweatherLight.ttf */; };
+		E36995A1FC8D4A4193E2FA0C /* MerriweatherRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29415686928A42E0BF992F64 /* MerriweatherRegular.ttf */; };
+		86F8C3CA499C4EE5AD0C3AFC /* NunitoSansBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BF9DEEF43CE4A7FAC0DDF04 /* NunitoSansBold.ttf */; };
+		3DD3887363E8470089ED01A2 /* NunitoSansLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 532094035FAD48B39C85DF9C /* NunitoSansLight.ttf */; };
+		B6CDA4C082C84D1C81D1A5CF /* NunitoSansMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13E9490FB3704151B81B9DC9 /* NunitoSansMedium.ttf */; };
+		5A721412E15E4773BDDAD4DB /* NunitoSansRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5A6894F45749FCB5949ABC /* NunitoSansRegular.ttf */; };
+		515F09E772264681828FAF16 /* NunitoSansSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C510125D2773421D9BCB625D /* NunitoSansSemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,10 +57,18 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BasicPractice/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-BasicPractice-BasicPracticeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BasicPractice-BasicPracticeTests.release.xcconfig"; path = "Target Support Files/Pods-BasicPractice-BasicPracticeTests/Pods-BasicPractice-BasicPracticeTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		2AF33C3D3F11473F84F93DC1 /* Gelasio-Bold.ttf */ = {isa = PBXFileReference; name = "Gelasio-Bold.ttf"; path = "../assets/fonts/Gelasio/Gelasio-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		671524B3D2554ED38492EC34 /* Gelasio-Medium.ttf */ = {isa = PBXFileReference; name = "Gelasio-Medium.ttf"; path = "../assets/fonts/Gelasio/Gelasio-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3F82F9D6EFDB4870899FADAF /* Gelasio-Regular.ttf */ = {isa = PBXFileReference; name = "Gelasio-Regular.ttf"; path = "../assets/fonts/Gelasio/Gelasio-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		674EC65784864A1881466F33 /* Gelasio-SemiBold.ttf */ = {isa = PBXFileReference; name = "Gelasio-SemiBold.ttf"; path = "../assets/fonts/Gelasio/Gelasio-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D4460123FBBF411F809CE5AF /* GelasioBold.ttf */ = {isa = PBXFileReference; name = "GelasioBold.ttf"; path = "../assets/fonts/Gelasio/GelasioBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CD44374E832B4FECADE95AFB /* GelasioMedium.ttf */ = {isa = PBXFileReference; name = "GelasioMedium.ttf"; path = "../assets/fonts/Gelasio/GelasioMedium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A536637046E947AAAEFFA241 /* GelasioRegular.ttf */ = {isa = PBXFileReference; name = "GelasioRegular.ttf"; path = "../assets/fonts/Gelasio/GelasioRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		63B759C6C0584DDDB343CE2F /* GelasioSemiBold.ttf */ = {isa = PBXFileReference; name = "GelasioSemiBold.ttf"; path = "../assets/fonts/Gelasio/GelasioSemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E3DA5AD112434028B21B6D1C /* MerriweatherBold.ttf */ = {isa = PBXFileReference; name = "MerriweatherBold.ttf"; path = "../assets/fonts/Merriweather/MerriweatherBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4E54C7EFFA3145B6B41035F3 /* MerriweatherLight.ttf */ = {isa = PBXFileReference; name = "MerriweatherLight.ttf"; path = "../assets/fonts/Merriweather/MerriweatherLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		29415686928A42E0BF992F64 /* MerriweatherRegular.ttf */ = {isa = PBXFileReference; name = "MerriweatherRegular.ttf"; path = "../assets/fonts/Merriweather/MerriweatherRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6BF9DEEF43CE4A7FAC0DDF04 /* NunitoSansBold.ttf */ = {isa = PBXFileReference; name = "NunitoSansBold.ttf"; path = "../assets/fonts/Nunito Sans/NunitoSansBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		532094035FAD48B39C85DF9C /* NunitoSansLight.ttf */ = {isa = PBXFileReference; name = "NunitoSansLight.ttf"; path = "../assets/fonts/Nunito Sans/NunitoSansLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		13E9490FB3704151B81B9DC9 /* NunitoSansMedium.ttf */ = {isa = PBXFileReference; name = "NunitoSansMedium.ttf"; path = "../assets/fonts/Nunito Sans/NunitoSansMedium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0A5A6894F45749FCB5949ABC /* NunitoSansRegular.ttf */ = {isa = PBXFileReference; name = "NunitoSansRegular.ttf"; path = "../assets/fonts/Nunito Sans/NunitoSansRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C510125D2773421D9BCB625D /* NunitoSansSemiBold.ttf */ = {isa = PBXFileReference; name = "NunitoSansSemiBold.ttf"; path = "../assets/fonts/Nunito Sans/NunitoSansSemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,10 +178,18 @@
 		E56F3C7B4E54457DB4BD9CBA /* Resources */ = {
 			isa = "PBXGroup";
 			children = (
-				2AF33C3D3F11473F84F93DC1 /* Gelasio-Bold.ttf */,
-				671524B3D2554ED38492EC34 /* Gelasio-Medium.ttf */,
-				3F82F9D6EFDB4870899FADAF /* Gelasio-Regular.ttf */,
-				674EC65784864A1881466F33 /* Gelasio-SemiBold.ttf */,
+				D4460123FBBF411F809CE5AF /* GelasioBold.ttf */,
+				CD44374E832B4FECADE95AFB /* GelasioMedium.ttf */,
+				A536637046E947AAAEFFA241 /* GelasioRegular.ttf */,
+				63B759C6C0584DDDB343CE2F /* GelasioSemiBold.ttf */,
+				E3DA5AD112434028B21B6D1C /* MerriweatherBold.ttf */,
+				4E54C7EFFA3145B6B41035F3 /* MerriweatherLight.ttf */,
+				29415686928A42E0BF992F64 /* MerriweatherRegular.ttf */,
+				6BF9DEEF43CE4A7FAC0DDF04 /* NunitoSansBold.ttf */,
+				532094035FAD48B39C85DF9C /* NunitoSansLight.ttf */,
+				13E9490FB3704151B81B9DC9 /* NunitoSansMedium.ttf */,
+				0A5A6894F45749FCB5949ABC /* NunitoSansRegular.ttf */,
+				C510125D2773421D9BCB625D /* NunitoSansSemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -266,10 +290,18 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				8F0771A8030346AAB2FA55BF /* Gelasio-Bold.ttf in Resources */,
-				D1B78A09D95E478D9F18B6F3 /* Gelasio-Medium.ttf in Resources */,
-				CF9585E26FEF4DD7AEFB0C30 /* Gelasio-Regular.ttf in Resources */,
-				FDDDD505D03E467D8B373056 /* Gelasio-SemiBold.ttf in Resources */,
+				420C3283351A4567AC4E8059 /* GelasioBold.ttf in Resources */,
+				56CD12FD591F441C8908E323 /* GelasioMedium.ttf in Resources */,
+				7B02315E063E4926AD09913D /* GelasioRegular.ttf in Resources */,
+				8E0B47D027864857B476247D /* GelasioSemiBold.ttf in Resources */,
+				EBA0979FA3194693845ACB82 /* MerriweatherBold.ttf in Resources */,
+				0789CEC32281438DB8CE17AB /* MerriweatherLight.ttf in Resources */,
+				E36995A1FC8D4A4193E2FA0C /* MerriweatherRegular.ttf in Resources */,
+				86F8C3CA499C4EE5AD0C3AFC /* NunitoSansBold.ttf in Resources */,
+				3DD3887363E8470089ED01A2 /* NunitoSansLight.ttf in Resources */,
+				B6CDA4C082C84D1C81D1A5CF /* NunitoSansMedium.ttf in Resources */,
+				5A721412E15E4773BDDAD4DB /* NunitoSansRegular.ttf in Resources */,
+				515F09E772264681828FAF16 /* NunitoSansSemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

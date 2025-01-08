@@ -1,19 +1,14 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import CustomButton from '.';
+import Button from '.';
 import {ActivityIndicator} from 'react-native';
 
-const meta: Meta<typeof CustomButton> = {
-  title: 'components/common/CustomButton',
-  component: CustomButton,
-  argTypes: {
-    IconLeft: {
-      control: false,
-    },
-  },
+const meta: Meta<typeof Button> = {
+  title: 'components/common/Button',
+  component: Button,
 };
 
 export default meta;
-type Story = StoryObj<typeof CustomButton>;
+type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
@@ -37,14 +32,14 @@ export const Rounded: Story = {
 };
 
 export const LeftIcon: Story = {
-  render: args => <CustomButton {...args} IconLeft={<ActivityIndicator />} />,
+  render: args => <Button {...args} IconLeft={<ActivityIndicator />} />,
   args: {
     title: 'LeftIcon',
   },
 };
 
 export const RightIcon: Story = {
-  render: args => <CustomButton {...args} IconRight={<ActivityIndicator />} />,
+  render: args => <Button {...args} IconRight={<ActivityIndicator />} />,
   args: {
     title: 'RightIcon',
   },

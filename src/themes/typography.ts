@@ -17,10 +17,10 @@ export const fontWeights = {
 } as const;
 
 export const fontFamilies = {
-  GelasioNormal: 'Gelasio-Regular',
-  GelasioMedium: 'Gelasio-Medium',
-  GelasioSemiBold: 'Gelasio-SemiBold',
-  GelasioBold: 'Gelasio-Bold',
+  GelasioNormal: 'GelasioRegular',
+  GelasioMedium: 'GelasioMedium',
+  GelasioSemiBold: 'GelasioSemiBold',
+  GelasioBold: 'GelasioBold',
   NunitoSansLight: 'NunitoSansLight',
   NuniToSansNormal: 'NunitoSansRegular',
   NuniToSansMedium: 'NunitoSansMedium',

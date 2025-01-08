@@ -1,9 +1,8 @@
 import {render, screen} from 'test-utils';
-import CustomButton, {CustomButtonProps} from '..';
+import Text, {TextProps} from '..';
 
-describe('CustomButton', () => {
-  const setup = (props?: CustomButtonProps) =>
-    render(<CustomButton {...props} />);
+describe('Text', () => {
+  const setup = (props?: TextProps) => render(<Text {...props} />);
 
   it('should render correctly', () => {
     const {toJSON} = setup();
@@ -12,10 +11,9 @@ describe('CustomButton', () => {
 
   it('should render correctly with given props', () => {
     setup({
-      title: 'Mock title',
-      bgVariant: 'outline',
-      textVariant: 'outline',
-      isLoading: true,
+      font: 'GelasioBold',
+      children: 'Mock title',
+      size: 'xs',
     });
 
     expect(screen.getByText('Mock title')).toBeVisible();

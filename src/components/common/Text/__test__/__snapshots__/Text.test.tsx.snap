@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text should render correctly 1`] = `
+<div>
+  <Text
+    style={
+      [
+        {
+          "color": "#242424",
+          "fontFamily": "NunitoSansRegular",
+          "fontSize": 16,
+        },
+        undefined,
+      ]
+    }
+  />
+</div>
+`;

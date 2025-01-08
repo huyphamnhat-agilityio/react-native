@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   ActivityIndicator,
   DimensionValue,
@@ -10,9 +9,11 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+
+// Themes
 import {borderRadius, colors} from 'src/themes';
 
-export interface CustomButtonProps extends TouchableOpacityProps {
+export interface ButtonProps extends TouchableOpacityProps {
   IconLeft?: React.ReactElement;
   IconRight?: React.ReactElement;
   bgVariant?: 'primary' | 'outline';
@@ -24,7 +25,7 @@ export interface CustomButtonProps extends TouchableOpacityProps {
   width?: DimensionValue;
 }
 
-const getBgVariantStyle = (variant: CustomButtonProps['bgVariant']) => {
+const getBgVariantStyle = (variant: ButtonProps['bgVariant']) => {
   switch (variant) {
     case 'outline':
       return 'transparent';
@@ -34,7 +35,7 @@ const getBgVariantStyle = (variant: CustomButtonProps['bgVariant']) => {
   }
 };
 
-const getTextVariantStyle = (variant: CustomButtonProps['textVariant']) => {
+const getTextVariantStyle = (variant: ButtonProps['textVariant']) => {
   switch (variant) {
     case 'outline':
       return colors.text.secondary;
@@ -44,19 +45,19 @@ const getTextVariantStyle = (variant: CustomButtonProps['textVariant']) => {
   }
 };
 
-const CustomButton = ({
+const Button = ({
   IconLeft,
   IconRight,
   bgVariant = 'primary',
+  disabled,
   isLoading = false,
   rounded = 'none',
   style,
   textVariant = 'primary',
   title = '',
-  disabled,
   width,
   ...props
-}: CustomButtonProps) => {
+}: ButtonProps) => {
   const isDisabled = disabled || isLoading;
 
   const opacity = isDisabled ? 0.5 : 1;
@@ -81,7 +82,7 @@ const CustomButton = ({
       {IconLeft}
 
       <View style={styles.wrapper}>
-        {isLoading && <ActivityIndicator color={textColor} />}
+        {!!title && isLoading && <ActivityIndicator color={textColor} />}
         {!!title && (
           <Text
             style={{
@@ -114,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomButton;
+export default Button;
