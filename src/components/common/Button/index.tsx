@@ -19,7 +19,7 @@ import Text from '../Text';
 export interface ButtonProps extends TouchableOpacityProps {
   IconLeft?: React.ReactElement;
   IconRight?: React.ReactElement;
-  bgVariant?: 'primary' | 'outline' | 'none';
+  bgVariant?: 'primary' | 'secondary' | 'outline' | 'none';
   isLoading?: boolean;
   rounded?: BorderRadius;
   style?: StyleProp<ViewStyle>;
@@ -36,6 +36,8 @@ const getBgVariantStyle = (variant: ButtonProps['bgVariant']) => {
     case 'none':
       return 'transparent';
 
+    case 'secondary':
+      return colors.background.quaternary;
     default:
       return colors.background.primary;
   }
@@ -74,6 +76,7 @@ const Button = ({
   titleFont = 'NuniToSansNormal',
   titleSize = 'sm',
   width,
+  children,
   ...props
 }: ButtonProps) => {
   const isDisabled = disabled || isLoading;
@@ -116,6 +119,7 @@ const Button = ({
           </Text>
         )}
       </View>
+      {children}
 
       {IconRight}
     </TouchableOpacity>

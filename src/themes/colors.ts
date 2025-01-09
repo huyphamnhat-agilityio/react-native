@@ -29,6 +29,8 @@ export const colors = {
     primary: '#242424',
     secondary: '#f0f0f0',
     tertiary: '#60606066',
+    quaternary: '#4f4f4f',
+    disabled: '#f5f5f5',
   },
 
   shadow: {

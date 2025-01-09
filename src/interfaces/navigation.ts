@@ -5,6 +5,7 @@ import {SCREENS} from 'src/constants';
 export type AppStackParamList = {
   [SCREENS.BOARDING]: undefined;
   [SCREENS.LOGIN]: undefined;
+  [SCREENS.HOME]: undefined;
 };
 
 export type AppStackScreenProps<Screen extends keyof AppStackParamList> =

@@ -116,4 +116,5 @@ const styles = StyleSheet.create({
     width: '94%',
   },
 });
+
 export default TextInput;
