@@ -3,7 +3,11 @@ import {ImageBackground, StyleSheet, View} from 'react-native';
 
 // Components
 import {Button, Text} from 'src/components/common';
+
+// Constants
 import {SCREENS} from 'src/constants';
+
+// Interfaces
 import {StackNavigation} from 'src/interfaces';
 export interface BoardingScreenProps {
   navigation: StackNavigation;
