@@ -1,7 +1,7 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // Screens
-import {BoardingScreen} from 'src/screens';
+import {BoardingScreen, LoginScreen} from 'src/screens';
 
 // Constants
 import {SCREENS} from 'src/constants';
@@ -18,6 +18,7 @@ export const AppStackNavigation = () => {
         headerShown: false,
       }}>
       <AppStack.Screen name={SCREENS.BOARDING} component={BoardingScreen} />
+      <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
     </AppStack.Navigator>
   );
 };

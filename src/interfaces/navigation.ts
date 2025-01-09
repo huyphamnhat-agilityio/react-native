@@ -1,4 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationProp} from '@react-navigation/native';
 import {SCREENS} from 'src/constants';
 
 export type AppStackParamList = {
@@ -8,3 +9,5 @@ export type AppStackParamList = {
 
 export type AppStackScreenProps<Screen extends keyof AppStackParamList> =
   NativeStackScreenProps<AppStackParamList, Screen>;
+
+export type StackNavigation = NavigationProp<AppStackParamList>;

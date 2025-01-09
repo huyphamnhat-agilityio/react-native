@@ -1,4 +1,8 @@
-import {Text as TextBase, TextProps as TextBaseProps} from 'react-native';
+import {
+  StyleSheet,
+  Text as TextBase,
+  TextProps as TextBaseProps,
+} from 'react-native';
 import {FontFamily, FontSize} from 'src/interfaces';
 import {TextVariant} from 'src/interfaces/color';
 
@@ -22,6 +26,7 @@ const Text = ({
   return (
     <TextBase
       style={[
+        styles.text,
         {
           color: colors.text[`${textVariant}`],
           fontSize: fontSizes[`${size}`],
@@ -34,5 +39,11 @@ const Text = ({
     </TextBase>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    includeFontPadding: false,
+  },
+});
 
 export default Text;

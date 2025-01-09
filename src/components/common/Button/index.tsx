@@ -3,7 +3,6 @@ import {
   DimensionValue,
   StyleProp,
   StyleSheet,
-  Text,
   TouchableOpacity,
   TouchableOpacityProps,
   View,
@@ -11,10 +10,11 @@ import {
 } from 'react-native';
 
 // Type & Interfaces
-import {BorderRadius} from 'src/interfaces';
+import {BorderRadius, FontFamily, FontSize} from 'src/interfaces';
 
 // Themes
 import {borderRadius, colors} from 'src/themes';
+import Text from '../Text';
 
 export interface ButtonProps extends TouchableOpacityProps {
   IconLeft?: React.ReactElement;
@@ -25,6 +25,8 @@ export interface ButtonProps extends TouchableOpacityProps {
   style?: StyleProp<ViewStyle>;
   textVariant?: 'primary' | 'outline';
   title?: string;
+  titleFont?: FontFamily;
+  titleSize?: FontSize;
   width?: DimensionValue;
 }
 
@@ -69,6 +71,8 @@ const Button = ({
   style,
   textVariant = 'primary',
   title = '',
+  titleFont = 'NuniToSansNormal',
+  titleSize = 'sm',
   width,
   ...props
 }: ButtonProps) => {
@@ -83,6 +87,7 @@ const Button = ({
   const textColor = getTextVariantStyle(textVariant);
   return (
     <TouchableOpacity
+      activeOpacity={0.5}
       style={[
         styles.container,
         {
@@ -102,6 +107,8 @@ const Button = ({
         {!!title && isLoading && <ActivityIndicator color={textColor} />}
         {!!title && (
           <Text
+            font={titleFont}
+            size={titleSize}
             style={{
               color: textColor,
             }}>
