@@ -13,6 +13,7 @@ import {FontFamily, FontSize, TextVariant} from 'src/interfaces';
 
 // Themes
 import {colors, fontFamilies, fontSizes} from 'src/themes';
+import {forwardRef, Ref} from 'react';
 
 export interface TextInputProps extends TextInputBaseProps {
   LeftContent?: React.ReactElement;
@@ -29,70 +30,76 @@ export interface TextInputProps extends TextInputBaseProps {
   labelVariant?: TextVariant;
 }
 
-const TextInput = ({
-  label,
-  font = 'NuniToSansNormal',
-  labelSize = 'sm',
-  inputSize = 'sm',
-  inputVariant = 'primary',
-  labelVariant = 'primary',
-  LeftContent,
-  RightContent,
-  numberOfLines = 1,
-  placeholderTextColor = colors.text.placeholder,
-  isDisabled = false,
-  isLoading = false,
-  isError = false,
-  errorMessage = '',
-  ...props
-}: TextInputProps) => {
-  const isEditable = !isDisabled && !isLoading;
+const TextInput = forwardRef(
+  (
+    {
+      label,
+      font = 'NuniToSansNormal',
+      labelSize = 'sm',
+      inputSize = 'sm',
+      inputVariant = 'primary',
+      labelVariant = 'primary',
+      LeftContent,
+      RightContent,
+      numberOfLines = 1,
+      placeholderTextColor = colors.text.placeholder,
+      isDisabled = false,
+      isLoading = false,
+      isError = false,
+      errorMessage = '',
+      ...props
+    }: TextInputProps,
+    ref: Ref<TextInputBase>,
+  ) => {
+    const isEditable = !isDisabled && !isLoading;
 
-  const errorBorderVariant = isError
-    ? colors.border.danger
-    : colors.border.secondary;
+    const errorBorderVariant = isError
+      ? colors.border.danger
+      : colors.border.secondary;
 
-  const opacity = !isEditable ? 0.5 : 1;
-  return (
-    <View style={[styles.wrapper, {opacity}]}>
-      {label && (
-        <Text font={font} size={labelSize} textVariant={labelVariant}>
-          {label}
-        </Text>
-      )}
-      <View
-        style={[
-          styles.container,
-          {
-            borderBottomColor: errorBorderVariant,
-          },
-        ]}>
-        {LeftContent}
-        <TextInputBase
-          placeholderTextColor={placeholderTextColor}
-          numberOfLines={numberOfLines}
+    const opacity = !isEditable ? 0.5 : 1;
+    return (
+      <View style={[styles.wrapper, {opacity}]}>
+        {label && (
+          <Text font={font} size={labelSize} textVariant={labelVariant}>
+            {label}
+          </Text>
+        )}
+        <View
           style={[
-            styles.input,
+            styles.container,
             {
-              fontSize: fontSizes[`${inputSize}`],
-              color: colors.text[`${inputVariant}`],
-              fontFamily: fontFamilies[`${font}`],
+              borderBottomColor: errorBorderVariant,
             },
-          ]}
-          editable={isEditable}
-          {...props}
-        />
+          ]}>
+          {LeftContent}
+          <TextInputBase
+            ref={ref}
+            placeholderTextColor={placeholderTextColor}
+            numberOfLines={numberOfLines}
+            style={[
+              styles.input,
+              {
+                fontSize: fontSizes[`${inputSize}`],
+                color: colors.text[`${inputVariant}`],
+                fontFamily: fontFamilies[`${font}`],
+              },
+            ]}
+            editable={isEditable}
+            {...props}
+          />
 
-        {RightContent}
+          {RightContent}
+        </View>
+        {isError && !!errorMessage && (
+          <Text font={font} size={labelSize} textVariant="danger">
+            {errorMessage}
+          </Text>
+        )}
       </View>
-      {isError && !!errorMessage && (
-        <Text font={font} size={labelSize} textVariant="danger">
-          {errorMessage}
-        </Text>
-      )}
-    </View>
-  );
-};
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   wrapper: {
