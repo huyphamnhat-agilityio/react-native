@@ -1,9 +1,16 @@
+import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {CategoryItem, Text} from 'src/components/common';
+import {CategoryList} from 'src/components';
+
+// Components
+import {Text} from 'src/components/common';
 import {CartIcon, SearchIcon} from 'src/components/icons';
+
+// Themes
 import {colors} from 'src/themes';
 
 const HomeScreen = () => {
+  const [category, setCategory] = useState('Popular');
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -19,7 +26,7 @@ const HomeScreen = () => {
         <CartIcon />
       </View>
 
-      <CategoryItem />
+      <CategoryList category={category} setCategory={setCategory} />
     </View>
   );
 };

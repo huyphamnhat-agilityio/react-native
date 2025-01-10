@@ -1,9 +1,9 @@
 import {Controller, useForm} from 'react-hook-form';
-import {useCallback} from 'react';
+import {memo, useCallback, useMemo, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 // Utils
-import {clearErrorOnChange} from 'src/utils';
+import {clearErrorOnChange, isEnableSubmit} from 'src/utils';
 
 // Themes
 import {colors} from 'src/themes';
@@ -47,12 +47,18 @@ export const LOGIN_FORM_VALIDATION = {
   },
 };
 
-const LoginForm = () => {
+const LoginForm = memo(() => {
+  const [isShowPassword, setIsShowPassword] = useState(true);
+
+  const handleShowPassword = useCallback(() => {
+    setIsShowPassword(!isShowPassword);
+  }, [isShowPassword]);
+
   const {
     control,
     handleSubmit,
     clearErrors,
-    formState: {errors},
+    formState: {errors, dirtyFields, isSubmitting},
   } = useForm<LoginFormData>({
     mode: 'onBlur',
     reValidateMode: 'onBlur',
@@ -68,6 +74,13 @@ const LoginForm = () => {
     },
     [clearErrors, errors],
   );
+
+  const dirtyFieldList = Object.keys(dirtyFields);
+
+  const isDisabled = useMemo(() => {
+    const REQUIRED_FIELDS: Array<keyof LoginFormData> = ['email', 'password'];
+    return !isEnableSubmit(REQUIRED_FIELDS, dirtyFieldList, errors);
+  }, [dirtyFieldList, errors]);
 
   const onSubmit = useCallback((data: LoginFormData) => {
     // TODO: Integrate API later
@@ -89,6 +102,7 @@ const LoginForm = () => {
               onChangeText={handleInputChange('email', onChange)}
               isError={!!error?.message}
               errorMessage={error?.message}
+              isDisabled={isSubmitting}
               {...rest}
             />
           )}
@@ -100,15 +114,16 @@ const LoginForm = () => {
           name="password"
           render={({field: {onChange, ...rest}, fieldState: {error}}) => (
             <TextInput
-              RightContent={<EyeIcon />}
+              RightContent={<EyeIcon onPress={handleShowPassword} />}
               font="NuniToSansNormal"
               label="Password"
-              secureTextEntry
+              secureTextEntry={isShowPassword}
               labelSize="xs"
               labelVariant="alternative"
               onChangeText={handleInputChange('password', onChange)}
               isError={!!error?.message}
               errorMessage={error?.message}
+              isDisabled={isSubmitting}
               {...rest}
             />
           )}
@@ -122,6 +137,7 @@ const LoginForm = () => {
           titleSize="base"
           titleFont="NunitoSansSemiBold"
           style={styles.link}
+          disabled={isSubmitting}
         />
 
         <Button
@@ -131,6 +147,7 @@ const LoginForm = () => {
           titleFont="NunitoSansSemiBold"
           rounded="md"
           style={styles.button}
+          disabled={isDisabled || isSubmitting}
           onPress={handleSubmit(onSubmit)}
         />
 
@@ -141,11 +158,12 @@ const LoginForm = () => {
           titleSize="base"
           titleFont="NunitoSansSemiBold"
           style={styles.link}
+          disabled={isSubmitting}
         />
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -172,4 +190,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
 });
+
+LoginForm.displayName = 'Login';
+
 export default LoginForm;

@@ -1,3 +1,4 @@
+export type {TextVariant, BackgroundVariant} from './color';
 export type {BorderRadius} from './metrics';
 export type {
   AppStackParamList,
@@ -5,4 +6,3 @@ export type {
   StackNavigation,
 } from './navigation';
 export type {FontFamily, FontSize} from './typography';
-export type {TextVariant} from './color';

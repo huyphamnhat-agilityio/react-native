@@ -1,1 +1,1 @@
-export {clearErrorOnChange} from './form';
+export {clearErrorOnChange, isEnableSubmit} from './form';

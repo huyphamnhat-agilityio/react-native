@@ -2,8 +2,8 @@ import Svg, {ClipPath, Defs, G, Path, Rect, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
 export const StarIcon = ({
-  width = 20,
-  height = 20,
+  width = 28,
+  height = 28,
   color = colors.background.disabled,
   ...props
 }: SvgProps) => {

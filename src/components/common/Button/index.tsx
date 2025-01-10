@@ -15,11 +15,12 @@ import {BorderRadius, FontFamily, FontSize} from 'src/interfaces';
 // Themes
 import {borderRadius, colors} from 'src/themes';
 import Text from '../Text';
+import {memo} from 'react';
 
 export interface ButtonProps extends TouchableOpacityProps {
   IconLeft?: React.ReactElement;
   IconRight?: React.ReactElement;
-  bgVariant?: 'primary' | 'secondary' | 'outline' | 'none';
+  bgVariant?: 'primary' | 'secondary' | 'outline' | 'disabled' | 'none';
   isLoading?: boolean;
   rounded?: BorderRadius;
   style?: StyleProp<ViewStyle>;
@@ -38,6 +39,10 @@ const getBgVariantStyle = (variant: ButtonProps['bgVariant']) => {
 
     case 'secondary':
       return colors.background.quaternary;
+
+    case 'disabled':
+      return colors.background.disabled;
+
     default:
       return colors.background.primary;
   }
@@ -63,68 +68,70 @@ const getBorderVariantStyle = (variant: ButtonProps['bgVariant']) => {
   }
 };
 
-const Button = ({
-  IconLeft,
-  IconRight,
-  bgVariant = 'primary',
-  disabled,
-  isLoading = false,
-  rounded = 'none',
-  style,
-  textVariant = 'primary',
-  title = '',
-  titleFont = 'NuniToSansNormal',
-  titleSize = 'sm',
-  width,
-  children,
-  ...props
-}: ButtonProps) => {
-  const isDisabled = disabled || isLoading;
+const Button = memo(
+  ({
+    IconLeft,
+    IconRight,
+    bgVariant = 'primary',
+    disabled,
+    isLoading = false,
+    rounded = 'none',
+    style,
+    textVariant = 'primary',
+    title = '',
+    titleFont = 'NuniToSansNormal',
+    titleSize = 'sm',
+    width,
+    children,
+    ...props
+  }: ButtonProps) => {
+    const isDisabled = disabled || isLoading;
 
-  const opacity = isDisabled ? 0.5 : 1;
+    const opacity = isDisabled ? 0.5 : 1;
 
-  const backgroundColor = getBgVariantStyle(bgVariant);
+    const backgroundColor = getBgVariantStyle(bgVariant);
 
-  const borderColor = getBorderVariantStyle(bgVariant);
+    const borderColor = getBorderVariantStyle(bgVariant);
 
-  const textColor = getTextVariantStyle(textVariant);
-  return (
-    <TouchableOpacity
-      activeOpacity={0.5}
-      style={[
-        styles.container,
-        {
-          backgroundColor: backgroundColor,
-          borderRadius: borderRadius[rounded],
-          opacity,
-          width,
-          borderColor,
-        },
-        style,
-      ]}
-      disabled={isDisabled}
-      {...props}>
-      {IconLeft}
+    const textColor = getTextVariantStyle(textVariant);
+    return (
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={[
+          styles.container,
+          {
+            backgroundColor: backgroundColor,
+            borderRadius: borderRadius[rounded],
+            opacity,
+            width,
+            borderColor,
+          },
+          style,
+        ]}
+        disabled={isDisabled}
+        {...props}>
+        {IconLeft}
 
-      <View style={styles.wrapper}>
-        {!!title && isLoading && <ActivityIndicator color={textColor} />}
-        {!!title && (
-          <Text
-            font={titleFont}
-            size={titleSize}
-            style={{
-              color: textColor,
-            }}>
-            {title}
-          </Text>
-        )}
-      </View>
-      {children}
+        <View style={styles.wrapper}>
+          {!!title && isLoading && <ActivityIndicator color={textColor} />}
+          {!!title && (
+            <Text
+              font={titleFont}
+              size={titleSize}
+              style={{
+                color: textColor,
+              }}>
+              {title}
+            </Text>
+          )}
+        </View>
+        {children}
 
-      {IconRight}
-    </TouchableOpacity>
-  );
-};
+        {IconRight}
+      </TouchableOpacity>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -142,5 +149,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
+
+Button.displayName = 'Button';
 
 export default Button;

@@ -16,6 +16,7 @@ export const colors = {
     alternative: '#909090',
     placeholder: '#b3b3b3',
     danger: '#6a1c1c',
+    disabled: '#999999',
   },
 
   border: {
