@@ -6,6 +6,9 @@ exports[`Text should render correctly 1`] = `
     style={
       [
         {
+          "includeFontPadding": false,
+        },
+        {
           "color": "#242424",
           "fontFamily": "NunitoSansRegular",
           "fontSize": 16,

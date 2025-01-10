@@ -4,7 +4,7 @@ import {colors} from 'src/themes';
 export const StarIcon = ({
   width = 28,
   height = 28,
-  color = colors.background.disabled,
+  color = colors.white,
   ...props
 }: SvgProps) => {
   return (

@@ -17,6 +17,7 @@ module.exports = {
     'src/services/**/*.{ts,tsx}',
     'src/utils/**/*.{ts,tsx}',
     '!**/*.stories.{ts,tsx}',
+    '!src/components/**/index.ts',
   ],
   moduleDirectories: [
     'node_modules',

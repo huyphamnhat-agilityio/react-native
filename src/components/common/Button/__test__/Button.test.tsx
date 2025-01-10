@@ -18,5 +18,12 @@ describe('Button', () => {
     });
 
     expect(screen.getByText('Mock title')).toBeVisible();
+
+    setup({
+      title: 'Mock secondary',
+      bgVariant: 'secondary',
+    });
+
+    expect(screen.getByText('Mock secondary')).toBeVisible();
   });
 });

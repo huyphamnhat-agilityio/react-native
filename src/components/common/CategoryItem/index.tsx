@@ -1,5 +1,5 @@
 import {memo} from 'react';
-import {PressableProps, StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ViewProps} from 'react-native';
 
 // Components
 import Button, {ButtonProps} from '../Button';
@@ -8,19 +8,14 @@ import Text from '../Text';
 // Types & Interfaces
 import {TextVariant} from 'src/interfaces';
 
-export interface CategoryItemProps extends PressableProps {
+export interface CategoryItemProps extends ViewProps {
   Icon: React.ReactElement;
   isActive?: boolean;
   onPress?: () => void;
   title?: string;
 }
 const CategoryItem = memo(
-  ({
-    Icon,
-    isActive = false,
-    onPress = () => {},
-    title = '',
-  }: CategoryItemProps) => {
+  ({Icon, isActive = false, onPress, title = ''}: CategoryItemProps) => {
     const buttonVariant: ButtonProps['bgVariant'] = isActive
       ? 'primary'
       : 'disabled';
@@ -34,6 +29,7 @@ const CategoryItem = memo(
           bgVariant={buttonVariant}
           onPress={onPress}
           rounded="lg"
+          testID="category-item"
         />
         <Text font="NunitoSansSemiBold" textVariant={titleVariant} size="xs">
           {title}

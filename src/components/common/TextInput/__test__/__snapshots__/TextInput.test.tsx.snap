@@ -18,6 +18,7 @@ exports[`TextInput should render correctly 1`] = `
       style={
         [
           {
+            "alignItems": "center",
             "borderBottomWidth": 2,
             "flexDirection": "row",
           },
