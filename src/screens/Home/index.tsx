@@ -1,9 +1,10 @@
+import {useGetProducts} from 'src/hooks';
 import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {CategoryList} from 'src/components';
 
 // Components
 import {Text} from 'src/components/common';
+import {CategoryList} from 'src/components';
 import {CartIcon, SearchIcon} from 'src/components/icons';
 
 // Themes
@@ -11,6 +12,9 @@ import {colors} from 'src/themes';
 
 const HomeScreen = () => {
   const [category, setCategory] = useState('Popular');
+
+  const {data} = useGetProducts();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -27,6 +31,10 @@ const HomeScreen = () => {
       </View>
 
       <CategoryList category={category} setCategory={setCategory} />
+
+      {data?.map(value => (
+        <Text key={value.name}>{value.name}</Text>
+      ))}
     </View>
   );
 };

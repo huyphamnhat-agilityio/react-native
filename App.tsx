@@ -1,6 +1,17 @@
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {useEffect, useState} from 'react';
 import {DevSettings} from 'react-native';
 import {Navigation} from 'src/navigation';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 300000,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 function App(): React.JSX.Element {
   const [showStorybook, setShowStorybook] = useState(false);
 
@@ -16,7 +27,12 @@ function App(): React.JSX.Element {
     const StorybookUI = require('./.storybook').default;
     return <StorybookUI />;
   }
-  return <Navigation />;
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Navigation />
+    </QueryClientProvider>
+  );
 }
 
 export default App;

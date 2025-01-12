@@ -5,4 +5,5 @@ export type {
   AppStackScreenProps,
   StackNavigation,
 } from './navigation';
+export type {Product} from './product';
 export type {FontFamily, FontSize} from './typography';
