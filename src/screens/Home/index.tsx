@@ -1,9 +1,8 @@
-import {useGetProducts} from 'src/hooks';
 import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 // Components
-import {Text} from 'src/components/common';
+import {ProductCard, Text} from 'src/components/common';
 import {CategoryList} from 'src/components';
 import {CartIcon, SearchIcon} from 'src/components/icons';
 
@@ -13,7 +12,7 @@ import {colors} from 'src/themes';
 const HomeScreen = () => {
   const [category, setCategory] = useState('Popular');
 
-  const {data} = useGetProducts();
+  // const {data} = useGetProducts();
 
   return (
     <View style={styles.container}>
@@ -32,9 +31,14 @@ const HomeScreen = () => {
 
       <CategoryList category={category} setCategory={setCategory} />
 
-      {data?.map(value => (
+      <ProductCard
+        image="https://i.ibb.co/7QXpRPv/chill-guy-memes-have-flooded-social-media-241142207-16x9-0.jpg"
+        name="Chill guy"
+        price={12.22}
+      />
+      {/* {data?.map(value => (
         <Text key={value.name}>{value.name}</Text>
-      ))}
+      ))} */}
     </View>
   );
 };

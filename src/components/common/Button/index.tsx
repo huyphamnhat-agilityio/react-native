@@ -20,7 +20,13 @@ import {memo} from 'react';
 export interface ButtonProps extends TouchableOpacityProps {
   IconLeft?: React.ReactElement;
   IconRight?: React.ReactElement;
-  bgVariant?: 'primary' | 'secondary' | 'outline' | 'disabled' | 'none';
+  bgVariant?:
+    | 'primary'
+    | 'secondary'
+    | 'outline'
+    | 'disabled'
+    | 'alternative'
+    | 'none';
   isLoading?: boolean;
   rounded?: BorderRadius;
   style?: StyleProp<ViewStyle>;
@@ -42,6 +48,9 @@ const getBgVariantStyle = (variant: ButtonProps['bgVariant']) => {
 
     case 'disabled':
       return colors.background.disabled;
+
+    case 'alternative':
+      return colors.background.alternative;
 
     default:
       return colors.background.primary;

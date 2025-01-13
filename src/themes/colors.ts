@@ -32,6 +32,7 @@ export const colors = {
     tertiary: '#60606066',
     quaternary: '#4f4f4f',
     disabled: '#f5f5f5',
+    alternative: '#60606066',
   },
 
   shadow: {

@@ -18,6 +18,7 @@ module.exports = {
     'src/utils/**/*.{ts,tsx}',
     '!**/*.stories.{ts,tsx}',
     '!src/components/**/index.ts',
+    '!src/components/icons/*.{ts,tsx}',
   ],
   moduleDirectories: [
     'node_modules',

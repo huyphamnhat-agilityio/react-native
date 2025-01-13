@@ -6,5 +6,6 @@ export * from './EyeIcon.tsx';
 export * from './LampIcon.tsx';
 export * from './LogoIcon.tsx';
 export * from './SearchIcon.tsx';
+export * from './ShoppingBagIcon.tsx';
 export * from './StarIcon.tsx';
 export * from './TableIcon.tsx';
