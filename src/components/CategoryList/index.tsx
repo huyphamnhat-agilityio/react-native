@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 0,
     height: 100,
+
     marginTop: 20,
   },
   contentContainer: {

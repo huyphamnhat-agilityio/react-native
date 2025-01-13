@@ -14,10 +14,13 @@ import {colors} from 'src/themes';
 // Hooks
 import {useGetProducts} from 'src/hooks';
 
-const HomeScreen = () => {
-  const [category, setCategory] = useState('Popular');
+// Constants
+import {CATGORIES} from 'src/constants';
 
-  const {data = [], isFetching} = useGetProducts();
+const HomeScreen = () => {
+  const [category, setCategory] = useState<string>(CATGORIES[0].title);
+
+  const {data = [], isFetching} = useGetProducts({category});
 
   return (
     <View style={styles.container}>
