@@ -6,6 +6,7 @@ export type AppStackParamList = {
   [SCREENS.BOARDING]: undefined;
   [SCREENS.LOGIN]: undefined;
   [SCREENS.HOME]: undefined;
+  [SCREENS.PRODUCT_DETAIL]: {id: string};
 };
 
 export type AppStackScreenProps<Screen extends keyof AppStackParamList> =

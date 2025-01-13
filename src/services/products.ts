@@ -16,3 +16,11 @@ export const getProducts = async (
 
   return products;
 };
+
+export const getProduct = async (id: string) => {
+  const product = await fetchApi<Product>(
+    `${process.env.API_URL}/${RESOURCES.PRODUCTS}/${id}`,
+  );
+
+  return product;
+};

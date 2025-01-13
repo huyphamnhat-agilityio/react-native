@@ -26,7 +26,7 @@ const ProductCard = memo(
   ({image, name, price, onPress, style, ...props}: ProductCardProps) => {
     return (
       <TouchableHighlight
-        onPress={() => {}}
+        onPress={onPress}
         underlayColor="#ffffff"
         style={[styles.container, style]}
         {...props}>

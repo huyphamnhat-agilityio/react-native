@@ -1,1 +1,1 @@
-export * from './useGetProducts';
+export {useGetProducts} from './product';

@@ -26,6 +26,7 @@ export interface ButtonProps extends TouchableOpacityProps {
     | 'outline'
     | 'disabled'
     | 'alternative'
+    | 'white'
     | 'none';
   isLoading?: boolean;
   rounded?: BorderRadius;
@@ -51,6 +52,9 @@ const getBgVariantStyle = (variant: ButtonProps['bgVariant']) => {
 
     case 'alternative':
       return colors.background.alternative;
+
+    case 'white':
+      return colors.white;
 
     default:
       return colors.background.primary;
