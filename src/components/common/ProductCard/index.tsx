@@ -1,5 +1,11 @@
 import {memo} from 'react';
-import {Image, StyleSheet, View, ViewProps} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  ViewProps,
+} from 'react-native';
 
 // Components
 import {Button, Text} from 'src/components/common';
@@ -16,54 +22,63 @@ export interface ProductCardProps extends ViewProps {
   price: number;
   onPress?: () => void;
 }
-const ProductCard = memo(({image, name, price, onPress}: ProductCardProps) => {
-  return (
-    <View style={styles.container}>
-      <Image
-        source={{
-          uri: image,
-        }}
-        width={157}
-        height={256}
-        style={styles.image}
-        resizeMode="cover"
-      />
-      <Button
-        IconLeft={<ShoppingBagIcon />}
-        bgVariant="alternative"
-        rounded="sm"
-        testID="add-to-cart"
-        style={styles.button}
-        onPress={onPress}
-      />
-      <View style={styles.content}>
-        <Text numberOfLines={1} size="sm" textVariant="tertiary">
-          {name}
-        </Text>
-        <Text font="NunitoSansBold" size="sm" textVariant="secondary">
-          $ {price}
-        </Text>
-      </View>
-    </View>
-  );
-});
+const ProductCard = memo(
+  ({image, name, price, onPress, style, ...props}: ProductCardProps) => {
+    return (
+      <TouchableHighlight
+        onPress={() => {}}
+        underlayColor="#ffffff"
+        style={[styles.container, style]}
+        {...props}>
+        <View>
+          <Image
+            source={{
+              uri: image,
+            }}
+            style={styles.image}
+            resizeMode="stretch"
+          />
+          <Button
+            IconLeft={<ShoppingBagIcon />}
+            bgVariant="alternative"
+            rounded="sm"
+            testID="add-to-cart"
+            style={styles.button}
+            onPress={onPress}
+          />
+          <View style={styles.content}>
+            <Text numberOfLines={1} size="sm" textVariant="tertiary">
+              {name}
+            </Text>
+            <Text font="NunitoSansBold" size="sm" textVariant="secondary">
+              $ {price}
+            </Text>
+          </View>
+        </View>
+      </TouchableHighlight>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
-    width: 157,
-    display: 'flex',
+    width: '48%',
     position: 'relative',
+    display: 'flex',
     flexDirection: 'column',
     gap: 10,
   },
   button: {
     position: 'absolute',
     padding: 5,
-    right: 10,
-    bottom: 68,
+    right: '5%',
+    bottom: '23%',
     zIndex: 99,
   },
   image: {
+    flex: 1,
+    width: undefined,
+    height: 236,
     borderRadius: borderRadius.base,
   },
   content: {

@@ -44,7 +44,7 @@ const CategoryList = memo(
 const styles = StyleSheet.create({
   container: {
     flexGrow: 0,
-    height: 80,
+    height: 100,
     marginTop: 20,
   },
   contentContainer: {

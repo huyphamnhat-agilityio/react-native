@@ -1,18 +1,23 @@
 import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 
 // Components
-import {ProductCard, Text} from 'src/components/common';
-import {CategoryList} from 'src/components';
+import {Text} from 'src/components/common';
+import {CategoryList, ProductList} from 'src/components';
+
+// Icons
 import {CartIcon, SearchIcon} from 'src/components/icons';
 
 // Themes
 import {colors} from 'src/themes';
 
+// Hooks
+import {useGetProducts} from 'src/hooks';
+
 const HomeScreen = () => {
   const [category, setCategory] = useState('Popular');
 
-  // const {data} = useGetProducts();
+  const {data = [], isFetching} = useGetProducts();
 
   return (
     <View style={styles.container}>
@@ -31,14 +36,13 @@ const HomeScreen = () => {
 
       <CategoryList category={category} setCategory={setCategory} />
 
-      <ProductCard
-        image="https://i.ibb.co/7QXpRPv/chill-guy-memes-have-flooded-social-media-241142207-16x9-0.jpg"
-        name="Chill guy"
-        price={12.22}
-      />
-      {/* {data?.map(value => (
-        <Text key={value.name}>{value.name}</Text>
-      ))} */}
+      {isFetching ? (
+        <View style={styles.wrapper}>
+          <ActivityIndicator size="large" color="black" />
+        </View>
+      ) : (
+        <ProductList products={data} />
+      )}
     </View>
   );
 };
@@ -59,6 +63,11 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  wrapper: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
