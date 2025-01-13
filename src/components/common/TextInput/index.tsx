@@ -1,4 +1,5 @@
 import {
+  DimensionValue,
   StyleSheet,
   TextInput as TextInputBase,
   TextInputProps as TextInputBaseProps,
@@ -28,6 +29,9 @@ export interface TextInputProps extends TextInputBaseProps {
   label?: string;
   labelSize?: FontSize;
   labelVariant?: TextVariant;
+  inputWidth?: DimensionValue;
+  inputHeight?: DimensionValue;
+  borderBottomWidth?: number;
 }
 
 const TextInput = memo(
@@ -48,6 +52,9 @@ const TextInput = memo(
         isLoading = false,
         isError = false,
         errorMessage = '',
+        inputWidth = '94%',
+        inputHeight = 'auto',
+        borderBottomWidth = 2,
         ...props
       }: TextInputProps,
       ref: Ref<TextInputBase>,
@@ -70,6 +77,7 @@ const TextInput = memo(
             style={[
               styles.container,
               {
+                borderBottomWidth,
                 borderBottomColor: errorBorderVariant,
               },
             ]}>
@@ -84,6 +92,8 @@ const TextInput = memo(
                   fontSize: fontSizes[`${inputSize}`],
                   color: colors.text[`${inputVariant}`],
                   fontFamily: fontFamilies[`${font}`],
+                  width: inputWidth,
+                  height: inputHeight,
                 },
               ]}
               editable={isEditable}
@@ -110,12 +120,13 @@ const styles = StyleSheet.create({
 
   container: {
     flexDirection: 'row',
-    borderBottomWidth: 2,
     alignItems: 'center',
   },
 
   input: {
-    width: '94%',
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    textAlign: 'center',
   },
 });
 

@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {Button, QuantityControl, Text} from 'src/components/common';
 import {BackArrowIcon} from 'src/components/icons';
@@ -12,6 +12,8 @@ const ProductDetailScreen = ({
   },
   navigation: {goBack},
 }: AppStackScreenProps<'ProductDetail'>) => {
+  const [quantity, setQuantity] = useState(1);
+
   const {data} = useProductDetail(id);
 
   const handleBack = useCallback(() => goBack(), [goBack]);
@@ -49,7 +51,7 @@ const ProductDetailScreen = ({
             $ {data?.price}
           </Text>
 
-          <QuantityControl />
+          <QuantityControl quantity={quantity} setQuantity={setQuantity} />
         </View>
       </View>
     </View>
@@ -95,11 +97,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'green',
   },
   price: {
-    width: '68%',
-    backgroundColor: 'tomato',
+    width: '66%',
   },
 });
 
