@@ -20,7 +20,7 @@ import {CATGORIES} from 'src/constants';
 const HomeScreen = () => {
   const [category, setCategory] = useState<string>(CATGORIES[0].title);
 
-  const {data = [], isFetching} = useGetProducts({category});
+  const {data = [], isLoading} = useGetProducts({category});
 
   return (
     <View style={styles.container}>
@@ -39,7 +39,7 @@ const HomeScreen = () => {
 
       <CategoryList category={category} setCategory={setCategory} />
 
-      {isFetching ? (
+      {isLoading ? (
         <View style={styles.wrapper}>
           <ActivityIndicator size="large" color="black" />
         </View>

@@ -33,7 +33,6 @@ const QuantityControl = memo(
 
     const handleOnChange = useCallback(
       (value: string) => {
-        console.log('onChange value: ', parseToInt(value, min, max));
         setQuantity(parseToInt(value, min, max));
       },
       [max, min, setQuantity],

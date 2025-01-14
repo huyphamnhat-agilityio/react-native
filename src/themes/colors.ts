@@ -5,8 +5,8 @@ export const colors = {
   quaternary: '#808080',
   white: '#ffffff',
   disabled: '#999999',
-
   divider: '#bdbdbd',
+  yellow: '#F2C94C',
 
   text: {
     primary: '#242424',
@@ -23,6 +23,7 @@ export const colors = {
     primary: '#303030',
     secondary: '#e0e0e0',
     tertiary: '#f0f0f0',
+    quaternary: '#909090',
     danger: '#6a1c1c',
   },
 
@@ -36,7 +37,7 @@ export const colors = {
   },
 
   shadow: {
-    primary: '#8A959E33',
+    primary: '#8A959E80',
     secondary: '#30303040',
   },
 } as const;

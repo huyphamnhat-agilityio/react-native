@@ -45,7 +45,7 @@ const getBgVariantStyle = (variant: ButtonProps['bgVariant']) => {
       return 'transparent';
 
     case 'secondary':
-      return colors.background.quaternary;
+      return colors.background.secondary;
 
     case 'disabled':
       return colors.background.disabled;

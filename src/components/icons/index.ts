@@ -4,6 +4,7 @@ export * from './BedIcon.tsx';
 export * from './CartIcon.tsx';
 export * from './ChairIcon.tsx';
 export * from './EyeIcon.tsx';
+export * from './MarkIcon.tsx';
 export * from './MinusIcon.tsx';
 export * from './LampIcon.tsx';
 export * from './LogoIcon.tsx';
