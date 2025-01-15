@@ -25,5 +25,26 @@ describe('Button', () => {
     });
 
     expect(screen.getByText('Mock secondary')).toBeVisible();
+
+    setup({
+      title: 'Mock disabled',
+      bgVariant: 'disabled',
+    });
+
+    expect(screen.getByText('Mock disabled')).toBeVisible();
+
+    setup({
+      title: 'Mock alternative',
+      bgVariant: 'secondary',
+    });
+
+    expect(screen.getByText('Mock alternative')).toBeVisible();
+
+    setup({
+      title: 'Mock white',
+      bgVariant: 'white',
+    });
+
+    expect(screen.getByText('Mock white')).toBeVisible();
   });
 });

@@ -7,7 +7,7 @@ export const fetchApi = async <T>(url: string, options?: RequestInit) => {
   };
 
   const response = await fetch(url, {
-    method: options?.method || 'GET',
+    method: options?.method ?? 'GET',
     headers: headerOption,
     body: options?.body,
     ...options,

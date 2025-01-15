@@ -40,6 +40,7 @@ const QuantityControl = memo(
     return (
       <View style={[styles.container, style]} {...props}>
         <Button
+          testID="increase-quantity"
           IconLeft={<PlusIcon opacity={isMaximum ? 0.5 : 1} />}
           bgVariant="none"
           onPress={handleChangeQuantity(1)}
@@ -47,6 +48,7 @@ const QuantityControl = memo(
           style={styles.button}
         />
         <TextInput
+          testID="quantity-input"
           borderBottomWidth={0}
           inputWidth={30}
           inputHeight={20}
@@ -57,6 +59,7 @@ const QuantityControl = memo(
           value={quantity.toString()}
         />
         <Button
+          testID="decrease-quantity"
           IconLeft={<MinusIcon opacity={isMinimum ? 0.5 : 1} />}
           bgVariant="none"
           onPress={handleChangeQuantity(-1)}
