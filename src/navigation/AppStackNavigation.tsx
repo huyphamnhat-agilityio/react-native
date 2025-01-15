@@ -40,6 +40,7 @@ export const AppStackNavigation = () => {
           title: 'My cart',
           headerTitleAlign: 'center',
           headerShown: true,
+          headerShadowVisible: false,
           headerStyle: {
             backgroundColor: colors.white,
           },

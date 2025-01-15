@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
+  ToastAndroid,
   View,
 } from 'react-native';
 import {
@@ -25,12 +26,13 @@ import {Button, QuantityControl, Text} from 'src/components/common';
 
 // Icons
 import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
+import {SUCCESS_MESSAGE} from 'src/constants';
 
 // Hooks
 import {useProductDetail} from 'src/hooks/product';
 
 // Types & Interfaces
-import {AppStackScreenProps, CartItem} from 'src/interfaces';
+import {AppStackScreenProps, CartItemData} from 'src/interfaces';
 import {useCartStore} from 'src/store';
 
 // Themes
@@ -70,27 +72,35 @@ const ProductDetailScreen = ({
   const onPressPagination = useCallback(
     (index: number) => {
       ref.current?.scrollTo({
-        count: index - progress.value,
+        count: index - progress.get(),
         animated: true,
       });
     },
-    [progress.value],
+    [progress],
   );
 
   const handleBack = useCallback(() => goBack(), [goBack]);
 
   const handleAddToCart = () => {
-    const cartItem: CartItem = {
+    const cartItem: CartItemData = {
       id: productId,
       productId,
       productName: name,
       quantity,
       price,
-      image: variants[progress.value].image,
-      selectedColor: variants[progress.value].color,
+      image: variants[progress.get()].image,
+      selectedColor: variants[progress.get()].color,
     };
 
     addToCart(cartItem);
+
+    Keyboard.dismiss();
+
+    ToastAndroid.showWithGravity(
+      SUCCESS_MESSAGE.ADD_TO_CART,
+      ToastAndroid.SHORT,
+      ToastAndroid.TOP,
+    );
   };
 
   useEffect(() => {

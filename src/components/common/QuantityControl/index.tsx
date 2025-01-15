@@ -10,7 +10,7 @@ export interface QuantityControlProps extends ViewProps {
   quantity?: number;
   max?: number;
   min?: number;
-  setQuantity: React.Dispatch<React.SetStateAction<number>>;
+  setQuantity: (quantity: number) => void;
 }
 const QuantityControl = memo(
   ({
@@ -26,9 +26,9 @@ const QuantityControl = memo(
 
     const handleChangeQuantity = useCallback(
       (amount: number) => () => {
-        setQuantity(prev => prev + amount);
+        setQuantity(quantity + amount);
       },
-      [setQuantity],
+      [quantity, setQuantity],
     );
 
     const handleOnChange = useCallback(

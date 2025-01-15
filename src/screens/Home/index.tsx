@@ -23,7 +23,7 @@ export interface HomeScreenProps {
   navigation: StackNavigation;
 }
 const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
-  const [category, setCategory] = useState<string>(CATEGORIES[4].title);
+  const [category, setCategory] = useState<string>(CATEGORIES[0].title);
 
   const {data = [], isLoading} = useGetProducts({category});
 

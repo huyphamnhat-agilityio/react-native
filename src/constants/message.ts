@@ -21,3 +21,7 @@ export const FETCH_ERROR_MESSAGES: Record<number, string> = {
   405: 'The HTTP method used is not allowed for this resource. Please refer to the API documentation for the correct method.',
   406: 'The requested resource cannot generate content acceptable according to the Accept headers sent in the request. Please modify your request and try again.',
 } as const;
+
+export const SUCCESS_MESSAGE = {
+  ADD_TO_CART: 'The product has been added to cart!',
+};

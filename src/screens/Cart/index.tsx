@@ -1,11 +1,20 @@
 import {StyleSheet, View} from 'react-native';
-import {CartItem} from 'src/components/common';
+
+// Components
+import {CartList} from 'src/components';
+
+// Store
+import {useCartStore} from 'src/store';
+
+// Themes
 import {colors} from 'src/themes';
 
 const CartScreen = () => {
+  const cart = useCartStore(state => state.cart);
+
   return (
     <View style={styles.container}>
-      <CartItem hasDividerStroke />
+      <CartList cartItems={cart} />
     </View>
   );
 };
@@ -14,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     flex: 1,
+    paddingHorizontal: 20,
   },
 });
 export default CartScreen;
