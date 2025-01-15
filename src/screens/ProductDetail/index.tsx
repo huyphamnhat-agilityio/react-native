@@ -48,7 +48,7 @@ const ProductDetailScreen = ({
 }: AppStackScreenProps<'ProductDetail'>) => {
   const [quantity, setQuantity] = useState(1);
   const [screenHeight, setScreenHeight] = useState(
-    Dimensions.get('window').height * 0.54,
+    Dimensions.get('window').height * 0.53,
   );
 
   const addToCart = useCartStore(state => state.addToCart);
@@ -83,7 +83,7 @@ const ProductDetailScreen = ({
 
   const handleAddToCart = () => {
     const cartItem: CartItemData = {
-      id: productId,
+      id: `${productId}-${variants[progress.get()].color}`,
       productId,
       productName: name,
       quantity,

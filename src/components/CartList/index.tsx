@@ -16,7 +16,7 @@ const CartList = ({cartItems}: CartListProps) => {
       contentContainerStyle={styles.contentContainer}
       renderItem={({item, index}) => (
         <CartItem
-          key={item.selectedColor}
+          key={item.id}
           data={item}
           hasDividerStroke={index < cartItems.length - 1}
         />
