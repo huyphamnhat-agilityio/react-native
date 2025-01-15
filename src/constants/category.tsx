@@ -7,7 +7,7 @@ import {
   TableIcon,
 } from 'src/components/icons';
 
-export const CATGORIES = [
+export const CATEGORIES = [
   {
     title: 'Popular',
     icon: <StarIcon />,

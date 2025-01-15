@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 
 // Components
@@ -15,12 +15,19 @@ import {colors} from 'src/themes';
 import {useGetProducts} from 'src/hooks';
 
 // Constants
-import {CATGORIES} from 'src/constants';
+import {CATEGORIES} from 'src/constants';
 
-const HomeScreen = () => {
-  const [category, setCategory] = useState<string>(CATGORIES[0].title);
+// Types& Interfaces
+import {StackNavigation} from 'src/interfaces';
+export interface HomeScreenProps {
+  navigation: StackNavigation;
+}
+const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
+  const [category, setCategory] = useState<string>(CATEGORIES[4].title);
 
   const {data = [], isLoading} = useGetProducts({category});
+
+  const handleCartPress = useCallback(() => navigate('Cart'), [navigate]);
 
   return (
     <View style={styles.container}>
@@ -34,7 +41,7 @@ const HomeScreen = () => {
             BEAUTIFUL
           </Text>
         </View>
-        <CartIcon />
+        <CartIcon onPress={handleCartPress} />
       </View>
 
       <CategoryList category={category} setCategory={setCategory} />

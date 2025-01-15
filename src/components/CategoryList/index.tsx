@@ -5,7 +5,7 @@ import {FlatList, StyleSheet} from 'react-native';
 import {CategoryItem} from '../common';
 
 // Constants
-import {CATGORIES} from 'src/constants';
+import {CATEGORIES} from 'src/constants';
 
 export interface CategoryListProps extends Partial<FlatList> {
   category?: string;
@@ -22,7 +22,7 @@ const CategoryList = memo(
     return (
       <FlatList
         style={styles.container}
-        data={CATGORIES}
+        data={CATEGORIES}
         horizontal
         contentContainerStyle={styles.contentContainer}
         renderItem={({item: {icon, title}}) => {
@@ -43,10 +43,9 @@ const CategoryList = memo(
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 0,
-    height: 100,
-
+    height: 80,
     marginTop: 20,
+    flexGrow: 0,
   },
   contentContainer: {
     gap: 25,

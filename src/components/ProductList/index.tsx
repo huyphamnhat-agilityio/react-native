@@ -45,6 +45,7 @@ const ProductList = memo(({products, ...props}: ProductListProps) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
+    flex: 1,
   },
   contentContainer: {
     gap: 20,

@@ -1,3 +1,4 @@
+export type {CartItem} from './cart';
 export type {TextVariant, BackgroundVariant} from './color';
 export type {BorderRadius} from './metrics';
 export type {

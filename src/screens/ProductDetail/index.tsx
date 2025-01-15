@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import {useCallback, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   Image,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
@@ -18,11 +19,21 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from 'react-native-reanimated-carousel';
+
+// Components
 import {Button, QuantityControl, Text} from 'src/components/common';
+
+// Icons
 import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
-import {useKeyBoardDetect} from 'src/hooks';
+
+// Hooks
 import {useProductDetail} from 'src/hooks/product';
-import {AppStackScreenProps} from 'src/interfaces';
+
+// Types & Interfaces
+import {AppStackScreenProps, CartItem} from 'src/interfaces';
+import {useCartStore} from 'src/store';
+
+// Themes
 import {borderRadius, colors} from 'src/themes';
 
 const width = Dimensions.get('window').width * 0.86;
@@ -38,6 +49,8 @@ const ProductDetailScreen = ({
     Dimensions.get('window').height * 0.54,
   );
 
+  const addToCart = useCartStore(state => state.addToCart);
+
   const progress = useSharedValue<number>(0);
 
   const ref = useRef<ICarouselInstance>(null);
@@ -45,6 +58,7 @@ const ProductDetailScreen = ({
   const {data, isLoading} = useProductDetail(id);
 
   const {
+    id: productId = '',
     variants = [],
     name = '',
     description = '',
@@ -65,7 +79,41 @@ const ProductDetailScreen = ({
 
   const handleBack = useCallback(() => goBack(), [goBack]);
 
-  useKeyBoardDetect(setScreenHeight);
+  const handleAddToCart = () => {
+    const cartItem: CartItem = {
+      id: productId,
+      productId,
+      productName: name,
+      quantity,
+      price,
+      image: variants[progress.value].image,
+      selectedColor: variants[progress.value].color,
+    };
+
+    addToCart(cartItem);
+  };
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      e => {
+        setScreenHeight(
+          (e.endCoordinates.screenY - e.endCoordinates.height) * 0.94,
+        );
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setScreenHeight(Dimensions.get('screen').height * 0.53);
+      },
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
 
   if (isLoading) {
     return (
@@ -98,25 +146,6 @@ const ProductDetailScreen = ({
           containerStyle={styles.colorPagination}
           horizontal
           onPress={onPressPagination}
-          customReanimatedStyle={(progress, index, length) => {
-            let val = Math.abs(progress - index);
-            if (index === 0 && progress > length - 1) {
-              val = Math.abs(progress - length);
-            }
-
-            return {
-              transform: [
-                {
-                  translateY: interpolate(
-                    val,
-                    [0, 1],
-                    [0, 0],
-                    Extrapolation.CLAMP,
-                  ),
-                },
-              ],
-            };
-          }}
           renderItem={item => (
             <View
               style={[
@@ -235,6 +264,7 @@ const ProductDetailScreen = ({
               titleFont="NunitoSansSemiBold"
               titleSize="md"
               style={styles.buttonAddToCart}
+              onPress={handleAddToCart}
             />
           </View>
         </View>

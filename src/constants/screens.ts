@@ -3,4 +3,5 @@ export const SCREENS = {
   LOGIN: 'Login',
   HOME: 'Home',
   PRODUCT_DETAIL: 'ProductDetail',
+  CART: 'Cart',
 } as const;
