@@ -7,6 +7,7 @@ import {
   ViewProps,
   ViewStyle,
 } from 'react-native';
+import {useShallow} from 'zustand/shallow';
 
 // Themes
 import {borderRadius, colors} from 'src/themes';
@@ -19,8 +20,9 @@ import {CrossIcon} from 'src/components/icons';
 
 // Types & Interfaces
 import {CartItemData} from 'src/interfaces';
+
+// Stores
 import {useCartStore} from 'src/store';
-import {useShallow} from 'zustand/shallow';
 
 export interface CartItemProps extends ViewProps {
   hasDividerStroke?: boolean;
@@ -81,7 +83,7 @@ const CartItem = memo(
                 {productName}
               </Text>
               <Text font="NunitoSansBold" size="sm">
-                {price}
+                $ {price.toFixed(2)}
               </Text>
             </View>
             <Button

@@ -39,5 +39,6 @@ export const colors = {
   shadow: {
     primary: '#8A959E80',
     secondary: '#30303040',
+    alternative: '#8A959E33',
   },
 } as const;

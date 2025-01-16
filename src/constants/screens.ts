@@ -4,4 +4,5 @@ export const SCREENS = {
   HOME: 'Home',
   PRODUCT_DETAIL: 'ProductDetail',
   CART: 'Cart',
+  CHECKOUT: 'Checkout',
 } as const;

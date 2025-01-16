@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {
   BoardingScreen,
   CartScreen,
+  CheckoutScreen,
   HomeScreen,
   LoginScreen,
   ProductDetailScreen,
@@ -36,6 +37,10 @@ export const AppStackNavigation = () => {
       <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
       <AppStack.Screen name={SCREENS.HOME} component={HomeScreen} />
       <AppStack.Screen
+        name={SCREENS.PRODUCT_DETAIL}
+        component={ProductDetailScreen}
+      />
+      <AppStack.Screen
         options={{
           title: 'My cart',
           headerTitleAlign: 'center',
@@ -50,8 +55,18 @@ export const AppStackNavigation = () => {
         component={CartScreen}
       />
       <AppStack.Screen
-        name={SCREENS.PRODUCT_DETAIL}
-        component={ProductDetailScreen}
+        options={{
+          title: 'Check out',
+          headerTitleAlign: 'center',
+          headerShown: true,
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: colors.white,
+          },
+          headerLeft: () => <BackArrowIcon onPress={goBack} />,
+        }}
+        name={SCREENS.CHECKOUT}
+        component={CheckoutScreen}
       />
     </AppStack.Navigator>
   );

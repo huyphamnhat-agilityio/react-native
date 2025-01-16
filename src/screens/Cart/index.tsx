@@ -1,17 +1,24 @@
 import {StyleSheet, View} from 'react-native';
+import {useShallow} from 'zustand/shallow';
+
+// Types & Interfaces
+import {StackNavigation} from 'src/interfaces';
 
 // Components
-import {CartList} from 'src/components';
 import {Button, CartItem, Text} from 'src/components/common';
+import {CartList} from 'src/components';
 
 // Store
 import {useCartStore} from 'src/store';
 
 // Themes
 import {colors} from 'src/themes';
-import {useShallow} from 'zustand/shallow';
+import {useCallback} from 'react';
 
-const CartScreen = () => {
+export interface CartScreenProps {
+  navigation: StackNavigation;
+}
+const CartScreen = ({navigation: {navigate}}: CartScreenProps) => {
   const {cart, getTotalMoney} = useCartStore(
     useShallow(state => ({
       cart: state.cart,
@@ -19,6 +26,12 @@ const CartScreen = () => {
     })),
   );
 
+  const handleCheckoutPress = useCallback(
+    () => navigate('Checkout'),
+    [navigate],
+  );
+
+  const totalMoney = getTotalMoney();
   return (
     <View style={styles.container}>
       <CartList
@@ -37,11 +50,14 @@ const CartScreen = () => {
             Total:
           </Text>
           <Text font="NunitoSansBold" size="lg" textVariant="secondary">
-            $ {getTotalMoney()}
+            $ {totalMoney.toFixed(2)}
           </Text>
         </View>
+
         <Button
           style={styles.button}
+          onPress={handleCheckoutPress}
+          disabled={totalMoney === 0}
           width="100%"
           rounded="md"
           titleFont="NunitoSansSemiBold"
@@ -72,4 +88,5 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
 });
+
 export default CartScreen;
