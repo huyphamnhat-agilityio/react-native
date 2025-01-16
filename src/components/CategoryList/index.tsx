@@ -7,39 +7,36 @@ import {CategoryItem} from '../common';
 // Constants
 import {CATEGORIES} from 'src/constants';
 
-export interface CategoryListProps extends Partial<FlatList> {
+export interface CategoryListProps {
   category?: string;
   setCategory: (category: string) => void;
 }
-const CategoryList = memo(
-  ({category, setCategory, ...props}: CategoryListProps) => {
-    const handleSetCategory = useCallback(
-      (categoryTitle: string) => () => {
-        categoryTitle !== category && setCategory(categoryTitle);
-      },
-      [category, setCategory],
-    );
-    return (
-      <FlatList
-        style={styles.container}
-        data={CATEGORIES}
-        horizontal
-        contentContainerStyle={styles.contentContainer}
-        renderItem={({item: {icon, title}}) => {
-          return (
-            <CategoryItem
-              isActive={category === title}
-              onPress={handleSetCategory(title)}
-              Icon={icon}
-              title={title}
-            />
-          );
-        }}
-        {...props}
-      />
-    );
-  },
-);
+const CategoryList = memo(({category, setCategory}: CategoryListProps) => {
+  const handleSetCategory = useCallback(
+    (categoryTitle: string) => () => {
+      categoryTitle !== category && setCategory(categoryTitle);
+    },
+    [category, setCategory],
+  );
+  return (
+    <FlatList
+      style={styles.container}
+      data={CATEGORIES}
+      horizontal
+      contentContainerStyle={styles.contentContainer}
+      renderItem={({item: {icon, title}}) => {
+        return (
+          <CategoryItem
+            isActive={category === title}
+            onPress={handleSetCategory(title)}
+            Icon={icon}
+            title={title}
+          />
+        );
+      }}
+    />
+  );
+});
 
 const styles = StyleSheet.create({
   container: {

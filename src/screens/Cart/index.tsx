@@ -2,27 +2,42 @@ import {StyleSheet, View} from 'react-native';
 
 // Components
 import {CartList} from 'src/components';
-import {Button, Text} from 'src/components/common';
+import {Button, CartItem, Text} from 'src/components/common';
 
 // Store
 import {useCartStore} from 'src/store';
 
 // Themes
 import {colors} from 'src/themes';
+import {useShallow} from 'zustand/shallow';
 
 const CartScreen = () => {
-  const cart = useCartStore(state => state.cart);
+  const {cart, getTotalMoney} = useCartStore(
+    useShallow(state => ({
+      cart: state.cart,
+      getTotalMoney: state.getTotalMoney,
+    })),
+  );
 
   return (
     <View style={styles.container}>
-      <CartList cartItems={cart} />
+      <CartList
+        data={cart}
+        renderItem={({item, index}) => (
+          <CartItem
+            key={item.id}
+            data={item}
+            hasDividerStroke={index < cart.length - 1}
+          />
+        )}
+      />
       <View style={styles.wrapper}>
         <View style={styles.stat}>
           <Text font="NunitoSansBold" size="lg" textVariant="quaternary">
             Total:
           </Text>
           <Text font="NunitoSansBold" size="lg" textVariant="secondary">
-            $ 95.00
+            $ {getTotalMoney()}
           </Text>
         </View>
         <Button
