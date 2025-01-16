@@ -6,7 +6,6 @@ import {
   BoardingScreen,
   CartScreen,
   CheckoutScreen,
-  HomeScreen,
   LoginScreen,
   ProductDetailScreen,
 } from 'src/screens';
@@ -23,6 +22,7 @@ import {colors} from 'src/themes';
 // Icons
 import {BackArrowIcon} from 'src/components/icons';
 import SuccessScreen from 'src/screens/Success';
+import HomeTabs from './HomeTabsNavigation';
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
@@ -30,13 +30,13 @@ export const AppStackNavigation = () => {
   const {goBack} = useNavigation<StackNavigation>();
   return (
     <AppStack.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeTabs"
       screenOptions={{
         headerShown: false,
       }}>
       <AppStack.Screen name={SCREENS.BOARDING} component={BoardingScreen} />
       <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
-      <AppStack.Screen name={SCREENS.HOME} component={HomeScreen} />
+      <AppStack.Screen name={SCREENS.HOME_TABS} component={HomeTabs} />
       <AppStack.Screen
         name={SCREENS.PRODUCT_DETAIL}
         component={ProductDetailScreen}

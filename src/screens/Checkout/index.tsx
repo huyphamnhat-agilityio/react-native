@@ -38,7 +38,7 @@ const CheckoutScreen = ({navigation: {reset}}: CheckoutScreenProps) => {
 
     reset({
       index: 1,
-      routes: [{name: 'Home'}, {name: 'Success'}],
+      routes: [{name: 'HomeTabs'}, {name: 'Success'}],
     });
   }, [clearCart, reset]);
   return (
