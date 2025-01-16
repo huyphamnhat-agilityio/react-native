@@ -22,6 +22,7 @@ import {colors} from 'src/themes';
 
 // Icons
 import {BackArrowIcon} from 'src/components/icons';
+import SuccessScreen from 'src/screens/Success';
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
@@ -68,6 +69,7 @@ export const AppStackNavigation = () => {
         name={SCREENS.CHECKOUT}
         component={CheckoutScreen}
       />
+      <AppStack.Screen name={SCREENS.SUCCESS} component={SuccessScreen} />
     </AppStack.Navigator>
   );
 };

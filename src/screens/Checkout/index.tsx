@@ -15,10 +15,32 @@ import {colors} from 'src/themes';
 // Store
 import {useCartStore} from 'src/store';
 
-const CheckoutScreen = () => {
-  const getTotalMoney = useCartStore(state => state.getTotalMoney);
+// Types & Interfaces
+import {StackNavigation} from 'src/interfaces';
+import {useCallback} from 'react';
+import {useShallow} from 'zustand/shallow';
+
+export interface CheckoutScreenProps {
+  navigation: StackNavigation;
+}
+const CheckoutScreen = ({navigation: {reset}}: CheckoutScreenProps) => {
+  const {getTotalMoney, clearCart} = useCartStore(
+    useShallow(state => ({
+      getTotalMoney: state.getTotalMoney,
+      clearCart: state.clearCart,
+    })),
+  );
 
   const totalMoney = getTotalMoney();
+
+  const handleCheckoutPress = useCallback(() => {
+    clearCart();
+
+    reset({
+      index: 1,
+      routes: [{name: 'Home'}, {name: 'Success'}],
+    });
+  }, [clearCart, reset]);
   return (
     <View style={styles.container}>
       <ShippingAddressCard
@@ -39,6 +61,7 @@ const CheckoutScreen = () => {
         titleSize="md"
         rounded="md"
         style={styles.button}
+        onPress={handleCheckoutPress}
       />
     </View>
   );

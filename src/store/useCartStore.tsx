@@ -8,6 +8,7 @@ export type CartStore = {
   removeFromCart: (color: string) => void;
   updateQuantity: (id: string, color: string, quantity: number) => void;
   getTotalMoney: () => number;
+  clearCart: () => void;
 };
 
 export const useCartStore = create(
@@ -49,5 +50,9 @@ export const useCartStore = create(
 
       return Math.round(totalMoney * 100) / 100;
     },
+    clearCart: () =>
+      set(state => {
+        state.cart = [];
+      }),
   })),
 );

@@ -9,6 +9,7 @@ export type AppStackParamList = {
   [SCREENS.PRODUCT_DETAIL]: {id: string};
   [SCREENS.CART]: undefined;
   [SCREENS.CHECKOUT]: undefined;
+  [SCREENS.SUCCESS]: undefined;
 };
 
 export type AppStackScreenProps<Screen extends keyof AppStackParamList> =

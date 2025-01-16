@@ -5,4 +5,5 @@ export const SCREENS = {
   PRODUCT_DETAIL: 'ProductDetail',
   CART: 'Cart',
   CHECKOUT: 'Checkout',
+  SUCCESS: 'Success',
 } as const;
