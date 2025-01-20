@@ -114,6 +114,7 @@ const LoginForm = memo(() => {
               label="Email"
               labelSize="xs"
               labelVariant="alternative"
+              testID="email"
               onChangeText={handleInputChange('email', onChange)}
               isError={!!error?.message}
               errorMessage={error?.message}
@@ -129,12 +130,18 @@ const LoginForm = memo(() => {
           name="password"
           render={({field: {onChange, ...rest}, fieldState: {error}}) => (
             <TextInput
-              RightContent={<EyeIcon onPress={handleShowPassword} />}
+              RightContent={
+                <EyeIcon
+                  onPress={handleShowPassword}
+                  testID="toggle-password"
+                />
+              }
               font="NuniToSansNormal"
               label="Password"
               secureTextEntry={isShowPassword}
               labelSize="xs"
               labelVariant="alternative"
+              testID="password"
               onChangeText={handleInputChange('password', onChange)}
               isError={!!error?.message}
               errorMessage={error?.message}
@@ -161,6 +168,7 @@ const LoginForm = memo(() => {
           titleSize="base"
           titleFont="NunitoSansSemiBold"
           rounded="md"
+          testID="login"
           style={styles.button}
           disabled={isDisabled || isSubmitting}
           onPress={handleSubmit(onSubmit)}
