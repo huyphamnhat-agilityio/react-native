@@ -24,4 +24,11 @@ export const FETCH_ERROR_MESSAGES: Record<number, string> = {
 
 export const SUCCESS_MESSAGE = {
   ADD_TO_CART: 'The product has been added to cart!',
-};
+} as const;
+
+export const ERROR_MESSAGE: Record<string, Record<number, string>> = {
+  LOGIN: {
+    404: 'Login failed! Please check your email or password and try again.',
+    500: 'Login failed! The server is unavailable now. Please try again later.',
+  },
+} as const;

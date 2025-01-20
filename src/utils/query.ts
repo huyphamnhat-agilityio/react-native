@@ -54,5 +54,7 @@ export const toQueryString = <T extends Record<string, ValidParam>>(
     }
   });
 
-  return queryParams.length > 0 ? `?${queryParams.join('&')}` : '';
+  return queryParams.length > 0
+    ? `?${decodeURIComponent(queryParams.join('&'))}`
+    : '';
 };

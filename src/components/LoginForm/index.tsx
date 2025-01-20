@@ -1,6 +1,6 @@
 import {Controller, useForm} from 'react-hook-form';
 import {memo, useCallback, useMemo, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 
 // Utils
 import {clearErrorOnChange, isEnableSubmit} from 'src/utils';
@@ -16,6 +16,9 @@ import {EyeIcon} from '../icons';
 
 // Constants
 import {FORM_VALIDATION_MESSAGE, REGEX} from 'src/constants';
+
+// Services
+import {login} from 'src/services';
 
 export type LoginFormData = {
   email: string;
@@ -82,9 +85,21 @@ const LoginForm = memo(() => {
     return !isEnableSubmit(REQUIRED_FIELDS, dirtyFieldList, errors);
   }, [dirtyFieldList, errors]);
 
-  const onSubmit = useCallback((data: LoginFormData) => {
-    // TODO: Integrate API later
-    console.log('data', data);
+  const onSubmit = useCallback(async (data: LoginFormData) => {
+    const errorMessage = await login(data);
+
+    if (errorMessage) {
+      Alert.alert(
+        'Error',
+        errorMessage,
+        [
+          {
+            text: 'Ok',
+          },
+        ],
+        {cancelable: true},
+      );
+    }
   }, []);
 
   return (

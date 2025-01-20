@@ -1,4 +1,4 @@
-import {FETCH_ERROR_MESSAGES} from 'src/constants';
+import {CustomError} from 'src/interfaces';
 
 export const fetchApi = async <T>(url: string, options?: RequestInit) => {
   let headerOption: HeadersInit_ = {
@@ -17,12 +17,5 @@ export const fetchApi = async <T>(url: string, options?: RequestInit) => {
     return (await response.json()) as T;
   }
 
-  const errorMessage = `${response.status}: ${
-    FETCH_ERROR_MESSAGES[`${response.status}`]
-  }`;
-
-  throw {
-    status: response.status,
-    message: errorMessage,
-  };
+  throw new CustomError(response.status);
 };

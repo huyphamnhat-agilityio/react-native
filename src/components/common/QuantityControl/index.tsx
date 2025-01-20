@@ -55,6 +55,7 @@ const QuantityControl = memo(
           inputMode="numeric"
           font="NunitoSansSemiBold"
           inputVariant="primary"
+          textAlign="center"
           onChangeText={handleOnChange}
           value={quantity.toString()}
         />
@@ -81,9 +82,6 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 0,
-  },
-  input: {
-    borderBottomWidth: undefined,
   },
 });
 

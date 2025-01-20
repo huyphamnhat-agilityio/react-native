@@ -1,6 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {useShallow} from 'zustand/shallow';
+import HomeTabs from './HomeTabsNavigation';
+
 // Screens
 import {
   BoardingScreen,
@@ -8,6 +12,7 @@ import {
   CheckoutScreen,
   LoginScreen,
   ProductDetailScreen,
+  SuccessScreen,
 } from 'src/screens';
 
 // Constants
@@ -21,76 +26,106 @@ import {colors, fontFamilies, fontSizes} from 'src/themes';
 
 // Icons
 import {BackArrowIcon} from 'src/components/icons';
-import SuccessScreen from 'src/screens/Success';
-import HomeTabs from './HomeTabsNavigation';
+
+// Store
+import {useUserStore} from 'src/store';
+
+// Components
 import {Button} from 'src/components/common';
-import {StyleSheet} from 'react-native';
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 export const AppStackNavigation = () => {
   const {goBack} = useNavigation<StackNavigation>();
+
+  const {user, isFirstTimeLogin, isHydrated} = useUserStore(
+    useShallow(state => ({
+      user: state.user,
+      isFirstTimeLogin: state.isFirstTimeLogin,
+      isHydrated: state.isHydrated,
+    })),
+  );
+
+  const initalUnAuthenticatedRoute = isFirstTimeLogin ? 'Boarding' : 'Login';
+
+  const initialRouteName = !user ? initalUnAuthenticatedRoute : 'HomeTabs';
+
+  if (!isHydrated) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
+
   return (
     <AppStack.Navigator
-      initialRouteName="HomeTabs"
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
       }}>
-      <AppStack.Screen name={SCREENS.BOARDING} component={BoardingScreen} />
-      <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
-      <AppStack.Screen name={SCREENS.HOME_TABS} component={HomeTabs} />
-      <AppStack.Screen
-        name={SCREENS.PRODUCT_DETAIL}
-        component={ProductDetailScreen}
-      />
-      <AppStack.Screen
-        options={{
-          title: 'My cart',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontSize: fontSizes.sm,
-            fontFamily: fontFamilies.MerriweatherBold,
-            color: colors.secondary,
-          },
-          headerShown: true,
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: colors.white,
-          },
-          headerLeft: () => (
-            <Button
-              style={styles.button}
-              bgVariant="none"
-              IconLeft={<BackArrowIcon />}
-              onPress={goBack}
-            />
-          ),
-        }}
-        name={SCREENS.CART}
-        component={CartScreen}
-      />
-      <AppStack.Screen
-        options={{
-          title: 'Check out',
-          headerTitleAlign: 'center',
-          headerShown: true,
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: colors.white,
-          },
-          headerLeft: () => (
-            <Button
-              style={styles.button}
-              bgVariant="none"
-              IconLeft={<BackArrowIcon />}
-              onPress={goBack}
-            />
-          ),
-        }}
-        name={SCREENS.CHECKOUT}
-        component={CheckoutScreen}
-      />
-      <AppStack.Screen name={SCREENS.SUCCESS} component={SuccessScreen} />
+      {!user ? (
+        <>
+          <AppStack.Screen name={SCREENS.BOARDING} component={BoardingScreen} />
+          <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
+        </>
+      ) : (
+        <>
+          <AppStack.Screen name={SCREENS.HOME_TABS} component={HomeTabs} />
+          <AppStack.Screen
+            name={SCREENS.PRODUCT_DETAIL}
+            component={ProductDetailScreen}
+          />
+          <AppStack.Screen
+            options={{
+              title: 'My cart',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: fontSizes.sm,
+                fontFamily: fontFamilies.MerriweatherBold,
+                color: colors.secondary,
+              },
+              headerShown: true,
+              headerShadowVisible: false,
+              headerStyle: {
+                backgroundColor: colors.white,
+              },
+              headerLeft: () => (
+                <Button
+                  style={styles.button}
+                  bgVariant="none"
+                  IconLeft={<BackArrowIcon />}
+                  onPress={goBack}
+                />
+              ),
+            }}
+            name={SCREENS.CART}
+            component={CartScreen}
+          />
+          <AppStack.Screen
+            options={{
+              title: 'Check out',
+              headerTitleAlign: 'center',
+              headerShown: true,
+              headerShadowVisible: false,
+              headerStyle: {
+                backgroundColor: colors.white,
+              },
+              headerLeft: () => (
+                <Button
+                  style={styles.button}
+                  bgVariant="none"
+                  IconLeft={<BackArrowIcon />}
+                  onPress={goBack}
+                />
+              ),
+            }}
+            name={SCREENS.CHECKOUT}
+            component={CheckoutScreen}
+          />
+          <AppStack.Screen name={SCREENS.SUCCESS} component={SuccessScreen} />
+        </>
+      )}
     </AppStack.Navigator>
   );
 };
@@ -98,5 +133,11 @@ export const AppStackNavigation = () => {
 const styles = StyleSheet.create({
   button: {
     padding: 0,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

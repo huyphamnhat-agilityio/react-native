@@ -55,6 +55,7 @@ const TextInput = memo(
         inputWidth = '94%',
         inputHeight = 'auto',
         borderBottomWidth = 2,
+        style,
         ...props
       }: TextInputProps,
       ref: Ref<TextInputBase>,
@@ -95,6 +96,7 @@ const TextInput = memo(
                   width: inputWidth,
                   height: inputHeight,
                 },
+                style,
               ]}
               editable={isEditable}
               {...props}
@@ -126,7 +128,6 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 0,
     paddingHorizontal: 0,
-    textAlign: 'center',
   },
 });
 

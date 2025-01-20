@@ -22,19 +22,30 @@ import {colors, fontFamilies, fontSizes} from 'src/themes';
 
 // Components
 import {Button} from 'src/components/common';
+import {useUserStore} from 'src/store';
 
 const HomeTab = createBottomTabNavigator<HomeTabParamList>();
 
 const HomeTabs = () => {
+  const clearUserSession = useUserStore(state => state.clearUserSession);
+
   const handleLogoutPress = useCallback(() => {
-    Alert.alert('Log out', 'You will be returned to the login screen.', [
-      {text: 'Log out'},
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-    ]);
-  }, []);
+    Alert.alert(
+      'Log out',
+      'You will be returned to the login screen.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          onPress: () => clearUserSession(),
+        },
+      ],
+      {cancelable: true},
+    );
+  }, [clearUserSession]);
   return (
     <HomeTab.Navigator
       initialRouteName="Home"
@@ -80,6 +91,10 @@ const HomeTabs = () => {
           headerStyle: {
             backgroundColor: colors.white,
           },
+          headerRightContainerStyle: {
+            alignSelf: 'center',
+            paddingRight: 16,
+          },
           headerRight: () => (
             <Button
               style={styles.button}
@@ -88,10 +103,6 @@ const HomeTabs = () => {
               onPress={handleLogoutPress}
             />
           ),
-          headerRightContainerStyle: {
-            alignSelf: 'center',
-            paddingRight: 16,
-          },
         }}
         name="Profile"
         component={ProfileScreen}
