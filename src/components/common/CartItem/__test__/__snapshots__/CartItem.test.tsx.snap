@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button should render correctly 1`] = `
+exports[`CartItem should render correctly 1`] = `
 <div>
   <View
     style={
@@ -533,7 +533,7 @@ exports[`Button should render correctly 1`] = `
 </div>
 `;
 
-exports[`Button should render correctly with the given props 1`] = `
+exports[`CartItem should render correctly with the given props 1`] = `
 <div>
   <View
     style={

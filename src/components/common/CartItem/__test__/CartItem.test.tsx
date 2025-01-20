@@ -2,7 +2,7 @@ import {render} from 'test-utils';
 import CartItem, {CartItemProps} from '..';
 import {MOCK_PRODUCT} from 'src/mocks';
 
-describe('Button', () => {
+describe('CartItem', () => {
   const mockProps: CartItemProps = {
     data: {
       id: MOCK_PRODUCT.id,

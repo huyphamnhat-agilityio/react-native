@@ -1,7 +1,7 @@
 import {render} from 'test-utils';
 import PaymentCard, {PaymentCardProps} from '..';
 
-describe('Button', () => {
+describe('ShippingAddressCard', () => {
   const setup = (props: PaymentCardProps) => render(<PaymentCard {...props} />);
 
   it('should render correctly', () => {

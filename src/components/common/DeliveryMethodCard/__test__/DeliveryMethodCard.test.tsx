@@ -1,7 +1,7 @@
 import {render} from 'test-utils';
 import DeliveryMethodCard from '..';
 
-describe('Button', () => {
+describe('ShippingAddressCard', () => {
   const setup = () => render(<DeliveryMethodCard />);
 
   it('should render correctly', () => {
