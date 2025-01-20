@@ -2,7 +2,7 @@ import {fireEvent, render, screen} from 'test-utils';
 import ProductCard, {ProductCardProps} from '..';
 import {act} from 'react';
 
-describe('Button', () => {
+describe('ProductCard', () => {
   const mockOnPress = jest.fn();
   const mockProps: ProductCardProps = {
     image: require('assets/images/boarding-background.webp'),
