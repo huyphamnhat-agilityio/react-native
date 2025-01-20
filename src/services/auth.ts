@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 
 // Types & Interfaces
-import {CustomError, UserPayload} from 'src/interfaces';
+import {UserPayload} from 'src/interfaces';
 
 // Services
 import {getUser} from './user';
@@ -10,7 +10,7 @@ import {getUser} from './user';
 import {useUserStore} from 'src/store';
 
 // Constants
-import {ERROR_MESSAGE} from 'src/constants';
+import {ERROR_MESSAGE, FETCH_ERROR_MESSAGES} from 'src/constants';
 
 export const login = async (payload: UserPayload) => {
   try {
@@ -19,7 +19,7 @@ export const login = async (payload: UserPayload) => {
     const isMatchPassword = bcrypt.compareSync(payload.password, user.password);
 
     if (!isMatchPassword) {
-      throw new CustomError(404);
+      throw new Error(FETCH_ERROR_MESSAGES[404]);
     }
 
     const setUser = useUserStore.getState().setUser;
@@ -28,8 +28,8 @@ export const login = async (payload: UserPayload) => {
 
     return undefined;
   } catch (error) {
-    if (error instanceof CustomError) {
-      return ERROR_MESSAGE.LOGIN[`${error.status}`];
+    if (error instanceof Error) {
+      return error.message;
     }
     return ERROR_MESSAGE.LOGIN['500'];
   }
