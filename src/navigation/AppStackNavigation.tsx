@@ -17,12 +17,14 @@ import {SCREENS} from 'src/constants';
 import {AppStackParamList, StackNavigation} from 'src/interfaces';
 
 // Themes
-import {colors} from 'src/themes';
+import {colors, fontFamilies, fontSizes} from 'src/themes';
 
 // Icons
 import {BackArrowIcon} from 'src/components/icons';
 import SuccessScreen from 'src/screens/Success';
 import HomeTabs from './HomeTabsNavigation';
+import {Button} from 'src/components/common';
+import {StyleSheet} from 'react-native';
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
@@ -45,12 +47,24 @@ export const AppStackNavigation = () => {
         options={{
           title: 'My cart',
           headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontSize: fontSizes.sm,
+            fontFamily: fontFamilies.MerriweatherBold,
+            color: colors.secondary,
+          },
           headerShown: true,
           headerShadowVisible: false,
           headerStyle: {
             backgroundColor: colors.white,
           },
-          headerLeft: () => <BackArrowIcon onPress={goBack} />,
+          headerLeft: () => (
+            <Button
+              style={styles.button}
+              bgVariant="none"
+              IconLeft={<BackArrowIcon />}
+              onPress={goBack}
+            />
+          ),
         }}
         name={SCREENS.CART}
         component={CartScreen}
@@ -64,7 +78,14 @@ export const AppStackNavigation = () => {
           headerStyle: {
             backgroundColor: colors.white,
           },
-          headerLeft: () => <BackArrowIcon onPress={goBack} />,
+          headerLeft: () => (
+            <Button
+              style={styles.button}
+              bgVariant="none"
+              IconLeft={<BackArrowIcon />}
+              onPress={goBack}
+            />
+          ),
         }}
         name={SCREENS.CHECKOUT}
         component={CheckoutScreen}
@@ -73,3 +94,9 @@ export const AppStackNavigation = () => {
     </AppStack.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    padding: 0,
+  },
+});

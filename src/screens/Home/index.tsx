@@ -2,7 +2,7 @@ import {useCallback, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 
 // Components
-import {Text} from 'src/components/common';
+import {Button, Text} from 'src/components/common';
 import {CategoryList, ProductList} from 'src/components';
 
 // Icons
@@ -41,7 +41,12 @@ const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
             BEAUTIFUL
           </Text>
         </View>
-        <CartIcon onPress={handleCartPress} />
+        <Button
+          style={styles.button}
+          bgVariant="none"
+          IconLeft={<CartIcon />}
+          onPress={handleCartPress}
+        />
       </View>
 
       <CategoryList category={category} setCategory={setCategory} />
@@ -80,6 +85,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  button: {
+    padding: 0,
   },
 });
 

@@ -13,6 +13,7 @@ export * from './HomeIcon.tsx';
 export * from './MinusIcon.tsx';
 export * from './LampIcon.tsx';
 export * from './LogoIcon.tsx';
+export * from './LogoutIcon.tsx';
 export * from './MarkIcon.tsx';
 export * from './MasterCardIcon.tsx';
 export * from './PlusIcon.tsx';
