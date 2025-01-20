@@ -37,20 +37,7 @@ export const toQueryString = <T extends Record<string, ValidParam>>(
     }
 
     if (value !== undefined) {
-      // Handle arrays
-      if (Array.isArray(value)) {
-        value.forEach(item => {
-          addParam(`${key}[]`, item);
-        });
-      }
-      // Handle objects (convert to JSON string)
-      else if (typeof value === 'object' && value !== null) {
-        addParam(key, JSON.stringify(value));
-      }
-      // Handle primitive values
-      else {
-        addParam(key, value);
-      }
+      addParam(key, value);
     }
   });
 
