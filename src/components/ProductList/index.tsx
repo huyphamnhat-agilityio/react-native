@@ -34,6 +34,7 @@ const ProductList = memo(({products, ...props}: ProductListProps) => {
           onPress={handlePress(id)}
           image={variants[0].image}
           name={name}
+          testID={`product-${id}`}
           price={price}
         />
       )}
