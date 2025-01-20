@@ -5,15 +5,15 @@ import {Product} from 'src/interfaces';
 import {getProduct, getProducts} from '../products';
 import {MOCK_PRODUCT} from 'src/mocks';
 
-jest.mock('../fetch'); // Mock fetchApi
-jest.mock('src/utils'); // Mock toQueryString
+jest.mock('../fetch');
+jest.mock('src/utils');
 
 describe('getProducts', () => {
   const mockFetchApi = fetchApi as jest.Mock;
   const mockToQueryString = toQueryString as jest.Mock;
 
   beforeEach(() => {
-    jest.clearAllMocks(); // Clear mocks before each test
+    jest.clearAllMocks();
   });
 
   it('should fetch products with no parameters', async () => {
@@ -24,7 +24,7 @@ describe('getProducts', () => {
 
     const result = await getProducts();
 
-    expect(mockToQueryString).toHaveBeenCalledWith(undefined); // No params passed
+    expect(mockToQueryString).toHaveBeenCalledWith(undefined);
     expect(mockFetchApi).toHaveBeenCalledWith(
       `${process.env.API_URL}/${RESOURCES.PRODUCTS}`,
     );
