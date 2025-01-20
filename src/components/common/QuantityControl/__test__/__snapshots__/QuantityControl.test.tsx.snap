@@ -179,7 +179,6 @@ exports[`QuantityControl should render correctly 1`] = `
               {
                 "paddingHorizontal": 0,
                 "paddingVertical": 0,
-                "textAlign": "center",
               },
               {
                 "color": "#242424",
@@ -188,9 +187,11 @@ exports[`QuantityControl should render correctly 1`] = `
                 "height": 20,
                 "width": 30,
               },
+              undefined,
             ]
           }
           testID="quantity-input"
+          textAlign="center"
           value="1"
         />
       </View>
@@ -508,7 +509,6 @@ exports[`QuantityControl should render correctly without given quantity 1`] = `
               {
                 "paddingHorizontal": 0,
                 "paddingVertical": 0,
-                "textAlign": "center",
               },
               {
                 "color": "#242424",
@@ -517,9 +517,11 @@ exports[`QuantityControl should render correctly without given quantity 1`] = `
                 "height": 20,
                 "width": 30,
               },
+              undefined,
             ]
           }
           testID="quantity-input"
+          textAlign="center"
           value="1"
         />
       </View>

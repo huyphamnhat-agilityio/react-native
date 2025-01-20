@@ -1,5 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import ProductCard from '.';
+import {MOCK_PRODUCT} from 'src/mocks';
 
 const meta: Meta<typeof ProductCard> = {
   title: 'components/common/ProductCard',
@@ -11,7 +12,7 @@ type Story = StoryObj<typeof ProductCard>;
 
 export const Primary: Story = {
   args: {
-    image: 'https://m.media-amazon.com/images/I/711I3okfOpL._AC_SL1500_.jpg',
+    image: MOCK_PRODUCT.variants[0].image,
     name: 'Classic Dining Chair',
     price: 89.99,
   },

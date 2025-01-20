@@ -26,4 +26,5 @@ module.exports = {
     'utils', // a utility folder
     __dirname, // the root directory
   ],
+  setupFiles: ['./jest.setup.ts'],
 };

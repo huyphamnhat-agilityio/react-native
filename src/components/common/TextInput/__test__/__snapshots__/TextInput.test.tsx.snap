@@ -37,7 +37,6 @@ exports[`TextInput should render correctly 1`] = `
             {
               "paddingHorizontal": 0,
               "paddingVertical": 0,
-              "textAlign": "center",
             },
             {
               "color": "#242424",
@@ -46,6 +45,7 @@ exports[`TextInput should render correctly 1`] = `
               "height": "auto",
               "width": "94%",
             },
+            undefined,
           ]
         }
       />

@@ -380,7 +380,6 @@ exports[`Button should render correctly 1`] = `
                   {
                     "paddingHorizontal": 0,
                     "paddingVertical": 0,
-                    "textAlign": "center",
                   },
                   {
                     "color": "#242424",
@@ -389,9 +388,11 @@ exports[`Button should render correctly 1`] = `
                     "height": 20,
                     "width": 30,
                   },
+                  undefined,
                 ]
               }
               testID="quantity-input"
+              textAlign="center"
               value="2"
             />
           </View>
@@ -916,7 +917,6 @@ exports[`Button should render correctly with the given props 1`] = `
                   {
                     "paddingHorizontal": 0,
                     "paddingVertical": 0,
-                    "textAlign": "center",
                   },
                   {
                     "color": "#242424",
@@ -925,9 +925,11 @@ exports[`Button should render correctly with the given props 1`] = `
                     "height": 20,
                     "width": 30,
                   },
+                  undefined,
                 ]
               }
               testID="quantity-input"
+              textAlign="center"
               value="2"
             />
           </View>

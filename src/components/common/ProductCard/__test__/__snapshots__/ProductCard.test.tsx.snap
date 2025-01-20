@@ -35,6 +35,7 @@ exports[`Button should render correctly 1`] = `
   >
     <View>
       <Image
+        height={236}
         resizeMode="stretch"
         source={
           {
@@ -51,6 +52,7 @@ exports[`Button should render correctly 1`] = `
             "width": undefined,
           }
         }
+        width={236}
       />
       <View
         accessibilityState={

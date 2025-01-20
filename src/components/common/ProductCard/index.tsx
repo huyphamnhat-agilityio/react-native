@@ -35,6 +35,8 @@ const ProductCard = memo(
             source={{
               uri: image,
             }}
+            width={236}
+            height={236}
             style={styles.image}
             resizeMode="stretch"
           />
