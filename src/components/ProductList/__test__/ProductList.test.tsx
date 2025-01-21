@@ -27,7 +27,7 @@ describe('ProductList', () => {
     expect(toJSON()).toMatchSnapshot();
   });
 
-  it('test', () => {
+  it('should navigate to ProductDetail screen when clicking on product card', () => {
     setup({
       products: [MOCK_PRODUCT],
     });

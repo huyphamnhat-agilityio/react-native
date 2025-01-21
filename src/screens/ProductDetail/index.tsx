@@ -26,13 +26,17 @@ import {Button, QuantityControl, Text} from 'src/components/common';
 
 // Icons
 import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
+
+// Constantsn n
 import {SUCCESS_MESSAGE} from 'src/constants';
 
 // Hooks
-import {useProductDetail} from 'src/hooks/product';
+import {useProductDetail} from 'src/hooks';
 
 // Types & Interfaces
 import {AppStackScreenProps, CartItemData} from 'src/interfaces';
+
+// Stores
 import {useCartStore} from 'src/store';
 
 // Themes

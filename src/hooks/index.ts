@@ -1,1 +1,2 @@
-export {useGetProducts} from './product';
+export {useDebounce} from './useDebounce';
+export {useGetProducts, useProductDetail} from './product';

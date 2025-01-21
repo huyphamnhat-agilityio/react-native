@@ -1,8 +1,8 @@
-import {useCallback, useState} from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {useCallback, useRef, useState} from 'react';
+import {ActivityIndicator, Animated, StyleSheet, View} from 'react-native';
 
 // Components
-import {Button, Text} from 'src/components/common';
+import {Button, Text, TextInput} from 'src/components/common';
 import {CategoryList, ProductList} from 'src/components';
 
 // Icons
@@ -12,7 +12,7 @@ import {CartIcon, SearchIcon} from 'src/components/icons';
 import {colors} from 'src/themes';
 
 // Hooks
-import {useGetProducts} from 'src/hooks';
+import {useDebounce, useGetProducts} from 'src/hooks';
 
 // Constants
 import {CATEGORIES} from 'src/constants';
@@ -24,15 +24,52 @@ export interface HomeScreenProps {
 }
 const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
   const [category, setCategory] = useState<string>(CATEGORIES[0].title);
+  const {
+    value: searchQuery,
+    debouncedValue: debouncedSearchQuery,
+    setValue: setSearchQuery,
+  } = useDebounce('', 500);
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
-  const {data = [], isLoading} = useGetProducts({category});
+  const searchAnimation = useRef(new Animated.Value(0)).current;
+
+  const {data = [], isLoading} = useGetProducts({
+    category,
+    name: debouncedSearchQuery,
+  });
+
+  const toggleSearch = useCallback(() => {
+    const toValue = isSearchVisible ? 0 : 1;
+
+    Animated.timing(searchAnimation, {
+      toValue,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+
+    setIsSearchVisible(!isSearchVisible);
+
+    if (!isSearchVisible) {
+      setSearchQuery('');
+    }
+  }, [isSearchVisible, searchAnimation, setSearchQuery]);
 
   const handleCartPress = useCallback(() => navigate('Cart'), [navigate]);
+
+  const searchHeight = searchAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 40],
+  });
+
+  const searchOpacity = searchAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <SearchIcon />
+        <SearchIcon onPress={toggleSearch} />
         <View style={styles.headerTitle}>
           <Text font="GelasioNormal" size="base" textVariant="alternative">
             Make home
@@ -48,6 +85,23 @@ const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
           onPress={handleCartPress}
         />
       </View>
+
+      <Animated.View
+        style={[
+          styles.searchContainer,
+          {
+            height: searchHeight,
+            opacity: searchOpacity,
+          },
+        ]}>
+        <TextInput
+          inputSize="sm"
+          placeholder="Search products..."
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          autoCapitalize="none"
+        />
+      </Animated.View>
 
       <CategoryList category={category} setCategory={setCategory} />
 
@@ -88,6 +142,9 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 0,
+  },
+  searchContainer: {
+    overflow: 'hidden',
   },
 });
 

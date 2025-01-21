@@ -1,8 +1,19 @@
 import {PropsWithChildren, ReactElement} from 'react';
 import {render} from '@testing-library/react-native';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
-const AllTheProviders = ({children}: PropsWithChildren) => {
-  return <div>{children}</div>;
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 0,
+    },
+  },
+});
+
+export const AllTheProviders = ({children}: PropsWithChildren) => {
+  return (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
 };
 
 const customRender = (
