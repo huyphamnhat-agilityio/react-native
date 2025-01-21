@@ -66,7 +66,12 @@ export const AppStackNavigation = () => {
       }}>
       {!user ? (
         <>
-          <AppStack.Screen name={SCREENS.BOARDING} component={BoardingScreen} />
+          {isFirstTimeLogin && (
+            <AppStack.Screen
+              name={SCREENS.BOARDING}
+              component={BoardingScreen}
+            />
+          )}
           <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
         </>
       ) : (

@@ -17,7 +17,7 @@ import {useDebounce, useGetProducts} from 'src/hooks';
 // Constants
 import {CATEGORIES} from 'src/constants';
 
-// Types& Interfaces
+// Types & Interfaces
 import {StackNavigation} from 'src/interfaces';
 export interface HomeScreenProps {
   navigation: StackNavigation;
@@ -49,7 +49,7 @@ const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
 
     setIsSearchVisible(!isSearchVisible);
 
-    if (!isSearchVisible) {
+    if (isSearchVisible) {
       setSearchQuery('');
     }
   }, [isSearchVisible, searchAnimation, setSearchQuery]);
