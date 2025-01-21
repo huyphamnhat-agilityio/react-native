@@ -11,26 +11,31 @@ export interface CategoryListProps {
   category?: string;
   setCategory: (category: string) => void;
 }
-const CategoryList = memo(({category, setCategory}: CategoryListProps) => {
-  return (
-    <FlatList
-      style={styles.container}
-      data={CATEGORIES}
-      horizontal
-      contentContainerStyle={styles.contentContainer}
-      renderItem={({item: {icon, title}}) => {
-        return (
-          <CategoryItem
-            isActive={category === title}
-            onPress={setCategory}
-            Icon={icon}
-            title={title}
-          />
-        );
-      }}
-    />
-  );
-});
+const CategoryList = memo(
+  ({category, setCategory}: CategoryListProps) => {
+    return (
+      <FlatList
+        style={styles.container}
+        data={CATEGORIES}
+        horizontal
+        contentContainerStyle={styles.contentContainer}
+        renderItem={({item: {icon, title}}) => {
+          return (
+            <CategoryItem
+              isActive={category === title}
+              onPress={setCategory}
+              Icon={icon}
+              title={title}
+            />
+          );
+        }}
+      />
+    );
+  },
+  (prevProps, nextProps) => {
+    return prevProps.category === nextProps.category;
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
