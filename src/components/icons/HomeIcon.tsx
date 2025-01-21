@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const HomeIcon = ({
+const HomeIconComponent = ({
   width = 24,
   height = 24,
   color = colors.disabled,
@@ -27,3 +28,7 @@ export const HomeIcon = ({
     </Svg>
   );
 };
+
+export const HomeIcon = memo(HomeIconComponent);
+
+HomeIcon.displayName = 'HomeIcon';

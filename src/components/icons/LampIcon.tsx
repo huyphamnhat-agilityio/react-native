@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const LampIcon = ({
+const LampIconComponent = ({
   width = 28,
   height = 28,
   color = colors.white,
@@ -18,3 +19,7 @@ export const LampIcon = ({
     </Svg>
   );
 };
+
+export const LampIcon = memo(LampIconComponent);
+
+LampIcon.displayName = 'LampIcon';

@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const LogoIcon = ({
+const LogoIconComponent = ({
   width = 65,
   height = 65,
   color = colors.secondary,
@@ -45,3 +46,7 @@ export const LogoIcon = ({
     </Svg>
   );
 };
+
+export const LogoIcon = memo(LogoIconComponent);
+
+LogoIcon.displayName = 'LogoIcon';

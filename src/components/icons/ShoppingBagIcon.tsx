@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const ShoppingBagIcon = ({
+const ShoppingBagIconComponent = ({
   width = 20,
   height = 20,
   color = colors.white,
@@ -21,3 +22,7 @@ export const ShoppingBagIcon = ({
     </Svg>
   );
 };
+
+export const ShoppingBagIcon = memo(ShoppingBagIconComponent);
+
+ShoppingBagIcon.displayName = 'ShoppingBagIcon';

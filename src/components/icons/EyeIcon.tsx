@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const EyeIcon = ({
+const EyeIconComponent = ({
   width = 20,
   height = 20,
   color = colors.primary,
@@ -31,3 +32,7 @@ export const EyeIcon = ({
     </Svg>
   );
 };
+
+export const EyeIcon = memo(EyeIconComponent);
+
+EyeIcon.displayName = 'EyeIcon';

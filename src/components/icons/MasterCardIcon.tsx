@@ -1,6 +1,7 @@
+import {memo} from 'react';
 import Svg, {ClipPath, Defs, G, Path, Rect, SvgProps} from 'react-native-svg';
 
-export const MasterCardIcon = ({
+const MasterCardIconComponent = ({
   width = 32,
   height = 25,
   ...props
@@ -38,3 +39,7 @@ export const MasterCardIcon = ({
     </Svg>
   );
 };
+
+export const MasterCardIcon = memo(MasterCardIconComponent);
+
+MasterCardIcon.displayName = 'MasterCardIcon';

@@ -1,6 +1,7 @@
+import {memo} from 'react';
 import Svg, {ClipPath, Defs, G, Path, Rect, SvgProps} from 'react-native-svg';
 
-export const DHLIcon = ({width = 89, height = 20, ...props}: SvgProps) => {
+const DHLIconComponent = ({width = 89, height = 20, ...props}: SvgProps) => {
   return (
     <Svg
       width={width}
@@ -76,3 +77,7 @@ export const DHLIcon = ({width = 89, height = 20, ...props}: SvgProps) => {
     </Svg>
   );
 };
+
+export const DHLIcon = memo(DHLIconComponent);
+
+DHLIcon.displayName = 'DHLIcon';

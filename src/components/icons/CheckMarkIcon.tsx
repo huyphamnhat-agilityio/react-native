@@ -1,6 +1,7 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 
-export const CheckMarkIcon = ({
+const CheckMarkIconComponent = ({
   width = 50,
   height = 50,
   color = '#27ae60',
@@ -22,3 +23,7 @@ export const CheckMarkIcon = ({
     </Svg>
   );
 };
+
+export const CheckMarkIcon = memo(CheckMarkIconComponent);
+
+CheckMarkIcon.displayName = 'CheckMarkIcon';

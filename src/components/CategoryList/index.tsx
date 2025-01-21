@@ -1,4 +1,4 @@
-import {memo, useCallback} from 'react';
+import {memo} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 
 // Components
@@ -12,12 +12,6 @@ export interface CategoryListProps {
   setCategory: (category: string) => void;
 }
 const CategoryList = memo(({category, setCategory}: CategoryListProps) => {
-  const handleSetCategory = useCallback(
-    (categoryTitle: string) => () => {
-      categoryTitle !== category && setCategory(categoryTitle);
-    },
-    [category, setCategory],
-  );
   return (
     <FlatList
       style={styles.container}
@@ -28,7 +22,7 @@ const CategoryList = memo(({category, setCategory}: CategoryListProps) => {
         return (
           <CategoryItem
             isActive={category === title}
-            onPress={handleSetCategory(title)}
+            onPress={setCategory}
             Icon={icon}
             title={title}
           />

@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Rect, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const MinusIcon = ({
+const MinusIconComponent = ({
   width = 30,
   height = 30,
   color = colors.primary,
@@ -19,3 +20,7 @@ export const MinusIcon = ({
     </Svg>
   );
 };
+
+export const MinusIcon = memo(MinusIconComponent);
+
+MinusIcon.displayName = 'MinusIcon';

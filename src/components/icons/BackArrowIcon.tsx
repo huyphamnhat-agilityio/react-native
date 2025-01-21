@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const BackArrowIcon = ({
+const BackArrowIconComponent = ({
   width = 20,
   height = 20,
   color = colors.primary,
@@ -24,3 +25,7 @@ export const BackArrowIcon = ({
     </Svg>
   );
 };
+
+export const BackArrowIcon = memo(BackArrowIconComponent);
+
+BackArrowIcon.displayName = 'BackArrowIcon';

@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useCallback} from 'react';
 import {StyleSheet, View, ViewProps} from 'react-native';
 
 // Components
@@ -11,7 +11,7 @@ import {TextVariant} from 'src/interfaces';
 export interface CategoryItemProps extends ViewProps {
   Icon: React.ReactElement;
   isActive?: boolean;
-  onPress?: () => void;
+  onPress?: (category: string) => void;
   title?: string;
 }
 const CategoryItem = memo(
@@ -21,13 +21,20 @@ const CategoryItem = memo(
       : 'disabled';
 
     const titleVariant: TextVariant = isActive ? 'primary' : 'disabled';
+
+    const handlePressCategory = useCallback(
+      (category: string) => () => {
+        onPress?.(category);
+      },
+      [onPress],
+    );
     return (
       <View style={styles.container}>
         <Button
           IconLeft={Icon}
           style={styles.button}
           bgVariant={buttonVariant}
-          onPress={onPress}
+          onPress={handlePressCategory(title)}
           rounded="lg"
           testID="category-item"
         />

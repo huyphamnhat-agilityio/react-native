@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const ArmchairIcon = ({
+const ArmchairIconComponent = ({
   width = 28,
   height = 28,
   color = colors.white,
@@ -21,3 +22,7 @@ export const ArmchairIcon = ({
     </Svg>
   );
 };
+
+export const ArmchairIcon = memo(ArmchairIconComponent);
+
+ArmchairIcon.displayName = 'ArmchairIcon';

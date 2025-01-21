@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const CrossIcon = ({
+const CrossIconComponent = ({
   width = 24,
   height = 24,
   color = colors.primary,
@@ -23,3 +24,7 @@ export const CrossIcon = ({
     </Svg>
   );
 };
+
+export const CrossIcon = memo(CrossIconComponent);
+
+CrossIcon.displayName = 'CrossIcon';

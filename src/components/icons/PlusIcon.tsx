@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, Rect, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const PlusIcon = ({
+const PlusIconComponent = ({
   width = 30,
   height = 30,
   color = colors.primary,
@@ -22,3 +23,7 @@ export const PlusIcon = ({
     </Svg>
   );
 };
+
+export const PlusIcon = memo(PlusIconComponent);
+
+PlusIcon.displayName = 'PlusIcon';

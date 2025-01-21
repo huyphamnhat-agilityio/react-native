@@ -32,7 +32,7 @@ exports[`CategoryItem should render correctly 1`] = `
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}

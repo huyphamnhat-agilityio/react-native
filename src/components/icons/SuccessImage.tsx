@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const SuccessImage = ({
+const SuccessImageComponent = ({
   width = 201,
   height = 182,
   color = colors.secondary,
@@ -45,3 +46,7 @@ export const SuccessImage = ({
     </Svg>
   );
 };
+
+export const SuccessImage = memo(SuccessImageComponent);
+
+SuccessImage.displayName = 'SuccessImage';

@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {ClipPath, Defs, G, Path, Rect, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const ChairIcon = ({
+const ChairIconComponent = ({
   width = 28,
   height = 28,
   color = colors.white,
@@ -28,3 +29,7 @@ export const ChairIcon = ({
     </Svg>
   );
 };
+
+export const ChairIcon = memo(ChairIconComponent);
+
+ChairIcon.displayName = 'ChairIcon';

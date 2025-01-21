@@ -12,27 +12,27 @@ exports[`CategoryList should render correctly 1`] = `
   data={
     [
       {
-        "icon": <StarIcon />,
+        "icon": <Memo(StartIcon) />,
         "title": "Popular",
       },
       {
-        "icon": <ChairIcon />,
+        "icon": <Memo(ChairIcon) />,
         "title": "Chair",
       },
       {
-        "icon": <TableIcon />,
+        "icon": <Memo(TableIcon) />,
         "title": "Table",
       },
       {
-        "icon": <ArmchairIcon />,
+        "icon": <Memo(ArmchairIcon) />,
         "title": "Armchair",
       },
       {
-        "icon": <BedIcon />,
+        "icon": <Memo(BedIcon) />,
         "title": "Bed",
       },
       {
-        "icon": <LampIcon />,
+        "icon": <Memo(LampIcon) />,
         "title": "Lamp",
       },
     ]

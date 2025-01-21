@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const LogoutIcon = ({
+const LogoutIconComponent = ({
   width = 18,
   height = 18,
   color = colors.primary,
@@ -38,3 +39,7 @@ export const LogoutIcon = ({
     </Svg>
   );
 };
+
+export const LogoutIcon = memo(LogoutIconComponent);
+
+LogoutIcon.displayName = 'LogoutIcon';

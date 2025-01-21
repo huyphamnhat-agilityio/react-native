@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const SearchIcon = ({
+const SearchIconComponent = ({
   width = 24,
   height = 24,
   color = colors.quaternary,
@@ -21,3 +22,7 @@ export const SearchIcon = ({
     </Svg>
   );
 };
+
+export const SearchIcon = memo(SearchIconComponent);
+
+SearchIcon.displayName = 'SearchIcon';

@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const CartIcon = ({
+const CartIconComponent = ({
   width = 24,
   height = 24,
   color = colors.quaternary,
@@ -23,3 +24,7 @@ export const CartIcon = ({
     </Svg>
   );
 };
+
+export const CartIcon = memo(CartIconComponent);
+
+CartIcon.displayName = 'CartIcon';

@@ -1,6 +1,7 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 
-export const SuccessBackground = ({
+const SuccessBackgroundComponent = ({
   width = 269,
   height = 230,
   color = '#f9f9f9',
@@ -20,3 +21,7 @@ export const SuccessBackground = ({
     </Svg>
   );
 };
+
+export const SuccessBackground = memo(SuccessBackgroundComponent);
+
+SuccessBackground.displayName = 'SuccessBackground';

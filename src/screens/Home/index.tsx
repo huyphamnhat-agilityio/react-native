@@ -1,4 +1,4 @@
-import {useCallback, useRef, useState} from 'react';
+import {memo, useCallback, useRef, useState} from 'react';
 import {ActivityIndicator, Animated, StyleSheet, View} from 'react-native';
 
 // Components
@@ -22,7 +22,7 @@ import {StackNavigation} from 'src/interfaces';
 export interface HomeScreenProps {
   navigation: StackNavigation;
 }
-const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
+const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
   const [category, setCategory] = useState<string>(CATEGORIES[0].title);
   const {
     value: searchQuery,
@@ -55,6 +55,12 @@ const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
   }, [isSearchVisible, searchAnimation, setSearchQuery]);
 
   const handleCartPress = useCallback(() => navigate('Cart'), [navigate]);
+  const handleSetCategory = useCallback(
+    (categoryTitle: string) => {
+      categoryTitle !== category && setCategory(categoryTitle);
+    },
+    [category, setCategory],
+  );
 
   const searchHeight = searchAnimation.interpolate({
     inputRange: [0, 1],
@@ -103,7 +109,7 @@ const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
         />
       </Animated.View>
 
-      <CategoryList category={category} setCategory={setCategory} />
+      <CategoryList category={category} setCategory={handleSetCategory} />
 
       {isLoading ? (
         <View style={styles.wrapper}>
@@ -114,7 +120,7 @@ const HomeScreen = ({navigation: {navigate}}: HomeScreenProps) => {
       )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -147,5 +153,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
 });
+
+HomeScreen.displayName = 'HomeScreen';
 
 export default HomeScreen;

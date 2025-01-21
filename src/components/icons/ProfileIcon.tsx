@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const ProfileIcon = ({
+const ProfileIconComponent = ({
   width = 18,
   height = 18,
   color = colors.disabled,
@@ -24,3 +25,7 @@ export const ProfileIcon = ({
     </Svg>
   );
 };
+
+export const ProfileIcon = memo(ProfileIconComponent);
+
+ProfileIcon.displayName = 'ProfileIcon';

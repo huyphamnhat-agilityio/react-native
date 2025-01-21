@@ -1,7 +1,8 @@
+import {memo} from 'react';
 import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
-export const MarkIcon = ({
+const MarkIconComponent = ({
   width = 24,
   height = 24,
   color = colors.primary,
@@ -22,3 +23,7 @@ export const MarkIcon = ({
     </Svg>
   );
 };
+
+export const MarkIcon = memo(MarkIconComponent);
+
+MarkIcon.displayName = 'MarkIcon';
