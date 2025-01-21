@@ -58,6 +58,8 @@
 | `npm run test`                                                        | Run all test cases                    |
 | `npm run coverage`                                                    | Coverage all test cases               |
 
+- You can get the env variables in [here](https://drive.google.com/file/d/1bVNscHBAzIt4UQI0FMVx7LkTIZudH8th/view?usp=sharing).
+
 # Author
 
 - Huy Pham Nhat.

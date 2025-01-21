@@ -2,6 +2,21 @@
 
 exports[`ProductList should render correctly 1`] = `
 <RCTScrollView
+  ListEmptyComponent={
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Memo(Text)>
+        No product match with the keywords.
+      </Memo(Text)>
+    </View>
+  }
   contentContainerStyle={
     {
       "gap": 20,

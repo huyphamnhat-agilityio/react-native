@@ -31,4 +31,8 @@ export const ERROR_MESSAGE: Record<string, Record<number, string>> = {
     404: 'Login failed! Please check your email or password and try again.',
     500: 'Login failed! The server is unavailable now. Please try again later.',
   },
+  PRODUCT_LIST: {
+    404: 'No product match with the keywords.',
+    500: 'Failed to load product list. Please try again later.',
+  },
 } as const;
