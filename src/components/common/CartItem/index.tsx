@@ -1,16 +1,9 @@
 import {memo, useCallback} from 'react';
-import {
-  Image,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewProps,
-  ViewStyle,
-} from 'react-native';
+import {Image, StyleSheet, View, ViewProps} from 'react-native';
 import {useShallow} from 'zustand/shallow';
 
 // Themes
-import {borderRadius, colors} from 'src/themes';
+import {borderRadius} from 'src/themes';
 
 // Components
 import {Button, QuantityControl, Text} from 'src/components/common';
@@ -25,12 +18,10 @@ import {CartItemData} from 'src/interfaces';
 import {useCartStore} from 'src/store';
 
 export interface CartItemProps extends ViewProps {
-  hasDividerStroke?: boolean;
   data: CartItemData;
 }
 const CartItem = memo(
   ({
-    hasDividerStroke,
     data: {image, price, productName, quantity, selectedColor, id},
     style,
     ...props
@@ -56,15 +47,8 @@ const CartItem = memo(
       [updateQuantity],
     );
 
-    const strokeStyle: StyleProp<ViewStyle> = hasDividerStroke
-      ? {
-          paddingBottom: 12,
-          borderBottomWidth: 1,
-          borderColor: colors.border.tertiary,
-        }
-      : {};
     return (
-      <View style={[styles.container, strokeStyle, style]} {...props}>
+      <View style={[styles.container, style]} {...props}>
         <Image
           source={{uri: image}}
           width={100}

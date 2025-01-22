@@ -37,6 +37,7 @@ exports[`CategoryList should render correctly 1`] = `
       },
     ]
   }
+  extraData="Popular"
   getItem={[Function]}
   getItemCount={[Function]}
   horizontal={true}

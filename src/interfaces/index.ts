@@ -1,4 +1,5 @@
 export type {CartItemData} from './cart';
+export type {Category} from './category';
 export type {TextVariant, BackgroundVariant} from './color';
 export {CustomError} from './error';
 export type {BorderRadius} from './metrics';

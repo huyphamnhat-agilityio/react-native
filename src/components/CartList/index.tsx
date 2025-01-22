@@ -10,7 +10,7 @@ export interface CartListProps extends FlatListProps<CartItemData> {}
 const CartList = ({contentContainerStyle, ...props}: CartListProps) => {
   return (
     <FlatList
-      contentContainerStyle={[styles.contentContainer, contentContainerStyle]}
+      contentContainerStyle={contentContainerStyle}
       ListEmptyComponent={
         <Text style={styles.text}>No product was added in cart.</Text>
       }
@@ -22,9 +22,6 @@ const CartList = ({contentContainerStyle, ...props}: CartListProps) => {
 const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
-  },
-  contentContainer: {
-    gap: 12,
   },
 });
 

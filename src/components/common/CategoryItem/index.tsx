@@ -22,19 +22,16 @@ const CategoryItem = memo(
 
     const titleVariant: TextVariant = isActive ? 'primary' : 'disabled';
 
-    const handlePressCategory = useCallback(
-      (category: string) => () => {
-        onPress?.(category);
-      },
-      [onPress],
-    );
+    const handlePressCategory = useCallback(() => {
+      onPress?.(title);
+    }, [onPress, title]);
     return (
       <View style={styles.container}>
         <Button
           IconLeft={Icon}
           style={styles.button}
           bgVariant={buttonVariant}
-          onPress={handlePressCategory(title)}
+          onPress={handlePressCategory}
           rounded="lg"
           testID="category-item"
         />

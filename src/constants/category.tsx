@@ -6,8 +6,9 @@ import {
   StarIcon,
   TableIcon,
 } from 'src/components/icons';
+import {Category} from 'src/interfaces';
 
-export const CATEGORIES = [
+export const CATEGORIES: Array<Category> = [
   {
     title: 'Popular',
     icon: <StarIcon />,

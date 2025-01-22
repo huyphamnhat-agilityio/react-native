@@ -1,8 +1,9 @@
-import {StyleSheet, View} from 'react-native';
+import {useCallback} from 'react';
+import {ListRenderItemInfo, StyleSheet, View} from 'react-native';
 import {useShallow} from 'zustand/shallow';
 
 // Types & Interfaces
-import {StackNavigation} from 'src/interfaces';
+import {CartItemData, StackNavigation} from 'src/interfaces';
 
 // Components
 import {Button, CartItem, Text} from 'src/components/common';
@@ -13,7 +14,6 @@ import {useCartStore} from 'src/store';
 
 // Themes
 import {colors} from 'src/themes';
-import {useCallback} from 'react';
 
 export interface CartScreenProps {
   navigation: StackNavigation;
@@ -31,18 +31,28 @@ const CartScreen = ({navigation: {navigate}}: CartScreenProps) => {
     [navigate],
   );
 
+  const CartSeparatorComponent = useCallback(
+    () => (
+      <View style={styles.separatorWrapper}>
+        <View style={styles.separator} />
+      </View>
+    ),
+    [],
+  );
+
+  const handleRenderItem = useCallback(
+    ({item}: ListRenderItemInfo<CartItemData>) => (
+      <CartItem key={item.id} data={item} />
+    ),
+    [],
+  );
   const totalMoney = getTotalMoney();
   return (
     <View style={styles.container}>
       <CartList
         data={cart}
-        renderItem={({item, index}) => (
-          <CartItem
-            key={item.id}
-            data={item}
-            hasDividerStroke={index < cart.length - 1}
-          />
-        )}
+        renderItem={handleRenderItem}
+        ItemSeparatorComponent={CartSeparatorComponent}
       />
       <View style={styles.wrapper}>
         <View style={styles.stat}>
@@ -75,6 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingBottom: 30,
+    gap: 20,
   },
   wrapper: {
     gap: 20,
@@ -86,6 +97,17 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 16,
+  },
+  separatorWrapper: {
+    flex: 1,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  separator: {
+    width: '100%',
+    height: 1,
+    backgroundColor: colors.border.tertiary,
   },
 });
 
