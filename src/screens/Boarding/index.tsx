@@ -23,8 +23,8 @@ const BoardingScreen = ({navigation: {navigate}}: BoardingScreenProps) => {
         source={require('assets/images/boarding-background.webp')}
         resizeMode="cover"
         style={styles.image}>
-        <View style={styles.wrapper}>
-          <View style={styles.content}>
+        <View style={styles.content}>
+          <View>
             <View style={styles.title}>
               <Text font="GelasioSemiBold" size="lg" textVariant="tertiary">
                 MAKE YOUR
@@ -44,6 +44,8 @@ const BoardingScreen = ({navigation: {navigate}}: BoardingScreenProps) => {
               and make your home beautiful
             </Text>
           </View>
+        </View>
+        <View style={styles.wrapper}>
           <Button
             titleFont="GelasioSemiBold"
             titleSize="base"
@@ -62,17 +64,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  wrapper: {
-    marginBottom: 150,
-  },
   image: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   content: {
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'flex-end',
     alignSelf: 'center',
-    marginBottom: 148,
   },
   title: {
     paddingLeft: 30,
@@ -85,6 +84,7 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
     lineHeight: 35,
   },
+  wrapper: {flex: 1 / 1.25, justifyContent: 'center'},
   button: {
     paddingHorizontal: 28,
     paddingVertical: 16,

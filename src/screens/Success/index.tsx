@@ -23,48 +23,56 @@ const SuccessScreen = ({navigation: {goBack}}: SuccessScreenProps) => {
 
   return (
     <View style={styles.container}>
-      <Text
-        style={styles.title}
-        font="MerriweatherBold"
-        size="xxl"
-        textVariant="secondary">
-        SUCCESS!
-      </Text>
+      <View style={styles.contentContainer}>
+        <View style={styles.headerSection}>
+          <Text
+            style={styles.title}
+            font="MerriweatherBold"
+            size="xxl"
+            textVariant="secondary">
+            SUCCESS!
+          </Text>
+        </View>
 
-      <View style={styles.logoWrapper}>
-        <SuccessBackground />
-        <SuccessImage style={styles.logo} />
-        <CheckMarkIcon style={styles.checkMark} />
-      </View>
+        <View style={styles.illustrationSection}>
+          <View style={styles.logoWrapper}>
+            <SuccessBackground />
+            <SuccessImage style={styles.logo} />
+            <CheckMarkIcon style={styles.checkMark} />
+          </View>
+        </View>
 
-      <Text
-        style={styles.message}
-        font="NuniToSansNormal"
-        size="base"
-        textVariant="tertiary">
-        Your order will be delivered soon. Thank you for choosing our app!
-      </Text>
+        <View style={styles.messageSection}>
+          <Text
+            style={styles.message}
+            font="NuniToSansNormal"
+            size="base"
+            textVariant="tertiary">
+            Your order will be delivered soon. Thank you for choosing our app!
+          </Text>
+        </View>
 
-      <View style={styles.buttonWrapper}>
-        <Button
-          style={[styles.button, styles.shadow]}
-          width="100%"
-          title="Track your orders"
-          titleFont="NunitoSansSemiBold"
-          titleSize="base"
-          rounded="md"
-        />
-        <Button
-          style={styles.button}
-          onPress={handleGoBackPress}
-          width="100%"
-          title="BACK TO HOME"
-          titleFont="NunitoSansSemiBold"
-          titleSize="base"
-          bgVariant="outline"
-          textVariant="outline"
-          rounded="md"
-        />
+        <View style={styles.buttonSection}>
+          <Button
+            style={[styles.button, styles.shadow]}
+            width="100%"
+            title="Track your orders"
+            titleFont="NunitoSansSemiBold"
+            titleSize="base"
+            rounded="md"
+          />
+          <Button
+            style={styles.button}
+            onPress={handleGoBackPress}
+            width="100%"
+            title="BACK TO HOME"
+            titleFont="NunitoSansSemiBold"
+            titleSize="base"
+            bgVariant="outline"
+            textVariant="outline"
+            rounded="md"
+          />
+        </View>
       </View>
     </View>
   );
@@ -74,14 +82,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+  },
+  contentContainer: {
+    flex: 1,
+    paddingHorizontal: 30,
     justifyContent: 'center',
+  },
+  headerSection: {
     alignItems: 'center',
+    marginBottom: 30,
   },
   title: {
     textAlign: 'center',
   },
+  illustrationSection: {
+    alignItems: 'center',
+    marginBottom: 50,
+  },
   logoWrapper: {
-    marginTop: 30,
     position: 'relative',
   },
   logo: {
@@ -94,15 +112,16 @@ const styles = StyleSheet.create({
     bottom: -25,
     left: 111,
   },
+  messageSection: {
+    alignItems: 'center',
+    marginBottom: 40,
+    paddingHorizontal: 17,
+  },
   message: {
     textAlign: 'center',
-    marginTop: 50,
-    marginHorizontal: 47,
   },
-  buttonWrapper: {
+  buttonSection: {
     width: '100%',
-    paddingHorizontal: 30,
-    marginTop: 40,
     gap: 25,
   },
   button: {
