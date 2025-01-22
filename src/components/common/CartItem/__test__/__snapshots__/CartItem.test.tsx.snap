@@ -9,7 +9,6 @@ exports[`CartItem should render correctly 1`] = `
         "gap": 20,
         "width": "100%",
       },
-      {},
       undefined,
     ]
   }
@@ -533,17 +532,13 @@ exports[`CartItem should render correctly 1`] = `
 
 exports[`CartItem should render correctly with the given props 1`] = `
 <View
+  hasDividerStroke={true}
   style={
     [
       {
         "flexDirection": "row",
         "gap": 20,
         "width": "100%",
-      },
-      {
-        "borderBottomWidth": 1,
-        "borderColor": "#f0f0f0",
-        "paddingBottom": 12,
       },
       undefined,
     ]

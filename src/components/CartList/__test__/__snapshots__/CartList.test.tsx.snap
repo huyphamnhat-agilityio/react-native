@@ -13,14 +13,6 @@ exports[`ShippingAddressCard should render correctly 1`] = `
       No product was added in cart.
     </Memo(Text)>
   }
-  contentContainerStyle={
-    [
-      {
-        "gap": 12,
-      },
-      undefined,
-    ]
-  }
   data={
     [
       {

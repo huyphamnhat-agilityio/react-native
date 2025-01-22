@@ -17,6 +17,7 @@ exports[`ProductList should render correctly 1`] = `
       </Memo(Text)>
     </View>
   }
+  ListFooterComponent={null}
   contentContainerStyle={
     {
       "gap": 20,
@@ -55,12 +56,20 @@ exports[`ProductList should render correctly 1`] = `
   horizontal={false}
   keyExtractor={[Function]}
   onContentSizeChange={[Function]}
+  onEndReached={[Function]}
+  onEndReachedThreshold={0.5}
   onLayout={[Function]}
   onMomentumScrollBegin={[Function]}
   onMomentumScrollEnd={[Function]}
   onScroll={[Function]}
   onScrollBeginDrag={[Function]}
   onScrollEndDrag={[Function]}
+  refreshControl={
+    <RefreshControlMock
+      onRefresh={[Function]}
+      refreshing={false}
+    />
+  }
   removeClippedSubviews={false}
   renderItem={[Function]}
   scrollEventThrottle={0.0001}
@@ -73,6 +82,7 @@ exports[`ProductList should render correctly 1`] = `
   }
   viewabilityConfigCallbackPairs={[]}
 >
+  <RCTRefreshControl />
   <View>
     <View
       onFocusCapture={[Function]}

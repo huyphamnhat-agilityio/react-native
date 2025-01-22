@@ -12,13 +12,14 @@ import {CartIcon, SearchIcon} from 'src/components/icons';
 import {colors} from 'src/themes';
 
 // Hooks
-import {useDebounce, useGetProducts} from 'src/hooks';
+import {useDebounce} from 'src/hooks';
 
 // Constants
 import {CATEGORIES} from 'src/constants';
 
 // Types & Interfaces
 import {StackNavigation} from 'src/interfaces';
+import {useGetInfinitiveProducts} from 'src/hooks/product';
 export interface HomeScreenProps {
   navigation: StackNavigation;
 }
@@ -33,7 +34,13 @@ const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
 
   const searchAnimation = useRef(new Animated.Value(0)).current;
 
-  const {data = [], isLoading} = useGetProducts({
+  const {
+    data = [],
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    resetData,
+  } = useGetInfinitiveProducts({
     category,
     name: debouncedSearchQuery,
   });
@@ -116,7 +123,13 @@ const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
           <ActivityIndicator size="large" color="black" />
         </View>
       ) : (
-        <ProductList products={data} />
+        <ProductList
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          products={data}
+          isRefreshing={isLoading}
+          resetData={resetData}
+        />
       )}
     </View>
   );

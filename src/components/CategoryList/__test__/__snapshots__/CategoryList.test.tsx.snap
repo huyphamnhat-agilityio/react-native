@@ -40,6 +40,7 @@ exports[`CategoryList should render correctly 1`] = `
   extraData="Popular"
   getItem={[Function]}
   getItemCount={[Function]}
+  getItemLayout={[Function]}
   horizontal={true}
   keyExtractor={[Function]}
   onContentSizeChange={[Function]}
@@ -65,7 +66,6 @@ exports[`CategoryList should render correctly 1`] = `
   <View>
     <View
       onFocusCapture={[Function]}
-      onLayout={[Function]}
       style={
         [
           {
@@ -253,7 +253,6 @@ exports[`CategoryList should render correctly 1`] = `
     </View>
     <View
       onFocusCapture={[Function]}
-      onLayout={[Function]}
       style={
         [
           {
@@ -441,7 +440,6 @@ exports[`CategoryList should render correctly 1`] = `
     </View>
     <View
       onFocusCapture={[Function]}
-      onLayout={[Function]}
       style={
         [
           {
@@ -590,7 +588,6 @@ exports[`CategoryList should render correctly 1`] = `
     </View>
     <View
       onFocusCapture={[Function]}
-      onLayout={[Function]}
       style={
         [
           {
@@ -739,7 +736,6 @@ exports[`CategoryList should render correctly 1`] = `
     </View>
     <View
       onFocusCapture={[Function]}
-      onLayout={[Function]}
       style={
         [
           {
@@ -888,7 +884,6 @@ exports[`CategoryList should render correctly 1`] = `
     </View>
     <View
       onFocusCapture={[Function]}
-      onLayout={[Function]}
       style={
         [
           {

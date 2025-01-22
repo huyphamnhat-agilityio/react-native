@@ -11,18 +11,14 @@ exports[`LoginForm should render correctly 1`] = `
   <View
     style={
       {
+        "borderColor": "transparent",
         "elevation": 10,
         "gap": 35,
         "paddingHorizontal": 30,
         "paddingVertical": 35,
         "shadowColor": "#8A959E80",
-        "shadowOffset": {
-          "height": 7,
-          "width": 0,
-        },
-        "shadowOpacity": 0.2,
-        "shadowRadius": 30,
         "width": "100%",
+        "zIndex": 99,
       }
     }
   >

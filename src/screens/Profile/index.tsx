@@ -11,7 +11,7 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <Image
-          source={require('assets/images/user-avatar.jpg')}
+          source={require('assets/images/user-avatar.png')}
           width={80}
           height={80}
           borderRadius={9999}

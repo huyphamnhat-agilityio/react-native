@@ -20,7 +20,7 @@ const BoardingScreen = ({navigation: {navigate}}: BoardingScreenProps) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('assets/images/boarding-background.webp')}
+        source={require('assets/images/boarding-background.png')}
         resizeMode="cover"
         style={styles.image}>
         <View style={styles.content}>
