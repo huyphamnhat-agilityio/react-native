@@ -12,14 +12,13 @@ import {CartIcon, SearchIcon} from 'src/components/icons';
 import {colors} from 'src/themes';
 
 // Hooks
-import {useDebounce} from 'src/hooks';
+import {useDebounce, useGetInfinitiveProducts} from 'src/hooks';
 
 // Constants
 import {CATEGORIES} from 'src/constants';
 
 // Types & Interfaces
 import {StackNavigation} from 'src/interfaces';
-import {useGetInfinitiveProducts} from 'src/hooks/product';
 export interface HomeScreenProps {
   navigation: StackNavigation;
 }

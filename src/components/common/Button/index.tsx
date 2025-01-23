@@ -38,49 +38,6 @@ export interface ButtonProps extends TouchableOpacityProps {
   width?: DimensionValue;
 }
 
-const getBgVariantStyle = (variant: ButtonProps['bgVariant']) => {
-  switch (variant) {
-    case 'outline':
-    case 'none':
-      return 'transparent';
-
-    case 'secondary':
-      return colors.background.secondary;
-
-    case 'disabled':
-      return colors.background.disabled;
-
-    case 'alternative':
-      return colors.background.alternative;
-
-    case 'white':
-      return colors.white;
-
-    default:
-      return colors.background.primary;
-  }
-};
-
-const getTextVariantStyle = (variant: ButtonProps['textVariant']) => {
-  switch (variant) {
-    case 'outline':
-      return colors.text.secondary;
-
-    default:
-      return colors.white;
-  }
-};
-
-const getBorderVariantStyle = (variant: ButtonProps['bgVariant']) => {
-  switch (variant) {
-    case 'outline':
-      return colors.border.primary;
-
-    default:
-      return 'transparent';
-  }
-};
-
 const Button = memo(
   ({
     IconLeft,
@@ -102,22 +59,17 @@ const Button = memo(
 
     const opacity = isDisabled ? 0.5 : 1;
 
-    const backgroundColor = getBgVariantStyle(bgVariant);
-
-    const borderColor = getBorderVariantStyle(bgVariant);
-
-    const textColor = getTextVariantStyle(textVariant);
     return (
       <TouchableOpacity
         activeOpacity={0.5}
         style={[
           styles.container,
+          bgVariantStyle[bgVariant],
+          borderVariantStyle[bgVariant],
           {
-            backgroundColor: backgroundColor,
             borderRadius: borderRadius[rounded],
             opacity,
             width,
-            borderColor,
           },
           style,
         ]}
@@ -126,14 +78,14 @@ const Button = memo(
         {IconLeft}
 
         <View style={styles.wrapper}>
-          {!!title && isLoading && <ActivityIndicator color={textColor} />}
+          {!!title && isLoading && (
+            <ActivityIndicator color={textVariantStyle[textVariant].color} />
+          )}
           {!!title && (
             <Text
               font={titleFont}
               size={titleSize}
-              style={{
-                color: textColor,
-              }}>
+              style={textVariantStyle[textVariant]}>
               {title}
             </Text>
           )}
@@ -163,6 +115,62 @@ const styles = StyleSheet.create({
   },
 });
 
+const bgVariantStyle = StyleSheet.create({
+  primary: {
+    backgroundColor: colors.background.primary,
+  },
+  secondary: {
+    backgroundColor: colors.background.secondary,
+  },
+  outline: {
+    backgroundColor: 'transparent',
+  },
+  disabled: {
+    backgroundColor: colors.background.disabled,
+  },
+  alternative: {
+    backgroundColor: colors.background.alternative,
+  },
+  white: {
+    backgroundColor: colors.white,
+  },
+  none: {
+    backgroundColor: 'transparent',
+  },
+});
+
+const borderVariantStyle = StyleSheet.create({
+  primary: {
+    borderColor: 'transparent',
+  },
+  secondary: {
+    borderColor: 'transparent',
+  },
+  outline: {
+    borderColor: colors.border.primary,
+  },
+  disabled: {
+    borderColor: 'transparent',
+  },
+  alternative: {
+    borderColor: 'transparent',
+  },
+  white: {
+    borderColor: 'transparent',
+  },
+  none: {
+    borderColor: 'transparent',
+  },
+});
+
+const textVariantStyle = StyleSheet.create({
+  primary: {
+    color: colors.white,
+  },
+  outline: {
+    color: colors.text.secondary,
+  },
+});
 Button.displayName = 'Button';
 
 export default Button;
