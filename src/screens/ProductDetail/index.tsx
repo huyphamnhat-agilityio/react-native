@@ -5,12 +5,11 @@ import {
   Dimensions,
   Image,
   Keyboard,
-  KeyboardAvoidingView,
-  Platform,
   StyleSheet,
   ToastAndroid,
   View,
 } from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
   Extrapolation,
   interpolate,
@@ -27,8 +26,8 @@ import {Button, QuantityControl, Text} from 'src/components/common';
 // Icons
 import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
 
-// Constantsn n
-import {SUCCESS_MESSAGE} from 'src/constants';
+// Constants
+import {MEDIUM_DEVICE_HEIGHT, SUCCESS_MESSAGE} from 'src/constants';
 
 // Hooks
 import {useProductDetail} from 'src/hooks';
@@ -42,7 +41,8 @@ import {useCartStore} from 'src/store';
 // Themes
 import {borderRadius, colors} from 'src/themes';
 
-const width = Dimensions.get('window').width * 0.86;
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 
 const ProductDetailScreen = ({
   route: {
@@ -51,9 +51,6 @@ const ProductDetailScreen = ({
   navigation: {goBack},
 }: AppStackScreenProps<'ProductDetail'>) => {
   const [quantity, setQuantity] = useState(1);
-  const [screenHeight, setScreenHeight] = useState(
-    Dimensions.get('window').height * 0.53,
-  );
 
   const addToCart = useCartStore(state => state.addToCart);
 
@@ -107,12 +104,14 @@ const ProductDetailScreen = ({
     );
   };
 
+  const [screenHeight, setScreenHeight] = useState(height * 0.53);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       e => {
         setScreenHeight(
-          (e.endCoordinates.screenY - e.endCoordinates.height) * 0.94,
+          (e.endCoordinates.screenY - e.endCoordinates.height) *
+            (height >= MEDIUM_DEVICE_HEIGHT ? 0.94 : 0),
         );
       },
     );
@@ -138,9 +137,7 @@ const ProductDetailScreen = ({
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      style={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <Button
         rounded="sm"
         bgVariant="white"
@@ -174,7 +171,7 @@ const ProductDetailScreen = ({
 
         <Carousel
           ref={ref}
-          width={width}
+          width={width * 0.86}
           height={screenHeight}
           style={styles.carousel}
           data={variants}
@@ -256,7 +253,7 @@ const ProductDetailScreen = ({
         </View>
 
         <Text
-          numberOfLines={5}
+          numberOfLines={height >= MEDIUM_DEVICE_HEIGHT ? 5 : 2}
           font="NunitoSansLight"
           size="sm"
           textVariant="quaternary">
@@ -283,7 +280,7 @@ const ProductDetailScreen = ({
           </View>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -312,7 +309,7 @@ const styles = StyleSheet.create({
   carouselWrapper: {
     height: '56%',
     position: 'relative',
-    overflow: 'hidden',
+    overflow: 'visible',
   },
   carousel: {
     alignSelf: 'flex-end',
@@ -340,10 +337,11 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginTop: 25,
+    height: '60%',
+    marginTop: height >= MEDIUM_DEVICE_HEIGHT ? 25 : 12,
     gap: 10,
     paddingHorizontal: 25,
-    paddingBottom: 30,
+    paddingBottom: height >= MEDIUM_DEVICE_HEIGHT ? 30 : 0,
   },
   wrapper: {
     flexDirection: 'row',
@@ -369,6 +367,7 @@ const styles = StyleSheet.create({
   },
   buttonMark: {
     padding: 18,
+    width: 60,
   },
   buttonAddToCart: {
     flex: 1,

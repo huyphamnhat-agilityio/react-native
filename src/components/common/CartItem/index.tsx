@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  content: {gap: 6},
+  content: {gap: 6, maxWidth: '80%'},
   button: {
     padding: 0,
   },

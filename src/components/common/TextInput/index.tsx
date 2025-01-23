@@ -1,3 +1,4 @@
+import {forwardRef, memo, Ref} from 'react';
 import {
   DimensionValue,
   StyleSheet,
@@ -14,7 +15,6 @@ import {FontFamily, FontSize, TextVariant} from 'src/interfaces';
 
 // Themes
 import {colors, fontFamilies, fontSizes} from 'src/themes';
-import {forwardRef, memo, Ref} from 'react';
 
 export interface TextInputProps extends TextInputBaseProps {
   LeftContent?: React.ReactElement;

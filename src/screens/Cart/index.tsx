@@ -1,5 +1,5 @@
 import {useCallback} from 'react';
-import {ListRenderItemInfo, StyleSheet, View} from 'react-native';
+import {Dimensions, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 import {useShallow} from 'zustand/shallow';
 
 // Types & Interfaces
@@ -14,10 +14,13 @@ import {useCartStore} from 'src/store';
 
 // Themes
 import {colors} from 'src/themes';
+import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
 
 export interface CartScreenProps {
   navigation: StackNavigation;
 }
+
+const height = Dimensions.get('window').height;
 const CartScreen = ({navigation: {navigate}}: CartScreenProps) => {
   const {cart, getTotalMoney} = useCartStore(
     useShallow(state => ({
@@ -50,6 +53,7 @@ const CartScreen = ({navigation: {navigate}}: CartScreenProps) => {
   return (
     <View style={styles.container}>
       <CartList
+        removeClippedSubviews={false}
         data={cart}
         renderItem={handleRenderItem}
         ItemSeparatorComponent={CartSeparatorComponent}
@@ -84,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     flex: 1,
     paddingHorizontal: 20,
-    paddingBottom: 30,
+    paddingBottom: height >= MEDIUM_DEVICE_HEIGHT ? 30 : 15,
     gap: 20,
   },
   wrapper: {

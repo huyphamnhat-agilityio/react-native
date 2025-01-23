@@ -1,3 +1,4 @@
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {StyleSheet, View} from 'react-native';
 
 // Icons
@@ -12,25 +13,26 @@ import {colors} from 'src/themes';
 
 const Login = () => {
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.logo}>
         <View style={styles.stroke} />
         <LogoIcon />
         <View style={styles.stroke} />
       </View>
-      <Text
-        font="MerriweatherNormal"
-        size="xl"
-        textVariant="alternative"
-        style={styles.title}>
-        Hello ! {'\n'}
-        <Text font="MerriweatherBold" size="lg" textVariant="secondary">
-          WELCOME BACK
+      <View style={styles.wrapper}>
+        <Text
+          font="MerriweatherNormal"
+          size="xl"
+          textVariant="alternative"
+          style={styles.title}>
+          Hello ! {'\n'}
+          <Text font="MerriweatherBold" size="lg" textVariant="secondary">
+            WELCOME BACK
+          </Text>
         </Text>
-      </Text>
-
-      <LoginForm />
-    </View>
+        <LoginForm />
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -38,10 +40,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+    gap: 20,
   },
   logo: {
-    marginTop: 64,
-    padding: 30,
+    marginTop: 20,
+    paddingHorizontal: 30,
     height: 64,
     gap: 20,
     width: '100%',
@@ -55,10 +58,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.divider,
     borderRadius: 2,
   },
+  wrapper: {
+    gap: 20,
+  },
   title: {
     lineHeight: 45,
     paddingLeft: 30,
-    marginTop: 30,
   },
 });
 export default Login;

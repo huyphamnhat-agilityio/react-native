@@ -1,6 +1,6 @@
 import {Controller, useForm} from 'react-hook-form';
 import {memo, useCallback, useMemo, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, Dimensions, StyleSheet, View} from 'react-native';
 
 // Utils
 import {clearErrorOnChange, isEnableSubmit} from 'src/utils';
@@ -15,7 +15,11 @@ import {Button, TextInput} from '../common';
 import {EyeIcon} from '../icons';
 
 // Constants
-import {FORM_VALIDATION_MESSAGE, REGEX} from 'src/constants';
+import {
+  FORM_VALIDATION_MESSAGE,
+  MEDIUM_DEVICE_HEIGHT,
+  REGEX,
+} from 'src/constants';
 
 // Services
 import {login} from 'src/services';
@@ -24,6 +28,8 @@ export type LoginFormData = {
   email: string;
   password: string;
 };
+
+const height = Dimensions.get('window').height;
 
 export const LOGIN_FORM_VALIDATION = {
   EMAIL: {
@@ -194,7 +200,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     width: '100%',
-    gap: 35,
+    gap: height >= MEDIUM_DEVICE_HEIGHT ? 30 : 16,
     paddingVertical: 35,
     paddingHorizontal: 30,
     shadowColor: colors.shadow.primary,

@@ -1,5 +1,5 @@
 import {useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 // Components
 import {Button, Text} from 'src/components/common';
@@ -10,6 +10,7 @@ import {
   SuccessBackground,
   SuccessImage,
 } from 'src/components/icons';
+import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
 import {StackNavigation} from 'src/interfaces';
 
 // Themes
@@ -18,6 +19,8 @@ import {colors} from 'src/themes';
 export interface SuccessScreenProps {
   navigation: StackNavigation;
 }
+
+const height = Dimensions.get('window').height;
 const SuccessScreen = ({navigation: {goBack}}: SuccessScreenProps) => {
   const handleGoBackPress = useCallback(() => goBack(), [goBack]);
 
@@ -90,14 +93,14 @@ const styles = StyleSheet.create({
   },
   headerSection: {
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: height >= MEDIUM_DEVICE_HEIGHT ? 30 : 0,
   },
   title: {
     textAlign: 'center',
   },
   illustrationSection: {
     alignItems: 'center',
-    marginBottom: 50,
+    marginBottom: height >= MEDIUM_DEVICE_HEIGHT ? 50 : 25,
   },
   logoWrapper: {
     position: 'relative',
@@ -114,7 +117,7 @@ const styles = StyleSheet.create({
   },
   messageSection: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: height >= MEDIUM_DEVICE_HEIGHT ? 40 : 20,
     paddingHorizontal: 17,
   },
   message: {
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
   },
   buttonSection: {
     width: '100%',
-    gap: 25,
+    gap: height >= MEDIUM_DEVICE_HEIGHT ? 25 : 12,
   },
   button: {
     paddingVertical: 18,

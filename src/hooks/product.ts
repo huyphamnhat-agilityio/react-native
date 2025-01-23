@@ -46,6 +46,7 @@ export const useGetInfinitiveProducts = (
       return lastPages.pageParam + 1;
     },
     initialPageParam: 1,
+    retry: 1,
   });
 
   const products = data?.pages.flatMap(page => page.data) || [];

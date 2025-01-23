@@ -39,6 +39,7 @@ const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
     fetchNextPage,
     hasNextPage,
     resetData,
+    isError,
   } = useGetInfinitiveProducts({
     category,
     name: debouncedSearchQuery,
@@ -123,7 +124,7 @@ const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
         </View>
       ) : (
         <ProductList
-          fetchNextPage={fetchNextPage}
+          fetchNextPage={isError ? undefined : fetchNextPage}
           hasNextPage={hasNextPage}
           products={data}
           isRefreshing={isLoading}

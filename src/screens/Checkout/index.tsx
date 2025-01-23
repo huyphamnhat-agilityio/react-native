@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 // Components
 import {
@@ -19,10 +19,13 @@ import {useCartStore} from 'src/store';
 import {StackNavigation} from 'src/interfaces';
 import {useCallback} from 'react';
 import {useShallow} from 'zustand/shallow';
+import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
 
 export interface CheckoutScreenProps {
   navigation: StackNavigation;
 }
+
+const height = Dimensions.get('window').height;
 const CheckoutScreen = ({navigation: {reset}}: CheckoutScreenProps) => {
   const {getTotalMoney, clearCart} = useCartStore(
     useShallow(state => ({
@@ -42,28 +45,30 @@ const CheckoutScreen = ({navigation: {reset}}: CheckoutScreenProps) => {
     });
   }, [clearCart, reset]);
   return (
-    <View style={styles.container}>
-      <ShippingAddressCard
-        name="Bruno Fernandes"
-        address="25 rue Robert Latouche, Nice, 06200, Côte D’azur, France"
-      />
+    <ScrollView style={styles.container}>
+      <View style={styles.wrapper}>
+        <ShippingAddressCard
+          name="Bruno Fernandes"
+          address="25 rue Robert Latouche, Nice, 06200, Côte D’azur, France"
+        />
 
-      <PaymentCard number="**** **** **** 3947" />
+        <PaymentCard number="**** **** **** 3947" />
 
-      <DeliveryMethodCard />
+        <DeliveryMethodCard />
 
-      <TotalCard order={totalMoney} delivery={5} />
+        <TotalCard order={totalMoney} delivery={5} />
 
-      <Button
-        width="100%"
-        title="SUBMIT ORDER"
-        titleFont="NunitoSansSemiBold"
-        titleSize="md"
-        rounded="md"
-        style={styles.button}
-        onPress={handleCheckoutPress}
-      />
-    </View>
+        <Button
+          width="100%"
+          title="SUBMIT ORDER"
+          titleFont="NunitoSansSemiBold"
+          titleSize="md"
+          rounded="md"
+          style={styles.button}
+          onPress={handleCheckoutPress}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
@@ -71,15 +76,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    paddingTop: 20,
-    paddingBottom: 35,
+  },
+  wrapper: {
     paddingVertical: 15,
     paddingHorizontal: 20,
     gap: 30,
   },
   button: {
     paddingVertical: 16,
-    marginTop: 'auto',
+    marginTop: height >= MEDIUM_DEVICE_HEIGHT ? 'auto' : 20,
   },
 });
 
