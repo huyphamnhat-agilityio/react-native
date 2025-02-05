@@ -10,7 +10,7 @@ import {getUser} from './user';
 import {useUserStore} from 'src/store';
 
 // Constants
-import {ERROR_MESSAGE, FETCH_ERROR_MESSAGES} from 'src/constants';
+import {ERROR_MESSAGE} from 'src/constants';
 
 export const login = async (payload: UserPayload) => {
   try {
@@ -19,7 +19,7 @@ export const login = async (payload: UserPayload) => {
     const isMatchPassword = bcrypt.compareSync(payload.password, user.password);
 
     if (!isMatchPassword) {
-      throw new Error(FETCH_ERROR_MESSAGES[404]);
+      throw new Error(ERROR_MESSAGE.LOGIN['404']);
     }
 
     const setUser = useUserStore.getState().setUser;
