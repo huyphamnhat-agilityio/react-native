@@ -49,6 +49,7 @@ exports[`CartItem should render correctly 1`] = `
         style={
           {
             "gap": 6,
+            "maxWidth": "80%",
           }
         }
       >
@@ -580,6 +581,7 @@ exports[`CartItem should render correctly with the given props 1`] = `
         style={
           {
             "gap": 6,
+            "maxWidth": "80%",
           }
         }
       >

@@ -5,7 +5,7 @@ import {act} from 'react';
 describe('ProductCard', () => {
   const mockOnPress = jest.fn();
   const mockProps: ProductCardProps = {
-    image: require('assets/images/boarding-background.webp'),
+    image: require('assets/images/boarding-background.png'),
     name: 'Mock',
     price: 10,
     onPress: mockOnPress,

@@ -13,7 +13,7 @@ exports[`LoginForm should render correctly 1`] = `
       {
         "borderColor": "transparent",
         "elevation": 10,
-        "gap": 35,
+        "gap": 30,
         "paddingHorizontal": 30,
         "paddingVertical": 35,
         "shadowColor": "#8A959E80",

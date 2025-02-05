@@ -39,7 +39,7 @@ exports[`ProductCard should render correctly 1`] = `
       source={
         {
           "uri": {
-            "testUri": "../../../assets/images/boarding-background.webp",
+            "testUri": "../../../assets/images/boarding-background.png",
           },
         }
       }
