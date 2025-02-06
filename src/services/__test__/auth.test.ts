@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import {getUser} from '../user';
 import {useUserStore} from 'src/store';
-import {ERROR_MESSAGE, FETCH_ERROR_MESSAGES} from 'src/constants';
+import {ERROR_MESSAGE} from 'src/constants';
 import {UserPayload} from 'src/interfaces';
 import {login} from '../auth';
 
@@ -67,7 +67,7 @@ describe('login', () => {
       mockUser.password,
     );
     expect(mockSetUser).not.toHaveBeenCalled();
-    expect(result).toBe(FETCH_ERROR_MESSAGES[404]);
+    expect(result).toBe(ERROR_MESSAGE.LOGIN[404]);
   });
 
   it('should return error message when user is not found', async () => {

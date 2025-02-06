@@ -81,6 +81,7 @@ const ProductList = memo(
     const handleRefresh = useCallback(() => resetData?.(), [resetData]);
     return (
       <FlatList
+        testID="product-list"
         style={styles.container}
         data={products}
         numColumns={2}

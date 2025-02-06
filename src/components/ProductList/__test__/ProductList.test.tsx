@@ -1,6 +1,6 @@
-import {fireEvent, render, screen} from 'test-utils';
+import {act, fireEvent, render, screen} from 'test-utils';
 import ProductList, {ProductListProps} from '..';
-import {MOCK_PRODUCT} from 'src/mocks';
+import {MOCK_PRODUCT, MOCK_PRODUCTS} from 'src/mocks';
 import {useNavigation} from '@react-navigation/native';
 
 jest.mock('@react-navigation/native', () => ({
@@ -12,6 +12,8 @@ describe('ProductList', () => {
   const mockNavigate = jest.fn();
 
   const mockUseNavigation = useNavigation as jest.Mock;
+  const mockFetchNextPage = jest.fn();
+  const mockReset = jest.fn();
 
   const setup = (props: ProductListProps) => render(<ProductList {...props} />);
 
@@ -36,5 +38,42 @@ describe('ProductList', () => {
     fireEvent.press(productName);
 
     expect(mockNavigate).toHaveBeenCalledWith('ProductDetail', {id: '1'});
+  });
+
+  it('should invoke the load more function when reaching the end of the product list', async () => {
+    setup({
+      products: MOCK_PRODUCTS,
+      fetchNextPage: mockFetchNextPage,
+      hasNextPage: true,
+    });
+
+    const flatList = screen.getByTestId('product-list');
+
+    act(() => {
+      fireEvent(flatList, 'onEndReached');
+    });
+
+    expect(mockFetchNextPage).toHaveBeenCalled();
+  });
+
+  it('should be able to refresh the list', async () => {
+    setup({
+      products: MOCK_PRODUCTS,
+      resetData: mockReset,
+    });
+
+    const flatList = screen.getByTestId('product-list');
+
+    const {refreshControl} = flatList.props;
+
+    expect(refreshControl).toBeDefined();
+
+    const {onRefresh} = refreshControl.props;
+
+    act(() => {
+      onRefresh();
+    });
+
+    expect(mockReset).toHaveBeenCalled();
   });
 });
