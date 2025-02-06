@@ -41,10 +41,10 @@ const CartItem = memo(
     );
 
     const handleChangeQuantity = useCallback(
-      (productId: string, color: string) => (value: number) => {
-        updateQuantity(productId, color, value);
+      (value: number) => {
+        updateQuantity(id, selectedColor, value);
       },
-      [updateQuantity],
+      [id, selectedColor, updateQuantity],
     );
 
     return (
@@ -82,7 +82,7 @@ const CartItem = memo(
           <QuantityControl
             quantity={quantity}
             style={styles.quantity}
-            setQuantity={handleChangeQuantity(id, selectedColor)}
+            setQuantity={handleChangeQuantity}
           />
         </View>
       </View>

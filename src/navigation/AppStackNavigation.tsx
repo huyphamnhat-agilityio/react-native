@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
+import {useMemo} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
@@ -50,6 +51,20 @@ export const AppStackNavigation = () => {
 
   const initialRouteName = !user ? initalUnAuthenticatedRoute : 'HomeTabs';
 
+  const HeaderLeftComponent = useMemo(
+    () => () =>
+      (
+        <Button
+          style={styles.button}
+          bgVariant="none"
+          IconLeft={<BackArrowIcon />}
+          onPress={goBack}
+          onPressIn={goBack}
+        />
+      ),
+    [goBack],
+  );
+
   if (!isHydrated) {
     return (
       <View style={styles.container}>
@@ -95,14 +110,7 @@ export const AppStackNavigation = () => {
               headerStyle: {
                 backgroundColor: colors.white,
               },
-              headerLeft: () => (
-                <Button
-                  style={styles.button}
-                  bgVariant="none"
-                  IconLeft={<BackArrowIcon />}
-                  onPress={goBack}
-                />
-              ),
+              headerLeft: HeaderLeftComponent,
             }}
             name={SCREENS.CART}
             component={CartScreen}
@@ -116,14 +124,7 @@ export const AppStackNavigation = () => {
               headerStyle: {
                 backgroundColor: colors.white,
               },
-              headerLeft: () => (
-                <Button
-                  style={styles.button}
-                  bgVariant="none"
-                  IconLeft={<BackArrowIcon />}
-                  onPress={goBack}
-                />
-              ),
+              headerLeft: HeaderLeftComponent,
             }}
             name={SCREENS.CHECKOUT}
             component={CheckoutScreen}
