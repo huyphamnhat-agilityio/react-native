@@ -40,6 +40,7 @@ const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
     hasNextPage,
     resetData,
     isError,
+    error,
   } = useGetInfinitiveProducts({
     category,
     name: debouncedSearchQuery,
@@ -62,6 +63,7 @@ const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
   }, [isSearchVisible, searchAnimation, setSearchQuery]);
 
   const handleCartPress = useCallback(() => navigate('Cart'), [navigate]);
+
   const handleSetCategory = useCallback(
     (categoryTitle: string) => {
       categoryTitle !== category && setCategory(categoryTitle);
@@ -69,6 +71,14 @@ const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
     [category, setCategory],
   );
 
+  const handleProductCardPress = useCallback(
+    (id: string) => () => {
+      navigate('ProductDetail', {
+        id,
+      });
+    },
+    [navigate],
+  );
   const searchHeight = searchAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: [0, 40],
@@ -129,6 +139,8 @@ const HomeScreen = memo(({navigation: {navigate}}: HomeScreenProps) => {
           products={data}
           isRefreshing={isLoading}
           resetData={resetData}
+          handlePress={handleProductCardPress}
+          errorMessage={error?.message}
         />
       )}
     </View>

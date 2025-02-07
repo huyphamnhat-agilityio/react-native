@@ -7,10 +7,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 
 // Types & Interfaces
-import {Product, StackNavigation} from 'src/interfaces';
+import {Product} from 'src/interfaces';
 
 // Components
 import {ProductCard, Text} from '../common';
@@ -39,6 +38,8 @@ export interface ProductListProps extends Partial<FlatList> {
   hasNextPage?: boolean;
   resetData?: () => void;
   isRefreshing?: boolean;
+  handlePress?: (id: string) => () => void;
+  errorMessage?: string;
 }
 const ProductList = memo(
   ({
@@ -47,23 +48,14 @@ const ProductList = memo(
     hasNextPage = false,
     resetData,
     isRefreshing = false,
+    handlePress,
+    errorMessage = ERROR_MESSAGE.PRODUCT_LIST[404],
     ...props
   }: ProductListProps) => {
-    const {navigate} = useNavigation<StackNavigation>();
-
-    const handlePress = useCallback(
-      (id: string) => () => {
-        navigate('ProductDetail', {
-          id,
-        });
-      },
-      [navigate],
-    );
-
     const handleRenderItem = useCallback(
       ({item: {variants, name, price, id}}: ListRenderItemInfo<Product>) => (
         <ProductCard
-          onPress={handlePress(id)}
+          onPress={handlePress?.(id)}
           image={variants[0].image}
           name={name}
           testID={`product-${id}`}
@@ -83,6 +75,7 @@ const ProductList = memo(
       <FlatList
         testID="product-list"
         style={styles.container}
+        keyExtractor={item => item.id}
         data={products}
         numColumns={2}
         horizontal={false}
@@ -99,7 +92,7 @@ const ProductList = memo(
         }
         ListEmptyComponent={
           <View style={styles.wrapper}>
-            <Text>{ERROR_MESSAGE.PRODUCT_LIST[404]}</Text>
+            <Text style={styles.message}>{errorMessage}</Text>
           </View>
         }
         {...props}
@@ -124,6 +117,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  message: {
+    textAlign: 'center',
   },
 });
 

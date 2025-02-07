@@ -12,7 +12,13 @@ exports[`ProductList should render correctly 1`] = `
         }
       }
     >
-      <Memo(Text)>
+      <Memo(Text)
+        style={
+          {
+            "textAlign": "center",
+          }
+        }
+      >
         No product match with the keywords.
       </Memo(Text)>
     </View>
@@ -113,7 +119,7 @@ exports[`ProductList should render correctly 1`] = `
             }
           }
           accessible={true}
-          focusable={true}
+          focusable={false}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -174,7 +180,7 @@ exports[`ProductList should render correctly 1`] = `
               }
               accessible={true}
               collapsable={false}
-              focusable={true}
+              focusable={false}
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}

@@ -1,6 +1,6 @@
-import {memo} from 'react';
+import {memo, useCallback} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 
 // Icons
 import {LogoIcon} from 'src/components/icons';
@@ -12,7 +12,29 @@ import {LoginForm} from 'src/components';
 // Themes
 import {colors} from 'src/themes';
 
+// Services
+import {login} from 'src/services';
+
+// Types & Interfaces
+import {LoginFormData} from 'src/interfaces';
+
 const LoginScreen = memo(() => {
+  const handleSubmit = useCallback(async (data: LoginFormData) => {
+    const errorMessage = await login(data);
+
+    if (errorMessage) {
+      Alert.alert(
+        'Error',
+        errorMessage,
+        [
+          {
+            text: 'Ok',
+          },
+        ],
+        {cancelable: true},
+      );
+    }
+  }, []);
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.logo}>
@@ -31,7 +53,7 @@ const LoginScreen = memo(() => {
             WELCOME BACK
           </Text>
         </Text>
-        <LoginForm />
+        <LoginForm onSubmit={handleSubmit} />
       </View>
     </KeyboardAwareScrollView>
   );

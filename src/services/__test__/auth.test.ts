@@ -76,14 +76,14 @@ describe('login', () => {
       password: 'password',
     };
 
-    mockGetUser.mockRejectedValueOnce(new Error('User not found'));
+    mockGetUser.mockRejectedValueOnce(404);
 
     const result = await login(payload);
 
     expect(mockGetUser).toHaveBeenCalledWith({email: payload.email});
     expect(mockBcryptCompareSync).not.toHaveBeenCalled();
     expect(mockSetUser).not.toHaveBeenCalled();
-    expect(result).toBe('User not found');
+    expect(result).toBe(ERROR_MESSAGE.LOGIN[404]);
   });
 
   it('should return fallback error message for unhandled errors', async () => {

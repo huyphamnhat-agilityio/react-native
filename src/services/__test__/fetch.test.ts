@@ -1,5 +1,4 @@
 import {fetchApi} from '../fetch';
-import {FETCH_ERROR_MESSAGES} from 'src/constants';
 
 global.fetch = jest.fn();
 
@@ -39,7 +38,7 @@ describe('fetchApi', () => {
     try {
       await fetchApi('https://api.example.com/test');
     } catch (error) {
-      expect((error as Error).message).toBe(FETCH_ERROR_MESSAGES[`${status}`]);
+      expect(error as number).toBe(404);
     }
   });
 });

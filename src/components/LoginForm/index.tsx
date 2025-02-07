@@ -1,6 +1,6 @@
 import {Controller, useForm} from 'react-hook-form';
 import {memo, useCallback, useMemo, useState} from 'react';
-import {Alert, Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 // Utils
 import {clearErrorOnChange, isEnableSubmit} from 'src/utils';
@@ -21,13 +21,12 @@ import {
   REGEX,
 } from 'src/constants';
 
-// Services
-import {login} from 'src/services';
+// Types & Interfaces
+import {LoginFormData} from 'src/interfaces';
 
-export type LoginFormData = {
-  email: string;
-  password: string;
-};
+export interface LoginFormProps {
+  onSubmit: (data: LoginFormData) => Promise<void>;
+}
 
 const height = Dimensions.get('window').height;
 
@@ -56,7 +55,7 @@ export const LOGIN_FORM_VALIDATION = {
   },
 };
 
-const LoginForm = memo(() => {
+const LoginForm = memo(({onSubmit}: LoginFormProps) => {
   const [isShowPassword, setIsShowPassword] = useState(true);
 
   const handleShowPassword = useCallback(() => {
@@ -90,23 +89,6 @@ const LoginForm = memo(() => {
     const REQUIRED_FIELDS: Array<keyof LoginFormData> = ['email', 'password'];
     return !isEnableSubmit(REQUIRED_FIELDS, dirtyFieldList, errors);
   }, [dirtyFieldList, errors]);
-
-  const onSubmit = useCallback(async (data: LoginFormData) => {
-    const errorMessage = await login(data);
-
-    if (errorMessage) {
-      Alert.alert(
-        'Error',
-        errorMessage,
-        [
-          {
-            text: 'Ok',
-          },
-        ],
-        {cancelable: true},
-      );
-    }
-  }, []);
 
   return (
     <View style={styles.container}>

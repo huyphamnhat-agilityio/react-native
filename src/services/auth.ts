@@ -19,7 +19,7 @@ export const login = async (payload: UserPayload) => {
     const isMatchPassword = bcrypt.compareSync(payload.password, user.password);
 
     if (!isMatchPassword) {
-      throw new Error(ERROR_MESSAGE.LOGIN['404']);
+      throw 404;
     }
 
     const setUser = useUserStore.getState().setUser;
@@ -28,8 +28,8 @@ export const login = async (payload: UserPayload) => {
 
     return undefined;
   } catch (error) {
-    if (error instanceof Error) {
-      return error.message;
+    if (typeof error === 'number') {
+      return ERROR_MESSAGE.LOGIN[`${error}`];
     }
     return ERROR_MESSAGE.LOGIN['500'];
   }

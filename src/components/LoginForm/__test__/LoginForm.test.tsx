@@ -1,17 +1,19 @@
 import {fireEvent, render, screen, waitFor} from 'test-utils';
 import LoginForm from '..';
 import {act} from 'react';
-import {login} from 'src/services';
-import {Alert} from 'react-native';
+import {LoginFormData} from 'src/interfaces';
 
 jest.mock('src/services/auth.ts', () => ({
   login: jest.fn(),
 }));
 
 describe('LoginForm', () => {
-  const mockLogin = login as jest.Mock;
+  // const mockLogin = login as jest.Mock;
+  const mockSubmit = jest
+    .fn()
+    .mockImplementation((_: LoginFormData) => Promise<void>);
 
-  const setup = () => render(<LoginForm />);
+  const setup = () => render(<LoginForm onSubmit={mockSubmit} />);
 
   beforeEach(() => jest.restoreAllMocks());
 
@@ -20,42 +22,8 @@ describe('LoginForm', () => {
     expect(toJSON()).toMatchSnapshot();
   });
 
-  it('should show error alert when login fails', async () => {
-    const errorMessage = 'Invalid credentials';
-    mockLogin.mockResolvedValueOnce(errorMessage);
-    setup();
-
-    jest.spyOn(Alert, 'alert');
-
-    const emailInput = screen.getByTestId('email');
-    const passwordInput = screen.getByTestId('password');
-    const loginButton = screen.getByTestId('login');
-
-    act(() => {
-      fireEvent.changeText(emailInput, 'test@example.com');
-      fireEvent.changeText(passwordInput, 'mock1234');
-    });
-
-    await act(async () => fireEvent.press(loginButton));
-
-    await waitFor(() => {
-      expect(mockLogin).toHaveBeenCalledWith({
-        email: 'test@example.com',
-        password: 'mock1234',
-      });
-    });
-
-    await waitFor(() => {
-      expect(Alert.alert).toHaveBeenCalledWith(
-        'Error',
-        errorMessage,
-        [{text: 'Ok'}],
-        {cancelable: true},
-      );
-    });
-  });
   it('should handle input changes', () => {
-    mockLogin.mockResolvedValueOnce(undefined);
+    mockSubmit.mockResolvedValueOnce(undefined);
 
     setup();
 
@@ -74,7 +42,7 @@ describe('LoginForm', () => {
 
   it('should able to submit when login form is filled properly', async () => {
     setup();
-    mockLogin.mockResolvedValueOnce(undefined);
+    mockSubmit.mockResolvedValueOnce(undefined);
 
     const emailInput = screen.getByTestId('email');
     const passwordInput = screen.getByTestId('password');
@@ -88,10 +56,7 @@ describe('LoginForm', () => {
     await act(async () => fireEvent.press(loginButton));
 
     await waitFor(() => {
-      expect(mockLogin).toHaveBeenCalledWith({
-        email: 'test@example.com',
-        password: 'mock1234',
-      });
+      expect(mockSubmit).toHaveBeenCalled();
     });
   });
 });

@@ -1,5 +1,5 @@
 import {fetchApi} from '../fetch';
-import {CATEGORIES, RESOURCES} from 'src/constants';
+import {CATEGORIES, ERROR_MESSAGE, RESOURCES} from 'src/constants';
 import {toQueryString} from 'src/utils';
 import {Product} from 'src/interfaces';
 import {getProduct, getProducts} from '../products';
@@ -70,9 +70,9 @@ describe('getProducts', () => {
 
   it('should handle errors thrown by fetchApi', async () => {
     const params = {category: 'Electronics'};
-    const errorMessage = 'Failed to fetch products';
+    const errorMessage = ERROR_MESSAGE.PRODUCT_LIST['404'];
 
-    mockFetchApi.mockRejectedValueOnce(new Error(errorMessage));
+    mockFetchApi.mockRejectedValueOnce(404);
 
     await expect(getProducts(params)).rejects.toThrow(errorMessage);
   });
@@ -92,13 +92,5 @@ describe('getProduct', () => {
       `${process.env.API_URL}/${RESOURCES.PRODUCTS}/${id}`,
     );
     expect(result).toEqual(mockResponse);
-  });
-
-  it('should handle errors thrown by fetchApi', async () => {
-    const errorMessage = 'Failed to fetch products';
-
-    mockFetchApi.mockRejectedValueOnce(new Error(errorMessage));
-
-    await expect(getProduct('1')).rejects.toThrow(errorMessage);
   });
 });

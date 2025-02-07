@@ -83,7 +83,7 @@ const ProductDetailScreen = memo(
 
     const handleBack = useCallback(() => goBack(), [goBack]);
 
-    const handleAddToCart = () => {
+    const handleAddToCart = useCallback(() => {
       const cartItem: CartItemData = {
         id: `${productId}-${variants[progress.get()].color}`,
         productId,
@@ -103,7 +103,7 @@ const ProductDetailScreen = memo(
         ToastAndroid.SHORT,
         ToastAndroid.TOP,
       );
-    };
+    }, [addToCart, name, price, productId, progress, quantity, variants]);
 
     const [screenHeight, setScreenHeight] = useState(height * 0.53);
     useEffect(() => {

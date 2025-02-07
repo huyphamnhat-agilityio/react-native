@@ -32,12 +32,13 @@ describe('ProductList', () => {
   it('should navigate to ProductDetail screen when clicking on product card', () => {
     setup({
       products: [MOCK_PRODUCT],
+      handlePress: mockNavigate,
     });
     const productName = screen.getByTestId('product-1');
 
     fireEvent.press(productName);
 
-    expect(mockNavigate).toHaveBeenCalledWith('ProductDetail', {id: '1'});
+    expect(mockNavigate).toHaveBeenCalledWith('1');
   });
 
   it('should invoke the load more function when reaching the end of the product list', async () => {
