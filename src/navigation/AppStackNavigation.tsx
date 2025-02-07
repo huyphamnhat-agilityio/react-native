@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unstable-nested-components */
-import {useMemo} from 'react';
+import {memo, useCallback} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
@@ -36,7 +35,7 @@ import {Button} from 'src/components/common';
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
-export const AppStackNavigation = () => {
+const AppStackNavigation = memo(() => {
   const {goBack} = useNavigation<StackNavigation>();
 
   const {user, isFirstTimeLogin, isHydrated} = useUserStore(
@@ -51,17 +50,16 @@ export const AppStackNavigation = () => {
 
   const initialRouteName = !user ? initalUnAuthenticatedRoute : 'HomeTabs';
 
-  const HeaderLeftComponent = useMemo(
-    () => () =>
-      (
-        <Button
-          style={styles.button}
-          bgVariant="none"
-          IconLeft={<BackArrowIcon />}
-          onPress={goBack}
-          onPressIn={goBack}
-        />
-      ),
+  const HeaderLeftComponent = useCallback(
+    () => (
+      <Button
+        style={styles.button}
+        bgVariant="none"
+        IconLeft={<BackArrowIcon />}
+        onPress={goBack}
+        onPressIn={goBack}
+      />
+    ),
     [goBack],
   );
 
@@ -134,7 +132,7 @@ export const AppStackNavigation = () => {
       )}
     </AppStack.Navigator>
   );
-};
+});
 
 const styles = StyleSheet.create({
   button: {
@@ -147,3 +145,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+AppStackNavigation.displayName = 'AppStackNavigation';
+
+export default AppStackNavigation;

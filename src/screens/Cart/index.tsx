@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {memo, useCallback} from 'react';
 import {Dimensions, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 import {useShallow} from 'zustand/shallow';
 
@@ -14,6 +14,8 @@ import {useCartStore} from 'src/store';
 
 // Themes
 import {colors} from 'src/themes';
+
+// Constants
 import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
 
 export interface CartScreenProps {
@@ -21,7 +23,8 @@ export interface CartScreenProps {
 }
 
 const height = Dimensions.get('window').height;
-const CartScreen = ({navigation: {navigate}}: CartScreenProps) => {
+
+const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
   const {cart, getTotalMoney} = useCartStore(
     useShallow(state => ({
       cart: state.cart,
@@ -81,7 +84,7 @@ const CartScreen = ({navigation: {navigate}}: CartScreenProps) => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -114,5 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.border.tertiary,
   },
 });
+
+CartScreen.displayName = 'CartScreen';
 
 export default CartScreen;

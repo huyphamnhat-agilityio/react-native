@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 
 // Components
@@ -6,7 +7,7 @@ import {Text} from 'src/components/common';
 // Themes
 import {colors} from 'src/themes';
 
-const ProfileScreen = () => {
+const ProfileScreen = memo(() => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -27,7 +28,7 @@ const ProfileScreen = () => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -44,5 +45,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
 });
+
+ProfileScreen.displayName = 'ProfileScreen';
 
 export default ProfileScreen;

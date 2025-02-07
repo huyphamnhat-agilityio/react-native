@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unstable-nested-components */
-import {useCallback} from 'react';
+import {memo, useCallback} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 // Types & Interfaces
@@ -22,11 +21,13 @@ import {colors, fontFamilies, fontSizes} from 'src/themes';
 
 // Components
 import {Button} from 'src/components/common';
+
+// Stores
 import {useUserStore} from 'src/store';
 
 const HomeTab = createBottomTabNavigator<HomeTabParamList>();
 
-const HomeTabs = () => {
+const HomeTabs = memo(() => {
   const clearUserSession = useUserStore(state => state.clearUserSession);
 
   const handleLogoutPress = useCallback(() => {
@@ -46,6 +47,34 @@ const HomeTabs = () => {
       {cancelable: true},
     );
   }, [clearUserSession]);
+
+  const HomeTabBarIconComponent = useCallback(
+    ({focused, color}: {focused: boolean; color: string}) => {
+      return (
+        <HomeIcon fill={focused ? colors.primary : undefined} color={color} />
+      );
+    },
+    [],
+  );
+
+  const ProfileTabIconComponent = useCallback(
+    ({focused}: {focused: boolean}) => {
+      return focused ? <ActiveProfileIcon /> : <ProfileIcon />;
+    },
+    [],
+  );
+
+  const HeaderRightComponent = useCallback(
+    () => (
+      <Button
+        style={styles.button}
+        bgVariant="none"
+        IconLeft={<LogoutIcon />}
+        onPress={handleLogoutPress}
+      />
+    ),
+    [handleLogoutPress],
+  );
   return (
     <HomeTab.Navigator
       initialRouteName="Home"
@@ -61,23 +90,14 @@ const HomeTabs = () => {
       }}>
       <HomeTab.Screen
         options={{
-          tabBarIcon: ({focused, color}) => {
-            return (
-              <HomeIcon
-                fill={focused ? colors.primary : undefined}
-                color={color}
-              />
-            );
-          },
+          tabBarIcon: HomeTabBarIconComponent,
         }}
         name="Home"
         component={HomeScreen}
       />
       <HomeTab.Screen
         options={{
-          tabBarIcon: ({focused}) => {
-            return focused ? <ActiveProfileIcon /> : <ProfileIcon />;
-          },
+          tabBarIcon: ProfileTabIconComponent,
           title: 'Profile',
           headerTitleAlign: 'center',
           headerTitleStyle: {
@@ -95,25 +115,21 @@ const HomeTabs = () => {
             alignSelf: 'center',
             paddingRight: 16,
           },
-          headerRight: () => (
-            <Button
-              style={styles.button}
-              bgVariant="none"
-              IconLeft={<LogoutIcon />}
-              onPress={handleLogoutPress}
-            />
-          ),
+          headerRight: HeaderRightComponent,
         }}
         name="Profile"
         component={ProfileScreen}
       />
     </HomeTab.Navigator>
   );
-};
+});
 
 const styles = StyleSheet.create({
   button: {
     padding: 0,
   },
 });
+
+HomeTabs.displayName = 'HomeTabs';
+
 export default HomeTabs;

@@ -1,6 +1,5 @@
-import {useCallback} from 'react';
+import {memo, useCallback} from 'react';
 import {ImageBackground, StyleSheet, View} from 'react-native';
-
 // Components
 import {Button, Text} from 'src/components/common';
 
@@ -12,7 +11,7 @@ import {StackNavigation} from 'src/interfaces';
 export interface BoardingScreenProps {
   navigation: StackNavigation;
 }
-const BoardingScreen = ({navigation: {navigate}}: BoardingScreenProps) => {
+const BoardingScreen = memo(({navigation: {navigate}}: BoardingScreenProps) => {
   const handlePress = useCallback(() => {
     navigate(SCREENS.LOGIN);
   }, [navigate]);
@@ -58,7 +57,7 @@ const BoardingScreen = ({navigation: {navigate}}: BoardingScreenProps) => {
       </ImageBackground>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -91,5 +90,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+
+BoardingScreen.displayName = 'BoardingScreen';
 
 export default BoardingScreen;

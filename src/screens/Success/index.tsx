@@ -1,4 +1,4 @@
-import {useCallback} from 'react';
+import {memo, useCallback} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 
 // Components
@@ -21,7 +21,7 @@ export interface SuccessScreenProps {
 }
 
 const height = Dimensions.get('window').height;
-const SuccessScreen = ({navigation: {goBack}}: SuccessScreenProps) => {
+const SuccessScreen = memo(({navigation: {goBack}}: SuccessScreenProps) => {
   const handleGoBackPress = useCallback(() => goBack(), [goBack]);
 
   return (
@@ -79,7 +79,7 @@ const SuccessScreen = ({navigation: {goBack}}: SuccessScreenProps) => {
       </View>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -136,5 +136,7 @@ const styles = StyleSheet.create({
     zIndex: 99,
   },
 });
+
+SuccessScreen.displayName = 'SuccessScreen';
 
 export default SuccessScreen;

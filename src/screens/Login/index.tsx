@@ -1,3 +1,4 @@
+import {memo} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {StyleSheet, View} from 'react-native';
 
@@ -11,7 +12,7 @@ import {LoginForm} from 'src/components';
 // Themes
 import {colors} from 'src/themes';
 
-const Login = () => {
+const LoginScreen = memo(() => {
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.logo}>
@@ -34,7 +35,7 @@ const Login = () => {
       </View>
     </KeyboardAwareScrollView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -66,4 +67,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
   },
 });
-export default Login;
+
+LoginScreen.displayName = 'LoginScreen';
+
+export default LoginScreen;
