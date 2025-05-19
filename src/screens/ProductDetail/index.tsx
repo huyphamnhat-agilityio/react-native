@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import {memo, useCallback, useEffect, useRef, useState} from 'react';
+import {memo, useCallback, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   Image,
   Keyboard,
+  ScrollView,
   StyleSheet,
   ToastAndroid,
   View,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {
   Extrapolation,
   interpolate,
@@ -105,30 +105,6 @@ const ProductDetailScreen = memo(
       );
     }, [addToCart, name, price, productId, progress, quantity, variants]);
 
-    const [screenHeight, setScreenHeight] = useState(height * 0.53);
-    useEffect(() => {
-      const keyboardDidShowListener = Keyboard.addListener(
-        'keyboardDidShow',
-        e => {
-          setScreenHeight(
-            (e.endCoordinates.screenY - e.endCoordinates.height) *
-              (height >= MEDIUM_DEVICE_HEIGHT ? 0.94 : 0),
-          );
-        },
-      );
-      const keyboardDidHideListener = Keyboard.addListener(
-        'keyboardDidHide',
-        () => {
-          setScreenHeight(Dimensions.get('screen').height * 0.53);
-        },
-      );
-
-      return () => {
-        keyboardDidHideListener.remove();
-        keyboardDidShowListener.remove();
-      };
-    }, []);
-
     if (isLoading) {
       return (
         <View style={styles.loadingWrapper}>
@@ -138,7 +114,125 @@ const ProductDetailScreen = memo(
     }
 
     return (
-      <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.carouselWrapper}>
+            {/* Color Carousel Pagination */}
+
+            <Carousel
+              ref={ref}
+              width={width * 0.86}
+              height={height * 0.5}
+              style={styles.carousel}
+              data={variants}
+              renderItem={({item}) => (
+                <Image
+                  source={{
+                    uri: item.image,
+                  }}
+                  style={styles.image}
+                  resizeMode="stretch"
+                />
+              )}
+              onProgressChange={progress}
+            />
+
+            {/* Image Carousel Pagination */}
+            <Pagination.Custom
+              size={15}
+              progress={progress}
+              data={variants}
+              dotStyle={styles.dot}
+              activeDotStyle={styles.activeDot}
+              containerStyle={styles.pagination}
+              horizontal
+              onPress={onPressPagination}
+              customReanimatedStyle={(progress, index, length) => {
+                let val = Math.abs(progress - index);
+                if (index === 0 && progress > length - 1) {
+                  val = Math.abs(progress - length);
+                }
+                return {
+                  transform: [
+                    {
+                      translateY: interpolate(
+                        val,
+                        [0, 1],
+                        [0, 0],
+                        Extrapolation.CLAMP,
+                      ),
+                    },
+                  ],
+                };
+              }}
+            />
+          </View>
+
+          <View style={styles.content}>
+            <Text
+              numberOfLines={1}
+              font="GelasioMedium"
+              size="lg"
+              textVariant="secondary">
+              {name}
+            </Text>
+
+            <View style={styles.wrapper}>
+              <Text
+                style={styles.price}
+                font="NunitoSansBold"
+                size="xxl"
+                textVariant="secondary">
+                $ {price}
+              </Text>
+
+              <QuantityControl quantity={quantity} setQuantity={setQuantity} />
+            </View>
+
+            <View style={styles.stat}>
+              <View style={styles.rate}>
+                <StarIcon width={20} height={20} color={colors.yellow} />
+                <Text font="NunitoSansBold" size="base" textVariant="secondary">
+                  {rating}
+                </Text>
+              </View>
+
+              <Text
+                font="NunitoSansSemiBold"
+                size="sm"
+                textVariant="quaternary">
+                (${reviewCount} reviews)
+              </Text>
+            </View>
+
+            <ScrollView style={styles.descriptionWrapper}>
+              <Text font="NunitoSansLight" size="sm" textVariant="quaternary">
+                {description}
+              </Text>
+            </ScrollView>
+
+            <View style={styles.footer}>
+              <View style={styles.buttonWrapper}>
+                <Button
+                  bgVariant="secondary"
+                  rounded="md"
+                  style={styles.buttonMark}
+                  IconLeft={<MarkIcon />}
+                />
+
+                <Button
+                  rounded="md"
+                  title="Add to cart"
+                  titleFont="NunitoSansSemiBold"
+                  titleSize="md"
+                  style={styles.buttonAddToCart}
+                  onPress={handleAddToCart}
+                />
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+
         <Button
           rounded="sm"
           bgVariant="white"
@@ -147,149 +241,34 @@ const ProductDetailScreen = memo(
           onPress={handleBack}
         />
 
-        <View style={styles.carouselWrapper}>
-          {/* Color Carousel Pagination */}
-          <Pagination.Custom<{color: string}>
-            progress={progress}
-            data={variants.map(({color}) => ({color}))}
-            size={34}
-            dotStyle={styles.colorDot}
-            activeDotStyle={styles.colorActiveDot}
-            containerStyle={styles.colorPagination}
-            horizontal
-            onPress={onPressPagination}
-            renderItem={item => (
-              <View
-                style={[
-                  styles.colorCarouselItem,
-                  {
-                    backgroundColor: item.color,
-                  },
-                ]}
-              />
-            )}
-          />
-
-          <Carousel
-            ref={ref}
-            width={width * 0.86}
-            height={screenHeight}
-            style={styles.carousel}
-            data={variants}
-            renderItem={({item}) => (
-              <Image
-                source={{
-                  uri: item.image,
-                }}
-                style={styles.image}
-                resizeMode="stretch"
-              />
-            )}
-            onProgressChange={progress}
-          />
-
-          {/* Image Carousel Pagination */}
-          <Pagination.Custom
-            size={15}
-            progress={progress}
-            data={variants}
-            dotStyle={styles.dot}
-            activeDotStyle={styles.activeDot}
-            containerStyle={styles.pagination}
-            horizontal
-            onPress={onPressPagination}
-            customReanimatedStyle={(progress, index, length) => {
-              let val = Math.abs(progress - index);
-              if (index === 0 && progress > length - 1) {
-                val = Math.abs(progress - length);
-              }
-              return {
-                transform: [
-                  {
-                    translateY: interpolate(
-                      val,
-                      [0, 1],
-                      [0, 0],
-                      Extrapolation.CLAMP,
-                    ),
-                  },
-                ],
-              };
-            }}
-          />
-        </View>
-
-        <View style={styles.content}>
-          <Text
-            numberOfLines={1}
-            font="GelasioMedium"
-            size="lg"
-            textVariant="secondary">
-            {name}
-          </Text>
-
-          <View style={styles.wrapper}>
-            <Text
-              style={styles.price}
-              font="NunitoSansBold"
-              size="xxl"
-              textVariant="secondary">
-              $ {price}
-            </Text>
-
-            <QuantityControl quantity={quantity} setQuantity={setQuantity} />
-          </View>
-
-          <View style={styles.stat}>
-            <View style={styles.rate}>
-              <StarIcon width={20} height={20} color={colors.yellow} />
-              <Text font="NunitoSansBold" size="base" textVariant="secondary">
-                {rating}
-              </Text>
-            </View>
-
-            <Text font="NunitoSansSemiBold" size="sm" textVariant="quaternary">
-              (${reviewCount} reviews)
-            </Text>
-          </View>
-
-          <Text
-            numberOfLines={height >= MEDIUM_DEVICE_HEIGHT ? 5 : 2}
-            font="NunitoSansLight"
-            size="sm"
-            textVariant="quaternary">
-            {description}
-          </Text>
-
-          <View style={styles.footer}>
-            <View style={styles.buttonWrapper}>
-              <Button
-                bgVariant="secondary"
-                rounded="md"
-                style={styles.buttonMark}
-                IconLeft={<MarkIcon />}
-              />
-
-              <Button
-                rounded="md"
-                title="Add to cart"
-                titleFont="NunitoSansSemiBold"
-                titleSize="md"
-                style={styles.buttonAddToCart}
-                onPress={handleAddToCart}
-              />
-            </View>
-          </View>
-        </View>
-      </KeyboardAwareScrollView>
+        <Pagination.Custom<{color: string}>
+          progress={progress}
+          data={variants.map(({color}) => ({color}))}
+          size={34}
+          dotStyle={styles.colorDot}
+          activeDotStyle={styles.colorActiveDot}
+          containerStyle={styles.colorPagination}
+          horizontal
+          onPress={onPressPagination}
+          renderItem={item => (
+            <View
+              style={[
+                styles.colorCarouselItem,
+                {
+                  backgroundColor: item.color,
+                },
+              ]}
+            />
+          )}
+        />
+      </View>
     );
   },
 );
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    position: 'relative',
+    flexGrow: 1,
     backgroundColor: colors.white,
   },
   buttonBack: {
@@ -309,7 +288,6 @@ const styles = StyleSheet.create({
     elevation: 40,
   },
   carouselWrapper: {
-    height: '56%',
     position: 'relative',
     overflow: 'visible',
   },
@@ -338,12 +316,13 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: borderRadius.xxl,
   },
   content: {
-    flex: 1,
-    height: '60%',
-    marginTop: height >= MEDIUM_DEVICE_HEIGHT ? 25 : 12,
-    gap: 10,
+    gap: height >= MEDIUM_DEVICE_HEIGHT ? 10 : 4,
+    marginTop: 12,
     paddingHorizontal: 25,
-    paddingBottom: height >= MEDIUM_DEVICE_HEIGHT ? 30 : 0,
+    paddingBottom: height >= MEDIUM_DEVICE_HEIGHT ? 15 : 0,
+  },
+  descriptionWrapper: {
+    height: height >= MEDIUM_DEVICE_HEIGHT ? height * 0.175 : height * 0.1,
   },
   wrapper: {
     flexDirection: 'row',
