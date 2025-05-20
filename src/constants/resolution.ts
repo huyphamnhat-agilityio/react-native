@@ -1,1 +1,1 @@
-export const MEDIUM_DEVICE_HEIGHT = 914;
+export const MEDIUM_DEVICE_HEIGHT = 800;

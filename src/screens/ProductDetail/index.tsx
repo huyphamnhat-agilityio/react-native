@@ -205,12 +205,11 @@ const ProductDetailScreen = memo(
               </Text>
             </View>
 
-            <ScrollView>
+            <ScrollView style={styles.descriptionWrapper}>
               <Text font="NunitoSansLight" size="sm" textVariant="quaternary">
                 {description}
               </Text>
             </ScrollView>
-
             <View style={styles.footer}>
               <View style={styles.buttonWrapper}>
                 <Button
@@ -323,7 +322,7 @@ const styles = StyleSheet.create({
     gap: height >= MEDIUM_DEVICE_HEIGHT ? 10 : 4,
     marginTop: 12,
     paddingHorizontal: 25,
-    paddingBottom: height >= MEDIUM_DEVICE_HEIGHT ? 15 : 0,
+    paddingBottom: 10,
   },
   wrapper: {
     flexDirection: 'row',
@@ -338,6 +337,9 @@ const styles = StyleSheet.create({
   rate: {
     flexDirection: 'row',
     gap: 10,
+  },
+  descriptionWrapper: {
+    height: height * (height >= MEDIUM_DEVICE_HEIGHT ? 0.185 : 0.1),
   },
   footer: {
     flex: 1,
