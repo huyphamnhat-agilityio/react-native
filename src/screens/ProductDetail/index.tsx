@@ -115,7 +115,7 @@ const ProductDetailScreen = memo(
 
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.carouselWrapper}>
             {/* Color Carousel Pagination */}
 
@@ -205,7 +205,7 @@ const ProductDetailScreen = memo(
               </Text>
             </View>
 
-            <ScrollView style={styles.descriptionWrapper}>
+            <ScrollView>
               <Text font="NunitoSansLight" size="sm" textVariant="quaternary">
                 {description}
               </Text>
@@ -271,6 +271,9 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: colors.white,
   },
+  contentContainer: {
+    flexGrow: 1,
+  },
   buttonBack: {
     position: 'absolute',
     top: 53,
@@ -316,13 +319,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: borderRadius.xxl,
   },
   content: {
+    flex: 1,
+    backgroundColor: 'pink',
     gap: height >= MEDIUM_DEVICE_HEIGHT ? 10 : 4,
     marginTop: 12,
     paddingHorizontal: 25,
     paddingBottom: height >= MEDIUM_DEVICE_HEIGHT ? 15 : 0,
-  },
-  descriptionWrapper: {
-    height: height >= MEDIUM_DEVICE_HEIGHT ? height * 0.175 : height * 0.1,
   },
   wrapper: {
     flexDirection: 'row',
