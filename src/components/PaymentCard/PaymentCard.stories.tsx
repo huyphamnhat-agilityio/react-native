@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import PaymentCard from '.';
 
 const meta: Meta<typeof PaymentCard> = {
-  title: 'components/common/PaymentCard',
+  title: 'components/PaymentCard',
   component: PaymentCard,
 };
 

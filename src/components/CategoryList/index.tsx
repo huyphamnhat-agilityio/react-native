@@ -2,7 +2,7 @@ import {memo, useCallback} from 'react';
 import {FlatList, ListRenderItemInfo, StyleSheet} from 'react-native';
 
 // Components
-import {CategoryItem} from '../common';
+import CategoryItem from '../CategoryItem';
 
 // Constants
 import {CATEGORIES} from 'src/constants';

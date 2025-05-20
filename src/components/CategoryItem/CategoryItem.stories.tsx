@@ -4,7 +4,7 @@ import {StarIcon} from 'src/components/icons';
 import CategoryItem from '.';
 
 const meta: Meta<typeof CategoryItem> = {
-  title: 'components/common/CategoryItem',
+  title: 'components/CategoryItem',
   component: CategoryItem,
 };
 

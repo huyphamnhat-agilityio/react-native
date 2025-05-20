@@ -3,13 +3,13 @@ import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 import {useShallow} from 'zustand/shallow';
 
 // Components
+import {Button} from 'src/components/common';
 import {
-  Button,
   DeliveryMethodCard,
   PaymentCard,
   ShippingAddressCard,
   TotalCard,
-} from 'src/components/common';
+} from 'src/components';
 
 // Themes
 import {colors} from 'src/themes';

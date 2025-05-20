@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import DeliveryMethodCard from '.';
 
 const meta: Meta<typeof DeliveryMethodCard> = {
-  title: 'components/common/DeliveryMethodCard',
+  title: 'components/DeliveryMethodCard',
   component: DeliveryMethodCard,
 };
 

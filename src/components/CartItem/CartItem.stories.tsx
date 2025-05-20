@@ -3,7 +3,7 @@ import CartItem from '.';
 import {MOCK_PRODUCT} from 'src/mocks';
 
 const meta: Meta<typeof CartItem> = {
-  title: 'components/common/CartItem',
+  title: 'components/CartItem',
   component: CartItem,
 };
 
@@ -21,20 +21,5 @@ export const Primary: Story = {
       quantity: 2,
       selectedColor: MOCK_PRODUCT.variants[0].color,
     },
-  },
-};
-
-export const HasDivider: Story = {
-  args: {
-    data: {
-      id: MOCK_PRODUCT.id,
-      image: MOCK_PRODUCT.variants[0].image,
-      price: MOCK_PRODUCT.price,
-      productId: MOCK_PRODUCT.id,
-      productName: MOCK_PRODUCT.name,
-      quantity: 2,
-      selectedColor: MOCK_PRODUCT.variants[0].color,
-    },
-    hasDividerStroke: true,
   },
 };

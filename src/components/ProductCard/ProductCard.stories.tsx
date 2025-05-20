@@ -3,7 +3,7 @@ import ProductCard from '.';
 import {MOCK_PRODUCT} from 'src/mocks';
 
 const meta: Meta<typeof ProductCard> = {
-  title: 'components/common/ProductCard',
+  title: 'components/ProductCard',
   component: ProductCard,
 };
 

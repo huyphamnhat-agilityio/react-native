@@ -2,11 +2,11 @@ import {memo, useCallback} from 'react';
 import {StyleSheet, View, ViewProps} from 'react-native';
 
 // Components
-import Button, {ButtonProps} from '../Button';
-import Text from '../Text';
+import {Text, Button} from '../common';
 
 // Types & Interfaces
 import {TextVariant} from 'src/interfaces';
+import {ButtonProps} from '../common/Button';
 
 export interface CategoryItemProps extends ViewProps {
   Icon: React.ReactElement;

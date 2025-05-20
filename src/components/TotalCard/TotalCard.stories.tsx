@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import TotalCard from '.';
 
 const meta: Meta<typeof TotalCard> = {
-  title: 'components/common/TotalCard',
+  title: 'components/TotalCard',
   component: TotalCard,
 };
 

@@ -6,8 +6,8 @@ import {useShallow} from 'zustand/shallow';
 import {CartItemData, StackNavigation} from 'src/interfaces';
 
 // Components
-import {Button, CartItem, Text} from 'src/components/common';
-import {CartList} from 'src/components';
+import {Button, Text} from 'src/components/common';
+import {CartItem, CartList} from 'src/components';
 
 // Store
 import {useCartStore} from 'src/store';

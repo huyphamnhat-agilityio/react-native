@@ -12,7 +12,8 @@ import {
 import {Product} from 'src/interfaces';
 
 // Components
-import {ProductCard, Text} from '../common';
+import {Text} from '../common';
+import ProductCard from '../ProductCard';
 
 // Constants
 import {ERROR_MESSAGE} from 'src/constants';

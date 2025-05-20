@@ -20,10 +20,4 @@ describe('CartItem', () => {
     const {toJSON} = setup(mockProps);
     expect(toJSON()).toMatchSnapshot();
   });
-
-  it('should render correctly with the given props', () => {
-    const {toJSON} = setup({...mockProps, hasDividerStroke: true});
-
-    expect(toJSON()).toMatchSnapshot();
-  });
 });
