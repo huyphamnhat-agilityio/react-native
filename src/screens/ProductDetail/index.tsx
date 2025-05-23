@@ -19,25 +19,18 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from 'react-native-reanimated-carousel';
-
 // Components
 import {Button, QuantityControl, Text} from 'src/components/common';
-
 // Icons
 import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
-
 // Constants
 import {MEDIUM_DEVICE_HEIGHT, SUCCESS_MESSAGE} from 'src/constants';
-
 // Hooks
 import {useProductDetail} from 'src/hooks';
-
 // Types & Interfaces
 import {AppStackScreenProps, CartItemData} from 'src/interfaces';
-
 // Stores
 import {useCartStore} from 'src/store';
-
 // Themes
 import {borderRadius, colors} from 'src/themes';
 

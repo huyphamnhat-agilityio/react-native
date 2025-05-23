@@ -1,3 +1,8 @@
+import {
+  FetchNextPageOptions,
+  InfiniteData,
+  InfiniteQueryObserverResult,
+} from '@tanstack/react-query';
 import {memo, useCallback} from 'react';
 import {
   ActivityIndicator,
@@ -7,7 +12,8 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-
+// Constants
+import {ERROR_MESSAGE} from 'src/constants';
 // Types & Interfaces
 import {Product} from 'src/interfaces';
 
@@ -15,26 +21,12 @@ import {Product} from 'src/interfaces';
 import {Text} from '../common';
 import ProductCard from '../ProductCard';
 
-// Constants
-import {ERROR_MESSAGE} from 'src/constants';
-import {
-  FetchNextPageOptions,
-  InfiniteData,
-  InfiniteQueryObserverResult,
-} from '@tanstack/react-query';
 export interface ProductListProps extends Partial<FlatList> {
   products: Array<Product>;
-  fetchNextPage?: (options?: FetchNextPageOptions) => Promise<
-    InfiniteQueryObserverResult<
-      InfiniteData<
-        {
-          data: Product[];
-          pageParam: number;
-        },
-        unknown
-      >,
-      Error
-    >
+  fetchNextPage?: (
+    options?: FetchNextPageOptions,
+  ) => Promise<
+    InfiniteQueryObserverResult<InfiniteData<Product[], unknown>, Error>
   >;
   hasNextPage?: boolean;
   resetData?: () => void;

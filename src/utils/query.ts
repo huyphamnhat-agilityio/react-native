@@ -29,7 +29,7 @@ export const toQueryString = <T extends Record<string, ValidParam>>(
   addParam('orderBy', params.orderBy);
   addParam('order', params.order);
 
-  // Handle all other properties from T (Product in this case)
+  // Handle all other properties from T
   Object.entries(params).forEach(([key, value]) => {
     // Skip the common params we already handled
     if (['page', 'limit', 'orderBy', 'order'].includes(key)) {

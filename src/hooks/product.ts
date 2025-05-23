@@ -12,51 +12,36 @@ export const useGetProducts = (
   params?: QueryParams<Omit<Product, 'variants'>>,
 ) =>
   useQuery({
-    queryKey: [QUERY_KEY.PRODUCTS, params],
-    queryFn: async () => await getProducts(params),
+    queryKey: QUERY_KEY.PRODUCTS(params),
+    queryFn: () => getProducts,
   });
 
 export const useGetInfinitiveProducts = (
   params?: QueryParams<Omit<Product, 'variants'>>,
 ) => {
-  const getMoreProducts = async (
-    pageParam: number,
-    queryParam?: QueryParams<Omit<Product, 'variants'>>,
-  ) => {
-    const query: QueryParams<Omit<Product, 'variants'>> = {
-      ...params,
-      page: queryParam?.page ?? 0 + pageParam,
-      limit: 6,
-    };
-
-    const result = await getProducts(query);
-
-    return {data: [...result], pageParam: pageParam};
-  };
-
   const {data, ...rest} = useInfiniteQuery({
-    queryKey: [QUERY_KEY.PRODUCTS, params],
-    queryFn: async ({pageParam = 1}) =>
-      await getMoreProducts(pageParam, params),
-    getNextPageParam: lastPages => {
-      if (lastPages.data.length < 6) {
+    queryKey: QUERY_KEY.PRODUCTS(params),
+    queryFn: getProducts,
+    getNextPageParam: (lastPages, _, lastPageParam) => {
+      if (lastPages.length < 6) {
         return undefined;
       }
 
-      return lastPages.pageParam + 1;
+      return lastPageParam + 1;
     },
     initialPageParam: 1,
     retry: 1,
   });
 
-  const products = data?.pages.flatMap(page => page.data) || [];
+  const products = data?.pages.flatMap(page => page) || [];
 
   const queryClient = useQueryClient();
 
-  const resetData = useCallback(
-    () => queryClient.resetQueries({queryKey: [QUERY_KEY.PRODUCTS, params]}),
-    [params, queryClient],
-  );
+  const resetData = useCallback(() => {
+    queryClient.resetQueries({queryKey: QUERY_KEY.PRODUCTS(params)});
+    console.log(params);
+  }, [params, queryClient]);
+
   return {
     data: products,
     resetData,
@@ -66,6 +51,6 @@ export const useGetInfinitiveProducts = (
 
 export const useProductDetail = (id: string) =>
   useQuery({
-    queryKey: [QUERY_KEY.PRODUCT, id],
-    queryFn: async () => await getProduct(id),
+    queryKey: QUERY_KEY.PRODUCT(id),
+    queryFn: getProduct,
   });

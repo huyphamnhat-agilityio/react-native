@@ -1,24 +1,19 @@
 import {memo, useCallback, useRef, useState} from 'react';
 import {ActivityIndicator, Animated, StyleSheet, View} from 'react-native';
-
+import {CategoryList, ProductList} from 'src/components';
 // Components
 import {Button, Text, TextInput} from 'src/components/common';
-import {CategoryList, ProductList} from 'src/components';
-
 // Icons
 import {CartIcon, SearchIcon} from 'src/components/icons';
-
+// Constants
+import {CATEGORIES} from 'src/constants';
+// Hooks
+import {useDebounce, useGetInfinitiveProducts} from 'src/hooks';
+// Types & Interfaces
+import {StackNavigation} from 'src/interfaces';
 // Themes
 import {colors} from 'src/themes';
 
-// Hooks
-import {useDebounce, useGetInfinitiveProducts} from 'src/hooks';
-
-// Constants
-import {CATEGORIES} from 'src/constants';
-
-// Types & Interfaces
-import {StackNavigation} from 'src/interfaces';
 export interface HomeScreenProps {
   navigation: StackNavigation;
 }
