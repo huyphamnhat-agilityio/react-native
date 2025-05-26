@@ -23,7 +23,7 @@
     "react-native": "0.76.5",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-reanimated-carousel": "4.0.0-canary.18",
-    "react-native-screens": "^4.4.0",
+    "react-native-screens": "^4.10.0",
     "react-native-svg": "^15.10.1",
     "zustand": "^5.0.3"
   },
@@ -66,8 +66,9 @@
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "^2.22.0",
     "react-native-reanimated": "^3.16.7",
-    "react-native-safe-area-context": "^5.0.0",
+    "react-native-safe-area-context": "^5.4.1",
     "react-test-renderer": "18.3.1",
+    "reactotron-react-native": "^5.1.13",
     "typescript": "5.0.4"
   },
   "engines": {

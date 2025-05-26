@@ -39,7 +39,6 @@ export const useGetInfinitiveProducts = (
 
   const resetData = useCallback(() => {
     queryClient.resetQueries({queryKey: QUERY_KEY.PRODUCTS(params)});
-    console.log(params);
   }, [params, queryClient]);
 
   return {

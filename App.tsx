@@ -21,6 +21,7 @@ function App(): React.JSX.Element {
       DevSettings.addMenuItem('Toggle Storybook', () => {
         setShowStorybook(prev => !prev);
       });
+      require('./ReactotronConfig');
     }
   }, []);
 
