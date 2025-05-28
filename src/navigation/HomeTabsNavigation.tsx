@@ -24,6 +24,7 @@ import {Button} from 'src/components/common';
 
 // Stores
 import {useUserStore} from 'src/store';
+import {SCREENS} from 'src/constants';
 
 const HomeTab = createBottomTabNavigator<HomeTabParamList>();
 
@@ -77,7 +78,7 @@ const HomeTabs = memo(() => {
   );
   return (
     <HomeTab.Navigator
-      initialRouteName="Home"
+      initialRouteName={SCREENS.HOME}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -92,7 +93,7 @@ const HomeTabs = memo(() => {
         options={{
           tabBarIcon: HomeTabBarIconComponent,
         }}
-        name="Home"
+        name={SCREENS.HOME}
         component={HomeScreen}
       />
       <HomeTab.Screen

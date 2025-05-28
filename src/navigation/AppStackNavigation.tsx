@@ -46,10 +46,6 @@ const AppStackNavigation = memo(() => {
     })),
   );
 
-  const initalUnAuthenticatedRoute = isFirstTimeLogin ? 'Boarding' : 'Login';
-
-  const initialRouteName = !user ? initalUnAuthenticatedRoute : 'HomeTabs';
-
   const HeaderLeftComponent = useCallback(
     () => (
       <Button
@@ -73,21 +69,10 @@ const AppStackNavigation = memo(() => {
 
   return (
     <AppStack.Navigator
-      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
       }}>
-      {!user ? (
-        <>
-          {isFirstTimeLogin && (
-            <AppStack.Screen
-              name={SCREENS.BOARDING}
-              component={BoardingScreen}
-            />
-          )}
-          <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
-        </>
-      ) : (
+      {user ? (
         <>
           <AppStack.Screen name={SCREENS.HOME_TABS} component={HomeTabs} />
           <AppStack.Screen
@@ -128,6 +113,16 @@ const AppStackNavigation = memo(() => {
             component={CheckoutScreen}
           />
           <AppStack.Screen name={SCREENS.SUCCESS} component={SuccessScreen} />
+        </>
+      ) : (
+        <>
+          {isFirstTimeLogin && (
+            <AppStack.Screen
+              name={SCREENS.BOARDING}
+              component={BoardingScreen}
+            />
+          )}
+          <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
         </>
       )}
     </AppStack.Navigator>
