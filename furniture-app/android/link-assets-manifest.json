@@ -1,0 +1,53 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Gelasio/GelasioBold.ttf",
+      "sha1": "ba107cbbe86c42dc8fe9b38bcc783659439e11d2"
+    },
+    {
+      "path": "assets/fonts/Gelasio/GelasioMedium.ttf",
+      "sha1": "7c568e3cfe3efddf8de07f01334a900c59b595e7"
+    },
+    {
+      "path": "assets/fonts/Gelasio/GelasioRegular.ttf",
+      "sha1": "f563d68711a6637fea4a5758780752373055ffb4"
+    },
+    {
+      "path": "assets/fonts/Gelasio/GelasioSemiBold.ttf",
+      "sha1": "d894225a6deffe15df9a2c61006f9ebb0784c068"
+    },
+    {
+      "path": "assets/fonts/Merriweather/MerriweatherBold.ttf",
+      "sha1": "09c7429408c624b9991c44e9975a9129fb2d2fe7"
+    },
+    {
+      "path": "assets/fonts/Merriweather/MerriweatherLight.ttf",
+      "sha1": "74d9f537010e5ac0ffe25990d1433873d98c9339"
+    },
+    {
+      "path": "assets/fonts/Merriweather/MerriweatherRegular.ttf",
+      "sha1": "f4e7810e4e20d1932d3d7994bb6f6456280ee6bd"
+    },
+    {
+      "path": "assets/fonts/Nunito Sans/NunitoSansBold.ttf",
+      "sha1": "9bac6650ac507968089985e02ba424a84b27ab12"
+    },
+    {
+      "path": "assets/fonts/Nunito Sans/NunitoSansLight.ttf",
+      "sha1": "794c5e24d84a89ac9796eda2a4ba770f865598fc"
+    },
+    {
+      "path": "assets/fonts/Nunito Sans/NunitoSansMedium.ttf",
+      "sha1": "036f3dbc6e6088809d1b2b7bcb0939988ad07bf8"
+    },
+    {
+      "path": "assets/fonts/Nunito Sans/NunitoSansRegular.ttf",
+      "sha1": "466635ba024c43f741e320148a159557fd732ec0"
+    },
+    {
+      "path": "assets/fonts/Nunito Sans/NunitoSansSemiBold.ttf",
+      "sha1": "b711d63c786e5a61d89f8918ab36925274bd591b"
+    }
+  ]
+}

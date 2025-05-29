@@ -1,0 +1,1 @@
+cd ./furniture-app && npx --no-install commitlint --edit "$1"

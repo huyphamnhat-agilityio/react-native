@@ -1,0 +1,1 @@
+cd ./furniture-app && npx lint-staged
