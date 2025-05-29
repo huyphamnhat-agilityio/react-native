@@ -1,1 +1,0 @@
-export const MEDIUM_DEVICE_HEIGHT = 800;
