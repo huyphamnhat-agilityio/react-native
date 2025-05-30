@@ -600,5 +600,12 @@
         }
       ]
     }
+  ],
+  "users": [
+    {
+      "email": "olivier@mail.com",
+      "password": "$2a$10$Z.0hBwgLhQ6Rp8uCtQAp5uCzJ.Ajd9cntjkwwEaQALLAQuurEFOLO",
+      "id": 1
+    }
   ]
 }
