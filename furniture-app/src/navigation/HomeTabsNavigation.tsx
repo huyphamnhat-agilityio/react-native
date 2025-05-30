@@ -25,13 +25,10 @@ import {Button} from 'src/components/common';
 // Stores
 import {useUserStore} from 'src/store';
 import {SCREENS} from 'src/constants';
-import {useStartProfiler} from '@shopify/react-native-performance';
 
 const HomeTab = createBottomTabNavigator<HomeTabParamList>();
 
 const HomeTabs = memo(() => {
-  const startProfiler = useStartProfiler();
-
   const clearUserSession = useUserStore(state => state.clearUserSession);
 
   const handleLogoutPress = useCallback(() => {
@@ -79,10 +76,6 @@ const HomeTabs = memo(() => {
     ),
     [handleLogoutPress],
   );
-
-  startProfiler({
-    source: SCREENS.HOME,
-  });
 
   return (
     <HomeTab.Navigator

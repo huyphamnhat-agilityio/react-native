@@ -40,8 +40,14 @@ const HomeScreen = memo(
       isError,
       error,
     } = useGetInfinitiveProducts({
-      category,
-      name: debouncedSearchQuery,
+      ...(category !== CATEGORIES[0].title && {
+        category: {
+          _like: category,
+        },
+      }),
+      name: {
+        _like: debouncedSearchQuery,
+      },
     });
 
     const toggleSearch = useCallback(() => {

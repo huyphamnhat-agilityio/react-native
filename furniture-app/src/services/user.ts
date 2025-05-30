@@ -5,7 +5,7 @@ import {toQueryString} from 'src/utils';
 
 export const getUser = async (params?: QueryParams<Pick<User, 'email'>>) => {
   const users = await fetchApi<Array<User>>(
-    `${process.env.API_URL}/${RESOURCES.USER}${toQueryString(params)}`,
+    `${process.env.AUTH_URL}/${RESOURCES.USER}${toQueryString(params)}`,
   );
 
   return users[0];

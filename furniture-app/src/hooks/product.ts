@@ -13,7 +13,7 @@ export const useGetProducts = (
 ) =>
   useQuery({
     queryKey: QUERY_KEY.PRODUCTS(params),
-    queryFn: () => getProducts,
+    queryFn: getProducts,
   });
 
 export const useGetInfinitiveProducts = (

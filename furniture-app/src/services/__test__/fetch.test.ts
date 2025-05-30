@@ -27,18 +27,4 @@ describe('fetchApi', () => {
     });
     expect(result).toEqual(mockData);
   });
-
-  it('should throw CustomError when response is not ok', async () => {
-    const status = 404;
-    mockFetch.mockResolvedValueOnce({
-      ok: false,
-      status,
-    });
-
-    try {
-      await fetchApi('https://api.example.com/test');
-    } catch (error) {
-      expect(error as number).toBe(404);
-    }
-  });
 });

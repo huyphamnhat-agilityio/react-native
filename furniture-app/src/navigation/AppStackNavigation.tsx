@@ -32,20 +32,15 @@ import {useUserStore} from 'src/store';
 
 // Components
 import {Button} from 'src/components/common';
-import {
-  PerformanceMeasureView,
-  useStartProfiler,
-} from '@shopify/react-native-performance';
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 const AppStackNavigation = memo(() => {
-  const startProfiler = useStartProfiler();
   const {goBack} = useNavigation<StackNavigation>();
 
-  const {user, isFirstTimeLogin, isHydrated} = useUserStore(
+  const {accessToken, isFirstTimeLogin, isHydrated} = useUserStore(
     useShallow(state => ({
-      user: state.user,
+      accessToken: state.accessToken,
       isFirstTimeLogin: state.isFirstTimeLogin,
       isHydrated: state.isHydrated,
     })),
@@ -66,24 +61,18 @@ const AppStackNavigation = memo(() => {
 
   if (!isHydrated) {
     return (
-      <PerformanceMeasureView interactive={false} screenName="SplashScreen">
-        <View style={styles.container}>
-          <ActivityIndicator size="large" color="black" />
-        </View>
-      </PerformanceMeasureView>
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
     );
   }
-
-  startProfiler({
-    source: isFirstTimeLogin ? SCREENS.BOARDING : SCREENS.LOGIN,
-  });
 
   return (
     <AppStack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      {user ? (
+      {accessToken ? (
         <>
           <AppStack.Screen name={SCREENS.HOME_TABS} component={HomeTabs} />
           <AppStack.Screen

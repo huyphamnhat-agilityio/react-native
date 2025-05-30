@@ -1,30 +1,26 @@
-import bcrypt from 'bcryptjs';
-
 // Types & Interfaces
-import {UserPayload} from 'src/interfaces';
-
-// Services
-import {getUser} from './user';
+import {AuthResponse, UserPayload} from 'src/interfaces';
 
 // Store
 import {useUserStore} from 'src/store';
 
 // Constants
-import {ERROR_MESSAGE} from 'src/constants';
+import {ERROR_MESSAGE, RESOURCES} from 'src/constants';
+import {fetchApi} from './fetch';
 
 export const login = async (payload: UserPayload) => {
   try {
-    const user = await getUser({email: payload.email});
+    const authCredential = await fetchApi<AuthResponse>(
+      `${process.env.API_URL}/${RESOURCES.LOGIN}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      },
+    );
 
-    const isMatchPassword = bcrypt.compareSync(payload.password, user.password);
+    const setToken = useUserStore.getState().setAccessToken;
 
-    if (!isMatchPassword) {
-      throw 404;
-    }
-
-    const setUser = useUserStore.getState().setUser;
-
-    setUser(user);
+    setToken(authCredential.accessToken);
 
     return undefined;
   } catch (error) {

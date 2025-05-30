@@ -1,27 +1,26 @@
 import {QueryFunctionContext} from '@tanstack/react-query';
-import {CATEGORIES, ERROR_MESSAGE, QUERY_KEY, RESOURCES} from 'src/constants';
+import {ERROR_MESSAGE, QUERY_KEY, RESOURCES} from 'src/constants';
 import {Product, QueryParams} from 'src/interfaces';
 import {toQueryString} from 'src/utils';
 
-import {fetchApi} from './fetch';
+import {fetchApiWithAuth} from './fetch';
 
 export const getProducts = async ({
   queryKey: [{params}],
   pageParam,
 }: QueryFunctionContext<ReturnType<(typeof QUERY_KEY)['PRODUCTS']>>) => {
   try {
-    const query: QueryParams<Omit<Product, 'variants'>> = {
+    const query: QueryParams<Product> = {
       ...params,
-      page: params?.page ?? 0 + (pageParam as number),
-      limit: 6,
-      category:
-        params?.category === CATEGORIES[0].title ? '' : params?.category,
+      _page: (params?._page ?? 0) + (pageParam as number),
+      _limit: 6,
     };
-    const products = await fetchApi<Product[]>(
+
+    const result = await fetchApiWithAuth<Product[]>(
       `${process.env.API_URL}/${RESOURCES.PRODUCTS}${toQueryString(query)}`,
     );
 
-    return products;
+    return result;
   } catch (error) {
     if (typeof error === 'number') {
       throw new Error(ERROR_MESSAGE.PRODUCT_LIST[`${error}`]);
@@ -33,7 +32,7 @@ export const getProducts = async ({
 export const getProduct = async ({
   queryKey: [{id}],
 }: QueryFunctionContext<ReturnType<(typeof QUERY_KEY)['PRODUCT']>>) => {
-  const product = await fetchApi<Product>(
+  const product = await fetchApiWithAuth<Product>(
     `${process.env.API_URL}/${RESOURCES.PRODUCTS}/${id}`,
   );
 
