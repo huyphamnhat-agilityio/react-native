@@ -9,3 +9,4 @@ export {default as ProductCard} from './ProductCard';
 export {default as ProductList} from './ProductList';
 export {default as ShippingAddressCard} from './ShippingAddressCard';
 export {default as TotalCard} from './TotalCard';
+export {default as RegisterForm} from './RegisterForm';

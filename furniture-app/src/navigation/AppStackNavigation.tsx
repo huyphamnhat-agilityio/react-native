@@ -12,6 +12,7 @@ import {
   CheckoutScreen,
   LoginScreen,
   ProductDetailScreen,
+  RegisterScreen,
   SuccessScreen,
 } from 'src/screens';
 
@@ -123,6 +124,7 @@ const AppStackNavigation = memo(() => {
             />
           )}
           <AppStack.Screen name={SCREENS.LOGIN} component={LoginScreen} />
+          <AppStack.Screen name={SCREENS.REGISTER} component={RegisterScreen} />
         </>
       )}
     </AppStack.Navigator>

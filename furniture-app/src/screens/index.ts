@@ -6,3 +6,4 @@ export {default as LoginScreen} from './Login';
 export {default as ProductDetailScreen} from './ProductDetail';
 export {default as ProfileScreen} from './Profile';
 export {default as SuccessScreen} from './Success';
+export {default as RegisterScreen} from './Register';

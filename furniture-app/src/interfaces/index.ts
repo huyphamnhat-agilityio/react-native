@@ -1,7 +1,7 @@
 export type {CartItemData} from './cart';
 export type {Category} from './category';
 export type {TextVariant, BackgroundVariant} from './color';
-export type {LoginFormData} from './form';
+export type {LoginFormData, RegisterFormData} from './form';
 export type {BorderRadius} from './metrics';
 export type {
   AppStackParamList,

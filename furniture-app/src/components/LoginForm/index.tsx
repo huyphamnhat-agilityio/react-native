@@ -22,10 +22,11 @@ import {
 } from 'src/constants';
 
 // Types & Interfaces
-import {LoginFormData} from 'src/interfaces';
+import {LoginFormData, StackNavigation} from 'src/interfaces';
 
 export interface LoginFormProps {
   onSubmit: (data: LoginFormData) => Promise<void>;
+  navigation: StackNavigation;
 }
 
 const height = Dimensions.get('window').height;
@@ -55,7 +56,7 @@ export const LOGIN_FORM_VALIDATION = {
   },
 };
 
-const LoginForm = memo(({onSubmit}: LoginFormProps) => {
+const LoginForm = memo(({onSubmit, navigation: {navigate}}: LoginFormProps) => {
   const [isShowPassword, setIsShowPassword] = useState(true);
 
   const handleShowPassword = useCallback(() => {
@@ -90,6 +91,9 @@ const LoginForm = memo(({onSubmit}: LoginFormProps) => {
     return !isEnableSubmit(REQUIRED_FIELDS, dirtyFieldList, errors);
   }, [dirtyFieldList, errors]);
 
+  const navigateToRegister = useCallback(() => {
+    navigate('Register');
+  }, [navigate]);
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -168,6 +172,7 @@ const LoginForm = memo(({onSubmit}: LoginFormProps) => {
           title="SIGN UP"
           titleSize="base"
           titleFont="NunitoSansSemiBold"
+          onPress={navigateToRegister}
           style={styles.link}
           disabled={isSubmitting}
         />
@@ -198,6 +203,6 @@ const styles = StyleSheet.create({
   },
 });
 
-LoginForm.displayName = 'Login';
+LoginForm.displayName = 'LoginForm';
 
 export default LoginForm;

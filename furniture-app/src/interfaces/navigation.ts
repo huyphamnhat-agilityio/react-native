@@ -15,6 +15,7 @@ export type HomeTabParamList = {
 export type AppStackParamList = {
   [SCREENS.BOARDING]: undefined;
   [SCREENS.LOGIN]: undefined;
+  [SCREENS.REGISTER]: undefined;
   [SCREENS.HOME_TABS]: NavigatorScreenParams<HomeTabParamList>;
   [SCREENS.PRODUCT_DETAIL]: {id: string};
   [SCREENS.CART]: undefined;

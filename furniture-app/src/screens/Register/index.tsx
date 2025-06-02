@@ -7,7 +7,6 @@ import {LogoIcon} from 'src/components/icons';
 
 // Components
 import {Text} from 'src/components/common';
-import {LoginForm} from 'src/components';
 
 // Themes
 import {colors} from 'src/themes';
@@ -16,10 +15,11 @@ import {colors} from 'src/themes';
 import {login} from 'src/services';
 
 // Types & Interfaces
-import {AppStackScreenProps, LoginFormData} from 'src/interfaces';
+import {AppStackScreenProps, RegisterFormData} from 'src/interfaces';
+import {RegisterForm} from 'src/components';
 
-const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
-  const handleSubmit = useCallback(async (data: LoginFormData) => {
+const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
+  const handleSubmit = useCallback(async (data: RegisterFormData) => {
     const errorMessage = await login(data);
 
     if (errorMessage) {
@@ -44,16 +44,13 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
       </View>
       <View style={styles.wrapper}>
         <Text
-          font="MerriweatherNormal"
-          size="xl"
-          textVariant="alternative"
+          font="MerriweatherBold"
+          size="lg"
+          textVariant="secondary"
           style={styles.title}>
-          Hello ! {'\n'}
-          <Text font="MerriweatherBold" size="lg" textVariant="secondary">
-            WELCOME BACK
-          </Text>
+          WELCOME
         </Text>
-        <LoginForm navigation={navigation} onSubmit={handleSubmit} />
+        <RegisterForm navigation={navigation} onSubmit={handleSubmit} />
       </View>
     </KeyboardAwareScrollView>
   );
@@ -90,6 +87,6 @@ const styles = StyleSheet.create({
   },
 });
 
-LoginScreen.displayName = 'LoginScreen';
+RegisterScreen.displayName = 'RegisterScreen';
 
-export default LoginScreen;
+export default RegisterScreen;
