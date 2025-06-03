@@ -26,6 +26,8 @@
 		B6CDA4C082C84D1C81D1A5CF /* NunitoSansMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13E9490FB3704151B81B9DC9 /* NunitoSansMedium.ttf */; };
 		5A721412E15E4773BDDAD4DB /* NunitoSansRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5A6894F45749FCB5949ABC /* NunitoSansRegular.ttf */; };
 		515F09E772264681828FAF16 /* NunitoSansSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C510125D2773421D9BCB625D /* NunitoSansSemiBold.ttf */; };
+		8D025D33AB4C40FF874169BA /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A7711CEC5AA411A8B3768A7 /* BootSplash.storyboard */; };
+		F00AAB4A68F44226AD03C639 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79F3408123AD4F1AB464C71A /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +71,8 @@
 		13E9490FB3704151B81B9DC9 /* NunitoSansMedium.ttf */ = {isa = PBXFileReference; name = "NunitoSansMedium.ttf"; path = "../assets/fonts/Nunito Sans/NunitoSansMedium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		0A5A6894F45749FCB5949ABC /* NunitoSansRegular.ttf */ = {isa = PBXFileReference; name = "NunitoSansRegular.ttf"; path = "../assets/fonts/Nunito Sans/NunitoSansRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		C510125D2773421D9BCB625D /* NunitoSansSemiBold.ttf */ = {isa = PBXFileReference; name = "NunitoSansSemiBold.ttf"; path = "../assets/fonts/Nunito Sans/NunitoSansSemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7A7711CEC5AA411A8B3768A7 /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "BasicPractice/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		79F3408123AD4F1AB464C71A /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "BasicPractice/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,8 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				7A7711CEC5AA411A8B3768A7 /* BootSplash.storyboard */,
+				79F3408123AD4F1AB464C71A /* Colors.xcassets */,
 			);
 			name = BasicPractice;
 			sourceTree = "<group>";
@@ -302,6 +308,8 @@
 				B6CDA4C082C84D1C81D1A5CF /* NunitoSansMedium.ttf in Resources */,
 				5A721412E15E4773BDDAD4DB /* NunitoSansRegular.ttf in Resources */,
 				515F09E772264681828FAF16 /* NunitoSansSemiBold.ttf in Resources */,
+				8D025D33AB4C40FF874169BA /* BootSplash.storyboard in Resources */,
+				F00AAB4A68F44226AD03C639 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

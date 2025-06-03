@@ -1,7 +1,7 @@
 import {memo, useCallback} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useShallow} from 'zustand/shallow';
 import HomeTabs from './HomeTabsNavigation';
 
@@ -39,11 +39,10 @@ const AppStack = createNativeStackNavigator<AppStackParamList>();
 const AppStackNavigation = memo(() => {
   const {goBack} = useNavigation<StackNavigation>();
 
-  const {accessToken, isFirstTimeLogin, isHydrated} = useUserStore(
+  const {accessToken, isFirstTimeLogin} = useUserStore(
     useShallow(state => ({
       accessToken: state.accessToken,
       isFirstTimeLogin: state.isFirstTimeLogin,
-      isHydrated: state.isHydrated,
     })),
   );
 
@@ -59,14 +58,6 @@ const AppStackNavigation = memo(() => {
     ),
     [goBack],
   );
-
-  if (!isHydrated) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="black" />
-      </View>
-    );
-  }
 
   return (
     <AppStack.Navigator
