@@ -1,4 +1,4 @@
-export type {CartItemData} from './cart';
+export type {CartItemData, CartPayload, Cart} from './cart';
 export type {Category} from './category';
 export type {TextVariant, BackgroundVariant} from './color';
 export type {LoginFormData, RegisterFormData} from './form';

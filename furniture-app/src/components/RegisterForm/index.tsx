@@ -228,11 +228,11 @@ const RegisterForm = memo(
 
           <Button
             width="100%"
-            title="Log in"
+            title="Sign up"
             titleSize="base"
             titleFont="NunitoSansSemiBold"
             rounded="md"
-            testID="login"
+            testID="sign-up"
             style={styles.button}
             disabled={isDisabled || isSubmitting}
             onPress={handleSubmit(onSubmit)}

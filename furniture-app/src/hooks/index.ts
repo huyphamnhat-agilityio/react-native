@@ -4,3 +4,4 @@ export {
   useProductDetail,
   useGetInfinitiveProducts,
 } from './product';
+export {useGetCart, useUpdateCart} from './cart';

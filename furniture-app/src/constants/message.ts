@@ -25,6 +25,11 @@ export const ERROR_MESSAGE: Record<string, Record<number, string>> = {
     404: 'Login failed! Please check your email or password and try again.',
     500: 'Login failed! The server is unavailable now. Please try again later.',
   },
+  REGISTER: {
+    400: 'User already exists! Please check your email and try again.',
+    404: 'Registration failed! Please check your email or password and try again.',
+    500: 'Registration failed! The server is unavailable now. Please try again later.',
+  },
   PRODUCT_LIST: {
     401: 'You are not authorized to access this resource. Please log in and try again.',
     404: 'No product match with the keywords.',

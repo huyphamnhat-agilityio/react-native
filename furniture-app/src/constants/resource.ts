@@ -1,5 +1,7 @@
 export const RESOURCES = {
   PRODUCTS: 'products',
-  USER: 'user',
+  USERS: 'users',
   LOGIN: 'login',
+  REGISTER: 'register',
+  CARTS: 'carts',
 };

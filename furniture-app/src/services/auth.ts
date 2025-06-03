@@ -5,10 +5,11 @@ import {AuthResponse, UserPayload} from 'src/interfaces';
 import {useUserStore} from 'src/store';
 
 // Constants
-import {ERROR_MESSAGE, RESOURCES} from 'src/constants';
+import {RESOURCES} from 'src/constants';
 import {fetchApi} from './fetch';
+import {createCart} from './cart';
 
-export const login = async (payload: UserPayload) => {
+export const login = async (payload: Omit<UserPayload, 'name'>) => {
   try {
     const authCredential = await fetchApi<AuthResponse>(
       `${process.env.API_URL}/${RESOURCES.LOGIN}`,
@@ -18,15 +19,58 @@ export const login = async (payload: UserPayload) => {
       },
     );
 
-    const setToken = useUserStore.getState().setAccessToken;
+    const {
+      user: {id, email, name},
+      accessToken,
+    } = authCredential;
 
-    setToken(authCredential.accessToken);
+    const setUser = useUserStore.getState().setUser;
+    const setAccessToken = useUserStore.getState().setAccessToken;
+
+    setUser({
+      id,
+      email,
+      name,
+    });
+
+    setAccessToken(accessToken);
 
     return undefined;
   } catch (error) {
-    if (typeof error === 'number') {
-      return ERROR_MESSAGE.LOGIN[`${error}`];
-    }
-    return ERROR_MESSAGE.LOGIN['500'];
+    return error as string;
+  }
+};
+
+export const register = async (payload: UserPayload) => {
+  try {
+    const authCredential = await fetchApi<AuthResponse>(
+      `${process.env.API_URL}/${RESOURCES.REGISTER}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      },
+    );
+
+    const {
+      user: {id, email, name},
+      accessToken,
+    } = authCredential;
+
+    const setUser = useUserStore.getState().setUser;
+    const setAccessToken = useUserStore.getState().setAccessToken;
+
+    setUser({
+      id,
+      email,
+      name,
+    });
+
+    setAccessToken(accessToken);
+
+    await createCart(id);
+
+    return undefined;
+  } catch (error) {
+    return error as string;
   }
 };

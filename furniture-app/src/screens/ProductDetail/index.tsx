@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
-  Keyboard,
   ScrollView,
   StyleSheet,
   ToastAndroid,
@@ -26,11 +25,11 @@ import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
 // Constants
 import {MEDIUM_DEVICE_HEIGHT, SUCCESS_MESSAGE} from 'src/constants';
 // Hooks
-import {useProductDetail} from 'src/hooks';
+import {useGetCart, useProductDetail, useUpdateCart} from 'src/hooks';
 // Types & Interfaces
-import {AppStackScreenProps, CartItemData} from 'src/interfaces';
+import {AppStackScreenProps, Cart} from 'src/interfaces';
 // Stores
-import {useCartStore} from 'src/store';
+import {useUserStore} from 'src/store';
 // Themes
 import {borderRadius, colors} from 'src/themes';
 
@@ -46,7 +45,19 @@ const ProductDetailScreen = memo(
   }: AppStackScreenProps<'ProductDetail'>) => {
     const [quantity, setQuantity] = useState(1);
 
-    const addToCart = useCartStore(state => state.addToCart);
+    const userId = useUserStore(state => state.user?.id) ?? '';
+
+    const {
+      data: currentCart,
+      refetch: refetchCart,
+      isLoading: isLoadingCart,
+    } = useGetCart({
+      id: userId,
+    });
+
+    const {items: currentCartItems = []} = currentCart || {};
+
+    const {mutateAsync: updateCart, isPending} = useUpdateCart();
 
     const progress = useSharedValue<number>(0);
 
@@ -76,27 +87,57 @@ const ProductDetailScreen = memo(
 
     const handleBack = useCallback(() => goBack(), [goBack]);
 
-    const handleAddToCart = useCallback(() => {
-      const cartItem: CartItemData = {
-        id: `${productId}-${variants[progress.get()].color}`,
-        productId,
-        productName: name,
-        quantity,
-        price,
-        image: variants[progress.get()].image,
-        selectedColor: variants[progress.get()].color,
+    const handleAddToCart = useCallback(async () => {
+      const itemId = `${productId}-${variants[progress.get()].color}`;
+
+      const updatedItems = currentCartItems.some(i => i.id === itemId)
+        ? currentCartItems.map(item =>
+            item.id === itemId
+              ? {...item, quantity: item.quantity + quantity}
+              : item,
+          )
+        : [
+            ...currentCartItems,
+            {
+              id: itemId,
+              productId,
+              productName: name,
+              quantity,
+              price,
+              image: variants[progress.get()].image,
+              selectedColor: variants[progress.get()].color,
+            },
+          ];
+
+      console.log('updatedItems', updatedItems);
+
+      const cartPayload: Omit<Cart, 'id'> = {
+        userId,
+        items: updatedItems,
       };
 
-      addToCart(cartItem);
-
-      Keyboard.dismiss();
-
-      ToastAndroid.showWithGravity(
-        SUCCESS_MESSAGE.ADD_TO_CART,
-        ToastAndroid.SHORT,
-        ToastAndroid.TOP,
-      );
-    }, [addToCart, name, price, productId, progress, quantity, variants]);
+      await updateCart(cartPayload, {
+        onSuccess: () => {
+          refetchCart();
+          ToastAndroid.showWithGravity(
+            SUCCESS_MESSAGE.ADD_TO_CART,
+            ToastAndroid.SHORT,
+            ToastAndroid.TOP,
+          );
+        },
+      });
+    }, [
+      currentCartItems,
+      name,
+      price,
+      productId,
+      progress,
+      quantity,
+      refetchCart,
+      updateCart,
+      userId,
+      variants,
+    ]);
 
     if (isLoading) {
       return (
@@ -217,6 +258,7 @@ const ProductDetailScreen = memo(
                   title="Add to cart"
                   titleFont="NunitoSansSemiBold"
                   titleSize="md"
+                  disabled={isPending || isLoadingCart}
                   style={styles.buttonAddToCart}
                   onPress={handleAddToCart}
                 />

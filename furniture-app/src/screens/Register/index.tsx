@@ -12,7 +12,7 @@ import {Text} from 'src/components/common';
 import {colors} from 'src/themes';
 
 // Services
-import {login} from 'src/services';
+import {register} from 'src/services';
 
 // Types & Interfaces
 import {AppStackScreenProps, RegisterFormData} from 'src/interfaces';
@@ -20,7 +20,7 @@ import {RegisterForm} from 'src/components';
 
 const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
   const handleSubmit = useCallback(async (data: RegisterFormData) => {
-    const errorMessage = await login(data);
+    const errorMessage = await register(data);
 
     if (errorMessage) {
       Alert.alert(

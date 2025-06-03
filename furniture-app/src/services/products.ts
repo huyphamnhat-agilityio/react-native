@@ -1,5 +1,5 @@
 import {QueryFunctionContext} from '@tanstack/react-query';
-import {ERROR_MESSAGE, QUERY_KEY, RESOURCES} from 'src/constants';
+import {QUERY_KEY, RESOURCES} from 'src/constants';
 import {Product, QueryParams} from 'src/interfaces';
 import {toQueryString} from 'src/utils';
 
@@ -22,10 +22,7 @@ export const getProducts = async ({
 
     return result;
   } catch (error) {
-    if (typeof error === 'number') {
-      throw new Error(ERROR_MESSAGE.PRODUCT_LIST[`${error}`]);
-    }
-    throw new Error(ERROR_MESSAGE.PRODUCT_LIST['500']);
+    throw new Error(error as string);
   }
 };
 

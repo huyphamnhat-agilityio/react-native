@@ -1,6 +1,11 @@
 import {memo, useCallback} from 'react';
-import {Dimensions, ListRenderItemInfo, StyleSheet, View} from 'react-native';
-import {useShallow} from 'zustand/shallow';
+import {
+  ActivityIndicator,
+  Dimensions,
+  ListRenderItemInfo,
+  StyleSheet,
+  View,
+} from 'react-native';
 
 // Types & Interfaces
 import {CartItemData, StackNavigation} from 'src/interfaces';
@@ -10,13 +15,16 @@ import {Button, Text} from 'src/components/common';
 import {CartItem, CartList} from 'src/components';
 
 // Store
-import {useCartStore} from 'src/store';
+import {useUserStore} from 'src/store';
 
 // Themes
 import {colors} from 'src/themes';
 
 // Constants
 import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
+
+// Hooks
+import {useGetCart} from 'src/hooks';
 
 export interface CartScreenProps {
   navigation: StackNavigation;
@@ -25,12 +33,13 @@ export interface CartScreenProps {
 const height = Dimensions.get('window').height;
 
 const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
-  const {cart, getTotalMoney} = useCartStore(
-    useShallow(state => ({
-      cart: state.cart,
-      getTotalMoney: state.getTotalMoney,
-    })),
-  );
+  const userId = useUserStore(state => state.user?.id);
+
+  const {data, isLoading, error} = useGetCart({
+    id: userId,
+  });
+
+  const {items = []} = data || {};
 
   const handleCheckoutPress = useCallback(
     () => navigate('Checkout'),
@@ -52,29 +61,43 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
     ),
     [],
   );
-  const totalMoney = getTotalMoney();
+  // const totalMoney = getTotalMoney();
   return (
     <View style={styles.container}>
-      <CartList
-        removeClippedSubviews={false}
-        data={cart}
-        renderItem={handleRenderItem}
-        ItemSeparatorComponent={CartSeparatorComponent}
-      />
+      {(() => {
+        if (error?.message) {
+          return <Text style={styles.message}>{error.message}</Text>;
+        }
+        if (isLoading) {
+          return (
+            <View style={styles.loadingWrapper}>
+              <ActivityIndicator size="large" color="black" />
+            </View>
+          );
+        }
+        return (
+          <CartList
+            removeClippedSubviews={false}
+            data={items}
+            renderItem={handleRenderItem}
+            ItemSeparatorComponent={CartSeparatorComponent}
+          />
+        );
+      })()}
       <View style={styles.wrapper}>
         <View style={styles.stat}>
           <Text font="NunitoSansBold" size="lg" textVariant="quaternary">
             Total:
           </Text>
           <Text font="NunitoSansBold" size="lg" textVariant="secondary">
-            $ {totalMoney.toFixed(2)}
+            {/* $ {totalMoney.toFixed(2)} */}
           </Text>
         </View>
 
         <Button
           style={styles.button}
           onPress={handleCheckoutPress}
-          disabled={totalMoney === 0}
+          // disabled={totalMoney === 0}
           width="100%"
           rounded="md"
           titleFont="NunitoSansSemiBold"
@@ -96,6 +119,15 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     gap: 20,
+  },
+  loadingWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  message: {
+    flex: 1,
+    textAlign: 'center',
   },
   stat: {
     paddingHorizontal: 20,
