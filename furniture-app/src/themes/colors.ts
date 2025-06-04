@@ -4,6 +4,7 @@ export const colors = {
   tertiary: '#606060',
   quaternary: '#808080',
   white: '#ffffff',
+  black: '#000000',
   disabled: '#999999',
   divider: '#bdbdbd',
   yellow: '#F2C94C',

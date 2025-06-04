@@ -49,7 +49,7 @@ const Button = memo(
     style,
     textVariant = 'primary',
     title = '',
-    titleFont = 'NuniToSansNormal',
+    titleFont = 'NunitoSansNormal',
     titleSize = 'sm',
     width,
     children,

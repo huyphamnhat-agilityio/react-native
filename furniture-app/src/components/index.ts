@@ -10,3 +10,6 @@ export {default as ProductList} from './ProductList';
 export {default as ShippingAddressCard} from './ShippingAddressCard';
 export {default as TotalCard} from './TotalCard';
 export {default as RegisterForm} from './RegisterForm';
+export {default as SettingItem} from './SettingItem';
+export {default as SettingMenu} from './SettingMenu';
+export {default as AddressItem} from './AddressItem';

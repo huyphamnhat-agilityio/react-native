@@ -35,7 +35,7 @@ const BoardingScreen = memo(
 
               <Text
                 style={styles.description}
-                font="NuniToSansNormal"
+                font="NunitoSansNormal"
                 size="base"
                 textVariant="quaternary">
                 The best simple place where you discover most wonderful

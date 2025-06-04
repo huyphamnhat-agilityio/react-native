@@ -41,7 +41,7 @@ const ShippingAddressCard = memo(
           <View style={styles.divider} />
 
           <Text
-            font="NuniToSansNormal"
+            font="NunitoSansNormal"
             size="xs"
             textVariant="quaternary"
             numberOfLines={2}

@@ -1,4 +1,5 @@
 export const fontSizes = {
+  tiny: 12,
   xs: 14,
   sm: 16,
   base: 18,
@@ -22,8 +23,8 @@ export const fontFamilies = {
   GelasioSemiBold: 'GelasioSemiBold',
   GelasioBold: 'GelasioBold',
   NunitoSansLight: 'NunitoSansLight',
-  NuniToSansNormal: 'NunitoSansRegular',
-  NuniToSansMedium: 'NunitoSansMedium',
+  NunitoSansNormal: 'NunitoSansRegular',
+  NunitoSansMedium: 'NunitoSansMedium',
   NunitoSansSemiBold: 'NunitoSansSemiBold',
   NunitoSansBold: 'NunitoSansBold',
   MerriweatherLight: 'MerriweatherLight',

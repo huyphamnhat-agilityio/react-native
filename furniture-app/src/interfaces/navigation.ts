@@ -21,6 +21,7 @@ export type AppStackParamList = {
   [SCREENS.CART]: undefined;
   [SCREENS.CHECKOUT]: undefined;
   [SCREENS.SUCCESS]: undefined;
+  [SCREENS.SHIPPING_ADDRESS]: undefined;
 };
 
 export type AppStackScreenProps<Screen extends keyof AppStackParamList> =

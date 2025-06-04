@@ -14,7 +14,7 @@ const TotalCard = ({order, delivery}: TotalCardProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.stat}>
-        <Text font="NuniToSansNormal" size="base" textVariant="quaternary">
+        <Text font="NunitoSansNormal" size="base" textVariant="quaternary">
           Order:
         </Text>
         <Text font="NunitoSansSemiBold" size="base" textVariant="primary">
@@ -22,7 +22,7 @@ const TotalCard = ({order, delivery}: TotalCardProps) => {
         </Text>
       </View>
       <View style={styles.stat}>
-        <Text font="NuniToSansNormal" size="base" textVariant="quaternary">
+        <Text font="NunitoSansNormal" size="base" textVariant="quaternary">
           Delivery:
         </Text>
         <Text font="NunitoSansSemiBold" size="base" textVariant="primary">
@@ -30,7 +30,7 @@ const TotalCard = ({order, delivery}: TotalCardProps) => {
         </Text>
       </View>
       <View style={styles.stat}>
-        <Text font="NuniToSansNormal" size="base" textVariant="quaternary">
+        <Text font="NunitoSansNormal" size="base" textVariant="quaternary">
           Total:
         </Text>
         <Text font="NunitoSansSemiBold" size="base" textVariant="primary">

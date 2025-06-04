@@ -128,7 +128,7 @@ const RegisterForm = memo(
             name="name"
             render={({field: {onChange, ...rest}, fieldState: {error}}) => (
               <TextInput
-                font="NuniToSansNormal"
+                font="NunitoSansNormal"
                 label="Name"
                 labelSize="xs"
                 labelVariant="alternative"
@@ -147,7 +147,7 @@ const RegisterForm = memo(
             name="email"
             render={({field: {onChange, ...rest}, fieldState: {error}}) => (
               <TextInput
-                font="NuniToSansNormal"
+                font="NunitoSansNormal"
                 label="Email"
                 labelSize="xs"
                 labelVariant="alternative"
@@ -173,7 +173,7 @@ const RegisterForm = memo(
                     testID="toggle-password"
                   />
                 }
-                font="NuniToSansNormal"
+                font="NunitoSansNormal"
                 label="Password"
                 secureTextEntry={isShowPassword}
                 labelSize="xs"
@@ -200,7 +200,7 @@ const RegisterForm = memo(
                     testID="toggle-password"
                   />
                 }
-                font="NuniToSansNormal"
+                font="NunitoSansNormal"
                 label="Confirm Password"
                 secureTextEntry={isShowConfirmPassword}
                 labelSize="xs"

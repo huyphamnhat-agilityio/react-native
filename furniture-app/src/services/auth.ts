@@ -20,7 +20,7 @@ export const login = async (payload: Omit<UserPayload, 'name'>) => {
     );
 
     const {
-      user: {id, email, name},
+      user: {id, email, name, shippingAddress},
       accessToken,
     } = authCredential;
 
@@ -31,6 +31,7 @@ export const login = async (payload: Omit<UserPayload, 'name'>) => {
       id,
       email,
       name,
+      shippingAddress,
     });
 
     setAccessToken(accessToken);
@@ -52,7 +53,7 @@ export const register = async (payload: UserPayload) => {
     );
 
     const {
-      user: {id, email, name},
+      user: {id, email, name, shippingAddress},
       accessToken,
     } = authCredential;
 
@@ -63,6 +64,7 @@ export const register = async (payload: UserPayload) => {
       id,
       email,
       name,
+      shippingAddress,
     });
 
     setAccessToken(accessToken);

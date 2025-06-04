@@ -48,7 +48,7 @@ const SuccessScreen = memo(({navigation: {goBack}}: SuccessScreenProps) => {
         <View style={styles.messageSection}>
           <Text
             style={styles.message}
-            font="NuniToSansNormal"
+            font="NunitoSansNormal"
             size="base"
             textVariant="tertiary">
             Your order will be delivered soon. Thank you for choosing our app!

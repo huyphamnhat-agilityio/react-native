@@ -6,6 +6,7 @@ import {immer} from 'zustand/middleware/immer';
 
 export type UserStore = {
   user: Omit<User, 'password'> | undefined;
+  currentAddressId: string;
   accessToken: string | undefined;
   isFirstTimeLogin: boolean;
   isHydrated: boolean;
@@ -13,6 +14,7 @@ export type UserStore = {
   setAccessToken: (token: string) => void;
   clearUserSession: () => void;
   setHydrated: (state: boolean) => void;
+  setCurrentAddressId: (id: string) => void;
 };
 
 export const useUserStore = create(
@@ -20,6 +22,7 @@ export const useUserStore = create(
     immer<UserStore>(set => ({
       user: undefined,
       accessToken: undefined,
+      currentAddressId: '',
       isFirstTimeLogin: true,
       isHydrated: false,
       setUser: (user: Omit<User, 'password'>) =>
@@ -30,6 +33,14 @@ export const useUserStore = create(
         set(state => {
           state.accessToken = token;
           state.isFirstTimeLogin = false;
+        }),
+      setCurrentAddressId: (id: string) =>
+        set(state => {
+          if (state.currentAddressId === id) {
+            state.currentAddressId = '';
+          } else {
+            state.currentAddressId = id;
+          }
         }),
       clearUserSession: () =>
         set(state => {

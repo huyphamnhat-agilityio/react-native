@@ -13,6 +13,7 @@ import {
   LoginScreen,
   ProductDetailScreen,
   RegisterScreen,
+  ShippingAddressScreen,
   SuccessScreen,
 } from 'src/screens';
 
@@ -94,6 +95,11 @@ const AppStackNavigation = memo(() => {
             options={{
               title: 'Check out',
               headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: fontSizes.sm,
+                fontFamily: fontFamilies.MerriweatherBold,
+                color: colors.secondary,
+              },
               headerShown: true,
               headerShadowVisible: false,
               headerStyle: {
@@ -105,6 +111,25 @@ const AppStackNavigation = memo(() => {
             component={CheckoutScreen}
           />
           <AppStack.Screen name={SCREENS.SUCCESS} component={SuccessScreen} />
+          <AppStack.Screen
+            options={{
+              title: 'Shipping Address',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontSize: fontSizes.sm,
+                fontFamily: fontFamilies.MerriweatherBold,
+                color: colors.secondary,
+              },
+              headerShown: true,
+              headerShadowVisible: false,
+              headerStyle: {
+                backgroundColor: colors.white,
+              },
+              headerLeft: HeaderLeftComponent,
+            }}
+            name={SCREENS.SHIPPING_ADDRESS}
+            component={ShippingAddressScreen}
+          />
         </>
       ) : (
         <>

@@ -22,7 +22,7 @@ const Text = memo(
     textVariant = 'primary',
     size = 'sm',
     style,
-    font = 'NuniToSansNormal',
+    font = 'NunitoSansNormal',
     children,
     ...props
   }: TextProps) => {

@@ -39,7 +39,7 @@ const TextInput = memo(
     (
       {
         label,
-        font = 'NuniToSansNormal',
+        font = 'NunitoSansNormal',
         labelSize = 'sm',
         inputSize = 'sm',
         inputVariant = 'primary',

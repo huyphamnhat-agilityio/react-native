@@ -102,7 +102,7 @@ const LoginForm = memo(({onSubmit, navigation: {navigate}}: LoginFormProps) => {
           name="email"
           render={({field: {onChange, ...rest}, fieldState: {error}}) => (
             <TextInput
-              font="NuniToSansNormal"
+              font="NunitoSansNormal"
               label="Email"
               labelSize="xs"
               labelVariant="alternative"
@@ -128,7 +128,7 @@ const LoginForm = memo(({onSubmit, navigation: {navigate}}: LoginFormProps) => {
                   testID="toggle-password"
                 />
               }
-              font="NuniToSansNormal"
+              font="NunitoSansNormal"
               label="Password"
               secureTextEntry={isShowPassword}
               labelSize="xs"

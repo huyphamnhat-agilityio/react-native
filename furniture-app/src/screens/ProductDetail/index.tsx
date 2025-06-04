@@ -109,8 +109,6 @@ const ProductDetailScreen = memo(
             },
           ];
 
-      console.log('updatedItems', updatedItems);
-
       const cartPayload: Omit<Cart, 'id'> = {
         userId,
         items: updatedItems,
