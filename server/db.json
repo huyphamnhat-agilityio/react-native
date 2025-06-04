@@ -601,6 +601,46 @@
       ]
     }
   ],
-  "users": [],
-  "carts": []
+  "users": [
+    {
+      "email": "bruno203@gmail.com",
+      "password": "$2a$10$XPf6xnpyVnLaMt8xYuMGeeTPCIKPDYjC9HfhWS2q4q0loqJD7gJzC",
+      "name": "Bruno Pham",
+      "shippingAddress": [
+        {
+          "id": "1",
+          "name": "Bruno Fernandes",
+          "address": "125 rue Robert Latouche, Nice, 06200, Côte D’Azur, France"
+        },
+        {
+          "id": "2",
+          "name": "Bruno Fernandes",
+          "address": "18 avenue Jean Médecin, Nice, 06000, Côte D’Azur, France"
+        },
+        {
+          "id": "3",
+          "name": "Bruno Fernandes",
+          "address": "45 boulevard de la Madeleine, Nice, 06000, Côte D’Azur, France"
+        },
+        {
+          "id": "4",
+          "name": "Bruno Fernandes",
+          "address": "9 rue de France, Nice, 06000, Côte D’Azur, France"
+        },
+        {
+          "id": "5",
+          "name": "Bruno Fernandes",
+          "address": "77 promenade des Anglais, Nice, 06000, Côte D’Azur, France"
+        }
+      ],
+      "id": 1
+    }
+  ],
+  "carts": [
+    {
+      "userId": "1",
+      "items": [],
+      "id": 1
+    }
+  ]
 }
