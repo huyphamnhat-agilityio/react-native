@@ -10,10 +10,10 @@ import {Button, Text} from 'src/components/common';
 // Themes
 import {borderRadius, colors} from 'src/themes';
 
-export interface ShippingAddressCardProps {
+export type ShippingAddressCardProps = {
   name: string;
   address: string;
-}
+};
 
 const ShippingAddressCard = memo(
   ({name, address}: ShippingAddressCardProps) => {

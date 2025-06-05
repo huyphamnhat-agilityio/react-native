@@ -1,10 +1,10 @@
 import {memo} from 'react';
-import Svg, {Path, Rect, SvgProps} from 'react-native-svg';
+import Svg, {Path, SvgProps} from 'react-native-svg';
 import {colors} from 'src/themes';
 
 const PlusIconComponent = ({
-  width = 30,
-  height = 30,
+  width = 14,
+  height = 14,
   color = colors.primary,
   ...props
 }: SvgProps) => {
@@ -12,12 +12,11 @@ const PlusIconComponent = ({
     <Svg
       width={width}
       height={height}
-      viewBox="0 0 30 30"
+      viewBox="0 0 14 14"
       fill="none"
       {...props}>
-      <Rect opacity="0.4" width={width} height={height} rx="6" fill="#E0E0E0" />
       <Path
-        d="M21 16H16V21C16 21.55 15.55 22 15 22C14.45 22 14 21.55 14 21V16H9C8.45 16 8 15.55 8 15C8 14.45 8.45 14 9 14H14V9C14 8.45 14.45 8 15 8C15.55 8 16 8.45 16 9V14H21C21.55 14 22 14.45 22 15C22 15.55 21.55 16 21 16Z"
+        d="M13 8H8V13C8 13.55 7.55 14 7 14C6.45 14 6 13.55 6 13V8H1C0.45 8 0 7.55 0 7C0 6.45 0.45 6 1 6H6V1C6 0.45 6.45 0 7 0C7.55 0 8 0.45 8 1V6H13C13.55 6 14 6.45 14 7C14 7.55 13.55 8 13 8Z"
         fill={color}
       />
     </Svg>

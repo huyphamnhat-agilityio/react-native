@@ -10,10 +10,10 @@ import {CATEGORIES} from 'src/constants';
 // Types & Intefaces
 import {Category} from 'src/interfaces';
 
-export interface CategoryListProps {
+export type CategoryListProps = {
   category?: string;
   setCategory: (category: string) => void;
-}
+};
 const CategoryList = memo(({category, setCategory}: CategoryListProps) => {
   const handleRenderItem = useCallback(
     ({item: {title, icon}}: ListRenderItemInfo<Category>) => {

@@ -1,5 +1,6 @@
 export const borderRadius = {
   none: 0,
+  tiny: 2,
   xs: 4,
   sm: 6,
   md: 8,

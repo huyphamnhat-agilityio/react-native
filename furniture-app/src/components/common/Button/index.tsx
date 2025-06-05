@@ -17,7 +17,7 @@ import {borderRadius, colors} from 'src/themes';
 import Text from '../Text';
 import {memo} from 'react';
 
-export interface ButtonProps extends TouchableOpacityProps {
+export type ButtonProps = TouchableOpacityProps & {
   IconLeft?: React.ReactElement;
   IconRight?: React.ReactElement;
   bgVariant?:
@@ -36,7 +36,7 @@ export interface ButtonProps extends TouchableOpacityProps {
   titleFont?: FontFamily;
   titleSize?: FontSize;
   width?: DimensionValue;
-}
+};
 
 const Button = memo(
   ({

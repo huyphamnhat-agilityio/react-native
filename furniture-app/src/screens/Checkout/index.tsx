@@ -1,5 +1,5 @@
 import {memo, useCallback} from 'react';
-import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useShallow} from 'zustand/shallow';
 
 // Components
@@ -20,14 +20,10 @@ import {useCartStore} from 'src/store';
 // Types & Interfaces
 import {StackNavigation} from 'src/interfaces';
 
-// Constants
-import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
-
-export interface CheckoutScreenProps {
+export type CheckoutScreenProps = {
   navigation: StackNavigation;
-}
+};
 
-const height = Dimensions.get('window').height;
 const CheckoutScreen = memo(({navigation: {reset}}: CheckoutScreenProps) => {
   const {getTotalMoney, clearCart} = useCartStore(
     useShallow(state => ({
@@ -86,7 +82,7 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 16,
-    marginTop: height >= MEDIUM_DEVICE_HEIGHT ? 'auto' : 20,
+    marginTop: 'auto',
   },
 });
 

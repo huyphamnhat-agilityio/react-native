@@ -8,3 +8,4 @@ export {default as ProfileScreen} from './Profile';
 export {default as SuccessScreen} from './Success';
 export {default as RegisterScreen} from './Register';
 export {default as ShippingAddressScreen} from './ShippingAddress';
+export {default as AddOrEditAddressScreen} from './AddOrEditAddress';

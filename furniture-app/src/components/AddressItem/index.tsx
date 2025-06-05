@@ -1,9 +1,16 @@
+import {useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+
+// Themes
 import {borderRadius, colors, fontSizes} from 'src/themes';
+
+// Components
 import {Button, Text} from '../common';
 import {EditIcon} from '../icons';
-import {useCallback} from 'react';
+
+// Interfaces
+import {StackNavigation} from 'src/interfaces';
 
 export type AddressItemProps = {
   isChecked?: boolean;
@@ -11,6 +18,7 @@ export type AddressItemProps = {
   address: string;
   onPress?: (id: string) => void;
   id: string;
+  navigation?: StackNavigation;
 };
 const AddressItem = ({
   isChecked = false,
@@ -18,10 +26,15 @@ const AddressItem = ({
   address,
   onPress,
   id,
+  navigation,
 }: AddressItemProps) => {
   const handlePress = useCallback(() => {
     onPress?.(id);
   }, [onPress, id]);
+
+  const handleNavigateToEditAddress = useCallback(() => {
+    navigation?.navigate('AddOrEditAddress', {address: {id, name, address}});
+  }, [navigation, id, name, address]);
 
   return (
     <View style={styles.container}>
@@ -48,6 +61,7 @@ const AddressItem = ({
           <Button
             style={styles.edit}
             bgVariant="none"
+            onPress={handleNavigateToEditAddress}
             IconLeft={<EditIcon />}
           />
         </View>
@@ -84,7 +98,7 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
   },
   checkboxIcon: {
-    borderRadius: 4,
+    borderRadius: borderRadius.xs,
   },
   addressContent: {
     shadowColor: colors.shadow.primary,

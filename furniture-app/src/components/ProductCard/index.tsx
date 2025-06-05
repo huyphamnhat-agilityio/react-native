@@ -16,12 +16,12 @@ import {ShoppingBagIcon} from 'src/components/icons';
 // Themes
 import {borderRadius} from 'src/themes';
 
-export interface ProductCardProps extends ViewProps {
+export type ProductCardProps = ViewProps & {
   image: string;
   name: string;
   price: number;
   onPress?: () => void;
-}
+};
 const ProductCard = memo(
   ({image, name, price, onPress, style, ...props}: ProductCardProps) => {
     return (

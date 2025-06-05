@@ -7,8 +7,16 @@ import {SettingMenu} from 'src/components';
 
 // Themes
 import {colors} from 'src/themes';
+import {useUserStore} from 'src/store';
+import {useShallow} from 'zustand/shallow';
 
 const ProfileScreen = memo(() => {
+  const {name = '', email = ''} = useUserStore(
+    useShallow(state => ({
+      name: state.user?.name,
+      email: state.user?.email,
+    })),
+  );
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -20,10 +28,10 @@ const ProfileScreen = memo(() => {
         />
         <View style={styles.content}>
           <Text font="NunitoSansBold" size="md" textVariant="secondary">
-            Bruno Pham
+            {name}
           </Text>
           <Text font="NunitoSansNormal" size="xs" textVariant="quaternary">
-            bruno203@gmail.com
+            {email}
           </Text>
         </View>
       </View>

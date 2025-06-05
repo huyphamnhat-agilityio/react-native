@@ -16,9 +16,9 @@ import {StackNavigation} from 'src/interfaces';
 // Themes
 import {colors} from 'src/themes';
 
-export interface SuccessScreenProps {
+export type SuccessScreenProps = {
   navigation: StackNavigation;
-}
+};
 
 const height = Dimensions.get('window').height;
 const SuccessScreen = memo(({navigation: {goBack}}: SuccessScreenProps) => {

@@ -8,7 +8,7 @@ export const colors = {
   disabled: '#999999',
   divider: '#bdbdbd',
   yellow: '#F2C94C',
-
+  gray: '#e0e0e0',
   text: {
     primary: '#242424',
     secondary: '#303030',
@@ -26,6 +26,7 @@ export const colors = {
     tertiary: '#f0f0f0',
     quaternary: '#909090',
     danger: '#6a1c1c',
+    alternative: '#DBDBDB',
   },
 
   background: {

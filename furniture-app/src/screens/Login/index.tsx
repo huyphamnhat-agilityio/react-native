@@ -10,31 +10,60 @@ import {Text} from 'src/components/common';
 import {LoginForm} from 'src/components';
 
 // Themes
-import {colors} from 'src/themes';
+import {borderRadius, colors} from 'src/themes';
 
-// Services
-import {login} from 'src/services';
+// Hooks
+import {useLogin} from 'src/hooks';
 
 // Types & Interfaces
 import {AppStackScreenProps, LoginFormData} from 'src/interfaces';
+import {useUserStore} from 'src/store';
+import {useShallow} from 'zustand/shallow';
 
 const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
-  const handleSubmit = useCallback(async (data: LoginFormData) => {
-    const errorMessage = await login(data);
+  const {mutateAsync: login} = useLogin();
 
-    if (errorMessage) {
-      Alert.alert(
-        'Error',
-        errorMessage,
-        [
-          {
-            text: 'Ok',
-          },
-        ],
-        {cancelable: true},
-      );
-    }
-  }, []);
+  const {setUser, setAccessToken} = useUserStore(
+    useShallow(state => ({
+      setUser: state.setUser,
+      setAccessToken: state.setAccessToken,
+    })),
+  );
+
+  const handleSubmit = useCallback(
+    async (data: LoginFormData) => {
+      await login(data, {
+        onSuccess: response => {
+          const {
+            user: {id, email, name, shippingAddress},
+            accessToken,
+          } = response;
+
+          setUser({
+            id,
+            email,
+            name,
+            shippingAddress,
+          });
+
+          setAccessToken(accessToken);
+        },
+        onError: error => {
+          Alert.alert(
+            'Login Failed',
+            error.message,
+            [
+              {
+                text: 'Ok',
+              },
+            ],
+            {cancelable: true},
+          );
+        },
+      });
+    },
+    [login, setAccessToken, setUser],
+  );
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.logo}>
@@ -79,7 +108,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 1,
     backgroundColor: colors.divider,
-    borderRadius: 2,
+    borderRadius: borderRadius.tiny,
   },
   wrapper: {
     gap: 20,

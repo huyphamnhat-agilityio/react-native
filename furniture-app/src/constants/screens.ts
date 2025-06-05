@@ -10,4 +10,5 @@ export const SCREENS = {
   CHECKOUT: 'Checkout',
   SUCCESS: 'Success',
   SHIPPING_ADDRESS: 'ShippingAddress',
+  ADD_OR_EDIT_ADDRESS: 'AddOrEditAddress',
 } as const;

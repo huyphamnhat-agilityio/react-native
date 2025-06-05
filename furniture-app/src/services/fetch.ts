@@ -16,7 +16,7 @@ export const fetchApi = async <T>(url: string, options?: RequestInit) => {
     return (await response.json()) as T;
   }
 
-  throw await response.text();
+  throw new Error(await response.text());
 };
 
 export const fetchApiWithAuth = async <T>(
@@ -44,5 +44,5 @@ export const fetchApiWithAuth = async <T>(
     return (await response.json()) as T;
   }
 
-  throw await response.text();
+  throw new Error(await response.text());
 };

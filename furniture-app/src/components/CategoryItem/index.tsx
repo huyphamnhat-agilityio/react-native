@@ -8,12 +8,12 @@ import {Text, Button} from '../common';
 import {TextVariant} from 'src/interfaces';
 import {ButtonProps} from '../common/Button';
 
-export interface CategoryItemProps extends ViewProps {
+export type CategoryItemProps = ViewProps & {
   Icon: React.ReactElement;
   isActive?: boolean;
   onPress?: (category: string) => void;
   title?: string;
-}
+};
 const CategoryItem = memo(
   ({Icon, isActive = false, onPress, title = ''}: CategoryItemProps) => {
     const buttonVariant: ButtonProps['bgVariant'] = isActive

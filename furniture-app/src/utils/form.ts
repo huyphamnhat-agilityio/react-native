@@ -24,7 +24,7 @@ export const isEnableSubmit = (
   dirtyFields: string[],
   errors: Record<string, unknown>,
 ): boolean => {
-  const isMatchAllRequiredFields = requiredFields.every(field =>
+  const isMatchAllRequiredFields = requiredFields.some(field =>
     dirtyFields.includes(field),
   );
 

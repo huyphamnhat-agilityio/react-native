@@ -17,6 +17,8 @@ export const FORM_VALIDATION_MESSAGE = {
 
 export const SUCCESS_MESSAGE = {
   ADD_TO_CART: 'The product has been added to cart!',
+  ADD_ADDRESS: 'The address has been added successfully!',
+  UPDATE_ADDRESS: 'The address has been updated successfully!',
 } as const;
 
 export const ERROR_MESSAGE: Record<string, Record<number, string>> = {

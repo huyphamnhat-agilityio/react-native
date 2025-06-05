@@ -1,5 +1,6 @@
 import {memo, useCallback} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {useShallow} from 'zustand/shallow';
 import {Alert, StyleSheet, View} from 'react-native';
 
 // Icons
@@ -7,34 +8,89 @@ import {LogoIcon} from 'src/components/icons';
 
 // Components
 import {Text} from 'src/components/common';
-
-// Themes
-import {colors} from 'src/themes';
-
-// Services
-import {register} from 'src/services';
-
-// Types & Interfaces
-import {AppStackScreenProps, RegisterFormData} from 'src/interfaces';
 import {RegisterForm} from 'src/components';
 
-const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
-  const handleSubmit = useCallback(async (data: RegisterFormData) => {
-    const errorMessage = await register(data);
+// Themes
+import {borderRadius, colors} from 'src/themes';
 
-    if (errorMessage) {
-      Alert.alert(
-        'Error',
-        errorMessage,
-        [
-          {
-            text: 'Ok',
-          },
-        ],
-        {cancelable: true},
-      );
-    }
-  }, []);
+// Types & Interfaces
+import {
+  AppStackScreenProps,
+  RegisterFormData,
+  UserPayload,
+} from 'src/interfaces';
+
+// Hooks
+import {useCreateCart, useRegister} from 'src/hooks';
+
+// Store
+import {useUserStore} from 'src/store';
+
+const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
+  const {mutateAsync: registerUser} = useRegister();
+
+  const {mutate: createCart} = useCreateCart();
+
+  const {setUser, setAccessToken} = useUserStore(
+    useShallow(state => ({
+      setUser: state.setUser,
+      setAccessToken: state.setAccessToken,
+    })),
+  );
+
+  const handleSubmit = useCallback(
+    async (data: RegisterFormData) => {
+      const payload: UserPayload = {
+        ...data,
+        shippingAddress: [],
+      };
+      await registerUser(payload, {
+        onSuccess: response => {
+          const {
+            user: {id, email, name, shippingAddress},
+            accessToken,
+          } = response;
+
+          setUser({
+            id,
+            email,
+            name,
+            shippingAddress,
+          });
+
+          setAccessToken(accessToken);
+
+          createCart(id, {
+            onError: error => {
+              Alert.alert(
+                'Create Cart Failed',
+                error.message,
+                [
+                  {
+                    text: 'Ok',
+                  },
+                ],
+                {cancelable: true},
+              );
+            },
+          });
+        },
+        onError: error => {
+          Alert.alert(
+            'Sign Up Failed',
+            error.message,
+            [
+              {
+                text: 'Ok',
+              },
+            ],
+            {cancelable: true},
+          );
+        },
+      });
+    },
+    [createCart, registerUser, setAccessToken, setUser],
+  );
   return (
     <KeyboardAwareScrollView style={styles.container}>
       <View style={styles.logo}>
@@ -76,7 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 1,
     backgroundColor: colors.divider,
-    borderRadius: 2,
+    borderRadius: borderRadius.tiny,
   },
   wrapper: {
     gap: 20,

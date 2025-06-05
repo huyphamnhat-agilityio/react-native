@@ -6,7 +6,7 @@ import {CartItemData} from 'src/interfaces';
 // Components
 import {Text} from 'src/components/common';
 
-export interface CartListProps extends FlatListProps<CartItemData> {}
+export type CartListProps = FlatListProps<CartItemData>;
 const CartList = ({contentContainerStyle, ...props}: CartListProps) => {
   return (
     <FlatList

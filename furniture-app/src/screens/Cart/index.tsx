@@ -26,9 +26,9 @@ import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
 // Hooks
 import {useGetCart} from 'src/hooks';
 
-export interface CartScreenProps {
+export type CartScreenProps = {
   navigation: StackNavigation;
-}
+};
 
 const height = Dimensions.get('window').height;
 

@@ -9,9 +9,9 @@ import {EditIcon, MasterCardIcon} from 'src/components/icons';
 // Themes
 import {borderRadius, colors} from 'src/themes';
 
-export interface PaymentCardProps {
+export type PaymentCardProps = {
   number: string;
-}
+};
 const PaymentCard = ({number}: PaymentCardProps) => {
   return (
     <View style={styles.container}>

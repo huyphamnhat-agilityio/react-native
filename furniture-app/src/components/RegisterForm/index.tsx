@@ -24,12 +24,19 @@ import {
 // Types & Interfaces
 import {RegisterFormData, StackNavigation} from 'src/interfaces';
 
-export interface RegisterFormProps {
+export type RegisterFormProps = {
   onSubmit: (data: RegisterFormData) => Promise<void>;
   navigation: StackNavigation;
-}
+};
 
 const height = Dimensions.get('window').height;
+
+const REQUIRED_FIELDS: Array<keyof RegisterFormData> = [
+  'email',
+  'password',
+  'name',
+  'confirmPassword',
+];
 
 export const REGISTER_FORM_VALIDATION = {
   NAME: {
@@ -107,12 +114,6 @@ const RegisterForm = memo(
     const dirtyFieldList = Object.keys(dirtyFields);
 
     const isDisabled = useMemo(() => {
-      const REQUIRED_FIELDS: Array<keyof RegisterFormData> = [
-        'email',
-        'password',
-        'name',
-        'confirmPassword',
-      ];
       return !isEnableSubmit(REQUIRED_FIELDS, dirtyFieldList, errors);
     }, [dirtyFieldList, errors]);
 

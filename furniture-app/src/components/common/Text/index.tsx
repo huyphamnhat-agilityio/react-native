@@ -11,11 +11,11 @@ import {FontFamily, FontSize, TextVariant} from 'src/interfaces';
 // Themes
 import {colors, fontFamilies, fontSizes} from 'src/themes';
 
-export interface TextProps extends TextBaseProps {
+export type TextProps = TextBaseProps & {
   font?: FontFamily;
   size?: FontSize;
   textVariant?: TextVariant;
-}
+};
 
 const Text = memo(
   ({

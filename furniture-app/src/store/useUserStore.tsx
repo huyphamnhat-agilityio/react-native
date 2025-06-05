@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {User} from 'src/interfaces';
+import {ShippingAddress, User} from 'src/interfaces';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 import {immer} from 'zustand/middleware/immer';
@@ -15,6 +15,7 @@ export type UserStore = {
   clearUserSession: () => void;
   setHydrated: (state: boolean) => void;
   setCurrentAddressId: (id: string) => void;
+  setUserAddress: (address: ShippingAddress[]) => void;
 };
 
 export const useUserStore = create(
@@ -42,10 +43,18 @@ export const useUserStore = create(
             state.currentAddressId = id;
           }
         }),
+      setUserAddress: (address: ShippingAddress[]) => {
+        set(state => {
+          if (state.user) {
+            state.user.shippingAddress = address;
+          }
+        });
+      },
       clearUserSession: () =>
         set(state => {
           state.user = undefined;
           state.accessToken = undefined;
+          state.currentAddressId = '';
         }),
       setHydrated: (hydrated: boolean) =>
         set(state => {

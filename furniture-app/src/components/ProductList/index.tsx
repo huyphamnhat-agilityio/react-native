@@ -22,7 +22,7 @@ import {Product} from 'src/interfaces';
 import {Text} from '../common';
 import ProductCard from '../ProductCard';
 
-export interface ProductListProps extends Partial<FlatListProps<Product>> {
+export type ProductListProps = Partial<FlatListProps<Product>> & {
   products: Array<Product>;
   fetchNextPage?: (
     options?: FetchNextPageOptions,
@@ -34,7 +34,7 @@ export interface ProductListProps extends Partial<FlatListProps<Product>> {
   isRefreshing?: boolean;
   handlePress?: (id: string) => () => void;
   errorMessage?: string;
-}
+};
 const ProductList = memo(
   ({
     products,

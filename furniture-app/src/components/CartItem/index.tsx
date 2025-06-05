@@ -17,9 +17,9 @@ import {CartItemData} from 'src/interfaces';
 // Stores
 import {useCartStore} from 'src/store';
 
-export interface CartItemProps extends ViewProps {
+export type CartItemProps = ViewProps & {
   data: CartItemData;
-}
+};
 const CartItem = memo(
   ({
     data: {image, price, productName, quantity, selectedColor, id},

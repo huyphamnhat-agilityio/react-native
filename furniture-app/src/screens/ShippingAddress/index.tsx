@@ -2,7 +2,10 @@ import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
 
 // Components
 import {AddressItem} from 'src/components';
+import {Button} from 'src/components/common';
+import {PlusIcon} from 'src/components/icons';
 import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
+import {AppStackScreenProps} from 'src/interfaces';
 import {useUserStore} from 'src/store';
 
 // Themes
@@ -11,56 +14,50 @@ import {useShallow} from 'zustand/shallow';
 
 const height = Dimensions.get('window').height;
 
-const MOCK_ADDRESS = [
-  {
-    id: '1',
-    name: 'Bruno Fernandes 1',
-    address: '125 rue Robert Latouche, Nice, 06200, Côte D’azur, France',
-  },
-  {
-    id: '2',
-    name: 'Bruno Fernandes 2',
-    address: '225 rue Robert Latouche, Nice, 06200, Côte D’azur, France',
-  },
-  {
-    id: '3',
-    name: 'Bruno Fernandes 3',
-    address: '325 rue Robert Latouche, Nice, 06200, Côte D’azur, France',
-  },
-  {
-    id: '4',
-    name: 'Bruno Fernandes 4',
-    address: '425 rue Robert Latouche, Nice, 06200, Côte D’azur, France',
-  },
-  {
-    id: '5',
-    name: 'Bruno Fernandes 5',
-    address: '525 rue Robert Latouche, Nice, 06200, Côte D’azur, France',
-  },
-];
-const ShippingAddressScreen = () => {
-  const {currentAddressId, setCurrentAddressId} = useUserStore(
+const ShippingAddressScreen = ({
+  navigation,
+}: AppStackScreenProps<'ShippingAddress'>) => {
+  const {
+    currentAddressId,
+    setCurrentAddressId,
+    addressList = [],
+  } = useUserStore(
     useShallow(state => ({
       currentAddressId: state.currentAddressId,
       setCurrentAddressId: state.setCurrentAddressId,
+      addressList: state.user?.shippingAddress,
     })),
   );
 
+  const navigateToAddAddress = () => {
+    navigation.navigate('AddOrEditAddress', {address: undefined});
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.wrapper}>
-        {MOCK_ADDRESS.map(item => (
-          <AddressItem
-            key={item.id}
-            id={item.id}
-            isChecked={currentAddressId === item.id}
-            name={item.name}
-            address={item.address}
-            onPress={setCurrentAddressId}
-          />
-        ))}
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.wrapper}>
+          {addressList.map(item => (
+            <AddressItem
+              key={item.id}
+              id={item.id}
+              isChecked={currentAddressId === item.id}
+              name={item.name}
+              address={item.address}
+              onPress={setCurrentAddressId}
+              navigation={navigation}
+            />
+          ))}
+        </View>
+      </ScrollView>
+      <Button
+        rounded="full"
+        style={styles.button}
+        bgVariant="white"
+        IconLeft={<PlusIcon />}
+        onPress={navigateToAddAddress}
+      />
+    </View>
   );
 };
 
@@ -72,6 +69,14 @@ const styles = StyleSheet.create({
   wrapper: {
     gap: height >= MEDIUM_DEVICE_HEIGHT ? 30 : 10,
     paddingBottom: 20,
+  },
+  button: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 52,
+    height: 52,
+    elevation: 40,
   },
 });
 

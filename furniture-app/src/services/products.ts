@@ -9,21 +9,17 @@ export const getProducts = async ({
   queryKey: [{params}],
   pageParam,
 }: QueryFunctionContext<ReturnType<(typeof QUERY_KEY)['PRODUCTS']>>) => {
-  try {
-    const query: QueryParams<Product> = {
-      ...params,
-      _page: (params?._page ?? 0) + (pageParam as number),
-      _limit: 6,
-    };
+  const query: QueryParams<Product> = {
+    ...params,
+    _page: (params?._page ?? 0) + (pageParam as number),
+    _limit: 6,
+  };
 
-    const result = await fetchApiWithAuth<Product[]>(
-      `${process.env.API_URL}/${RESOURCES.PRODUCTS}${toQueryString(query)}`,
-    );
+  const result = await fetchApiWithAuth<Product[]>(
+    `${process.env.API_URL}/${RESOURCES.PRODUCTS}${toQueryString(query)}`,
+  );
 
-    return result;
-  } catch (error) {
-    throw new Error(error as string);
-  }
+  return result;
 };
 
 export const getProduct = async ({

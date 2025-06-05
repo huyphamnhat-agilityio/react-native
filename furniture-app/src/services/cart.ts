@@ -18,32 +18,24 @@ export const createCart = async (userId: string) => {
 export const getCart = async ({
   queryKey: [{params}],
 }: QueryFunctionContext<ReturnType<(typeof QUERY_KEY)['CARTS']>>) => {
-  try {
-    const result = await fetchApiWithAuth<Cart>(
-      `${process.env.API_URL}/${RESOURCES.CARTS}${
-        params?.id ? `/${params.id}` : ''
-      }`,
-    );
+  const result = await fetchApiWithAuth<Cart>(
+    `${process.env.API_URL}/${RESOURCES.CARTS}${
+      params?.id ? `/${params.id}` : ''
+    }`,
+  );
 
-    return result;
-  } catch (error) {
-    throw new Error(error as string);
-  }
+  return result;
 };
 
 export const updateCart = async (payload: Omit<Cart, 'id'>) => {
-  try {
-    const {userId, items} = payload;
-    const result = await fetchApiWithAuth<Cart>(
-      `${process.env.API_URL}/${RESOURCES.CARTS}/${userId}`,
-      {
-        method: 'PATCH',
-        body: JSON.stringify({items}),
-      },
-    );
+  const {userId, items} = payload;
+  const result = await fetchApiWithAuth<Cart>(
+    `${process.env.API_URL}/${RESOURCES.CARTS}/${userId}`,
+    {
+      method: 'PATCH',
+      body: JSON.stringify({items}),
+    },
+  );
 
-    return result;
-  } catch (error) {
-    throw new Error(error as string);
-  }
+  return result;
 };

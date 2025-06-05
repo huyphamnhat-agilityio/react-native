@@ -24,12 +24,14 @@ import {
 // Types & Interfaces
 import {LoginFormData, StackNavigation} from 'src/interfaces';
 
-export interface LoginFormProps {
+export type LoginFormProps = {
   onSubmit: (data: LoginFormData) => Promise<void>;
   navigation: StackNavigation;
-}
+};
 
 const height = Dimensions.get('window').height;
+
+const REQUIRED_FIELDS: Array<keyof LoginFormData> = ['email', 'password'];
 
 export const LOGIN_FORM_VALIDATION = {
   EMAIL: {
@@ -87,7 +89,6 @@ const LoginForm = memo(({onSubmit, navigation: {navigate}}: LoginFormProps) => {
   const dirtyFieldList = Object.keys(dirtyFields);
 
   const isDisabled = useMemo(() => {
-    const REQUIRED_FIELDS: Array<keyof LoginFormData> = ['email', 'password'];
     return !isEnableSubmit(REQUIRED_FIELDS, dirtyFieldList, errors);
   }, [dirtyFieldList, errors]);
 

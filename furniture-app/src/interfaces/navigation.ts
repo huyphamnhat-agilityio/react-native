@@ -6,6 +6,7 @@ import {
 } from '@react-navigation/native';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import {SCREENS} from 'src/constants';
+import {ShippingAddress} from './user';
 
 export type HomeTabParamList = {
   [SCREENS.HOME]: undefined;
@@ -22,6 +23,7 @@ export type AppStackParamList = {
   [SCREENS.CHECKOUT]: undefined;
   [SCREENS.SUCCESS]: undefined;
   [SCREENS.SHIPPING_ADDRESS]: undefined;
+  [SCREENS.ADD_OR_EDIT_ADDRESS]: {address?: ShippingAddress};
 };
 
 export type AppStackScreenProps<Screen extends keyof AppStackParamList> =

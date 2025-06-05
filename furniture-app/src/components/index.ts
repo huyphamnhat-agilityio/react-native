@@ -13,3 +13,4 @@ export {default as RegisterForm} from './RegisterForm';
 export {default as SettingItem} from './SettingItem';
 export {default as SettingMenu} from './SettingMenu';
 export {default as AddressItem} from './AddressItem';
+export {default as ShippingAddressForm} from './ShippingAddressForm';

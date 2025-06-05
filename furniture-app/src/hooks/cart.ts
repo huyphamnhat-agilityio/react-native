@@ -1,7 +1,7 @@
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {QUERY_KEY} from 'src/constants';
 import {Cart, QueryParams} from 'src/interfaces';
-import {getCart, updateCart} from 'src/services';
+import {createCart, getCart, updateCart} from 'src/services';
 
 export const useGetCart = (params?: QueryParams<Pick<Cart, 'userId' | 'id'>>) =>
   useQuery({
@@ -12,4 +12,9 @@ export const useGetCart = (params?: QueryParams<Pick<Cart, 'userId' | 'id'>>) =>
 export const useUpdateCart = () =>
   useMutation({
     mutationFn: updateCart,
+  });
+
+export const useCreateCart = () =>
+  useMutation({
+    mutationFn: createCart,
   });

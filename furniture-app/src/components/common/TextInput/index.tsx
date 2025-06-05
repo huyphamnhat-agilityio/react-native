@@ -1,10 +1,14 @@
 import {forwardRef, memo, Ref} from 'react';
 import {
+  ColorValue,
   DimensionValue,
+  StyleProp,
   StyleSheet,
   TextInput as TextInputBase,
   TextInputProps as TextInputBaseProps,
+  TextStyle,
   View,
+  ViewStyle,
 } from 'react-native';
 
 // Components
@@ -16,7 +20,7 @@ import {FontFamily, FontSize, TextVariant} from 'src/interfaces';
 // Themes
 import {colors, fontFamilies, fontSizes} from 'src/themes';
 
-export interface TextInputProps extends TextInputBaseProps {
+export type TextInputProps = TextInputBaseProps & {
   LeftContent?: React.ReactElement;
   RightContent?: React.ReactElement;
   errorMessage?: string;
@@ -29,10 +33,15 @@ export interface TextInputProps extends TextInputBaseProps {
   label?: string;
   labelSize?: FontSize;
   labelVariant?: TextVariant;
+  labelDistance?: number;
   inputWidth?: DimensionValue;
   inputHeight?: DimensionValue;
-  borderBottomWidth?: number;
-}
+  innerBorderBottomWidth?: number;
+  backgroundColor?: ColorValue;
+  containerStyle?: StyleProp<ViewStyle>;
+  errorPosition?: 'inner' | 'outer';
+  errorStyle?: StyleProp<TextStyle>;
+};
 
 const TextInput = memo(
   forwardRef(
@@ -54,7 +63,12 @@ const TextInput = memo(
         errorMessage = '',
         inputWidth = '94%',
         inputHeight = 'auto',
-        borderBottomWidth = 2,
+        innerBorderBottomWidth = 2,
+        backgroundColor,
+        labelDistance,
+        errorPosition = 'inner',
+        containerStyle,
+        errorStyle,
         style,
         ...props
       }: TextInputProps,
@@ -68,44 +82,64 @@ const TextInput = memo(
 
       const opacity = !isEditable ? 0.5 : 1;
       return (
-        <View style={[styles.wrapper, {opacity}]}>
-          {label && (
-            <Text font={font} size={labelSize} textVariant={labelVariant}>
-              {label}
-            </Text>
-          )}
+        <View>
           <View
             style={[
-              styles.container,
-              {
-                borderBottomWidth,
-                borderBottomColor: errorBorderVariant,
-              },
+              styles.wrapper,
+              {opacity, backgroundColor, gap: labelDistance},
+              containerStyle,
             ]}>
-            {LeftContent}
-            <TextInputBase
-              ref={ref}
-              placeholderTextColor={placeholderTextColor}
-              numberOfLines={numberOfLines}
+            {label && (
+              <Text font={font} size={labelSize} textVariant={labelVariant}>
+                {label}
+              </Text>
+            )}
+            <View
               style={[
-                styles.input,
+                styles.container,
                 {
-                  fontSize: fontSizes[`${inputSize}`],
-                  color: colors.text[`${inputVariant}`],
-                  fontFamily: fontFamilies[`${font}`],
-                  width: inputWidth,
-                  height: inputHeight,
+                  borderBottomWidth: innerBorderBottomWidth,
+                  borderBottomColor: errorBorderVariant,
                 },
-                style,
-              ]}
-              editable={isEditable}
-              {...props}
-            />
+              ]}>
+              {LeftContent}
+              <TextInputBase
+                ref={ref}
+                placeholderTextColor={placeholderTextColor}
+                numberOfLines={numberOfLines}
+                style={[
+                  styles.input,
+                  {
+                    fontSize: fontSizes[`${inputSize}`],
+                    color: colors.text[`${inputVariant}`],
+                    fontFamily: fontFamilies[`${font}`],
+                    width: inputWidth,
+                    height: inputHeight,
+                  },
+                  style,
+                ]}
+                editable={isEditable}
+                {...props}
+              />
+              {RightContent}
+            </View>
 
-            {RightContent}
+            {isError && !!errorMessage && errorPosition === 'inner' && (
+              <Text
+                style={errorStyle}
+                font={font}
+                size={labelSize}
+                textVariant="danger">
+                {errorMessage}
+              </Text>
+            )}
           </View>
-          {isError && !!errorMessage && (
-            <Text font={font} size={labelSize} textVariant="danger">
+          {isError && !!errorMessage && errorPosition === 'outer' && (
+            <Text
+              style={errorStyle}
+              font={font}
+              size={labelSize}
+              textVariant="danger">
               {errorMessage}
             </Text>
           )}

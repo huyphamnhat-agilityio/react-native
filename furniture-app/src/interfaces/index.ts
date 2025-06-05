@@ -11,5 +11,5 @@ export type {
 export type {QueryParams} from './query';
 export type {Product} from './product';
 export type {FontFamily, FontSize} from './typography';
-export type {User, UserPayload} from './user';
+export type {User, UserPayload, ShippingAddress} from './user';
 export type {AuthResponse} from './auth';

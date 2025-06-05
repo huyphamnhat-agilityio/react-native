@@ -6,10 +6,10 @@ import {Text} from 'src/components/common';
 // Themes
 import {borderRadius, colors} from 'src/themes';
 
-export interface TotalCardProps {
+export type TotalCardProps = {
   order: number;
   delivery: number;
-}
+};
 const TotalCard = ({order, delivery}: TotalCardProps) => {
   return (
     <View style={styles.container}>

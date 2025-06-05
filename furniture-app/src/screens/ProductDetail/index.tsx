@@ -90,7 +90,7 @@ const ProductDetailScreen = memo(
     const handleAddToCart = useCallback(async () => {
       const itemId = `${productId}-${variants[progress.get()].color}`;
 
-      const updatedItems = currentCartItems.some(i => i.id === itemId)
+      const updatedItems = currentCartItems.some(item => item.id === itemId)
         ? currentCartItems.map(item =>
             item.id === itemId
               ? {...item, quantity: item.quantity + quantity}

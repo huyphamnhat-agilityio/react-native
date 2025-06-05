@@ -13,7 +13,7 @@ import {useUserStore} from 'src/store';
 // Types & Interfaces
 import {StackNavigation} from 'src/interfaces';
 
-export interface SettingMenuProps extends ViewProps {}
+export type SettingMenuProps = ViewProps;
 
 const SettingMenu = ({style, ...rest}: SettingMenuProps) => {
   const shippingAddress =

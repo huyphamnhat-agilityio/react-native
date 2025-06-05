@@ -1,4 +1,5 @@
 export type ShippingAddress = {
+  id: string;
   name: string;
   address: string;
 };

@@ -4,14 +4,15 @@ import {StyleSheet, View, ViewProps} from 'react-native';
 // Components
 import {Button, TextInput} from 'src/components/common';
 import {MinusIcon, PlusIcon} from 'src/components/icons';
+import {borderRadius, colors} from 'src/themes';
 import {parseToInt} from 'src/utils';
 
-export interface QuantityControlProps extends ViewProps {
+export type QuantityControlProps = ViewProps & {
   quantity?: number;
   max?: number;
   min?: number;
   setQuantity: (quantity: number) => void;
-}
+};
 const QuantityControl = memo(
   ({
     quantity = 1,
@@ -49,7 +50,7 @@ const QuantityControl = memo(
         />
         <TextInput
           testID="quantity-input"
-          borderBottomWidth={0}
+          innerBorderBottomWidth={0}
           inputWidth={30}
           inputHeight={20}
           inputMode="numeric"
@@ -81,7 +82,11 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   button: {
+    width: 30,
+    height: 30,
     padding: 0,
+    backgroundColor: colors.gray,
+    borderRadius: borderRadius.sm,
   },
 });
 
