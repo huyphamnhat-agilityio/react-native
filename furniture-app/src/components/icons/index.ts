@@ -24,3 +24,5 @@ export * from './StarIcon.tsx';
 export * from './SuccessBackground.tsx';
 export * from './SuccessImage.tsx';
 export * from './TableIcon.tsx';
+export * from './CameraIcon.tsx';
+export * from './GalleryIcon.tsx';

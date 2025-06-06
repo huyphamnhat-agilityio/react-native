@@ -115,6 +115,10 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
 });
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+    backgroundColor: colors.white,
+  },
   container: {
     backgroundColor: colors.white,
     flex: 1,

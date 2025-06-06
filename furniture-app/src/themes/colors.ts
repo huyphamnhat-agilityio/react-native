@@ -9,6 +9,7 @@ export const colors = {
   divider: '#bdbdbd',
   yellow: '#F2C94C',
   gray: '#e0e0e0',
+  underlay: '#dddddd',
   text: {
     primary: '#242424',
     secondary: '#303030',
@@ -36,6 +37,7 @@ export const colors = {
     quaternary: '#4f4f4f',
     disabled: '#f5f5f5',
     alternative: '#60606066',
+    backdrop: '#0000004d',
   },
 
   shadow: {

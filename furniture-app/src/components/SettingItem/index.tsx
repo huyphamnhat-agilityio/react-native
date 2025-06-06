@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   container: {
     shadowColor: colors.shadow.primary,
     elevation: 40,
-    zIndex: 99,
     backgroundColor: '#fff',
     gap: 10,
     paddingHorizontal: 20,
