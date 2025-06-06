@@ -18,13 +18,13 @@ const ShippingAddressScreen = ({
   navigation,
 }: AppStackScreenProps<'ShippingAddress'>) => {
   const {
-    currentAddressId,
-    setCurrentAddressId,
+    currentAddress,
+    setCurrentAddress,
     addressList = [],
   } = useUserStore(
     useShallow(state => ({
-      currentAddressId: state.currentAddressId,
-      setCurrentAddressId: state.setCurrentAddressId,
+      currentAddress: state.currentAddress,
+      setCurrentAddress: state.setCurrentAddress,
       addressList: state.user?.shippingAddress,
     })),
   );
@@ -41,10 +41,10 @@ const ShippingAddressScreen = ({
             <AddressItem
               key={item.id}
               id={item.id}
-              isChecked={currentAddressId === item.id}
+              isChecked={currentAddress?.id === item.id}
               name={item.name}
               address={item.address}
-              onPress={setCurrentAddressId}
+              onPress={setCurrentAddress}
               navigation={navigation}
             />
           ))}

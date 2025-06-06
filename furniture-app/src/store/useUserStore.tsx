@@ -6,7 +6,7 @@ import {immer} from 'zustand/middleware/immer';
 
 export type UserStore = {
   user: Omit<User, 'password'> | undefined;
-  currentAddressId: string;
+  currentAddress: ShippingAddress | undefined;
   accessToken: string | undefined;
   isFirstTimeLogin: boolean;
   isHydrated: boolean;
@@ -14,16 +14,16 @@ export type UserStore = {
   setAccessToken: (token: string) => void;
   clearUserSession: () => void;
   setHydrated: (state: boolean) => void;
-  setCurrentAddressId: (id: string) => void;
+  setCurrentAddress: (address: ShippingAddress) => void;
   setUserAddress: (address: ShippingAddress[]) => void;
 };
 
 export const useUserStore = create(
   persist(
-    immer<UserStore>(set => ({
+    immer<UserStore>((set, get) => ({
       user: undefined,
       accessToken: undefined,
-      currentAddressId: '',
+      currentAddress: undefined,
       isFirstTimeLogin: true,
       isHydrated: false,
       setUser: (user: Omit<User, 'password'>) =>
@@ -35,14 +35,22 @@ export const useUserStore = create(
           state.accessToken = token;
           state.isFirstTimeLogin = false;
         }),
-      setCurrentAddressId: (id: string) =>
+      setCurrentAddress: (address: ShippingAddress) =>
         set(state => {
-          if (state.currentAddressId === id) {
-            state.currentAddressId = '';
+          const isCurrentAddress = state.currentAddress?.id === address.id;
+
+          if (isCurrentAddress) {
+            state.currentAddress = undefined;
           } else {
-            state.currentAddressId = id;
+            state.currentAddress = address;
           }
         }),
+      getCurrentAddress: (id: string) => {
+        return (
+          get().user?.shippingAddress.find(address => address.id === id) ||
+          ({} as ShippingAddress)
+        );
+      },
       setUserAddress: (address: ShippingAddress[]) => {
         set(state => {
           if (state.user) {
@@ -54,7 +62,7 @@ export const useUserStore = create(
         set(state => {
           state.user = undefined;
           state.accessToken = undefined;
-          state.currentAddressId = '';
+          state.currentAddress = undefined;
         }),
       setHydrated: (hydrated: boolean) =>
         set(state => {

@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 // Icons
@@ -10,13 +10,21 @@ import {Button, Text} from 'src/components/common';
 // Themes
 import {borderRadius, colors} from 'src/themes';
 
+// Interfaces
+import {StackNavigation} from 'src/interfaces';
+
 export type ShippingAddressCardProps = {
   name: string;
   address: string;
+  navigation: StackNavigation;
 };
 
 const ShippingAddressCard = memo(
-  ({name, address}: ShippingAddressCardProps) => {
+  ({name, address, navigation}: ShippingAddressCardProps) => {
+    const handleNavigateToShippingAddress = useCallback(() => {
+      navigation?.navigate('ShippingAddress');
+    }, [navigation]);
+
     return (
       <View style={styles.addressWrapper}>
         <View style={styles.addressLabel}>
@@ -27,6 +35,7 @@ const ShippingAddressCard = memo(
             style={styles.edit}
             bgVariant="none"
             IconLeft={<EditIcon />}
+            onPress={handleNavigateToShippingAddress}
           />
         </View>
         <View style={styles.addressContent}>

@@ -26,6 +26,9 @@ import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
 // Hooks
 import {useGetCart} from 'src/hooks';
 
+// Utils
+import {getTotalMoney} from 'src/utils';
+
 export type CartScreenProps = {
   navigation: StackNavigation;
 };
@@ -41,9 +44,11 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
 
   const {items = []} = data || {};
 
+  const totalMoney = getTotalMoney(items);
+
   const handleCheckoutPress = useCallback(
-    () => navigate('Checkout'),
-    [navigate],
+    () => navigate('Checkout', {totalMoney}),
+    [navigate, totalMoney],
   );
 
   const CartSeparatorComponent = useCallback(
@@ -61,7 +66,7 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
     ),
     [],
   );
-  // const totalMoney = getTotalMoney();
+
   return (
     <View style={styles.container}>
       {(() => {
@@ -90,14 +95,14 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
             Total:
           </Text>
           <Text font="NunitoSansBold" size="lg" textVariant="secondary">
-            {/* $ {totalMoney.toFixed(2)} */}
+            $ {totalMoney.toFixed(2)}
           </Text>
         </View>
 
         <Button
           style={styles.button}
           onPress={handleCheckoutPress}
-          // disabled={totalMoney === 0}
+          disabled={totalMoney === 0}
           width="100%"
           rounded="md"
           titleFont="NunitoSansSemiBold"

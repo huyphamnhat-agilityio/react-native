@@ -20,7 +20,7 @@ export type AppStackParamList = {
   [SCREENS.HOME_TABS]: NavigatorScreenParams<HomeTabParamList>;
   [SCREENS.PRODUCT_DETAIL]: {id: string};
   [SCREENS.CART]: undefined;
-  [SCREENS.CHECKOUT]: undefined;
+  [SCREENS.CHECKOUT]: {totalMoney: number};
   [SCREENS.SUCCESS]: undefined;
   [SCREENS.SHIPPING_ADDRESS]: undefined;
   [SCREENS.ADD_OR_EDIT_ADDRESS]: {address?: ShippingAddress};

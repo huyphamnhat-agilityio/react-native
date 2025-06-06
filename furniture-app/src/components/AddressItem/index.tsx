@@ -10,13 +10,13 @@ import {Button, Text} from '../common';
 import {EditIcon} from '../icons';
 
 // Interfaces
-import {StackNavigation} from 'src/interfaces';
+import {ShippingAddress, StackNavigation} from 'src/interfaces';
 
 export type AddressItemProps = {
   isChecked?: boolean;
   name: string;
   address: string;
-  onPress?: (id: string) => void;
+  onPress?: (address: ShippingAddress) => void;
   id: string;
   navigation?: StackNavigation;
 };
@@ -29,8 +29,8 @@ const AddressItem = ({
   navigation,
 }: AddressItemProps) => {
   const handlePress = useCallback(() => {
-    onPress?.(id);
-  }, [onPress, id]);
+    onPress?.({id, name, address});
+  }, [onPress, id, name, address]);
 
   const handleNavigateToEditAddress = useCallback(() => {
     navigation?.navigate('AddOrEditAddress', {address: {id, name, address}});
