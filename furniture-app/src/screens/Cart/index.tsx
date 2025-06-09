@@ -1,11 +1,13 @@
 import {memo, useCallback} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Dimensions,
   ListRenderItemInfo,
   StyleSheet,
   View,
 } from 'react-native';
+import {useQueryClient} from '@tanstack/react-query';
 
 // Types & Interfaces
 import {CartItemData, StackNavigation} from 'src/interfaces';
@@ -21,10 +23,10 @@ import {useUserStore} from 'src/store';
 import {colors} from 'src/themes';
 
 // Constants
-import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
+import {MEDIUM_DEVICE_HEIGHT, QUERY_KEY} from 'src/constants';
 
 // Hooks
-import {useGetCart} from 'src/hooks';
+import {useGetCart, useUpdateCart} from 'src/hooks';
 
 // Utils
 import {getTotalMoney} from 'src/utils';
@@ -36,19 +38,105 @@ export type CartScreenProps = {
 const height = Dimensions.get('window').height;
 
 const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
-  const userId = useUserStore(state => state.user?.id);
+  const userId = useUserStore(state => state.user?.id) ?? '';
 
-  const {data, isLoading, error} = useGetCart({
+  const {
+    data,
+    isLoading,
+    error: getCartError,
+  } = useGetCart({
     id: userId,
   });
 
   const {items = []} = data || {};
 
+  const {mutateAsync: updateCart, isPending} = useUpdateCart();
+
   const totalMoney = getTotalMoney(items);
+
+  const queryClient = useQueryClient();
 
   const handleCheckoutPress = useCallback(
     () => navigate('Checkout', {totalMoney}),
     [navigate, totalMoney],
+  );
+
+  const handleRemovePress = useCallback(
+    async (color: string) => {
+      const updatedItems = [...items].filter(
+        item => item.selectedColor !== color,
+      );
+
+      await updateCart(
+        {
+          userId,
+          items: updatedItems,
+        },
+        {
+          onSuccess: () => {
+            queryClient.setQueryData(QUERY_KEY.CARTS({id: userId}), {
+              ...queryClient.getQueryData(QUERY_KEY.CARTS({id: userId})),
+              items: updatedItems,
+            });
+          },
+          onError: error => {
+            Alert.alert(
+              'Remove Item Failed',
+              error.message,
+              [
+                {
+                  text: 'Ok',
+                },
+              ],
+              {cancelable: true},
+            );
+          },
+        },
+      );
+    },
+    [items, queryClient, updateCart, userId],
+  );
+
+  const handleUpdateQuantity = useCallback(
+    async (id: string, color: string, quantity: number) => {
+      const updatedItems = [...items];
+
+      const item = updatedItems.find(
+        p => p.id === id && p.selectedColor === color,
+      );
+
+      if (item) {
+        item.quantity = quantity;
+      }
+
+      await updateCart(
+        {
+          userId,
+          items: updatedItems,
+        },
+        {
+          onSuccess: () => {
+            queryClient.setQueryData(QUERY_KEY.CARTS({id: userId}), {
+              ...queryClient.getQueryData(QUERY_KEY.CARTS({id: userId})),
+              items: updatedItems,
+            });
+          },
+          onError: error => {
+            Alert.alert(
+              'Change Quantity Failed',
+              error.message,
+              [
+                {
+                  text: 'Ok',
+                },
+              ],
+              {cancelable: true},
+            );
+          },
+        },
+      );
+    },
+    [items, queryClient, updateCart, userId],
   );
 
   const CartSeparatorComponent = useCallback(
@@ -62,16 +150,22 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
 
   const handleRenderItem = useCallback(
     ({item}: ListRenderItemInfo<CartItemData>) => (
-      <CartItem key={item.id} data={item} />
+      <CartItem
+        key={item.id}
+        data={item}
+        onRemovePress={handleRemovePress}
+        onUpdate={handleUpdateQuantity}
+        isDisabled={isPending}
+      />
     ),
-    [],
+    [handleRemovePress, handleUpdateQuantity, isPending],
   );
 
   return (
     <View style={styles.container}>
       {(() => {
-        if (error?.message) {
-          return <Text style={styles.message}>{error.message}</Text>;
+        if (getCartError?.message) {
+          return <Text style={styles.message}>{getCartError.message}</Text>;
         }
         if (isLoading) {
           return (

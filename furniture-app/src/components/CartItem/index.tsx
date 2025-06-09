@@ -1,6 +1,5 @@
-import {memo, useCallback} from 'react';
+import {memo, useCallback, useEffect, useRef} from 'react';
 import {Image, StyleSheet, View, ViewProps} from 'react-native';
-import {useShallow} from 'zustand/shallow';
 
 // Themes
 import {borderRadius} from 'src/themes';
@@ -13,40 +12,51 @@ import {CrossIcon} from 'src/components/icons';
 
 // Types & Interfaces
 import {CartItemData} from 'src/interfaces';
-
-// Stores
-import {useCartStore} from 'src/store';
+import {useDebounce} from 'src/hooks';
 
 export type CartItemProps = ViewProps & {
   data: CartItemData;
+  onRemovePress?: (color: string) => void;
+  onUpdate?: (id: string, color: string, quantity: number) => void;
+  isDisabled?: boolean;
 };
 const CartItem = memo(
   ({
     data: {image, price, productName, quantity, selectedColor, id},
+    onRemovePress,
+    onUpdate,
     style,
+    isDisabled = false,
     ...props
   }: CartItemProps) => {
-    const {removeFromCart, updateQuantity} = useCartStore(
-      useShallow(state => ({
-        removeFromCart: state.removeFromCart,
-        updateQuantity: state.updateQuantity,
-      })),
-    );
+    // Ref to skip effect on initial render
+    // This ensures the effect only runs when debouncedQuantity changes after mount
+    const didMount = useRef(false);
 
-    const handleRemoveButtonPress = useCallback(
-      (color: string) => () => {
-        removeFromCart(color);
-      },
-      [removeFromCart],
-    );
+    const handleRemovePress = useCallback(() => {
+      onRemovePress?.(selectedColor);
+    }, [onRemovePress, selectedColor]);
+
+    const {
+      value: currentQuantity,
+      debouncedValue: debouncedQuantity,
+      setValue: setQuantityDebounce,
+    } = useDebounce(quantity, 500);
 
     const handleChangeQuantity = useCallback(
       (value: number) => {
-        updateQuantity(id, selectedColor, value);
+        onUpdate?.(id, selectedColor, value);
       },
-      [id, selectedColor, updateQuantity],
+      [id, selectedColor, onUpdate],
     );
 
+    useEffect(() => {
+      if (didMount.current) {
+        handleChangeQuantity(debouncedQuantity);
+      } else {
+        didMount.current = true;
+      }
+    }, [debouncedQuantity, handleChangeQuantity]);
     return (
       <View style={[styles.container, style]} {...props}>
         <Image
@@ -74,15 +84,17 @@ const CartItem = memo(
               IconLeft={<CrossIcon />}
               bgVariant="none"
               rounded="full"
+              disabled={isDisabled}
               style={styles.button}
-              onPress={handleRemoveButtonPress(selectedColor)}
+              onPress={handleRemovePress}
             />
           </View>
 
           <QuantityControl
-            quantity={quantity}
+            isDisabled={isDisabled}
+            quantity={currentQuantity}
             style={styles.quantity}
-            setQuantity={handleChangeQuantity}
+            setQuantity={setQuantityDebounce}
           />
         </View>
       </View>

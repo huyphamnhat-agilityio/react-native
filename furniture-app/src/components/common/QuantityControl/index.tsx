@@ -12,6 +12,7 @@ export type QuantityControlProps = ViewProps & {
   max?: number;
   min?: number;
   setQuantity: (quantity: number) => void;
+  isDisabled?: boolean;
 };
 const QuantityControl = memo(
   ({
@@ -20,6 +21,7 @@ const QuantityControl = memo(
     min = 1,
     setQuantity,
     style,
+    isDisabled = false,
     ...props
   }: QuantityControlProps) => {
     const isMaximum = quantity >= max;
@@ -38,6 +40,7 @@ const QuantityControl = memo(
       },
       [max, min, setQuantity],
     );
+
     return (
       <View style={[styles.container, style]} {...props}>
         <Button
@@ -45,7 +48,7 @@ const QuantityControl = memo(
           IconLeft={<PlusIcon opacity={isMaximum ? 0.5 : 1} />}
           bgVariant="none"
           onPress={handleChangeQuantity(1)}
-          disabled={isMaximum}
+          disabled={isMaximum || isDisabled}
           style={styles.button}
         />
         <TextInput
@@ -57,6 +60,7 @@ const QuantityControl = memo(
           font="NunitoSansSemiBold"
           inputVariant="primary"
           textAlign="center"
+          isDisabled={isDisabled}
           onChangeText={handleOnChange}
           value={quantity.toString()}
         />
@@ -65,7 +69,7 @@ const QuantityControl = memo(
           IconLeft={<MinusIcon opacity={isMinimum ? 0.5 : 1} />}
           bgVariant="none"
           onPress={handleChangeQuantity(-1)}
-          disabled={quantity <= min}
+          disabled={quantity <= min || isDisabled}
           style={styles.button}
         />
       </View>
