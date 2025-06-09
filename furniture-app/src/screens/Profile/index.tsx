@@ -1,9 +1,11 @@
 import {memo, useCallback, useState} from 'react';
 import {useShallow} from 'zustand/shallow';
 import {
+  Alert,
   Image,
   Pressable,
   StyleSheet,
+  ToastAndroid,
   TouchableHighlight,
   View,
 } from 'react-native';
@@ -11,54 +13,50 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useSharedValue} from 'react-native-reanimated';
 
 // Components
-import {BottomSheet, Button, Text} from 'src/components/common';
+import {BottomSheet, Modal, Text} from 'src/components/common';
 import {SettingMenu} from 'src/components';
+
+// Icons
+import {CameraIcon, GalleryIcon} from 'src/components/icons';
 
 // Themes
 import {borderRadius, colors} from 'src/themes';
 
 // Store
 import {useUserStore} from 'src/store';
-import {CameraIcon, GalleryIcon} from 'src/components/icons';
-// import {useUploadImage} from 'src/hooks';
+
+// Hooks
+import {useUpdateUser, useUploadImage} from 'src/hooks';
+import {PLACEHOLDER_AVATAR_URL, SUCCESS_MESSAGE} from 'src/constants';
 
 const ProfileScreen = memo(() => {
-  const {name = '', email = ''} = useUserStore(
+  const {
+    id = '',
+    name = '',
+    email = '',
+    avatar,
+    setUserAvatar,
+  } = useUserStore(
     useShallow(state => ({
+      id: state.user?.id,
       name: state.user?.name,
       email: state.user?.email,
+      avatar: state.user?.avatar,
+      setUserAvatar: state.setUserAvatar,
     })),
   );
 
+  const [isVisible, setIsVisible] = useState(false);
   const [imageUri, setImageUri] = useState('');
+  const [imageBase64, setImageBase64] = useState('');
 
-  // const {mutateAsync: uploadImage} = useUploadImage();
-  // const handleUploadImage = useCallback(
-  //   async (base64: string) => {
-  //     console.log('Uploading image with base64:', base64);
-  //     const imageFormData = new FormData();
+  const {mutateAsync: uploadImage, isPending: isUploadImagePending} =
+    useUploadImage();
 
-  //     imageFormData.append('image', base64);
-  //     await uploadImage(imageFormData, {
-  //       onSuccess: response => {
-  //         setImageUri(response);
-  //       },
-  //       onError: error => {
-  //         Alert.alert(
-  //           'Upload Photo Failed',
-  //           error.message,
-  //           [
-  //             {
-  //               text: 'Ok',
-  //             },
-  //           ],
-  //           {cancelable: true},
-  //         );
-  //       },
-  //     });
-  //   },
-  //   [uploadImage],
-  // );
+  const {mutateAsync: updateUser, isPending: isUpdateUserAvatarPending} =
+    useUpdateUser();
+
+  const isPending = isUploadImagePending || isUpdateUserAvatarPending;
 
   const openCamera = async () => {
     toggleSheet();
@@ -70,7 +68,8 @@ const ProfileScreen = memo(() => {
     });
     if (!result.didCancel && result.assets && result.assets.length > 0) {
       setImageUri(result.assets[0].uri ?? '');
-      // result.assets[0].base64 && handleUploadImage(result.assets[0].base64);
+      toggleModal();
+      result.assets[0].base64 && setImageBase64(result.assets[0].base64);
     }
   };
 
@@ -82,7 +81,8 @@ const ProfileScreen = memo(() => {
     });
     if (!result.didCancel && result.assets && result.assets.length > 0) {
       setImageUri(result.assets[0].uri ?? '');
-      // result.assets[0].base64 && handleUploadImage(result.assets[0].base64);
+      toggleModal();
+      result.assets[0].base64 && setImageBase64(result.assets[0].base64);
     }
   };
 
@@ -92,6 +92,67 @@ const ProfileScreen = memo(() => {
     isOpen.value = !isOpen.value;
   }, [isOpen]);
 
+  const toggleModal = useCallback(() => {
+    setIsVisible(prev => !prev);
+  }, []);
+
+  const handleUploadImage = useCallback(
+    async (base64: string) => {
+      const imageFormData = new FormData();
+
+      imageFormData.append('image', base64);
+
+      const result = await uploadImage(imageFormData, {
+        onSuccess: response => {
+          setUserAvatar(response);
+        },
+        onError: error => {
+          Alert.alert(
+            'Upload Photo Failed',
+            error.message,
+            [
+              {
+                text: 'Ok',
+              },
+            ],
+            {cancelable: true},
+          );
+        },
+      });
+
+      await updateUser(
+        {id, avatar: result},
+        {
+          onSuccess: () => {
+            setUserAvatar(result);
+            toggleModal();
+            ToastAndroid.showWithGravity(
+              SUCCESS_MESSAGE.UPLOAD_IMAGE,
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM,
+            );
+          },
+          onError: error => {
+            Alert.alert(
+              'Upload Photo Failed',
+              error.message,
+              [
+                {
+                  text: 'Ok',
+                },
+              ],
+              {cancelable: true},
+            );
+          },
+        },
+      );
+    },
+    [id, setUserAvatar, toggleModal, updateUser, uploadImage],
+  );
+
+  const handleConfirm = useCallback(() => {
+    handleUploadImage(imageBase64);
+  }, [handleUploadImage, imageBase64]);
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -100,9 +161,7 @@ const ProfileScreen = memo(() => {
             <Pressable onPress={toggleSheet}>
               <Image
                 source={{
-                  uri: imageUri
-                    ? imageUri
-                    : 'https://static1.squarespace.com/static/547cae8ee4b07ec2526c1cc5/t/63c7f6ae0ccaba131852cc4b/1651711797375/profile-placeholder.png?format=1500w',
+                  uri: avatar ?? PLACEHOLDER_AVATAR_URL,
                 }}
                 width={80}
                 height={80}
@@ -110,8 +169,6 @@ const ProfileScreen = memo(() => {
                 resizeMode="cover"
               />
             </Pressable>
-
-            <Button title="Use this photo" />
           </View>
           <View style={styles.content}>
             <Text font="NunitoSansBold" size="md" textVariant="secondary">
@@ -120,12 +177,30 @@ const ProfileScreen = memo(() => {
             <Text font="NunitoSansNormal" size="xs" textVariant="quaternary">
               {email}
             </Text>
-
-            <Text>Image URI: {imageUri}</Text>
           </View>
         </View>
 
         <SettingMenu style={styles.menu} />
+
+        <Modal
+          isDisabled={isPending}
+          isVisible={isVisible}
+          onToggle={toggleModal}
+          onConfirm={handleConfirm}>
+          <Text style={styles.modalTitle}>
+            Do you want to use this photo as your profile picture?
+          </Text>
+          <Image
+            source={{
+              uri: imageUri,
+            }}
+            width={160}
+            height={160}
+            borderRadius={9999}
+            resizeMode="cover"
+            style={styles.previewImage}
+          />
+        </Modal>
       </View>
       <BottomSheet
         isOpen={isOpen}
@@ -203,6 +278,12 @@ const styles = StyleSheet.create({
   underlay: {
     padding: 4,
     borderRadius: borderRadius.md,
+  },
+  modalTitle: {
+    textAlign: 'center',
+  },
+  previewImage: {
+    marginHorizontal: 'auto',
   },
 });
 

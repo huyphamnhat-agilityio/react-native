@@ -16,6 +16,7 @@ export type UserStore = {
   setHydrated: (state: boolean) => void;
   setCurrentAddress: (address: ShippingAddress) => void;
   setUserAddress: (address: ShippingAddress[]) => void;
+  setUserAvatar: (avatar: string) => void;
 };
 
 export const useUserStore = create(
@@ -58,6 +59,12 @@ export const useUserStore = create(
           }
         });
       },
+      setUserAvatar: (avatar: string) =>
+        set(state => {
+          if (state.user) {
+            state.user.avatar = avatar;
+          }
+        }),
       clearUserSession: () =>
         set(state => {
           state.user = undefined;

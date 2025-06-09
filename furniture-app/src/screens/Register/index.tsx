@@ -25,6 +25,7 @@ import {useCreateCart, useRegister} from 'src/hooks';
 
 // Store
 import {useUserStore} from 'src/store';
+import {PLACEHOLDER_AVATAR_URL} from 'src/constants';
 
 const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
   const {mutateAsync: registerUser} = useRegister();
@@ -43,11 +44,12 @@ const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
       const payload: UserPayload = {
         ...data,
         shippingAddress: [],
+        avatar: PLACEHOLDER_AVATAR_URL,
       };
       await registerUser(payload, {
         onSuccess: response => {
           const {
-            user: {id, email, name, shippingAddress},
+            user: {id, email, name, shippingAddress, avatar},
             accessToken,
           } = response;
 
@@ -56,6 +58,7 @@ const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
             email,
             name,
             shippingAddress,
+            avatar,
           });
 
           setAccessToken(accessToken);

@@ -35,7 +35,7 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
       await login(data, {
         onSuccess: response => {
           const {
-            user: {id, email, name, shippingAddress},
+            user: {id, email, name, shippingAddress, avatar},
             accessToken,
           } = response;
 
@@ -44,6 +44,7 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
             email,
             name,
             shippingAddress,
+            avatar,
           });
 
           setAccessToken(accessToken);

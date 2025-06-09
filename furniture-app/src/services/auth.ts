@@ -6,7 +6,7 @@ import {AuthResponse, UserPayload} from 'src/interfaces';
 import {RESOURCES} from 'src/constants';
 
 export const login = async (
-  payload: Omit<UserPayload, 'name' | 'shippingAddress'>,
+  payload: Pick<UserPayload, 'email' | 'password'>,
 ) => {
   const authCredential = await fetchApi<AuthResponse>(
     `${process.env.API_URL}/${RESOURCES.LOGIN}`,

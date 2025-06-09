@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderTopRightRadius: 12,
     borderTopLeftRadius: 12,
-    zIndex: 9999,
+    zIndex: 99,
     backgroundColor: colors.white,
   },
   backdrop: {

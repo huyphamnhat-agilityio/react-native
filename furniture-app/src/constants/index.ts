@@ -10,3 +10,4 @@ export {MEDIUM_DEVICE_HEIGHT} from './resolution';
 export {RESOURCES} from './resource';
 export {SCREENS} from './screens';
 export {SETTINGS} from './settings';
+export {PLACEHOLDER_AVATAR_URL} from './image';
