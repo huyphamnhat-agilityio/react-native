@@ -27,6 +27,7 @@ export type ButtonProps = TouchableOpacityProps & {
     | 'disabled'
     | 'alternative'
     | 'white'
+    | 'gray'
     | 'none';
   isLoading?: boolean;
   rounded?: BorderRadius;
@@ -134,6 +135,9 @@ const bgVariantStyle = StyleSheet.create({
   white: {
     backgroundColor: colors.white,
   },
+  gray: {
+    backgroundColor: colors.gray,
+  },
   none: {
     backgroundColor: 'transparent',
   },
@@ -156,6 +160,9 @@ const borderVariantStyle = StyleSheet.create({
     borderColor: 'transparent',
   },
   white: {
+    borderColor: 'transparent',
+  },
+  gray: {
     borderColor: 'transparent',
   },
   none: {

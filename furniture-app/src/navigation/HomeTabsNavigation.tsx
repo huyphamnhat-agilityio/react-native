@@ -1,20 +1,23 @@
 import {memo, useCallback} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {useNavigation} from '@react-navigation/native';
+import {Alert, StyleSheet} from 'react-native';
 
 // Types & Interfaces
-import {Alert, StyleSheet} from 'react-native';
-import {HomeTabParamList} from 'src/interfaces/navigation';
+import {HomeTabParamList, StackNavigation} from 'src/interfaces/navigation';
 
 // Icons
 import {
   ActiveProfileIcon,
+  CartIcon,
   HomeIcon,
   LogoutIcon,
+  MarkIcon,
   ProfileIcon,
 } from 'src/components/icons';
 
 // Screens
-import {HomeScreen, ProfileScreen} from 'src/screens';
+import {FavoritesScreen, HomeScreen, ProfileScreen} from 'src/screens';
 
 // Themes
 import {colors, fontFamilies, fontSizes} from 'src/themes';
@@ -24,11 +27,15 @@ import {Button} from 'src/components/common';
 
 // Stores
 import {useUserStore} from 'src/store';
+
+// Constants
 import {SCREENS} from 'src/constants';
 
 const HomeTab = createBottomTabNavigator<HomeTabParamList>();
 
 const HomeTabs = memo(() => {
+  const {navigate} = useNavigation<StackNavigation>();
+
   const clearUserSession = useUserStore(state => state.clearUserSession);
 
   const handleLogoutPress = useCallback(() => {
@@ -65,7 +72,21 @@ const HomeTabs = memo(() => {
     [],
   );
 
-  const HeaderRightComponent = useCallback(
+  const FavoritesTabIconComponent = useCallback(
+    ({focused}: {focused: boolean}) => {
+      return (
+        <MarkIcon
+          fill={focused ? colors.primary : 'none'}
+          color={focused ? colors.primary : colors.disabled}
+        />
+      );
+    },
+    [],
+  );
+
+  const handleNavigateToCart = useCallback(() => navigate('Cart'), [navigate]);
+
+  const LogoutButton = useCallback(
     () => (
       <Button
         style={styles.button}
@@ -77,6 +98,17 @@ const HomeTabs = memo(() => {
     [handleLogoutPress],
   );
 
+  const CartButton = useCallback(
+    () => (
+      <Button
+        style={styles.button}
+        bgVariant="none"
+        IconLeft={<CartIcon />}
+        onPress={handleNavigateToCart}
+      />
+    ),
+    [handleNavigateToCart],
+  );
   return (
     <HomeTab.Navigator
       initialRouteName={SCREENS.HOME}
@@ -99,15 +131,14 @@ const HomeTabs = memo(() => {
       />
       <HomeTab.Screen
         options={{
-          tabBarIcon: ProfileTabIconComponent,
-          title: SCREENS.PROFILE,
+          tabBarIcon: FavoritesTabIconComponent,
+          title: SCREENS.FAVORITES,
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontSize: fontSizes.sm,
             fontFamily: fontFamilies.MerriweatherBold,
             color: colors.secondary,
           },
-
           headerShown: true,
           headerShadowVisible: false,
           headerStyle: {
@@ -117,7 +148,31 @@ const HomeTabs = memo(() => {
             alignSelf: 'center',
             paddingRight: 16,
           },
-          headerRight: HeaderRightComponent,
+          headerRight: CartButton,
+        }}
+        name={SCREENS.FAVORITES}
+        component={FavoritesScreen}
+      />
+      <HomeTab.Screen
+        options={{
+          tabBarIcon: ProfileTabIconComponent,
+          title: SCREENS.PROFILE,
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            fontSize: fontSizes.sm,
+            fontFamily: fontFamilies.MerriweatherBold,
+            color: colors.secondary,
+          },
+          headerShown: true,
+          headerShadowVisible: false,
+          headerStyle: {
+            backgroundColor: colors.white,
+          },
+          headerRightContainerStyle: {
+            alignSelf: 'center',
+            paddingRight: 16,
+          },
+          headerRight: LogoutButton,
         }}
         name={SCREENS.PROFILE}
         component={ProfileScreen}
@@ -129,6 +184,7 @@ const HomeTabs = memo(() => {
 const styles = StyleSheet.create({
   button: {
     padding: 0,
+    marginVertical: 'auto',
   },
 });
 

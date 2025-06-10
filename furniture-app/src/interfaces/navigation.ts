@@ -10,6 +10,7 @@ import {ShippingAddress} from './user';
 
 export type HomeTabParamList = {
   [SCREENS.HOME]: undefined;
+  [SCREENS.FAVORITES]: undefined;
   [SCREENS.PROFILE]: undefined;
 };
 

@@ -8,3 +8,8 @@ export {useGetCart, useUpdateCart, useCreateCart} from './cart';
 export {useUpdateUser} from './user';
 export {useLogin, useRegister} from './auth';
 export {useUploadImage} from './image';
+export {
+  useCreateFavorites,
+  useUpdateFavorites,
+  useGetFavorites,
+} from './favorites';

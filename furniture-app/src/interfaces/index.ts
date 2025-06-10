@@ -14,3 +14,4 @@ export type {FontFamily, FontSize} from './typography';
 export type {User, UserPayload, ShippingAddress} from './user';
 export type {AuthResponse} from './auth';
 export type {ImageInfo, ImageData, ImgBBResponse} from './image';
+export type {Favorites, FavoritesPayload} from './favorites';

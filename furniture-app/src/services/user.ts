@@ -1,6 +1,12 @@
 import {fetchApi, fetchApiWithAuth} from './fetch';
+
+// Types & Interfaces
 import {QueryParams, User} from 'src/interfaces';
+
+// Constants
 import {RESOURCES} from 'src/constants';
+
+// Utils
 import {toQueryString} from 'src/utils';
 
 export const getUser = async (params?: QueryParams<Pick<User, 'email'>>) => {

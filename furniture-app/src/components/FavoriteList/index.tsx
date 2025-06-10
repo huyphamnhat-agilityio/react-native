@@ -1,19 +1,19 @@
 import {FlatList, FlatListProps, StyleSheet} from 'react-native';
 
 // Types & Interfaces
-import {CartItemData} from 'src/interfaces';
+import {Product} from 'src/interfaces';
 
 // Components
-import {Text} from 'src/components/common';
+import {Text} from '../common';
 
-export type CartListProps = FlatListProps<CartItemData>;
+export type FavoriteListProps = FlatListProps<Product>;
 
-const CartList = ({contentContainerStyle, ...props}: CartListProps) => {
+const FavoriteList = ({contentContainerStyle, ...props}: FavoriteListProps) => {
   return (
     <FlatList
       contentContainerStyle={contentContainerStyle}
       ListEmptyComponent={
-        <Text style={styles.text}>No product was added in cart.</Text>
+        <Text style={styles.text}>No product was marked as favorite.</Text>
       }
       {...props}
     />
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CartList;
+export default FavoriteList;

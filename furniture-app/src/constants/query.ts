@@ -1,4 +1,4 @@
-import {Cart, Product, QueryParams} from 'src/interfaces';
+import {Cart, Favorites, Product, QueryParams} from 'src/interfaces';
 
 export const QUERY_KEY = {
   PRODUCTS: (params?: QueryParams<Omit<Product, 'variants'>>) =>
@@ -6,4 +6,6 @@ export const QUERY_KEY = {
   PRODUCT: (id: string) => [{scope: 'product', id}] as const,
   CARTS: (params?: QueryParams<Pick<Cart, 'userId' | 'id'>>) =>
     [{scope: 'carts', params}] as const,
+  FAVORITES: (params?: QueryParams<Pick<Favorites, 'userId' | 'id'>>) =>
+    [{scope: 'favorites', params}] as const,
 } as const;

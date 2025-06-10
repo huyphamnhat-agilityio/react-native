@@ -1,5 +1,7 @@
-import {ImgBBResponse} from 'src/interfaces';
 import {fetchApi} from './fetch';
+
+// Types & Interfaces
+import {ImgBBResponse} from 'src/interfaces';
 
 export const uploadImage = async (image: FormData): Promise<string> => {
   const response = await fetchApi<ImgBBResponse>(

@@ -1,9 +1,14 @@
-import {QueryFunctionContext} from '@tanstack/react-query';
-import {QUERY_KEY, RESOURCES} from 'src/constants';
-import {Product, QueryParams} from 'src/interfaces';
-import {toQueryString} from 'src/utils';
-
 import {fetchApiWithAuth} from './fetch';
+import {QueryFunctionContext} from '@tanstack/react-query';
+
+// Constants
+import {QUERY_KEY, RESOURCES} from 'src/constants';
+
+// Types & Interfaces
+import {Product, QueryParams} from 'src/interfaces';
+
+// Utils
+import {toQueryString} from 'src/utils';
 
 export const getProducts = async ({
   queryKey: [{params}],

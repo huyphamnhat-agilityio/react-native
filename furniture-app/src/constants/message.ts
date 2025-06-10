@@ -17,6 +17,8 @@ export const FORM_VALIDATION_MESSAGE = {
 
 export const SUCCESS_MESSAGE = {
   ADD_TO_CART: 'The product has been added to cart!',
+  ADD_TO_FAVORITES: 'The product has been added to favorites!',
+  REMOVE_FROM_FAVORITES: 'The product has been removed from favorites!',
   ADD_ADDRESS: 'The address has been added successfully!',
   UPDATE_ADDRESS: 'The address has been updated successfully!',
   UPLOAD_IMAGE: 'The image has been uploaded successfully!',

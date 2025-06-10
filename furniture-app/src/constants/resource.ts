@@ -4,4 +4,5 @@ export const RESOURCES = {
   LOGIN: 'login',
   REGISTER: 'register',
   CARTS: 'carts',
+  FAVORITES: 'favorites',
 };

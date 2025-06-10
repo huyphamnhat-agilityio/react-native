@@ -9,3 +9,4 @@ export {default as SuccessScreen} from './Success';
 export {default as RegisterScreen} from './Register';
 export {default as ShippingAddressScreen} from './ShippingAddress';
 export {default as AddOrEditAddressScreen} from './AddOrEditAddress';
+export {default as FavoritesScreen} from './Favorites';

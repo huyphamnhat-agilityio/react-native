@@ -21,7 +21,7 @@ import {
 } from 'src/interfaces';
 
 // Hooks
-import {useCreateCart, useRegister} from 'src/hooks';
+import {useCreateCart, useCreateFavorites, useRegister} from 'src/hooks';
 
 // Store
 import {useUserStore} from 'src/store';
@@ -31,6 +31,7 @@ const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
   const {mutateAsync: registerUser} = useRegister();
 
   const {mutate: createCart} = useCreateCart();
+  const {mutate: createFavorites} = useCreateFavorites();
 
   const {setUser, setAccessToken} = useUserStore(
     useShallow(state => ({
@@ -77,6 +78,21 @@ const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
               );
             },
           });
+
+          createFavorites(id, {
+            onError: error => {
+              Alert.alert(
+                'Create Favorites Failed',
+                error.message,
+                [
+                  {
+                    text: 'Ok',
+                  },
+                ],
+                {cancelable: true},
+              );
+            },
+          });
         },
         onError: error => {
           Alert.alert(
@@ -92,7 +108,7 @@ const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
         },
       });
     },
-    [createCart, registerUser, setAccessToken, setUser],
+    [createCart, createFavorites, registerUser, setAccessToken, setUser],
   );
   return (
     <KeyboardAwareScrollView style={styles.container}>

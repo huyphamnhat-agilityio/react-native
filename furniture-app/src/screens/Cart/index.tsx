@@ -56,12 +56,12 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
 
   const queryClient = useQueryClient();
 
-  const handleCheckoutPress = useCallback(
+  const handleCheckout = useCallback(
     () => navigate('Checkout', {totalMoney}),
     [navigate, totalMoney],
   );
 
-  const handleRemovePress = useCallback(
+  const handleRemove = useCallback(
     async (color: string) => {
       const updatedItems = [...items].filter(
         item => item.selectedColor !== color,
@@ -153,12 +153,12 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
       <CartItem
         key={item.id}
         data={item}
-        onRemovePress={handleRemovePress}
+        onRemove={handleRemove}
         onUpdate={handleUpdateQuantity}
         isDisabled={isPending}
       />
     ),
-    [handleRemovePress, handleUpdateQuantity, isPending],
+    [handleRemove, handleUpdateQuantity, isPending],
   );
 
   return (
@@ -195,7 +195,7 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
 
         <Button
           style={styles.button}
-          onPress={handleCheckoutPress}
+          onPress={handleCheckout}
           disabled={totalMoney === 0}
           width="100%"
           rounded="md"
@@ -209,10 +209,6 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
 });
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-    backgroundColor: colors.white,
-  },
   container: {
     backgroundColor: colors.white,
     flex: 1,

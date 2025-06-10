@@ -4,6 +4,7 @@ export const SCREENS = {
   REGISTER: 'Register',
   HOME_TABS: 'HomeTabs',
   HOME: 'Home',
+  FAVORITES: 'Favorites',
   PROFILE: 'Profile',
   PRODUCT_DETAIL: 'ProductDetail',
   CART: 'Cart',

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
+import {useQueryClient} from '@tanstack/react-query';
 import {memo, useCallback, useRef, useState} from 'react';
 import {
   ActivityIndicator,
@@ -23,11 +24,17 @@ import {Button, QuantityControl, Text} from 'src/components/common';
 // Icons
 import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
 // Constants
-import {MEDIUM_DEVICE_HEIGHT, SUCCESS_MESSAGE} from 'src/constants';
+import {MEDIUM_DEVICE_HEIGHT, QUERY_KEY, SUCCESS_MESSAGE} from 'src/constants';
 // Hooks
-import {useGetCart, useProductDetail, useUpdateCart} from 'src/hooks';
+import {
+  useGetCart,
+  useGetFavorites,
+  useProductDetail,
+  useUpdateCart,
+  useUpdateFavorites,
+} from 'src/hooks';
 // Types & Interfaces
-import {AppStackScreenProps, Cart} from 'src/interfaces';
+import {AppStackScreenProps, Cart, Favorites} from 'src/interfaces';
 // Stores
 import {useUserStore} from 'src/store';
 // Themes
@@ -47,18 +54,24 @@ const ProductDetailScreen = memo(
 
     const userId = useUserStore(state => state.user?.id) ?? '';
 
-    const {
-      data: currentCart,
-      refetch: refetchCart,
-      isLoading: isLoadingCart,
-    } = useGetCart({
+    const {data: currentCart, isLoading: isLoadingCart} = useGetCart({
       id: userId,
     });
 
     const {items: currentCartItems = []} = currentCart || {};
 
-    const {mutateAsync: updateCart, isPending} = useUpdateCart();
+    const {data: currentFavorites, isLoading: isLoadingFavorites} =
+      useGetFavorites({
+        id: userId,
+      });
 
+    const {items: currentFavoritesItems = []} = currentFavorites || {};
+
+    const {mutateAsync: updateCart, isPending: isAddingToCart} =
+      useUpdateCart();
+
+    const {mutateAsync: updateFavorites, isPending: isAddingToFavorites} =
+      useUpdateFavorites();
     const progress = useSharedValue<number>(0);
 
     const ref = useRef<ICarouselInstance>(null);
@@ -86,6 +99,8 @@ const ProductDetailScreen = memo(
     );
 
     const handleBack = useCallback(() => goBack(), [goBack]);
+
+    const queryClient = useQueryClient();
 
     const handleAddToCart = useCallback(async () => {
       const itemId = `${productId}-${variants[progress.get()].color}`;
@@ -116,7 +131,10 @@ const ProductDetailScreen = memo(
 
       await updateCart(cartPayload, {
         onSuccess: () => {
-          refetchCart();
+          queryClient.setQueryData(QUERY_KEY.CARTS({id: userId}), {
+            ...queryClient.getQueryData(QUERY_KEY.CARTS({id: userId})),
+            items: updatedItems,
+          });
           ToastAndroid.showWithGravity(
             SUCCESS_MESSAGE.ADD_TO_CART,
             ToastAndroid.SHORT,
@@ -131,10 +149,51 @@ const ProductDetailScreen = memo(
       productId,
       progress,
       quantity,
-      refetchCart,
+      queryClient,
       updateCart,
       userId,
       variants,
+    ]);
+
+    const isMarkAsFavorite = currentFavoritesItems.some(
+      item => item.id === productId,
+    );
+
+    const handleAddToFavorites = useCallback(async () => {
+      const updatedItems = currentFavoritesItems.some(
+        item => item.id === productId,
+      )
+        ? currentFavoritesItems.filter(item => item.id !== productId)
+        : [...currentFavoritesItems, ...(data !== undefined ? [data] : [])];
+
+      const favoritesPayload: Omit<Favorites, 'id'> = {
+        userId,
+        items: updatedItems,
+      };
+
+      await updateFavorites(favoritesPayload, {
+        onSuccess: () => {
+          queryClient.setQueryData(QUERY_KEY.FAVORITES({id: userId}), {
+            ...queryClient.getQueryData(QUERY_KEY.FAVORITES({id: userId})),
+            items: updatedItems,
+          });
+          ToastAndroid.showWithGravity(
+            isMarkAsFavorite
+              ? SUCCESS_MESSAGE.REMOVE_FROM_FAVORITES
+              : SUCCESS_MESSAGE.ADD_TO_FAVORITES,
+            ToastAndroid.SHORT,
+            ToastAndroid.TOP,
+          );
+        },
+      });
+    }, [
+      currentFavoritesItems,
+      data,
+      isMarkAsFavorite,
+      productId,
+      queryClient,
+      updateFavorites,
+      userId,
     ]);
 
     if (isLoading) {
@@ -149,8 +208,6 @@ const ProductDetailScreen = memo(
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.carouselWrapper}>
-            {/* Color Carousel Pagination */}
-
             <Carousel
               ref={ref}
               width={width * 0.86}
@@ -248,7 +305,14 @@ const ProductDetailScreen = memo(
                   bgVariant="secondary"
                   rounded="md"
                   style={styles.buttonMark}
-                  IconLeft={<MarkIcon />}
+                  disabled={isAddingToFavorites || isLoadingFavorites}
+                  IconLeft={
+                    <MarkIcon
+                      fill={isMarkAsFavorite ? colors.primary : 'none'}
+                      color={colors.primary}
+                    />
+                  }
+                  onPress={handleAddToFavorites}
                 />
 
                 <Button
@@ -256,7 +320,7 @@ const ProductDetailScreen = memo(
                   title="Add to cart"
                   titleFont="NunitoSansSemiBold"
                   titleSize="md"
-                  disabled={isPending || isLoadingCart}
+                  disabled={isAddingToCart || isLoadingCart}
                   style={styles.buttonAddToCart}
                   onPress={handleAddToCart}
                 />
@@ -273,6 +337,7 @@ const ProductDetailScreen = memo(
           onPress={handleBack}
         />
 
+        {/* Color Carousel Pagination */}
         <Pagination.Custom<{color: string}>
           progress={progress}
           data={variants.map(({color}) => ({color}))}

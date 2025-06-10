@@ -1,66 +1,39 @@
-import {memo, useCallback, useEffect, useRef} from 'react';
+import {memo, useCallback} from 'react';
 import {Image, StyleSheet, View, ViewProps} from 'react-native';
 
 // Themes
-import {borderRadius} from 'src/themes';
+import {borderRadius, colors} from 'src/themes';
 
 // Components
-import {Button, QuantityControl, Text} from 'src/components/common';
+import {Button, Text} from 'src/components/common';
 
 // Icons
-import {CrossIcon} from 'src/components/icons';
+import {CrossIcon, ShoppingBagIcon} from 'src/components/icons';
 
 // Types & Interfaces
-import {CartItemData} from 'src/interfaces';
-import {useDebounce} from 'src/hooks';
+import {Product} from 'src/interfaces';
 
-export type CartItemProps = ViewProps & {
-  data: CartItemData;
-  onRemove?: (color: string) => void;
-  onUpdate?: (id: string, color: string, quantity: number) => void;
+export type FavoriteItemProps = ViewProps & {
+  data: Product;
+  onRemove?: (id: string) => void;
   isDisabled?: boolean;
 };
-const CartItem = memo(
+const FavoriteItem = memo(
   ({
-    data: {image, price, productName, quantity, selectedColor, id},
+    data: {id, price, name: productName, variants},
     onRemove,
-    onUpdate,
     style,
     isDisabled = false,
     ...props
-  }: CartItemProps) => {
-    // Ref to skip effect on initial render
-    // This ensures the effect only runs when debouncedQuantity changes after mount
-    const didMount = useRef(false);
-
+  }: FavoriteItemProps) => {
     const handleRemovePress = useCallback(() => {
-      onRemove?.(selectedColor);
-    }, [onRemove, selectedColor]);
+      onRemove?.(id);
+    }, [onRemove, id]);
 
-    const {
-      value: currentQuantity,
-      debouncedValue: debouncedQuantity,
-      setValue: setQuantityDebounce,
-    } = useDebounce(quantity, 500);
-
-    const handleChangeQuantity = useCallback(
-      (value: number) => {
-        onUpdate?.(id, selectedColor, value);
-      },
-      [id, selectedColor, onUpdate],
-    );
-
-    useEffect(() => {
-      if (didMount.current) {
-        handleChangeQuantity(debouncedQuantity);
-      } else {
-        didMount.current = true;
-      }
-    }, [debouncedQuantity, handleChangeQuantity]);
     return (
       <View style={[styles.container, style]} {...props}>
         <Image
-          source={{uri: image}}
+          source={{uri: variants[0].image}}
           width={100}
           height={100}
           resizeMode="stretch"
@@ -85,16 +58,18 @@ const CartItem = memo(
               bgVariant="none"
               rounded="full"
               disabled={isDisabled}
-              style={styles.button}
+              style={styles.removeButton}
               onPress={handleRemovePress}
             />
           </View>
 
-          <QuantityControl
-            isDisabled={isDisabled}
-            quantity={currentQuantity}
-            style={styles.quantity}
-            setQuantity={setQuantityDebounce}
+          <Button
+            IconLeft={<ShoppingBagIcon color={colors.primary} />}
+            bgVariant="gray"
+            rounded="sm"
+            disabled={isDisabled}
+            style={styles.cartButton}
+            onPress={handleRemovePress}
           />
         </View>
       </View>
@@ -121,8 +96,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   content: {gap: 6, maxWidth: '80%'},
-  button: {
+  removeButton: {
     padding: 0,
+  },
+  cartButton: {
+    marginLeft: 'auto',
+    padding: 2,
   },
   quantity: {
     flex: 1,
@@ -130,5 +109,5 @@ const styles = StyleSheet.create({
   },
 });
 
-CartItem.displayName = 'CartItem';
-export default CartItem;
+FavoriteItem.displayName = 'FavoriteItem';
+export default FavoriteItem;

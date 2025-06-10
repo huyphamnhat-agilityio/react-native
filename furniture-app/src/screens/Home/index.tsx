@@ -66,7 +66,10 @@ const HomeScreen = memo(
       }
     }, [isSearchVisible, searchAnimation, setSearchQuery]);
 
-    const handleCartPress = useCallback(() => navigate('Cart'), [navigate]);
+    const handleNavigateToCart = useCallback(
+      () => navigate('Cart'),
+      [navigate],
+    );
 
     const handleSetCategory = useCallback(
       (categoryTitle: string) => {
@@ -109,7 +112,7 @@ const HomeScreen = memo(
             style={styles.button}
             bgVariant="none"
             IconLeft={<CartIcon />}
-            onPress={handleCartPress}
+            onPress={handleNavigateToCart}
           />
         </View>
 
@@ -178,6 +181,7 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 0,
+    marginTop: 8,
   },
   searchContainer: {
     overflow: 'hidden',
