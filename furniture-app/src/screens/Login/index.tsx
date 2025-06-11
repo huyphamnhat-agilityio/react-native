@@ -1,6 +1,7 @@
 import {memo, useCallback} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Alert, StyleSheet, View} from 'react-native';
+import {useShallow} from 'zustand/shallow';
 
 // Icons
 import {LogoIcon} from 'src/components/icons';
@@ -17,8 +18,9 @@ import {useLogin} from 'src/hooks';
 
 // Types & Interfaces
 import {AppStackScreenProps, LoginFormData} from 'src/interfaces';
+
+// Store
 import {useUserStore} from 'src/store';
-import {useShallow} from 'zustand/shallow';
 
 const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
   const {mutateAsync: login} = useLogin();

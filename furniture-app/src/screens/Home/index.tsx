@@ -1,5 +1,7 @@
-import {memo, useCallback, useRef, useState} from 'react';
+import {memo, useCallback, useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, Animated, StyleSheet, View} from 'react-native';
+import {getMessaging} from '@react-native-firebase/messaging';
+
 // Components
 import {Button, Text, TextInput} from 'src/components/common';
 import {CategoryList, ProductList} from 'src/components';
@@ -19,6 +21,8 @@ import {HomeTabScreenProps} from 'src/interfaces/navigation';
 // Themes
 import {colors} from 'src/themes';
 
+// Services
+import {onRegisterFirebaseMessaging} from 'src/services';
 const HomeScreen = memo(
   ({navigation: {navigate}}: HomeTabScreenProps<'Home'>) => {
     const [category, setCategory] = useState<string>(CATEGORIES[0].title);
@@ -94,6 +98,16 @@ const HomeScreen = memo(
     const searchOpacity = searchAnimation.interpolate({
       inputRange: [0, 1],
       outputRange: [0, 1],
+    });
+
+    useEffect(() => {
+      (async () => {
+        await onRegisterFirebaseMessaging();
+      })();
+    }, []);
+
+    getMessaging().onMessage(async remoteMessage => {
+      console.log('Notification received in foreground:', remoteMessage);
     });
 
     return (

@@ -7,7 +7,7 @@ import {immer} from 'zustand/middleware/immer';
 export type UserStore = {
   user: Omit<User, 'password'> | undefined;
   currentAddress: ShippingAddress | undefined;
-  accessToken: string | undefined;
+  accessToken?: string;
   isFirstTimeLogin: boolean;
   isHydrated: boolean;
   setUser: (user: Omit<User, 'password'>) => void;

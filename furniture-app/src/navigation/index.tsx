@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import AppStackNavigation from './AppStackNavigation';
-import {memo, useCallback, useState} from 'react';
+import {memo, useCallback, useEffect, useState} from 'react';
 import {AnimatedBootSplash} from './AnimatedBootSplash';
 import {useUserStore} from 'src/store';
 
@@ -14,6 +14,13 @@ const Navigation = memo(() => {
       setVisible(false);
     }
   }, [isHydrated]);
+
+  useEffect(() => {
+    if (!isHydrated) {
+      return;
+    }
+  }, [isHydrated]);
+
   return (
     <NavigationContainer onReady={handleReady}>
       <AppStackNavigation />

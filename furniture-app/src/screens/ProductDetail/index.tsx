@@ -177,6 +177,7 @@ const ProductDetailScreen = memo(
             ...queryClient.getQueryData(QUERY_KEY.FAVORITES({id: userId})),
             items: updatedItems,
           });
+
           ToastAndroid.showWithGravity(
             isMarkAsFavorite
               ? SUCCESS_MESSAGE.REMOVE_FROM_FAVORITES
