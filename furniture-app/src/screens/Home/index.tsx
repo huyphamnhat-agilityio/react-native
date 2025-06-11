@@ -22,7 +22,8 @@ import {HomeTabScreenProps} from 'src/interfaces/navigation';
 import {colors} from 'src/themes';
 
 // Services
-import {onRegisterFirebaseMessaging} from 'src/services';
+import {onMessageReceived, onRegisterFirebaseMessaging} from 'src/services';
+
 const HomeScreen = memo(
   ({navigation: {navigate}}: HomeTabScreenProps<'Home'>) => {
     const [category, setCategory] = useState<string>(CATEGORIES[0].title);
@@ -104,11 +105,9 @@ const HomeScreen = memo(
       (async () => {
         await onRegisterFirebaseMessaging();
       })();
+      getMessaging().onMessage(onMessageReceived);
+      getMessaging().setBackgroundMessageHandler(onMessageReceived);
     }, []);
-
-    getMessaging().onMessage(async remoteMessage => {
-      console.log('Notification received in foreground:', remoteMessage);
-    });
 
     return (
       <View style={styles.container}>

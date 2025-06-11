@@ -13,3 +13,4 @@ export {
   useUpdateFavorites,
   useGetFavorites,
 } from './favorites';
+export {useInitialNotifeeNavigation} from './notification';

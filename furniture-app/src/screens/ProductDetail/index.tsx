@@ -3,6 +3,7 @@ import {useQueryClient} from '@tanstack/react-query';
 import {memo, useCallback, useRef, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Dimensions,
   Image,
   ScrollView,
@@ -19,12 +20,16 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from 'react-native-reanimated-carousel';
+
 // Components
 import {Button, QuantityControl, Text} from 'src/components/common';
+
 // Icons
 import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
+
 // Constants
 import {MEDIUM_DEVICE_HEIGHT, QUERY_KEY, SUCCESS_MESSAGE} from 'src/constants';
+
 // Hooks
 import {
   useGetCart,
@@ -33,12 +38,17 @@ import {
   useUpdateCart,
   useUpdateFavorites,
 } from 'src/hooks';
+
 // Types & Interfaces
 import {AppStackScreenProps, Cart, Favorites} from 'src/interfaces';
+
 // Stores
 import {useUserStore} from 'src/store';
+
 // Themes
 import {borderRadius, colors} from 'src/themes';
+
+import notifee, {AndroidImportance} from '@notifee/react-native';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -76,7 +86,7 @@ const ProductDetailScreen = memo(
 
     const ref = useRef<ICarouselInstance>(null);
 
-    const {data, isLoading} = useProductDetail(id);
+    const {data, isLoading, error} = useProductDetail(id);
 
     const {
       id: productId = '',
@@ -159,6 +169,35 @@ const ProductDetailScreen = memo(
       item => item.id === productId,
     );
 
+    const handleDisplayNotification = useCallback(async () => {
+      await notifee.requestPermission();
+
+      const channelId = await notifee.createChannel({
+        id: 'default',
+        name: 'Default Channel',
+        importance: AndroidImportance.HIGH,
+      });
+
+      await notifee.displayNotification({
+        title: 'Furniture App',
+        body: 'A new product detail has been added to your favorite.',
+        android: {
+          channelId,
+          smallIcon: 'ic_notification',
+          color: colors.black,
+          pressAction: {
+            id: 'default',
+            launchActivity: 'default',
+          },
+          importance: AndroidImportance.HIGH,
+        },
+        data: {
+          type: 'ProductDetail',
+          id: productId,
+        },
+      });
+    }, [productId]);
+
     const handleAddToFavorites = useCallback(async () => {
       const updatedItems = currentFavoritesItems.some(
         item => item.id === productId,
@@ -178,6 +217,8 @@ const ProductDetailScreen = memo(
             items: updatedItems,
           });
 
+          !isMarkAsFavorite && handleDisplayNotification();
+
           ToastAndroid.showWithGravity(
             isMarkAsFavorite
               ? SUCCESS_MESSAGE.REMOVE_FROM_FAVORITES
@@ -190,6 +231,7 @@ const ProductDetailScreen = memo(
     }, [
       currentFavoritesItems,
       data,
+      handleDisplayNotification,
       isMarkAsFavorite,
       productId,
       queryClient,
@@ -202,6 +244,20 @@ const ProductDetailScreen = memo(
         <View style={styles.loadingWrapper}>
           <ActivityIndicator color="black" />
         </View>
+      );
+    }
+
+    if (error) {
+      Alert.alert(
+        'Get Product Detail Failed',
+        error.message,
+        [
+          {
+            text: 'Return Home',
+            onPress: goBack,
+          },
+        ],
+        {cancelable: true},
       );
     }
 
