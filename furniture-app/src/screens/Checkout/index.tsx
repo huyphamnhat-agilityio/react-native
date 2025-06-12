@@ -25,7 +25,7 @@ import {AppStackScreenProps} from 'src/interfaces';
 import {useUpdateCart} from 'src/hooks';
 
 // Constants
-import {QUERY_KEY} from 'src/constants';
+import {PLACEHOLDER_ADDRESS, QUERY_KEY} from 'src/constants';
 
 const CheckoutScreen = memo(
   ({
@@ -37,11 +37,7 @@ const CheckoutScreen = memo(
     const [isLoading, setIsLoading] = useState(false);
     const {currentAddress, userId} = useUserStore(
       useShallow(state => ({
-        currentAddress: state.currentAddress ?? {
-          id: '',
-          name: 'N/A',
-          address: 'N/A',
-        },
+        currentAddress: state.currentAddress ?? PLACEHOLDER_ADDRESS,
         userId: state.user?.id ?? '',
       })),
     );
@@ -95,7 +91,7 @@ const CheckoutScreen = memo(
             titleSize="md"
             rounded="md"
             style={styles.button}
-            disabled={isLoading}
+            disabled={isLoading || !currentAddress.id}
             onPress={handleCheckoutPress}
           />
         </View>

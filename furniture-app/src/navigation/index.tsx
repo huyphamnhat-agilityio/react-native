@@ -1,5 +1,6 @@
+import {getPerformance} from '@react-native-firebase/perf';
 import {NavigationContainer} from '@react-navigation/native';
-import {memo, useCallback, useEffect, useState} from 'react';
+import {memo, useCallback, useEffect, useRef, useState} from 'react';
 import AppStackNavigation from './AppStackNavigation';
 import {AnimatedBootSplash} from './AnimatedBootSplash';
 import {linking, navigate, navigationRef} from './navigationConfig';
@@ -14,6 +15,7 @@ import {useInitialNotifeeNavigation} from 'src/hooks';
 
 // Services
 import {onMessageReceived, onRegisterFirebaseMessaging} from 'src/services';
+import {InteractionManager} from 'react-native';
 
 const Navigation = memo(() => {
   const [visible, setVisible] = useState(true);
@@ -24,11 +26,35 @@ const Navigation = memo(() => {
 
   useInitialNotifeeNavigation(isNavReady && isHydrated);
 
+  const routeNameRef = useRef<string | undefined>();
+
+  const handleStateChange = async () => {
+    const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
+
+    if (!currentRouteName || routeNameRef.current === currentRouteName) {
+      return;
+    }
+
+    // Start new trace
+    const trace = getPerformance().newTrace(
+      `${currentRouteName}_initial_render`,
+    );
+    await trace.start();
+
+    InteractionManager.runAfterInteractions(() => {
+      trace.stop();
+    });
+
+    routeNameRef.current = currentRouteName;
+  };
+
   const handleReady = useCallback(() => {
     if (isHydrated) {
       setVisible(false);
     }
     setIsNavReady(true);
+    routeNameRef.current =
+      navigationRef.current?.getCurrentRoute?.()?.name ?? undefined;
   }, [isHydrated]);
 
   useEffect(() => {
@@ -67,7 +93,8 @@ const Navigation = memo(() => {
     <NavigationContainer
       linking={linking}
       ref={navigationRef}
-      onReady={handleReady}>
+      onReady={handleReady}
+      onStateChange={handleStateChange}>
       <AppStackNavigation />
       {visible && <AnimatedBootSplash onAnimationEnd={handleReady} />}
     </NavigationContainer>

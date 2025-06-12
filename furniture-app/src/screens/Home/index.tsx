@@ -1,6 +1,5 @@
-import {memo, useCallback, useEffect, useRef, useState} from 'react';
+import {memo, useCallback, useRef, useState} from 'react';
 import {ActivityIndicator, Animated, StyleSheet, View} from 'react-native';
-import {getMessaging} from '@react-native-firebase/messaging';
 
 // Components
 import {Button, Text, TextInput} from 'src/components/common';
@@ -20,9 +19,6 @@ import {HomeTabScreenProps} from 'src/interfaces/navigation';
 
 // Themes
 import {colors} from 'src/themes';
-
-// Services
-import {onMessageReceived, onRegisterFirebaseMessaging} from 'src/services';
 
 const HomeScreen = memo(
   ({navigation: {navigate}}: HomeTabScreenProps<'Home'>) => {
@@ -100,14 +96,6 @@ const HomeScreen = memo(
       inputRange: [0, 1],
       outputRange: [0, 1],
     });
-
-    useEffect(() => {
-      (async () => {
-        await onRegisterFirebaseMessaging();
-      })();
-      getMessaging().onMessage(onMessageReceived);
-      getMessaging().setBackgroundMessageHandler(onMessageReceived);
-    }, []);
 
     return (
       <View style={styles.container}>

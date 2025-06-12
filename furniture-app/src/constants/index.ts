@@ -11,3 +11,4 @@ export {RESOURCES} from './resource';
 export {SCREENS} from './screens';
 export {SETTINGS} from './settings';
 export {PLACEHOLDER_AVATAR_URL} from './image';
+export {PLACEHOLDER_ADDRESS} from './address';
