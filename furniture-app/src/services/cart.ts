@@ -1,11 +1,10 @@
-import {QueryFunctionContext} from '@tanstack/react-query';
 import {fetchApiWithAuth} from './fetch';
 
 // Constants
-import {QUERY_KEY, RESOURCES} from 'src/constants';
+import {RESOURCES} from 'src/constants';
 
 // Types & Interfaces
-import {Cart, CartPayload} from 'src/interfaces';
+import {Cart, CartPayload, QueryContexts} from 'src/interfaces';
 
 export const createCart = async (userId: string) => {
   const payload: CartPayload = {
@@ -21,7 +20,7 @@ export const createCart = async (userId: string) => {
 
 export const getCart = async ({
   queryKey: [{params}],
-}: QueryFunctionContext<ReturnType<(typeof QUERY_KEY)['CARTS']>>) => {
+}: QueryContexts['CARTS']) => {
   const result = await fetchApiWithAuth<Cart>(
     `${process.env.API_URL}/${RESOURCES.CARTS}${
       params?.id ? `/${params.id}` : ''

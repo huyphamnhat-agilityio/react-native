@@ -1,11 +1,10 @@
-import {QueryFunctionContext} from '@tanstack/react-query';
 import {fetchApiWithAuth} from './fetch';
 
 // Types & Interfaces
-import {Favorites, FavoritesPayload} from 'src/interfaces';
+import {Favorites, FavoritesPayload, QueryContexts} from 'src/interfaces';
 
 // Constants
-import {QUERY_KEY, RESOURCES} from 'src/constants';
+import {RESOURCES} from 'src/constants';
 
 export const createFavorites = async (userId: string) => {
   const payload: FavoritesPayload = {
@@ -21,7 +20,7 @@ export const createFavorites = async (userId: string) => {
 
 export const getFavorites = async ({
   queryKey: [{params}],
-}: QueryFunctionContext<ReturnType<(typeof QUERY_KEY)['FAVORITES']>>) => {
+}: QueryContexts['FAVORITES']) => {
   const result = await fetchApiWithAuth<Favorites>(
     `${process.env.API_URL}/${RESOURCES.FAVORITES}${
       params?.id ? `/${params.id}` : ''

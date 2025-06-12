@@ -1,11 +1,10 @@
 import {fetchApiWithAuth} from './fetch';
-import {QueryFunctionContext} from '@tanstack/react-query';
 
 // Constants
-import {QUERY_KEY, RESOURCES} from 'src/constants';
+import {RESOURCES} from 'src/constants';
 
 // Types & Interfaces
-import {Product, QueryParams} from 'src/interfaces';
+import {Product, QueryContexts, QueryParams} from 'src/interfaces';
 
 // Utils
 import {toQueryString} from 'src/utils';
@@ -13,7 +12,7 @@ import {toQueryString} from 'src/utils';
 export const getProducts = async ({
   queryKey: [{params}],
   pageParam,
-}: QueryFunctionContext<ReturnType<(typeof QUERY_KEY)['PRODUCTS']>>) => {
+}: QueryContexts['PRODUCTS']) => {
   const query: QueryParams<Product> = {
     ...params,
     _page: (params?._page ?? 0) + (pageParam as number),
@@ -29,7 +28,7 @@ export const getProducts = async ({
 
 export const getProduct = async ({
   queryKey: [{id}],
-}: QueryFunctionContext<ReturnType<(typeof QUERY_KEY)['PRODUCT']>>) => {
+}: QueryContexts['PRODUCT']) => {
   const product = await fetchApiWithAuth<Product>(
     `${process.env.API_URL}/${RESOURCES.PRODUCTS}/${id}`,
   );
