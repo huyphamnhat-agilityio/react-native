@@ -35,6 +35,7 @@ const HomeScreen = memo(
     const {
       data = [],
       isLoading,
+      isFetching,
       fetchNextPage,
       hasNextPage,
       resetData,
@@ -146,6 +147,7 @@ const HomeScreen = memo(
             hasNextPage={hasNextPage}
             products={data}
             isRefreshing={isLoading}
+            isFetching={isFetching}
             resetData={resetData}
             handlePress={handleProductCardPress}
             errorMessage={error?.message}

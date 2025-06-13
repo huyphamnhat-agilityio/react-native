@@ -4,7 +4,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {useCallback} from 'react';
-import {QUERY_KEY} from 'src/constants';
+import {PRODUCT_PAGE_SIZE, QUERY_KEY} from 'src/constants';
 import {Product, QueryParams} from 'src/interfaces';
 import {getProduct, getProducts} from 'src/services';
 
@@ -23,7 +23,7 @@ export const useGetInfinitiveProducts = (
     queryKey: QUERY_KEY.PRODUCTS(params),
     queryFn: getProducts,
     getNextPageParam: (lastPages, _, lastPageParam) => {
-      if (lastPages.length < 6) {
+      if (lastPages.length < PRODUCT_PAGE_SIZE) {
         return undefined;
       }
 

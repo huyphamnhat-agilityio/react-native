@@ -1,7 +1,7 @@
 import {fetchApiWithAuth} from './fetch';
 
 // Constants
-import {RESOURCES} from 'src/constants';
+import {PRODUCT_PAGE_SIZE, RESOURCES} from 'src/constants';
 
 // Types & Interfaces
 import {Product, QueryContexts, QueryParams} from 'src/interfaces';
@@ -16,7 +16,7 @@ export const getProducts = async ({
   const query: QueryParams<Product> = {
     ...params,
     _page: (params?._page ?? 0) + (pageParam as number),
-    _limit: 6,
+    _limit: PRODUCT_PAGE_SIZE,
   };
 
   const result = await fetchApiWithAuth<Product[]>(

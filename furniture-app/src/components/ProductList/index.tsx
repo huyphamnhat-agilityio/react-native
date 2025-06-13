@@ -32,6 +32,7 @@ export type ProductListProps = Partial<FlatListProps<Product>> & {
   hasNextPage?: boolean;
   resetData?: () => void;
   isRefreshing?: boolean;
+  isFetching?: boolean;
   handlePress?: (id: string) => () => void;
   errorMessage?: string;
 };
@@ -42,6 +43,7 @@ const ProductList = memo(
     hasNextPage = false,
     resetData,
     isRefreshing = false,
+    isFetching = false,
     handlePress,
     errorMessage = ERROR_MESSAGE.PRODUCT_LIST[404],
     ...props
@@ -59,12 +61,14 @@ const ProductList = memo(
       [handlePress],
     );
 
-    const handleFetchNextPage = useCallback(
-      () => fetchNextPage?.(),
-      [fetchNextPage],
-    );
+    const handleFetchNextPage = useCallback(() => {
+      if (!isFetching && hasNextPage) {
+        fetchNextPage?.();
+      }
+    }, [fetchNextPage, hasNextPage, isFetching]);
 
     const handleRefresh = useCallback(() => resetData?.(), [resetData]);
+
     return (
       <FlatList
         testID="product-list"
@@ -89,6 +93,8 @@ const ProductList = memo(
             <Text style={styles.message}>{errorMessage}</Text>
           </View>
         }
+        initialNumToRender={4}
+        maxToRenderPerBatch={8}
         {...props}
       />
     );
