@@ -4,6 +4,7 @@ import {
   getToken,
 } from '@react-native-firebase/messaging';
 import notifee from '@notifee/react-native';
+import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
 
 const messaging = getMessaging();
 
@@ -13,6 +14,7 @@ export const onRegisterFirebaseMessaging = async () => {
     console.log('FCM Token:', token);
   } catch (error) {
     console.error('Error when getting FCM token:', error);
+    recordError(getCrashlytics(), error as Error);
     return null;
   }
 };

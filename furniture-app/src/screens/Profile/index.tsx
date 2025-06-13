@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useSharedValue} from 'react-native-reanimated';
+import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
 
 // Components
 import {BottomSheet, Modal, Text} from 'src/components/common';
@@ -107,6 +108,7 @@ const ProfileScreen = memo(() => {
           setUserAvatar(response);
         },
         onError: error => {
+          recordError(getCrashlytics(), error);
           Alert.alert(
             'Upload Photo Failed',
             error.message,
@@ -133,6 +135,7 @@ const ProfileScreen = memo(() => {
             );
           },
           onError: error => {
+            recordError(getCrashlytics(), error);
             Alert.alert(
               'Upload Photo Failed',
               error.message,

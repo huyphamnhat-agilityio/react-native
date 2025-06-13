@@ -2,6 +2,7 @@ import {memo, useCallback} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useShallow} from 'zustand/shallow';
 import {Alert, StyleSheet, View} from 'react-native';
+import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
 
 // Icons
 import {LogoIcon} from 'src/components/icons';
@@ -66,6 +67,7 @@ const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
 
           createCart(id, {
             onError: error => {
+              recordError(getCrashlytics(), error);
               Alert.alert(
                 'Create Cart Failed',
                 error.message,
@@ -81,6 +83,7 @@ const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
 
           createFavorites(id, {
             onError: error => {
+              recordError(getCrashlytics(), error);
               Alert.alert(
                 'Create Favorites Failed',
                 error.message,
@@ -95,6 +98,7 @@ const RegisterScreen = memo(({navigation}: AppStackScreenProps<'Register'>) => {
           });
         },
         onError: error => {
+          recordError(getCrashlytics(), error);
           Alert.alert(
             'Sign Up Failed',
             error.message,

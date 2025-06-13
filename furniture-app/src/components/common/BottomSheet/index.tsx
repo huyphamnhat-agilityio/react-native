@@ -13,6 +13,7 @@ export type BottomSheetProps = {
   isOpen: SharedValue<boolean>;
   toggleSheet: () => void;
   duration?: number;
+  isDisabled?: boolean;
   children: React.ReactNode;
 } & ViewProps;
 
@@ -20,6 +21,7 @@ const BottomSheet = ({
   isOpen,
   toggleSheet,
   duration = 500,
+  isDisabled = false,
   children,
   style,
 }: BottomSheetProps) => {
@@ -42,7 +44,11 @@ const BottomSheet = ({
   return (
     <>
       <Animated.View style={[styles.backdrop, backdropStyle]}>
-        <TouchableOpacity style={styles.flex} onPress={toggleSheet} />
+        <TouchableOpacity
+          style={styles.flex}
+          disabled={isDisabled}
+          onPress={toggleSheet}
+        />
       </Animated.View>
       <Animated.View
         onLayout={e => {

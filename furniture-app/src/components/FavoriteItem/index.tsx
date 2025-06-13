@@ -16,20 +16,26 @@ import {Product} from 'src/interfaces';
 export type FavoriteItemProps = ViewProps & {
   data: Product;
   onRemove?: (id: string) => void;
+  onPress?: (data: Product) => void;
   isDisabled?: boolean;
 };
 const FavoriteItem = memo(
   ({
-    data: {id, price, name: productName, variants},
+    data,
     onRemove,
+    onPress,
     style,
     isDisabled = false,
     ...props
   }: FavoriteItemProps) => {
+    const {id, price, name: productName, variants} = data;
     const handleRemovePress = useCallback(() => {
       onRemove?.(id);
     }, [onRemove, id]);
 
+    const handlePress = useCallback(() => {
+      onPress?.(data);
+    }, [onPress, data]);
     return (
       <View style={[styles.container, style]} {...props}>
         <Image
@@ -69,7 +75,7 @@ const FavoriteItem = memo(
             rounded="sm"
             disabled={isDisabled}
             style={styles.cartButton}
-            onPress={handleRemovePress}
+            onPress={handlePress}
           />
         </View>
       </View>

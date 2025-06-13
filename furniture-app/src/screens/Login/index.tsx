@@ -2,12 +2,17 @@ import {memo, useCallback} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Alert, StyleSheet, View} from 'react-native';
 import {useShallow} from 'zustand/shallow';
+import {
+  getCrashlytics,
+  recordError,
+  crash,
+} from '@react-native-firebase/crashlytics';
 
 // Icons
 import {LogoIcon} from 'src/components/icons';
 
 // Components
-import {Text} from 'src/components/common';
+import {Button, Text} from 'src/components/common';
 import {LoginForm} from 'src/components';
 
 // Themes
@@ -52,6 +57,7 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
           setAccessToken(accessToken);
         },
         onError: error => {
+          recordError(getCrashlytics(), error);
           Alert.alert(
             'Login Failed',
             error.message,
@@ -84,6 +90,7 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
           <Text font="MerriweatherBold" size="lg" textVariant="secondary">
             WELCOME BACK
           </Text>
+          <Button title="Test crash" onPress={() => crash(getCrashlytics())} />
         </Text>
         <LoginForm navigation={navigation} onSubmit={handleSubmit} />
       </View>

@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {useQueryClient} from '@tanstack/react-query';
+import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
 
 // Types & Interfaces
 import {CartItemData, StackNavigation} from 'src/interfaces';
@@ -80,6 +81,7 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
             });
           },
           onError: error => {
+            recordError(getCrashlytics(), error);
             Alert.alert(
               'Remove Item Failed',
               error.message,

@@ -20,6 +20,7 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from 'react-native-reanimated-carousel';
+import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
 
 // Components
 import {Button, QuantityControl, Text} from 'src/components/common';
@@ -151,6 +152,19 @@ const ProductDetailScreen = memo(
             ToastAndroid.TOP,
           );
         },
+        onError: error => {
+          recordError(getCrashlytics(), error);
+          Alert.alert(
+            'Add item to cart failed',
+            error.message,
+            [
+              {
+                text: 'Ok',
+              },
+            ],
+            {cancelable: true},
+          );
+        },
       });
     }, [
       currentCartItems,
@@ -225,6 +239,19 @@ const ProductDetailScreen = memo(
               : SUCCESS_MESSAGE.ADD_TO_FAVORITES,
             ToastAndroid.SHORT,
             ToastAndroid.TOP,
+          );
+        },
+        onError: error => {
+          recordError(getCrashlytics(), error);
+          Alert.alert(
+            'Mark item as favorite failed',
+            error.message,
+            [
+              {
+                text: 'Ok',
+              },
+            ],
+            {cancelable: true},
           );
         },
       });
