@@ -19,14 +19,19 @@ export const clearErrorOnChange = <T extends FieldValues>(
 /**
  * Enable submission when all required fields are filled and there are no errors
  */
-export const isEnableSubmit = (
-  requiredFields: string[],
-  dirtyFields: string[],
-  errors: Record<string, unknown>,
-): boolean => {
-  const isMatchAllRequiredFields = requiredFields.some(field =>
-    dirtyFields.includes(field),
-  );
-
+export const isEnableSubmit = ({
+  requiredFields,
+  dirtyFields,
+  errors,
+  requirePartial = false,
+}: {
+  requiredFields: string[];
+  dirtyFields: string[];
+  errors: Record<string, unknown>;
+  requirePartial?: boolean;
+}): boolean => {
+  const isMatchAllRequiredFields = requirePartial
+    ? requiredFields.some(field => dirtyFields.includes(field))
+    : requiredFields.every(field => dirtyFields.includes(field));
   return isMatchAllRequiredFields && errors && !Object.keys(errors).length;
 };

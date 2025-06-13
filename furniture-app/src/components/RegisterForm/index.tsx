@@ -114,7 +114,11 @@ const RegisterForm = memo(
     const dirtyFieldList = Object.keys(dirtyFields);
 
     const isDisabled = useMemo(() => {
-      return !isEnableSubmit(REQUIRED_FIELDS, dirtyFieldList, errors);
+      return !isEnableSubmit({
+        requiredFields: REQUIRED_FIELDS,
+        dirtyFields: dirtyFieldList,
+        errors,
+      });
     }, [dirtyFieldList, errors]);
 
     const handleToLogin = useCallback(() => {
