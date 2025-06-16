@@ -64,7 +64,22 @@ const Navigation = memo(() => {
   }, [isHydrated]);
 
   useEffect(() => {
+    (async () => {
+      await notifee.requestPermission();
+    })();
+
     notifee.onForegroundEvent(({type, detail}) => {
+      if (
+        type === EventType.PRESS &&
+        detail.notification?.data?.type === 'ProductDetail'
+      ) {
+        const id = detail.notification.data.id;
+
+        navigate('ProductDetail', {id});
+      }
+    });
+
+    notifee.onBackgroundEvent(async ({type, detail}) => {
       if (
         type === EventType.PRESS &&
         detail.notification?.data?.type === 'ProductDetail'

@@ -184,8 +184,6 @@ const ProductDetailScreen = memo(
     );
 
     const handleDisplayNotification = useCallback(async () => {
-      await notifee.requestPermission();
-
       const channelId = await notifee.createChannel({
         id: 'default',
         name: 'Default Channel',

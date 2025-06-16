@@ -93,8 +93,8 @@ const ProductList = memo(
             <Text style={styles.message}>{errorMessage}</Text>
           </View>
         }
-        initialNumToRender={4}
-        maxToRenderPerBatch={8}
+        initialNumToRender={6}
+        maxToRenderPerBatch={12}
         {...props}
       />
     );

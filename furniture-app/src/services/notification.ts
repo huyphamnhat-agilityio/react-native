@@ -3,7 +3,7 @@ import {
   getMessaging,
   getToken,
 } from '@react-native-firebase/messaging';
-import notifee from '@notifee/react-native';
+import notifee, {AndroidImportance} from '@notifee/react-native';
 import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
 
 const messaging = getMessaging();
@@ -22,10 +22,10 @@ export const onRegisterFirebaseMessaging = async () => {
 export const onMessageReceived = async (
   message: FirebaseMessagingTypes.RemoteMessage,
 ) => {
-  console.log('Received message:', message);
   const channelId = await notifee.createChannel({
-    id: 'default',
-    name: 'Default Channel',
+    id: 'firebase',
+    name: 'Firebase Channel',
+    importance: AndroidImportance.HIGH,
   });
 
   notifee.displayNotification({
@@ -33,6 +33,7 @@ export const onMessageReceived = async (
     body: message.notification?.body,
     android: {
       channelId: channelId,
+      importance: AndroidImportance.HIGH,
     },
   });
 };
