@@ -79,19 +79,21 @@ const FavoritesScreen = () => {
     setSelectedProduct(null);
   };
 
-  const toggleSheet = useCallback(() => {
-    isOpen.value = !isOpen.value;
-    if (isOpen.value) {
-      clearVariants();
-    }
+  const handleOpenSheet = useCallback(() => {
+    isOpen.value = true;
+  }, [isOpen]);
+
+  const handleCloseSheet = useCallback(() => {
+    isOpen.value = false;
+    clearVariants();
   }, [isOpen]);
 
   const handleCartPress = useCallback(
     (product: Product) => {
-      toggleSheet();
+      handleOpenSheet();
       setSelectedProduct(product);
     },
-    [toggleSheet],
+    [handleOpenSheet],
   );
 
   const handleRemove = useCallback(
@@ -161,7 +163,7 @@ const FavoritesScreen = () => {
 
     await updateCart(cartPayload, {
       onSuccess: () => {
-        toggleSheet();
+        handleCloseSheet();
         queryClient.setQueryData(QUERY_KEY.CARTS({id: userId}), {
           ...queryClient.getQueryData(QUERY_KEY.CARTS({id: userId})),
           items: updatedItems,
@@ -188,6 +190,7 @@ const FavoritesScreen = () => {
     });
   }, [
     currentCartItems,
+    handleCloseSheet,
     name,
     price,
     productId,
@@ -195,7 +198,6 @@ const FavoritesScreen = () => {
     queryClient,
     selectedVariant?.color,
     selectedVariant?.image,
-    toggleSheet,
     updateCart,
     userId,
   ]);
@@ -251,7 +253,7 @@ const FavoritesScreen = () => {
       <BottomSheet
         isDisabled={isAddingToCart}
         isOpen={isOpen}
-        toggleSheet={toggleSheet}
+        onClose={handleCloseSheet}
         style={styles.actionSheet}>
         <Text style={styles.actionTitle}>Choose color and quantity</Text>
         <View style={styles.actionWrapper}>

@@ -59,8 +59,18 @@ const ProfileScreen = memo(() => {
 
   const isPending = isUploadImagePending || isUpdateUserAvatarPending;
 
+  const isOpen = useSharedValue(false);
+
+  const handleOpenSheet = useCallback(() => {
+    isOpen.value = true;
+  }, [isOpen]);
+
+  const handleCloseSheet = useCallback(() => {
+    isOpen.value = false;
+  }, [isOpen]);
+
   const openCamera = async () => {
-    toggleSheet();
+    handleCloseSheet();
     const result = await launchCamera({
       mediaType: 'photo',
       saveToPhotos: true,
@@ -75,7 +85,7 @@ const ProfileScreen = memo(() => {
   };
 
   const openGallery = async () => {
-    toggleSheet();
+    handleCloseSheet();
     const result = await launchImageLibrary({
       mediaType: 'photo',
       includeBase64: true,
@@ -86,13 +96,6 @@ const ProfileScreen = memo(() => {
       result.assets[0].base64 && setImageBase64(result.assets[0].base64);
     }
   };
-
-  const isOpen = useSharedValue(false);
-
-  const toggleSheet = useCallback(() => {
-    isOpen.value = !isOpen.value;
-  }, [isOpen]);
-
   const toggleModal = useCallback(() => {
     setIsVisible(prev => !prev);
   }, []);
@@ -161,7 +164,7 @@ const ProfileScreen = memo(() => {
       <View style={styles.contentContainer}>
         <View style={styles.wrapper}>
           <View>
-            <Pressable onPress={toggleSheet}>
+            <Pressable onPress={handleOpenSheet}>
               <Image
                 source={{
                   uri: avatar ?? PLACEHOLDER_AVATAR_URL,
@@ -207,7 +210,7 @@ const ProfileScreen = memo(() => {
       </View>
       <BottomSheet
         isOpen={isOpen}
-        toggleSheet={toggleSheet}
+        onClose={handleCloseSheet}
         style={styles.actionSheet}>
         <Text style={styles.actionTitle}>Take photo from</Text>
         <View style={styles.actionWrapper}>

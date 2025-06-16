@@ -11,7 +11,7 @@ import {colors} from 'src/themes';
 
 export type BottomSheetProps = {
   isOpen: SharedValue<boolean>;
-  toggleSheet: () => void;
+  onClose: () => void;
   duration?: number;
   isDisabled?: boolean;
   children: React.ReactNode;
@@ -19,23 +19,29 @@ export type BottomSheetProps = {
 
 const BottomSheet = ({
   isOpen,
-  toggleSheet,
+  onClose,
   duration = 500,
   isDisabled = false,
   children,
   style,
 }: BottomSheetProps) => {
   const height = useSharedValue(0);
+
   const progress = useDerivedValue(() =>
     withTiming(isOpen.value ? 0 : 1, {duration}),
   );
 
-  const sheetStyle = useAnimatedStyle(() => ({
-    transform: [{translateY: progress.value * 2 * height.value}],
-  }));
+  const sheetStyle = useAnimatedStyle(() => {
+    // Fallback: if height not measured, force very large offset to hide
+    const translateY =
+      height.value === 0 ? 10000 : progress.value * 2 * height.value;
+    return {
+      transform: [{translateY}],
+    };
+  });
 
   const backdropStyle = useAnimatedStyle(() => ({
-    opacity: 1 - progress.value,
+    opacity: height.value === 0 ? 0 : 1 - progress.value,
     zIndex: isOpen.value
       ? 1
       : withDelay(duration, withTiming(-1, {duration: 0})),
@@ -47,9 +53,11 @@ const BottomSheet = ({
         <TouchableOpacity
           style={styles.flex}
           disabled={isDisabled}
-          onPress={toggleSheet}
+          onPress={onClose}
         />
       </Animated.View>
+
+      {/* Render sheet only when ready */}
       <Animated.View
         onLayout={e => {
           height.value = e.nativeEvent.layout.height;
@@ -66,14 +74,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   sheet: {
-    height: 'auto',
-    width: '100%',
     position: 'absolute',
     bottom: 0,
-    borderTopRightRadius: 12,
+    width: '100%',
     borderTopLeftRadius: 12,
-    zIndex: 99,
+    borderTopRightRadius: 12,
     backgroundColor: colors.white,
+    zIndex: 99,
   },
   backdrop: {
     ...StyleSheet.absoluteFillObject,

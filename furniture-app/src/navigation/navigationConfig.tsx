@@ -3,7 +3,7 @@ import {SCREENS} from 'src/constants';
 import {AppStackParamList} from 'src/interfaces';
 
 export const linking = {
-  prefixes: ['myapp://'], // or your custom scheme
+  prefixes: ['myapp://'],
   config: {
     screens: {
       [SCREENS.PRODUCT_DETAIL]: `${SCREENS.PRODUCT_DETAIL}/:id`,

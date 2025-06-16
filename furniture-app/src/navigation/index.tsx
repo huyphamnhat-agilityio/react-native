@@ -6,6 +6,7 @@ import {AnimatedBootSplash} from './AnimatedBootSplash';
 import {linking, navigate, navigationRef} from './navigationConfig';
 import notifee, {EventType} from '@notifee/react-native';
 import {getMessaging} from '@react-native-firebase/messaging';
+import {InteractionManager} from 'react-native';
 
 // Store
 import {useUserStore} from 'src/store';
@@ -15,7 +16,6 @@ import {useInitialNotifeeNavigation} from 'src/hooks';
 
 // Services
 import {onMessageReceived, onRegisterFirebaseMessaging} from 'src/services';
-import {InteractionManager} from 'react-native';
 
 const Navigation = memo(() => {
   const [visible, setVisible] = useState(true);
@@ -35,10 +35,10 @@ const Navigation = memo(() => {
       return;
     }
 
-    // Start new trace
     const trace = getPerformance().newTrace(
       `${currentRouteName}_initial_render`,
     );
+
     await trace.start();
 
     InteractionManager.runAfterInteractions(() => {

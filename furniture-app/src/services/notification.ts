@@ -5,6 +5,7 @@ import {
 } from '@react-native-firebase/messaging';
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
+import {colors} from 'src/themes';
 
 const messaging = getMessaging();
 
@@ -32,8 +33,18 @@ export const onMessageReceived = async (
     title: message.notification?.title,
     body: message.notification?.body,
     android: {
-      channelId: channelId,
+      channelId,
+      smallIcon: 'ic_notification',
+      color: colors.black,
+      pressAction: {
+        id: channelId,
+        launchActivity: 'default',
+      },
       importance: AndroidImportance.HIGH,
+    },
+    data: {
+      type: message.data?.type ?? '',
+      id: message.data?.id ?? '',
     },
   });
 };
