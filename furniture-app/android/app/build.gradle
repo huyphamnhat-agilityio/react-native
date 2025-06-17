@@ -79,9 +79,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.basicpractice"
+    namespace "com.furnitureapp"
     defaultConfig {
-        applicationId "com.basicpractice"
+        applicationId "com.furnitureapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
