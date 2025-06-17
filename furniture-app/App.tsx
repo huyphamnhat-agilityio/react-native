@@ -1,10 +1,10 @@
-import {getMessaging} from '@react-native-firebase/messaging';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {useEffect, useState} from 'react';
-import {DevSettings} from 'react-native';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { getMessaging } from '@react-native-firebase/messaging';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { DevSettings } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Navigation from 'src/navigation';
-import {onMessageReceived} from 'src/services';
+import { onMessageReceived } from 'src/services';
 
 getMessaging().setBackgroundMessageHandler(onMessageReceived);
 
@@ -25,7 +25,6 @@ function App(): React.JSX.Element {
       DevSettings.addMenuItem('Toggle Storybook', () => {
         setShowStorybook(prev => !prev);
       });
-      require('./ReactotronConfig');
     }
   }, []);
 

@@ -1,21 +1,21 @@
-import {getPerformance} from '@react-native-firebase/perf';
-import {NavigationContainer} from '@react-navigation/native';
-import {memo, useCallback, useEffect, useRef, useState} from 'react';
+import { getPerformance } from '@react-native-firebase/perf';
+import { NavigationContainer } from '@react-navigation/native';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import AppStackNavigation from './AppStackNavigation';
-import {AnimatedBootSplash} from './AnimatedBootSplash';
-import {linking, navigate, navigationRef} from './navigationConfig';
-import notifee, {EventType} from '@notifee/react-native';
-import {getMessaging} from '@react-native-firebase/messaging';
-import {InteractionManager} from 'react-native';
+import { AnimatedBootSplash } from './AnimatedBootSplash';
+import { linking, navigate, navigationRef } from './navigationConfig';
+import notifee, { EventType } from '@notifee/react-native';
+import { getMessaging } from '@react-native-firebase/messaging';
+import { InteractionManager } from 'react-native';
 
 // Store
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 // Hooks
-import {useInitialNotifeeNavigation} from 'src/hooks';
+import { useInitialNotifeeNavigation } from 'src/hooks';
 
 // Services
-import {onMessageReceived, onRegisterFirebaseMessaging} from 'src/services';
+import { onMessageReceived, onRegisterFirebaseMessaging } from 'src/services';
 
 const Navigation = memo(() => {
   const [visible, setVisible] = useState(true);
@@ -26,7 +26,7 @@ const Navigation = memo(() => {
 
   useInitialNotifeeNavigation(isNavReady && isHydrated);
 
-  const routeNameRef = useRef<string | undefined>();
+  const routeNameRef = useRef<string | undefined>(undefined);
 
   const handleStateChange = async () => {
     const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
@@ -68,25 +68,25 @@ const Navigation = memo(() => {
       await notifee.requestPermission();
     })();
 
-    notifee.onForegroundEvent(({type, detail}) => {
+    notifee.onForegroundEvent(({ type, detail }) => {
       if (
         type === EventType.PRESS &&
         detail.notification?.data?.type === 'ProductDetail'
       ) {
         const id = detail.notification.data.id;
 
-        navigate('ProductDetail', {id});
+        navigate('ProductDetail', { id });
       }
     });
 
-    notifee.onBackgroundEvent(async ({type, detail}) => {
+    notifee.onBackgroundEvent(async ({ type, detail }) => {
       if (
         type === EventType.PRESS &&
         detail.notification?.data?.type === 'ProductDetail'
       ) {
         const id = detail.notification.data.id;
 
-        navigate('ProductDetail', {id});
+        navigate('ProductDetail', { id });
       }
     });
 
@@ -96,8 +96,6 @@ const Navigation = memo(() => {
 
     const unsubscribeForegroundMessage =
       getMessaging().onMessage(onMessageReceived);
-
-    getMessaging().setBackgroundMessageHandler(onMessageReceived);
 
     return () => {
       unsubscribeForegroundMessage();
@@ -109,7 +107,8 @@ const Navigation = memo(() => {
       linking={linking}
       ref={navigationRef}
       onReady={handleReady}
-      onStateChange={handleStateChange}>
+      onStateChange={handleStateChange}
+    >
       <AppStackNavigation />
       {visible && <AnimatedBootSplash onAnimationEnd={handleReady} />}
     </NavigationContainer>

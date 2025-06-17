@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
-import {getUser} from '../user';
-import {useUserStore} from 'src/store';
-import {ERROR_MESSAGE} from 'src/constants';
-import {UserPayload} from 'src/interfaces';
-import {login} from '../auth';
+import { getUser } from '../user';
+import { useUserStore } from 'src/store';
+import { ERROR_MESSAGE } from 'src/constants';
+import { UserPayload } from 'src/interfaces';
+import { login } from '../auth';
 
 jest.mock('../user');
 jest.mock('bcryptjs');
@@ -29,7 +29,7 @@ describe('login', () => {
   });
 
   it('should set user in store on successful login', async () => {
-    const mockUser = {email: 'test@example.com', password: 'hashedPassword'};
+    const mockUser = { email: 'test@example.com', password: 'hashedPassword' };
     const payload: UserPayload = {
       email: 'test@example.com',
       password: 'plaintextPassword',
@@ -40,7 +40,7 @@ describe('login', () => {
 
     const result = await login(payload);
 
-    expect(mockGetUser).toHaveBeenCalledWith({email: payload.email});
+    expect(mockGetUser).toHaveBeenCalledWith({ email: payload.email });
     expect(mockBcryptCompareSync).toHaveBeenCalledWith(
       payload.password,
       mockUser.password,
@@ -50,7 +50,7 @@ describe('login', () => {
   });
 
   it('should return error message for invalid password', async () => {
-    const mockUser = {email: 'test@example.com', password: 'hashedPassword'};
+    const mockUser = { email: 'test@example.com', password: 'hashedPassword' };
     const payload: UserPayload = {
       email: 'test@example.com',
       password: 'wrongPassword',
@@ -61,7 +61,7 @@ describe('login', () => {
 
     const result = await login(payload);
 
-    expect(mockGetUser).toHaveBeenCalledWith({email: payload.email});
+    expect(mockGetUser).toHaveBeenCalledWith({ email: payload.email });
     expect(mockBcryptCompareSync).toHaveBeenCalledWith(
       payload.password,
       mockUser.password,
@@ -80,7 +80,7 @@ describe('login', () => {
 
     const result = await login(payload);
 
-    expect(mockGetUser).toHaveBeenCalledWith({email: payload.email});
+    expect(mockGetUser).toHaveBeenCalledWith({ email: payload.email });
     expect(mockBcryptCompareSync).not.toHaveBeenCalled();
     expect(mockSetUser).not.toHaveBeenCalled();
     expect(result).toBe(ERROR_MESSAGE.LOGIN[404]);
@@ -96,7 +96,7 @@ describe('login', () => {
 
     const result = await login(payload);
 
-    expect(mockGetUser).toHaveBeenCalledWith({email: payload.email});
+    expect(mockGetUser).toHaveBeenCalledWith({ email: payload.email });
     expect(mockBcryptCompareSync).not.toHaveBeenCalled();
     expect(mockSetUser).not.toHaveBeenCalled();
     expect(result).toBe(ERROR_MESSAGE.LOGIN['500']);
