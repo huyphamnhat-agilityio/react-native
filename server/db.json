@@ -24011,46 +24011,46 @@
           "id": "1",
           "name": "Bruno Fernandes",
           "address": "125 rue Robert Latouche",
-          "city": "Nice",
+          "city": "City 1",
           "postalCode": "06000",
-          "district": "Côte D’Azur",
-          "country": "France"
+          "district": "District 1",
+          "country": "Country 1"
         },
         {
           "id": "2",
           "name": "Bruno Fernandes",
           "address": "18 avenue Jean Médecin",
-          "city": "Nice",
+          "city": "City 2",
           "postalCode": "06000",
-          "district": "Côte D’Azur",
-          "country": "France"
+          "district": "District 2",
+          "country": "Country 2"
         },
         {
           "id": "3",
           "name": "Bruno Fernandes",
           "address": "45 boulevard de la Madeleine",
-          "city": "Nice",
+          "city": "City 3",
           "postalCode": "06000",
-          "district": "Côte D’Azur",
-          "country": "France"
+          "district": "District 3",
+          "country": "Country 3"
         },
         {
           "id": "4",
           "name": "Bruno Fernandes",
           "address": "9 rue de France",
-          "city": "Nice",
+          "city": "City 4",
           "postalCode": "06000",
-          "district": "Côte D’Azur",
-          "country": "France"
+          "district": "District 4",
+          "country": "Country 4"
         },
         {
           "id": "5",
           "name": "Bruno Fernandes",
           "address": "77 promenade des Anglais",
-          "city": "Nice",
+          "city": "City 5",
           "postalCode": "06000",
-          "district": "Côte D’Azur",
-          "country": "France"
+          "district": "District 5",
+          "country": "Country 5"
         }
       ],
       "avatar": "https://i.ibb.co/RpGXkKYx/profile-placeholder.png",
