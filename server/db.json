@@ -24010,27 +24010,42 @@
         {
           "id": "1",
           "name": "Bruno Fernandes",
-          "address": "125 rue Robert Latouche, Nice, 06200, Côte D’Azur, France"
+          "address": "125 rue Robert Latouche",
+          "city": "Nice",
+          "district": "Côte D’Azur",
+          "country": "France"
         },
         {
           "id": "2",
           "name": "Bruno Fernandes",
-          "address": "18 avenue Jean Médecin, Nice, 06000, Côte D’Azur, France"
+          "address": "18 avenue Jean Médecin, Nice, 06000, Côte D’Azur, France",
+          "city": "Nice",
+          "district": "Côte D’Azur",
+          "country": "France"
         },
         {
           "id": "3",
           "name": "Bruno Fernandes",
-          "address": "45 boulevard de la Madeleine, Nice, 06000, Côte D’Azur, France"
+          "address": "45 boulevard de la Madeleine, Nice, 06000, Côte D’Azur, France",
+          "city": "Nice",
+          "district": "Côte D’Azur",
+          "country": "France"
         },
         {
           "id": "4",
           "name": "Bruno Fernandes",
-          "address": "9 rue de France, Nice, 06000, Côte D’Azur, France"
+          "address": "9 rue de France, Nice, 06000, Côte D’Azur, France",
+          "city": "Nice",
+          "district": "Côte D’Azur",
+          "country": "France"
         },
         {
           "id": "5",
           "name": "Bruno Fernandes",
-          "address": "77 promenade des Anglais, Nice, 06000, Côte D’Azur, France"
+          "address": "77 promenade des Anglais, Nice, 06000, Côte D’Azur, France",
+          "city": "Nice",
+          "district": "Côte D’Azur",
+          "country": "France"
         }
       ],
       "avatar": "https://i.ibb.co/RpGXkKYx/profile-placeholder.png",
