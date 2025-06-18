@@ -2,6 +2,8 @@ import { memo, useCallback, useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 import {
   Alert,
+  PermissionsAndroid,
+  Platform,
   Pressable,
   StyleSheet,
   ToastAndroid,
@@ -32,6 +34,7 @@ import { useUserStore } from 'src/store';
 import { useUpdateUser, useUploadImage } from 'src/hooks';
 import { PLACEHOLDER_AVATAR_URL, SUCCESS_MESSAGE } from 'src/constants';
 import FastImage from '@d11/react-native-fast-image';
+import { requestAndroidPermission } from 'src/utils';
 
 const ProfileScreen = memo(() => {
   const {
@@ -73,6 +76,16 @@ const ProfileScreen = memo(() => {
   }, [isOpen]);
 
   const openCamera = async () => {
+    if (Platform.OS === 'android') {
+      const hasCamera = await requestAndroidPermission(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        'Camera',
+      );
+      if (!hasCamera) {
+        return;
+      }
+    }
+
     handleCloseSheet();
     const result = await launchCamera({
       mediaType: 'photo',
@@ -80,6 +93,7 @@ const ProfileScreen = memo(() => {
       cameraType: 'back',
       includeBase64: true,
     });
+
     if (!result.didCancel && result.assets && result.assets.length > 0) {
       setImageUri(result.assets[0].uri ?? '');
       toggleModal();
@@ -88,6 +102,19 @@ const ProfileScreen = memo(() => {
   };
 
   const openGallery = async () => {
+    if (Platform.OS === 'android') {
+      const hasStorage = await requestAndroidPermission(
+        Platform.Version >= 33
+          ? PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
+          : PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        'Storage',
+      );
+
+      if (!hasStorage) {
+        return;
+      }
+    }
+
     handleCloseSheet();
     const result = await launchImageLibrary({
       mediaType: 'photo',
