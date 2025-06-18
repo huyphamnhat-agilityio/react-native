@@ -1,18 +1,18 @@
-import {Controller, useForm} from 'react-hook-form';
-import {memo, useCallback, useMemo, useState} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import { Controller, useForm } from 'react-hook-form';
+import { memo, useCallback, useMemo, useState } from 'react';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 // Utils
-import {clearErrorOnChange, isEnableSubmit} from 'src/utils';
+import { clearErrorOnChange, isEnableSubmit } from 'src/utils';
 
 // Themes
-import {colors} from 'src/themes';
+import { colors } from 'src/themes';
 
 // Components
-import {Button, TextInput} from '../common';
+import { Button, TextInput } from '../common';
 
 // Icons
-import {EyeIcon} from '../icons';
+import { EyeIcon } from '../icons';
 
 // Constants
 import {
@@ -22,7 +22,7 @@ import {
 } from 'src/constants';
 
 // Types & Interfaces
-import {LoginFormData, StackNavigation} from 'src/interfaces';
+import { LoginFormData, StackNavigation } from 'src/interfaces';
 
 export type LoginFormProps = {
   onSubmit: (data: LoginFormData) => Promise<void>;
@@ -58,133 +58,142 @@ export const LOGIN_FORM_VALIDATION = {
   },
 };
 
-const LoginForm = memo(({onSubmit, navigation: {navigate}}: LoginFormProps) => {
-  const [isShowPassword, setIsShowPassword] = useState(true);
+const LoginForm = memo(
+  ({ onSubmit, navigation: { navigate } }: LoginFormProps) => {
+    const [isShowPassword, setIsShowPassword] = useState(true);
 
-  const handleShowPassword = useCallback(() => {
-    setIsShowPassword(!isShowPassword);
-  }, [isShowPassword]);
+    const handleShowPassword = useCallback(() => {
+      setIsShowPassword(!isShowPassword);
+    }, [isShowPassword]);
 
-  const {
-    control,
-    handleSubmit,
-    clearErrors,
-    formState: {errors, dirtyFields, isSubmitting},
-  } = useForm<LoginFormData>({
-    mode: 'onBlur',
-    reValidateMode: 'onBlur',
-  });
-
-  const handleInputChange = useCallback(
-    (name: keyof LoginFormData, onChange: (value: string) => void) => {
-      return (value: string) => {
-        onChange(value);
-
-        clearErrorOnChange(name, errors, clearErrors);
-      };
-    },
-    [clearErrors, errors],
-  );
-
-  const dirtyFieldList = Object.keys(dirtyFields);
-
-  const isDisabled = useMemo(() => {
-    return !isEnableSubmit({
-      requiredFields: REQUIRED_FIELDS,
-      dirtyFields: dirtyFieldList,
-      errors,
+    const {
+      control,
+      handleSubmit,
+      clearErrors,
+      formState: { errors, dirtyFields, isSubmitting },
+    } = useForm<LoginFormData>({
+      mode: 'onBlur',
+      reValidateMode: 'onBlur',
     });
-  }, [dirtyFieldList, errors]);
 
-  const navigateToRegister = useCallback(() => {
-    navigate('Register');
-  }, [navigate]);
-  return (
-    <View style={styles.container}>
-      <View style={styles.wrapper}>
-        <Controller
-          control={control}
-          name="email"
-          render={({field: {onChange, ...rest}, fieldState: {error}}) => (
-            <TextInput
-              font="NunitoSansNormal"
-              label="Email"
-              labelSize="xs"
-              labelVariant="alternative"
-              testID="email"
-              onChangeText={handleInputChange('email', onChange)}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              isDisabled={isSubmitting}
-              {...rest}
-            />
-          )}
-          rules={LOGIN_FORM_VALIDATION.EMAIL}
-        />
+    const handleInputChange = useCallback(
+      (name: keyof LoginFormData, onChange: (value: string) => void) => {
+        return (value: string) => {
+          onChange(value);
 
-        <Controller
-          control={control}
-          name="password"
-          render={({field: {onChange, ...rest}, fieldState: {error}}) => (
-            <TextInput
-              RightContent={
-                <EyeIcon
-                  onPress={handleShowPassword}
-                  testID="toggle-password"
-                />
-              }
-              font="NunitoSansNormal"
-              label="Password"
-              secureTextEntry={isShowPassword}
-              labelSize="xs"
-              labelVariant="alternative"
-              testID="password"
-              onChangeText={handleInputChange('password', onChange)}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              isDisabled={isSubmitting}
-              {...rest}
-            />
-          )}
-          rules={LOGIN_FORM_VALIDATION.PASSWORD}
-        />
+          clearErrorOnChange(name, errors, clearErrors);
+        };
+      },
+      [clearErrors, errors],
+    );
 
-        <Button
-          bgVariant="none"
-          textVariant="outline"
-          title="Forgot Password"
-          titleSize="base"
-          titleFont="NunitoSansSemiBold"
-          style={styles.link}
-          disabled={isSubmitting}
-        />
+    const dirtyFieldList = Object.keys(dirtyFields);
 
-        <Button
-          width="100%"
-          title="Log in"
-          titleSize="base"
-          titleFont="NunitoSansSemiBold"
-          rounded="md"
-          testID="login"
-          style={styles.button}
-          disabled={isDisabled || isSubmitting}
-          onPress={handleSubmit(onSubmit)}
-        />
+    const isDisabled = useMemo(() => {
+      return !isEnableSubmit({
+        requiredFields: REQUIRED_FIELDS,
+        dirtyFields: dirtyFieldList,
+        errors,
+      });
+    }, [dirtyFieldList, errors]);
 
-        <Button
-          bgVariant="none"
-          textVariant="outline"
-          title="SIGN UP"
-          titleSize="base"
-          titleFont="NunitoSansSemiBold"
-          onPress={navigateToRegister}
-          style={styles.link}
-          disabled={isSubmitting}
-        />
+    const navigateToRegister = useCallback(() => {
+      navigate('Register');
+    }, [navigate]);
+    return (
+      <View style={styles.container}>
+        <View style={styles.wrapper}>
+          <Controller
+            control={control}
+            name="email"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <TextInput
+                font="NunitoSansNormal"
+                label="Email"
+                labelSize="xs"
+                labelVariant="alternative"
+                testID="email"
+                onChangeText={handleInputChange('email', onChange)}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                isDisabled={isSubmitting}
+                {...rest}
+              />
+            )}
+            rules={LOGIN_FORM_VALIDATION.EMAIL}
+          />
+
+          <Controller
+            control={control}
+            name="password"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <TextInput
+                RightContent={
+                  <EyeIcon
+                    onPress={handleShowPassword}
+                    testID="toggle-password"
+                  />
+                }
+                font="NunitoSansNormal"
+                label="Password"
+                secureTextEntry={isShowPassword}
+                labelSize="xs"
+                labelVariant="alternative"
+                testID="password"
+                onChangeText={handleInputChange('password', onChange)}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                isDisabled={isSubmitting}
+                onSubmitEditing={handleSubmit(onSubmit)}
+                {...rest}
+              />
+            )}
+            rules={LOGIN_FORM_VALIDATION.PASSWORD}
+          />
+
+          <Button
+            bgVariant="none"
+            textVariant="outline"
+            title="Forgot Password"
+            titleSize="base"
+            titleFont="NunitoSansSemiBold"
+            style={styles.link}
+            disabled={isSubmitting}
+          />
+
+          <Button
+            width="100%"
+            title="Log in"
+            titleSize="base"
+            titleFont="NunitoSansSemiBold"
+            rounded="md"
+            testID="login"
+            style={styles.button}
+            disabled={isDisabled || isSubmitting}
+            onPress={handleSubmit(onSubmit)}
+          />
+
+          <Button
+            bgVariant="none"
+            textVariant="outline"
+            title="SIGN UP"
+            titleSize="base"
+            titleFont="NunitoSansSemiBold"
+            onPress={navigateToRegister}
+            style={styles.link}
+            disabled={isSubmitting}
+          />
+        </View>
       </View>
-    </View>
-  );
-});
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

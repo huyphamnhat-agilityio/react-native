@@ -1,16 +1,16 @@
-import {memo, useCallback} from 'react';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import { memo, useCallback } from 'react';
+import { ImageBackground, StyleSheet, View } from 'react-native';
 // Components
-import {Button, Text} from 'src/components/common';
+import { Button, Text } from 'src/components/common';
 
 // Constants
-import {SCREENS} from 'src/constants';
+import { SCREENS } from 'src/constants';
 
 // Interfaces
-import {AppStackScreenProps} from 'src/interfaces';
+import { AppStackScreenProps } from 'src/interfaces';
 
 const BoardingScreen = memo(
-  ({navigation: {navigate}}: AppStackScreenProps<'Boarding'>) => {
+  ({ navigation: { navigate } }: AppStackScreenProps<'Boarding'>) => {
     const handlePress = useCallback(() => {
       navigate(SCREENS.LOGIN);
     }, [navigate]);
@@ -20,7 +20,8 @@ const BoardingScreen = memo(
         <ImageBackground
           source={require('assets/images/boarding-background.png')}
           resizeMode="cover"
-          style={styles.image}>
+          style={styles.image}
+        >
           <View style={styles.content}>
             <View>
               <View style={styles.title}>
@@ -37,7 +38,8 @@ const BoardingScreen = memo(
                 style={styles.description}
                 font="NunitoSansNormal"
                 size="base"
-                textVariant="quaternary">
+                textVariant="quaternary"
+              >
                 The best simple place where you discover most wonderful
                 furnitures and make your home beautiful
               </Text>
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
     lineHeight: 35,
   },
-  wrapper: {flex: 1 / 1.25, justifyContent: 'center'},
+  wrapper: { flex: 1 / 1.25, justifyContent: 'center' },
   button: {
     paddingHorizontal: 28,
     paddingVertical: 16,

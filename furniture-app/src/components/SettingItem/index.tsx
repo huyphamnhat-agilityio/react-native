@@ -1,23 +1,23 @@
-import {StyleSheet, TouchableHighlight, View} from 'react-native';
-import {colors} from 'src/themes';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
+import { colors } from 'src/themes';
 
 // Components
-import {Button, Text} from '../common';
-import {BackArrowIcon} from '../icons';
-import {Fragment} from 'react/jsx-runtime';
+import { Button, Text } from '../common';
+import { BackArrowIcon } from '../icons';
 
 export type SettingItemProps = {
   title: string;
   description: string;
   handlePress?: () => void;
 };
-const SettingItem = ({title, description, handlePress}: SettingItemProps) => {
+const SettingItem = ({ title, description, handlePress }: SettingItemProps) => {
   return (
     <TouchableHighlight
       underlayColor={colors.white}
       style={styles.container}
-      onPress={handlePress}>
-      <Fragment>
+      onPress={handlePress}
+    >
+      <View style={styles.content}>
         <View style={styles.wrapper}>
           <Text font="NunitoSansBold" size="base">
             {title}
@@ -33,7 +33,7 @@ const SettingItem = ({title, description, handlePress}: SettingItemProps) => {
           bgVariant="none"
           IconRight={<BackArrowIcon />}
         />
-      </Fragment>
+      </View>
     </TouchableHighlight>
   );
 };
@@ -55,8 +55,14 @@ const styles = StyleSheet.create({
   },
   button: {
     marginVertical: 'auto',
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
     padding: 0,
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
   },
 });
 export default SettingItem;

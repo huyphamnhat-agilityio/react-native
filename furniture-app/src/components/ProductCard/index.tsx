@@ -1,20 +1,15 @@
-import {memo} from 'react';
-import {
-  Image,
-  StyleSheet,
-  TouchableHighlight,
-  View,
-  ViewProps,
-} from 'react-native';
+import FastImage from '@d11/react-native-fast-image';
+import { memo } from 'react';
+import { StyleSheet, TouchableHighlight, View, ViewProps } from 'react-native';
 
 // Components
-import {Button, Text} from 'src/components/common';
+import { Button, Text } from 'src/components/common';
 
 // Icons
-import {ShoppingBagIcon} from 'src/components/icons';
+import { ShoppingBagIcon } from 'src/components/icons';
 
 // Themes
-import {borderRadius} from 'src/themes';
+import { borderRadius } from 'src/themes';
 
 export type ProductCardProps = ViewProps & {
   image: string;
@@ -23,20 +18,19 @@ export type ProductCardProps = ViewProps & {
   onPress?: () => void;
 };
 const ProductCard = memo(
-  ({image, name, price, onPress, style, ...props}: ProductCardProps) => {
+  ({ image, name, price, onPress, style, ...props }: ProductCardProps) => {
     return (
       <TouchableHighlight
         onPress={onPress}
         underlayColor="#ffffff"
         style={[styles.container, style]}
-        {...props}>
+        {...props}
+      >
         <View>
-          <Image
+          <FastImage
             source={{
               uri: image,
             }}
-            width={236}
-            height={236}
             style={styles.image}
             resizeMode="stretch"
           />
@@ -79,7 +73,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: undefined,
+    width: 'auto',
     height: 236,
     borderRadius: borderRadius.base,
   },

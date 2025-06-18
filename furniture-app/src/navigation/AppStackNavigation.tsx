@@ -1,8 +1,8 @@
-import {memo, useCallback} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
-import {StyleSheet} from 'react-native';
-import {useShallow} from 'zustand/shallow';
+import { memo, useCallback } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
+import { useShallow } from 'zustand/shallow';
 import HomeTabs from './HomeTabsNavigation';
 
 // Screens
@@ -19,29 +19,29 @@ import {
 } from 'src/screens';
 
 // Constants
-import {SCREENS} from 'src/constants';
+import { SCREENS } from 'src/constants';
 
 // Types & Interfaces
-import {AppStackParamList, StackNavigation} from 'src/interfaces';
+import { AppStackParamList, StackNavigation } from 'src/interfaces';
 
 // Themes
-import {colors, fontFamilies, fontSizes} from 'src/themes';
+import { colors, fontFamilies, fontSizes } from 'src/themes';
 
 // Icons
-import {BackArrowIcon} from 'src/components/icons';
+import { BackArrowIcon } from 'src/components/icons';
 
 // Store
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 // Components
-import {Button} from 'src/components/common';
+import { Button } from 'src/components/common';
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 const AppStackNavigation = memo(() => {
-  const {goBack} = useNavigation<StackNavigation>();
+  const { goBack } = useNavigation<StackNavigation>();
 
-  const {accessToken, isFirstTimeLogin} = useUserStore(
+  const { accessToken, isFirstTimeLogin } = useUserStore(
     useShallow(state => ({
       accessToken: state.accessToken,
       isFirstTimeLogin: state.isFirstTimeLogin,
@@ -65,7 +65,8 @@ const AppStackNavigation = memo(() => {
     <AppStack.Navigator
       screenOptions={{
         headerShown: false,
-      }}>
+      }}
+    >
       {accessToken ? (
         <>
           <AppStack.Screen name={SCREENS.HOME_TABS} component={HomeTabs} />
@@ -132,7 +133,7 @@ const AppStackNavigation = memo(() => {
             component={ShippingAddressScreen}
           />
           <AppStack.Screen
-            options={({route}) => ({
+            options={({ route }) => ({
               title: route.params.address
                 ? 'Edit Shipping Address'
                 : 'Add Shipping Address',

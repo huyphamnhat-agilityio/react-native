@@ -1,34 +1,37 @@
-import {memo, useCallback, useState} from 'react';
-import {useShallow} from 'zustand/shallow';
+import { memo, useCallback, useState } from 'react';
+import { useShallow } from 'zustand/shallow';
 import {
   Alert,
-  Image,
   Pressable,
   StyleSheet,
   ToastAndroid,
   TouchableHighlight,
   View,
 } from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {useSharedValue} from 'react-native-reanimated';
-import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { useSharedValue } from 'react-native-reanimated';
+import {
+  getCrashlytics,
+  recordError,
+} from '@react-native-firebase/crashlytics';
 
 // Components
-import {BottomSheet, Modal, Text} from 'src/components/common';
-import {SettingMenu} from 'src/components';
+import { BottomSheet, Modal, Text } from 'src/components/common';
+import { SettingMenu } from 'src/components';
 
 // Icons
-import {CameraIcon, GalleryIcon} from 'src/components/icons';
+import { CameraIcon, GalleryIcon } from 'src/components/icons';
 
 // Themes
-import {borderRadius, colors} from 'src/themes';
+import { borderRadius, colors } from 'src/themes';
 
 // Store
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 // Hooks
-import {useUpdateUser, useUploadImage} from 'src/hooks';
-import {PLACEHOLDER_AVATAR_URL, SUCCESS_MESSAGE} from 'src/constants';
+import { useUpdateUser, useUploadImage } from 'src/hooks';
+import { PLACEHOLDER_AVATAR_URL, SUCCESS_MESSAGE } from 'src/constants';
+import FastImage from '@d11/react-native-fast-image';
 
 const ProfileScreen = memo(() => {
   const {
@@ -51,10 +54,10 @@ const ProfileScreen = memo(() => {
   const [imageUri, setImageUri] = useState('');
   const [imageBase64, setImageBase64] = useState('');
 
-  const {mutateAsync: uploadImage, isPending: isUploadImagePending} =
+  const { mutateAsync: uploadImage, isPending: isUploadImagePending } =
     useUploadImage();
 
-  const {mutateAsync: updateUser, isPending: isUpdateUserAvatarPending} =
+  const { mutateAsync: updateUser, isPending: isUpdateUserAvatarPending } =
     useUpdateUser();
 
   const isPending = isUploadImagePending || isUpdateUserAvatarPending;
@@ -120,13 +123,13 @@ const ProfileScreen = memo(() => {
                 text: 'Ok',
               },
             ],
-            {cancelable: true},
+            { cancelable: true },
           );
         },
       });
 
       await updateUser(
-        {id, avatar: result},
+        { id, avatar: result },
         {
           onSuccess: () => {
             setUserAvatar(result);
@@ -147,7 +150,7 @@ const ProfileScreen = memo(() => {
                   text: 'Ok',
                 },
               ],
-              {cancelable: true},
+              { cancelable: true },
             );
           },
         },
@@ -165,13 +168,11 @@ const ProfileScreen = memo(() => {
         <View style={styles.wrapper}>
           <View>
             <Pressable onPress={handleOpenSheet}>
-              <Image
+              <FastImage
                 source={{
                   uri: avatar ?? PLACEHOLDER_AVATAR_URL,
                 }}
-                width={80}
-                height={80}
-                borderRadius={9999}
+                style={styles.image}
                 resizeMode="cover"
               />
             </Pressable>
@@ -192,17 +193,15 @@ const ProfileScreen = memo(() => {
           isDisabled={isPending}
           isVisible={isVisible}
           onToggle={toggleModal}
-          onConfirm={handleConfirm}>
+          onConfirm={handleConfirm}
+        >
           <Text style={styles.modalTitle}>
             Do you want to use this photo as your profile picture?
           </Text>
-          <Image
+          <FastImage
             source={{
               uri: imageUri,
             }}
-            width={160}
-            height={160}
-            borderRadius={9999}
             resizeMode="cover"
             style={styles.previewImage}
           />
@@ -211,13 +210,15 @@ const ProfileScreen = memo(() => {
       <BottomSheet
         isOpen={isOpen}
         onClose={handleCloseSheet}
-        style={styles.actionSheet}>
+        style={styles.actionSheet}
+      >
         <Text style={styles.actionTitle}>Take photo from</Text>
         <View style={styles.actionWrapper}>
           <TouchableHighlight
             style={styles.underlay}
             underlayColor={colors.underlay}
-            onPress={openCamera}>
+            onPress={openCamera}
+          >
             <View style={styles.actionItem}>
               <CameraIcon width={40} height={40} />
               <Text>Camera</Text>
@@ -226,7 +227,8 @@ const ProfileScreen = memo(() => {
           <TouchableHighlight
             style={styles.underlay}
             underlayColor={colors.underlay}
-            onPress={openGallery}>
+            onPress={openGallery}
+          >
             <View style={styles.actionItem}>
               <GalleryIcon width={40} height={40} />
               <Text>Gallery</Text>
@@ -289,7 +291,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   previewImage: {
+    width: 160,
+    height: 160,
+    borderRadius: borderRadius.full,
     marginHorizontal: 'auto',
+  },
+  image: {
+    width: 80,
+    height: 80,
+    borderRadius: borderRadius.full,
   },
 });
 

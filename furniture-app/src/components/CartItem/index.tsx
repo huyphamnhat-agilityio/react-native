@@ -1,18 +1,21 @@
-import {memo, useCallback, useEffect, useRef} from 'react';
-import {Image, StyleSheet, View, ViewProps} from 'react-native';
+import { memo, useCallback, useEffect, useRef } from 'react';
+import { StyleSheet, View, ViewProps } from 'react-native';
 
 // Themes
-import {borderRadius} from 'src/themes';
+import { borderRadius } from 'src/themes';
 
 // Components
-import {Button, QuantityControl, Text} from 'src/components/common';
+import { Button, QuantityControl, Text } from 'src/components/common';
 
 // Icons
-import {CrossIcon} from 'src/components/icons';
+import { CrossIcon } from 'src/components/icons';
 
 // Types & Interfaces
-import {CartItemData} from 'src/interfaces';
-import {useDebounce} from 'src/hooks';
+import { CartItemData } from 'src/interfaces';
+
+// Hooks
+import { useDebounce } from 'src/hooks';
+import FastImage from '@d11/react-native-fast-image';
 
 export type CartItemProps = ViewProps & {
   data: CartItemData;
@@ -22,7 +25,7 @@ export type CartItemProps = ViewProps & {
 };
 const CartItem = memo(
   ({
-    data: {image, price, productName, quantity, selectedColor, id},
+    data: { image, price, productName, quantity, selectedColor, id },
     onRemove,
     onUpdate,
     style,
@@ -59,13 +62,12 @@ const CartItem = memo(
     }, [debouncedQuantity, handleChangeQuantity]);
     return (
       <View style={[styles.container, style]} {...props}>
-        <Image
-          source={{uri: image}}
-          width={100}
-          height={100}
-          resizeMode="stretch"
+        <FastImage
           style={styles.image}
+          source={{ uri: image }}
+          resizeMode="stretch"
         />
+
         <View style={styles.wrapper}>
           <View style={styles.contentWrapper}>
             <View style={styles.content}>
@@ -73,7 +75,8 @@ const CartItem = memo(
                 numberOfLines={1}
                 font="NunitoSansSemiBold"
                 size="xs"
-                textVariant="disabled">
+                textVariant="disabled"
+              >
                 {productName}
               </Text>
               <Text font="NunitoSansBold" size="sm">
@@ -110,6 +113,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: borderRadius.base,
+    width: 100,
+    height: 100,
   },
   wrapper: {
     flex: 1,
@@ -120,7 +125,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  content: {gap: 6, maxWidth: '80%'},
+  content: { gap: 6, maxWidth: '80%' },
   button: {
     padding: 0,
   },

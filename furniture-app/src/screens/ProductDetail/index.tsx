@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import {useQueryClient} from '@tanstack/react-query';
-import {memo, useCallback, useRef, useState} from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { memo, useCallback, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
   Dimensions,
-  Image,
   ScrollView,
   StyleSheet,
   ToastAndroid,
@@ -20,16 +19,23 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from 'react-native-reanimated-carousel';
-import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
+import {
+  getCrashlytics,
+  recordError,
+} from '@react-native-firebase/crashlytics';
 
 // Components
-import {Button, QuantityControl, Text} from 'src/components/common';
+import { Button, QuantityControl, Text } from 'src/components/common';
 
 // Icons
-import {BackArrowIcon, MarkIcon, StarIcon} from 'src/components/icons';
+import { BackArrowIcon, MarkIcon, StarIcon } from 'src/components/icons';
 
 // Constants
-import {MEDIUM_DEVICE_HEIGHT, QUERY_KEY, SUCCESS_MESSAGE} from 'src/constants';
+import {
+  MEDIUM_DEVICE_HEIGHT,
+  QUERY_KEY,
+  SUCCESS_MESSAGE,
+} from 'src/constants';
 
 // Hooks
 import {
@@ -41,15 +47,16 @@ import {
 } from 'src/hooks';
 
 // Types & Interfaces
-import {AppStackScreenProps, Cart, Favorites} from 'src/interfaces';
+import { AppStackScreenProps, Cart, Favorites } from 'src/interfaces';
 
 // Stores
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 // Themes
-import {borderRadius, colors} from 'src/themes';
+import { borderRadius, colors } from 'src/themes';
 
-import notifee, {AndroidImportance} from '@notifee/react-native';
+import notifee, { AndroidImportance } from '@notifee/react-native';
+import FastImage from '@d11/react-native-fast-image';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -57,37 +64,37 @@ const height = Dimensions.get('window').height;
 const ProductDetailScreen = memo(
   ({
     route: {
-      params: {id},
+      params: { id },
     },
-    navigation: {goBack},
+    navigation: { goBack },
   }: AppStackScreenProps<'ProductDetail'>) => {
     const [quantity, setQuantity] = useState(1);
 
     const userId = useUserStore(state => state.user?.id) ?? '';
 
-    const {data: currentCart, isLoading: isLoadingCart} = useGetCart({
+    const { data: currentCart, isLoading: isLoadingCart } = useGetCart({
       id: userId,
     });
 
-    const {items: currentCartItems = []} = currentCart || {};
+    const { items: currentCartItems = [] } = currentCart || {};
 
-    const {data: currentFavorites, isLoading: isLoadingFavorites} =
+    const { data: currentFavorites, isLoading: isLoadingFavorites } =
       useGetFavorites({
         id: userId,
       });
 
-    const {items: currentFavoritesItems = []} = currentFavorites || {};
+    const { items: currentFavoritesItems = [] } = currentFavorites || {};
 
-    const {mutateAsync: updateCart, isPending: isAddingToCart} =
+    const { mutateAsync: updateCart, isPending: isAddingToCart } =
       useUpdateCart();
 
-    const {mutateAsync: updateFavorites, isPending: isAddingToFavorites} =
+    const { mutateAsync: updateFavorites, isPending: isAddingToFavorites } =
       useUpdateFavorites();
     const progress = useSharedValue<number>(0);
 
     const ref = useRef<ICarouselInstance>(null);
 
-    const {data, isLoading, error} = useProductDetail(id);
+    const { data, isLoading, error } = useProductDetail(id);
 
     const {
       id: productId = '',
@@ -119,7 +126,7 @@ const ProductDetailScreen = memo(
       const updatedItems = currentCartItems.some(item => item.id === itemId)
         ? currentCartItems.map(item =>
             item.id === itemId
-              ? {...item, quantity: item.quantity + quantity}
+              ? { ...item, quantity: item.quantity + quantity }
               : item,
           )
         : [
@@ -142,8 +149,8 @@ const ProductDetailScreen = memo(
 
       await updateCart(cartPayload, {
         onSuccess: () => {
-          queryClient.setQueryData(QUERY_KEY.CARTS({id: userId}), {
-            ...queryClient.getQueryData(QUERY_KEY.CARTS({id: userId})),
+          queryClient.setQueryData(QUERY_KEY.CARTS({ id: userId }), {
+            ...queryClient.getQueryData(QUERY_KEY.CARTS({ id: userId })),
             items: updatedItems,
           });
           ToastAndroid.showWithGravity(
@@ -162,7 +169,7 @@ const ProductDetailScreen = memo(
                 text: 'Ok',
               },
             ],
-            {cancelable: true},
+            { cancelable: true },
           );
         },
       });
@@ -224,8 +231,8 @@ const ProductDetailScreen = memo(
 
       await updateFavorites(favoritesPayload, {
         onSuccess: () => {
-          queryClient.setQueryData(QUERY_KEY.FAVORITES({id: userId}), {
-            ...queryClient.getQueryData(QUERY_KEY.FAVORITES({id: userId})),
+          queryClient.setQueryData(QUERY_KEY.FAVORITES({ id: userId }), {
+            ...queryClient.getQueryData(QUERY_KEY.FAVORITES({ id: userId })),
             items: updatedItems,
           });
 
@@ -249,7 +256,7 @@ const ProductDetailScreen = memo(
                 text: 'Ok',
               },
             ],
-            {cancelable: true},
+            { cancelable: true },
           );
         },
       });
@@ -282,7 +289,7 @@ const ProductDetailScreen = memo(
             onPress: goBack,
           },
         ],
-        {cancelable: true},
+        { cancelable: true },
       );
     }
 
@@ -296,8 +303,8 @@ const ProductDetailScreen = memo(
               height={height * 0.5}
               style={styles.carousel}
               data={variants}
-              renderItem={({item}) => (
-                <Image
+              renderItem={({ item }) => (
+                <FastImage
                   source={{
                     uri: item.image,
                   }}
@@ -344,7 +351,8 @@ const ProductDetailScreen = memo(
               numberOfLines={1}
               font="GelasioMedium"
               size="lg"
-              textVariant="secondary">
+              textVariant="secondary"
+            >
               {name}
             </Text>
 
@@ -353,7 +361,8 @@ const ProductDetailScreen = memo(
                 style={styles.price}
                 font="NunitoSansBold"
                 size="xxl"
-                textVariant="secondary">
+                textVariant="secondary"
+              >
                 $ {price}
               </Text>
 
@@ -371,7 +380,8 @@ const ProductDetailScreen = memo(
               <Text
                 font="NunitoSansSemiBold"
                 size="sm"
-                textVariant="quaternary">
+                textVariant="quaternary"
+              >
                 (${reviewCount} reviews)
               </Text>
             </View>
@@ -420,9 +430,9 @@ const ProductDetailScreen = memo(
         />
 
         {/* Color Carousel Pagination */}
-        <Pagination.Custom<{color: string}>
+        <Pagination.Custom<{ color: string }>
           progress={progress}
-          data={variants.map(({color}) => ({color}))}
+          data={variants.map(({ color }) => ({ color }))}
           size={34}
           dotStyle={styles.colorDot}
           activeDotStyle={styles.colorActiveDot}

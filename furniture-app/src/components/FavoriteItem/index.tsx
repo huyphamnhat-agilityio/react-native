@@ -1,17 +1,18 @@
-import {memo, useCallback} from 'react';
-import {Image, StyleSheet, View, ViewProps} from 'react-native';
+import { memo, useCallback } from 'react';
+import { StyleSheet, View, ViewProps } from 'react-native';
+import FastImage from '@d11/react-native-fast-image';
 
 // Themes
-import {borderRadius, colors} from 'src/themes';
+import { borderRadius, colors } from 'src/themes';
 
 // Components
-import {Button, Text} from 'src/components/common';
+import { Button, Text } from 'src/components/common';
 
 // Icons
-import {CrossIcon, ShoppingBagIcon} from 'src/components/icons';
+import { CrossIcon, ShoppingBagIcon } from 'src/components/icons';
 
 // Types & Interfaces
-import {Product} from 'src/interfaces';
+import { Product } from 'src/interfaces';
 
 export type FavoriteItemProps = ViewProps & {
   data: Product;
@@ -28,7 +29,7 @@ const FavoriteItem = memo(
     isDisabled = false,
     ...props
   }: FavoriteItemProps) => {
-    const {id, price, name: productName, variants} = data;
+    const { id, price, name: productName, variants } = data;
     const handleRemovePress = useCallback(() => {
       onRemove?.(id);
     }, [onRemove, id]);
@@ -38,10 +39,8 @@ const FavoriteItem = memo(
     }, [onPress, data]);
     return (
       <View style={[styles.container, style]} {...props}>
-        <Image
-          source={{uri: variants[0].image}}
-          width={100}
-          height={100}
+        <FastImage
+          source={{ uri: variants[0].image }}
           resizeMode="stretch"
           style={styles.image}
         />
@@ -52,7 +51,8 @@ const FavoriteItem = memo(
                 numberOfLines={1}
                 font="NunitoSansSemiBold"
                 size="xs"
-                textVariant="disabled">
+                textVariant="disabled"
+              >
                 {productName}
               </Text>
               <Text font="NunitoSansBold" size="sm">
@@ -91,6 +91,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: borderRadius.base,
+    width: 100,
+    height: 100,
   },
   wrapper: {
     flex: 1,
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  content: {gap: 6, maxWidth: '80%'},
+  content: { gap: 6, maxWidth: '80%' },
   removeButton: {
     padding: 0,
   },
