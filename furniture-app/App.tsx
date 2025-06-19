@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { DevSettings } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Navigation from 'src/navigation';
 import { onMessageReceived } from 'src/services';
 
@@ -34,11 +35,13 @@ function App(): React.JSX.Element {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <GestureHandlerRootView>
-        <Navigation />
-      </GestureHandlerRootView>
-    </QueryClientProvider>
+    <KeyboardProvider>
+      <QueryClientProvider client={queryClient}>
+        <GestureHandlerRootView>
+          <Navigation />
+        </GestureHandlerRootView>
+      </QueryClientProvider>
+    </KeyboardProvider>
   );
 }
 

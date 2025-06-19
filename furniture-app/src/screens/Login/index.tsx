@@ -1,32 +1,35 @@
-import {memo, useCallback} from 'react';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {Alert, StyleSheet, View} from 'react-native';
-import {useShallow} from 'zustand/shallow';
-import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
+import { memo, useCallback } from 'react';
+import { Alert, StyleSheet, View } from 'react-native';
+import { useShallow } from 'zustand/shallow';
+import {
+  getCrashlytics,
+  recordError,
+} from '@react-native-firebase/crashlytics';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 // Icons
-import {LogoIcon} from 'src/components/icons';
+import { LogoIcon } from 'src/components/icons';
 
 // Components
-import {Text} from 'src/components/common';
-import {LoginForm} from 'src/components';
+import { Text } from 'src/components/common';
+import { LoginForm } from 'src/components';
 
 // Themes
-import {borderRadius, colors} from 'src/themes';
+import { borderRadius, colors } from 'src/themes';
 
 // Hooks
-import {useLogin} from 'src/hooks';
+import { useLogin } from 'src/hooks';
 
 // Types & Interfaces
-import {AppStackScreenProps, LoginFormData} from 'src/interfaces';
+import { AppStackScreenProps, LoginFormData } from 'src/interfaces';
 
 // Store
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
-const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
-  const {mutateAsync: login} = useLogin();
+const LoginScreen = memo(({ navigation }: AppStackScreenProps<'Login'>) => {
+  const { mutateAsync: login } = useLogin();
 
-  const {setUser, setAccessToken} = useUserStore(
+  const { setUser, setAccessToken } = useUserStore(
     useShallow(state => ({
       setUser: state.setUser,
       setAccessToken: state.setAccessToken,
@@ -38,7 +41,7 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
       await login(data, {
         onSuccess: response => {
           const {
-            user: {id, email, name, shippingAddress, avatar},
+            user: { id, email, name, shippingAddress, avatar },
             accessToken,
           } = response;
 
@@ -62,7 +65,7 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
                 text: 'Ok',
               },
             ],
-            {cancelable: true},
+            { cancelable: true },
           );
         },
       });
@@ -70,7 +73,10 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
     [login, setAccessToken, setUser],
   );
   return (
-    <KeyboardAwareScrollView style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.logo}>
         <View style={styles.stroke} />
         <LogoIcon />
@@ -81,7 +87,8 @@ const LoginScreen = memo(({navigation}: AppStackScreenProps<'Login'>) => {
           font="MerriweatherNormal"
           size="xl"
           textVariant="alternative"
-          style={styles.title}>
+          style={styles.title}
+        >
           Hello ! {'\n'}
           <Text font="MerriweatherBold" size="lg" textVariant="secondary">
             WELCOME BACK
@@ -98,6 +105,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     gap: 20,
+  },
+  contentContainer: {
+    flexGrow: 1,
   },
   logo: {
     marginTop: 20,

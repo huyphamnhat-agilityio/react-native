@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import uuid from 'react-native-uuid';
 
 // Components
@@ -17,6 +18,8 @@ import { clearErrorOnChange, isEnableSubmit } from 'src/utils';
 
 // Constants
 import { FORM_VALIDATION_MESSAGE } from 'src/constants';
+
+// Mocks
 import { MOCK_CITIES, MOCK_COUNTRIES, MOCK_DISTRICTS } from 'src/mocks';
 
 export type RegisterFormProps = {
@@ -114,7 +117,10 @@ const ShippingAddressForm = ({ onSubmit, data }: RegisterFormProps) => {
   }, [dirtyFieldList, errors]);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView
+      style={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <Controller
         control={control}
         name="name"
@@ -284,7 +290,7 @@ const ShippingAddressForm = ({ onSubmit, data }: RegisterFormProps) => {
         style={styles.button}
         onPress={handleSubmit(onSubmit)}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
