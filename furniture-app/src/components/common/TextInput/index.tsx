@@ -1,4 +1,4 @@
-import {forwardRef, memo, Ref} from 'react';
+import { forwardRef, memo, Ref } from 'react';
 import {
   ColorValue,
   DimensionValue,
@@ -15,10 +15,10 @@ import {
 import Text from '../Text';
 
 // Types & Interfaces
-import {FontFamily, FontSize, TextVariant} from 'src/interfaces';
+import { FontFamily, FontSize, TextVariant } from 'src/interfaces';
 
 // Themes
-import {colors, fontFamilies, fontSizes} from 'src/themes';
+import { colors, fontFamilies, fontSizes } from 'src/themes';
 
 export type TextInputProps = TextInputBaseProps & {
   LeftContent?: React.ReactElement;
@@ -29,7 +29,6 @@ export type TextInputProps = TextInputBaseProps & {
   inputVariant?: TextVariant;
   isDisabled?: boolean;
   isError?: boolean;
-  isLoading?: boolean;
   label?: string;
   labelSize?: FontSize;
   labelVariant?: TextVariant;
@@ -58,7 +57,6 @@ const TextInput = memo(
         numberOfLines = 1,
         placeholderTextColor = colors.text.placeholder,
         isDisabled = false,
-        isLoading = false,
         isError = false,
         errorMessage = '',
         inputWidth = '94%',
@@ -74,21 +72,22 @@ const TextInput = memo(
       }: TextInputProps,
       ref: Ref<TextInputBase>,
     ) => {
-      const isEditable = !isDisabled && !isLoading;
+      const isEditable = !isDisabled;
 
       const errorBorderVariant = isError
         ? colors.border.danger
         : colors.border.secondary;
 
-      const opacity = !isEditable ? 0.5 : 1;
+      const opacity = isEditable ? 1 : 0.5;
       return (
         <View>
           <View
             style={[
               styles.wrapper,
-              {opacity, backgroundColor, gap: labelDistance},
+              { opacity, backgroundColor, gap: labelDistance },
               containerStyle,
-            ]}>
+            ]}
+          >
             {label && (
               <Text font={font} size={labelSize} textVariant={labelVariant}>
                 {label}
@@ -101,7 +100,8 @@ const TextInput = memo(
                   borderBottomWidth: innerBorderBottomWidth,
                   borderBottomColor: errorBorderVariant,
                 },
-              ]}>
+              ]}
+            >
               {LeftContent}
               <TextInputBase
                 ref={ref}
@@ -129,7 +129,8 @@ const TextInput = memo(
                 style={errorStyle}
                 font={font}
                 size={labelSize}
-                textVariant="danger">
+                textVariant="danger"
+              >
                 {errorMessage}
               </Text>
             )}
@@ -139,7 +140,8 @@ const TextInput = memo(
               style={errorStyle}
               font={font}
               size={labelSize}
-              textVariant="danger">
+              textVariant="danger"
+            >
               {errorMessage}
             </Text>
           )}

@@ -2,6 +2,10 @@ export type ShippingAddress = {
   id: string;
   name: string;
   address: string;
+  postalCode: string;
+  country: string;
+  district: string;
+  city: string;
 };
 
 export type User = {

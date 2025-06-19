@@ -1,40 +1,37 @@
-import {useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 // Themes
-import {borderRadius, colors, fontSizes} from 'src/themes';
+import { borderRadius, colors, fontSizes } from 'src/themes';
 
 // Components
-import {Button, Text} from '../common';
-import {EditIcon} from '../icons';
+import { Button, Text } from '../common';
+import { EditIcon } from '../icons';
 
 // Interfaces
-import {ShippingAddress, StackNavigation} from 'src/interfaces';
+import { ShippingAddress, StackNavigation } from 'src/interfaces';
+import { formatFullAddress } from 'src/utils';
 
 export type AddressItemProps = {
   isChecked?: boolean;
-  name: string;
-  address: string;
+  shippingAddress: ShippingAddress;
   onPress?: (address: ShippingAddress) => void;
-  id: string;
   navigation?: StackNavigation;
 };
 const AddressItem = ({
   isChecked = false,
-  name,
-  address,
+  shippingAddress,
   onPress,
-  id,
   navigation,
 }: AddressItemProps) => {
   const handlePress = useCallback(() => {
-    onPress?.({id, name, address});
-  }, [onPress, id, name, address]);
+    onPress?.(shippingAddress);
+  }, [onPress, shippingAddress]);
 
   const handleNavigateToEditAddress = useCallback(() => {
-    navigation?.navigate('AddOrEditAddress', {address: {id, name, address}});
-  }, [navigation, id, name, address]);
+    navigation?.navigate('AddOrEditAddress', { address: shippingAddress });
+  }, [navigation, shippingAddress]);
 
   return (
     <View style={styles.container}>
@@ -55,7 +52,7 @@ const AddressItem = ({
       <View style={styles.addressContent}>
         <View style={styles.titleWrapper}>
           <Text font="NunitoSansBold" size="base" textVariant="secondary">
-            {name}
+            {shippingAddress.name}
           </Text>
 
           <Button
@@ -72,8 +69,9 @@ const AddressItem = ({
           size="xs"
           textVariant="quaternary"
           numberOfLines={2}
-          style={styles.address}>
-          {address}
+          style={styles.address}
+        >
+          {formatFullAddress(shippingAddress)}
         </Text>
       </View>
     </View>

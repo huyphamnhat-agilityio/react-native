@@ -1,16 +1,24 @@
-import {Dimensions, ScrollView, StyleSheet, View} from 'react-native';
+import { useShallow } from 'zustand/shallow';
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 
 // Components
-import {AddressItem} from 'src/components';
-import {Button} from 'src/components/common';
-import {PlusIcon} from 'src/components/icons';
-import {MEDIUM_DEVICE_HEIGHT} from 'src/constants';
-import {AppStackScreenProps} from 'src/interfaces';
-import {useUserStore} from 'src/store';
+import { AddressItem } from 'src/components';
+import { Button } from 'src/components/common';
+
+// Icons
+import { PlusIcon } from 'src/components/icons';
+
+// Constants
+import { MEDIUM_DEVICE_HEIGHT } from 'src/constants';
+
+// Interfaces
+import { AppStackScreenProps } from 'src/interfaces';
+
+// Stores
+import { useUserStore } from 'src/store';
 
 // Themes
-import {colors} from 'src/themes';
-import {useShallow} from 'zustand/shallow';
+import { colors } from 'src/themes';
 
 const height = Dimensions.get('window').height;
 
@@ -30,7 +38,7 @@ const ShippingAddressScreen = ({
   );
 
   const navigateToAddAddress = () => {
-    navigation.navigate('AddOrEditAddress', {address: undefined});
+    navigation.navigate('AddOrEditAddress', { address: undefined });
   };
 
   return (
@@ -40,10 +48,8 @@ const ShippingAddressScreen = ({
           {addressList.map(item => (
             <AddressItem
               key={item.id}
-              id={item.id}
               isChecked={currentAddress?.id === item.id}
-              name={item.name}
-              address={item.address}
+              shippingAddress={item}
               onPress={setCurrentAddress}
               navigation={navigation}
             />

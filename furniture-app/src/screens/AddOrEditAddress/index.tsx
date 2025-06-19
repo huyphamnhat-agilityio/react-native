@@ -1,27 +1,27 @@
-import {useShallow} from 'zustand/shallow';
-import {useCallback} from 'react';
-import {Alert, ToastAndroid} from 'react-native';
+import { useShallow } from 'zustand/shallow';
+import { useCallback } from 'react';
+import { Alert, ToastAndroid } from 'react-native';
 
 // Components
-import {ShippingAddressForm} from 'src/components';
+import { ShippingAddressForm } from 'src/components';
 
 // Constants
-import {SUCCESS_MESSAGE} from 'src/constants';
+import { SUCCESS_MESSAGE } from 'src/constants';
 
 // Hooks
-import {useUpdateUser} from 'src/hooks';
+import { useUpdateUser } from 'src/hooks';
 
 // Interfaces
-import {AppStackScreenProps, ShippingAddress} from 'src/interfaces';
+import { AppStackScreenProps, ShippingAddress } from 'src/interfaces';
 
 // Store
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 const AddOrEditAddress = ({
   route,
-  navigation: {goBack},
+  navigation: { goBack },
 }: AppStackScreenProps<'AddOrEditAddress'>) => {
-  const {address: currentAddress} = route.params;
+  const { address: currentAddress } = route.params;
 
   const {
     userId,
@@ -35,7 +35,7 @@ const AddOrEditAddress = ({
     })),
   );
 
-  const {mutateAsync: updateUserAddress} = useUpdateUser();
+  const { mutateAsync: updateUserAddress } = useUpdateUser();
 
   const handleSubmit = useCallback(
     async (data: ShippingAddress) => {
@@ -52,6 +52,7 @@ const AddOrEditAddress = ({
             },
           ];
 
+      console.log(updatedAddress);
       await updateUserAddress(
         {
           id: userId,
@@ -78,7 +79,7 @@ const AddOrEditAddress = ({
                   text: 'Ok',
                 },
               ],
-              {cancelable: true},
+              { cancelable: true },
             );
           },
         },
