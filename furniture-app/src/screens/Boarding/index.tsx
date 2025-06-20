@@ -7,12 +7,12 @@ import { Button, Text } from 'src/components/common';
 import { SCREENS } from 'src/constants';
 
 // Interfaces
-import { AppStackScreenProps } from 'src/interfaces';
+import { AuthStacksScreenProps } from 'src/interfaces';
 
 const BoardingScreen = memo(
-  ({ navigation: { navigate } }: AppStackScreenProps<'Boarding'>) => {
+  ({ navigation: { navigate } }: AuthStacksScreenProps<'Boarding'>) => {
     const handlePress = useCallback(() => {
-      navigate(SCREENS.LOGIN);
+      navigate(SCREENS.AUTH.LOGIN);
     }, [navigate]);
 
     return (

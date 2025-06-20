@@ -1,4 +1,4 @@
-import {memo, useCallback} from 'react';
+import { memo, useCallback } from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -7,38 +7,41 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useQueryClient} from '@tanstack/react-query';
-import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  getCrashlytics,
+  recordError,
+} from '@react-native-firebase/crashlytics';
 
 // Types & Interfaces
-import {CartItemData, StackNavigation} from 'src/interfaces';
+import { CartItemData, MainNavigation } from 'src/interfaces';
 
 // Components
-import {Button, Text} from 'src/components/common';
-import {CartItem, CartList} from 'src/components';
+import { Button, Text } from 'src/components/common';
+import { CartItem, CartList } from 'src/components';
 
 // Store
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 // Themes
-import {colors} from 'src/themes';
+import { colors } from 'src/themes';
 
 // Constants
-import {MEDIUM_DEVICE_HEIGHT, QUERY_KEY} from 'src/constants';
+import { MEDIUM_DEVICE_HEIGHT, QUERY_KEY } from 'src/constants';
 
 // Hooks
-import {useGetCart, useUpdateCart} from 'src/hooks';
+import { useGetCart, useUpdateCart } from 'src/hooks';
 
 // Utils
-import {getTotalMoney} from 'src/utils';
+import { getTotalMoney } from 'src/utils';
 
 export type CartScreenProps = {
-  navigation: StackNavigation;
+  navigation: MainNavigation;
 };
 
 const height = Dimensions.get('window').height;
 
-const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
+const CartScreen = memo(({ navigation: { navigate } }: CartScreenProps) => {
   const userId = useUserStore(state => state.user?.id) ?? '';
 
   const {
@@ -49,16 +52,16 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
     id: userId,
   });
 
-  const {items = []} = data || {};
+  const { items = [] } = data || {};
 
-  const {mutateAsync: updateCart, isPending} = useUpdateCart();
+  const { mutateAsync: updateCart, isPending } = useUpdateCart();
 
   const totalMoney = getTotalMoney(items);
 
   const queryClient = useQueryClient();
 
   const handleCheckout = useCallback(
-    () => navigate('Checkout', {totalMoney}),
+    () => navigate('Checkout', { totalMoney }),
     [navigate, totalMoney],
   );
 
@@ -75,8 +78,8 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
         },
         {
           onSuccess: () => {
-            queryClient.setQueryData(QUERY_KEY.CARTS({id: userId}), {
-              ...queryClient.getQueryData(QUERY_KEY.CARTS({id: userId})),
+            queryClient.setQueryData(QUERY_KEY.CARTS({ id: userId }), {
+              ...queryClient.getQueryData(QUERY_KEY.CARTS({ id: userId })),
               items: updatedItems,
             });
           },
@@ -90,7 +93,7 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
                   text: 'Ok',
                 },
               ],
-              {cancelable: true},
+              { cancelable: true },
             );
           },
         },
@@ -118,8 +121,8 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
         },
         {
           onSuccess: () => {
-            queryClient.setQueryData(QUERY_KEY.CARTS({id: userId}), {
-              ...queryClient.getQueryData(QUERY_KEY.CARTS({id: userId})),
+            queryClient.setQueryData(QUERY_KEY.CARTS({ id: userId }), {
+              ...queryClient.getQueryData(QUERY_KEY.CARTS({ id: userId })),
               items: updatedItems,
             });
           },
@@ -132,7 +135,7 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
                   text: 'Ok',
                 },
               ],
-              {cancelable: true},
+              { cancelable: true },
             );
           },
         },
@@ -151,7 +154,7 @@ const CartScreen = memo(({navigation: {navigate}}: CartScreenProps) => {
   );
 
   const handleRenderItem = useCallback(
-    ({item}: ListRenderItemInfo<CartItemData>) => (
+    ({ item }: ListRenderItemInfo<CartItemData>) => (
       <CartItem
         key={item.id}
         data={item}

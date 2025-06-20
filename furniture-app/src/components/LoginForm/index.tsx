@@ -22,11 +22,11 @@ import {
 } from 'src/constants';
 
 // Types & Interfaces
-import { LoginFormData, StackNavigation } from 'src/interfaces';
+import { AuthNavigation, LoginFormData } from 'src/interfaces';
 
 export type LoginFormProps = {
   onSubmit: (data: LoginFormData) => Promise<void>;
-  navigation: StackNavigation;
+  navigation: AuthNavigation;
 };
 
 const height = Dimensions.get('window').height;

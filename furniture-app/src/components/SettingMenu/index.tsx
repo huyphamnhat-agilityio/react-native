@@ -1,25 +1,25 @@
-import {StyleSheet, View, ViewProps} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { StyleSheet, View, ViewProps } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 // Components
 import SettingItem from '../SettingItem';
 
 // Constants
-import {SETTINGS} from 'src/constants';
+import { SETTINGS } from 'src/constants';
 
 // Store
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 // Types & Interfaces
-import {StackNavigation} from 'src/interfaces';
+import { AppNavigation } from 'src/interfaces';
 
 export type SettingMenuProps = ViewProps;
 
-const SettingMenu = ({style, ...rest}: SettingMenuProps) => {
+const SettingMenu = ({ style, ...rest }: SettingMenuProps) => {
   const shippingAddress =
     useUserStore(state => state.user?.shippingAddress) ?? [];
 
-  const {navigate} = useNavigation<StackNavigation>();
+  const { navigate } = useNavigation<AppNavigation>();
 
   return (
     <View style={[styles.container, style]} {...rest}>
@@ -28,7 +28,11 @@ const SettingMenu = ({style, ...rest}: SettingMenuProps) => {
         description={SETTINGS.SHIPPING_ADDRESS.description(
           shippingAddress.length,
         )}
-        handlePress={() => navigate('ShippingAddress')}
+        handlePress={() =>
+          navigate('AddressStacks', {
+            screen: 'ShippingAddress',
+          })
+        }
       />
     </View>
   );

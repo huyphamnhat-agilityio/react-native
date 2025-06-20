@@ -1,10 +1,9 @@
-import {memo, useCallback} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useNavigation} from '@react-navigation/native';
-import {Alert, StyleSheet} from 'react-native';
+import { memo, useCallback } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { Alert, StyleSheet } from 'react-native';
 
 // Types & Interfaces
-import {HomeTabParamList, StackNavigation} from 'src/interfaces/navigation';
 
 // Icons
 import {
@@ -17,24 +16,27 @@ import {
 } from 'src/components/icons';
 
 // Screens
-import {FavoritesScreen, HomeScreen, ProfileScreen} from 'src/screens';
+import { FavoritesScreen, HomeScreen, ProfileScreen } from 'src/screens';
 
 // Themes
-import {colors, fontFamilies, fontSizes} from 'src/themes';
+import { colors, fontFamilies, fontSizes } from 'src/themes';
 
 // Components
-import {Button} from 'src/components/common';
+import { Button } from 'src/components/common';
 
 // Stores
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 // Constants
-import {SCREENS} from 'src/constants';
+import { SCREENS } from 'src/constants';
 
-const HomeTab = createBottomTabNavigator<HomeTabParamList>();
+// Types & Interfaces
+import { HomeTabsParamList, MainNavigation } from 'src/interfaces';
+
+const HomeTab = createBottomTabNavigator<HomeTabsParamList>();
 
 const HomeTabs = memo(() => {
-  const {navigate} = useNavigation<StackNavigation>();
+  const { navigate } = useNavigation<MainNavigation>();
 
   const clearUserSession = useUserStore(state => state.clearUserSession);
 
@@ -52,12 +54,12 @@ const HomeTabs = memo(() => {
           onPress: () => clearUserSession(),
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   }, [clearUserSession]);
 
   const HomeTabBarIconComponent = useCallback(
-    ({focused, color}: {focused: boolean; color: string}) => {
+    ({ focused, color }: { focused: boolean; color: string }) => {
       return (
         <HomeIcon fill={focused ? colors.primary : undefined} color={color} />
       );
@@ -66,14 +68,14 @@ const HomeTabs = memo(() => {
   );
 
   const ProfileTabIconComponent = useCallback(
-    ({focused}: {focused: boolean}) => {
+    ({ focused }: { focused: boolean }) => {
       return focused ? <ActiveProfileIcon /> : <ProfileIcon />;
     },
     [],
   );
 
   const FavoritesTabIconComponent = useCallback(
-    ({focused}: {focused: boolean}) => {
+    ({ focused }: { focused: boolean }) => {
       return (
         <MarkIcon
           fill={focused ? colors.primary : 'none'}
@@ -111,7 +113,7 @@ const HomeTabs = memo(() => {
   );
   return (
     <HomeTab.Navigator
-      initialRouteName={SCREENS.HOME}
+      initialRouteName={SCREENS.TABS.HOME}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
@@ -121,18 +123,19 @@ const HomeTabs = memo(() => {
           height: 60,
           paddingTop: 8,
         },
-      }}>
+      }}
+    >
       <HomeTab.Screen
         options={{
           tabBarIcon: HomeTabBarIconComponent,
         }}
-        name={SCREENS.HOME}
+        name={SCREENS.TABS.HOME}
         component={HomeScreen}
       />
       <HomeTab.Screen
         options={{
           tabBarIcon: FavoritesTabIconComponent,
-          title: SCREENS.FAVORITES,
+          title: SCREENS.TABS.FAVORITES,
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontSize: fontSizes.sm,
@@ -150,13 +153,13 @@ const HomeTabs = memo(() => {
           },
           headerRight: CartButton,
         }}
-        name={SCREENS.FAVORITES}
+        name={SCREENS.TABS.FAVORITES}
         component={FavoritesScreen}
       />
       <HomeTab.Screen
         options={{
           tabBarIcon: ProfileTabIconComponent,
-          title: SCREENS.PROFILE,
+          title: SCREENS.TABS.PROFILE,
           headerTitleAlign: 'center',
           headerTitleStyle: {
             fontSize: fontSizes.sm,
@@ -174,7 +177,7 @@ const HomeTabs = memo(() => {
           },
           headerRight: LogoutButton,
         }}
-        name={SCREENS.PROFILE}
+        name={SCREENS.TABS.PROFILE}
         component={ProfileScreen}
       />
     </HomeTab.Navigator>

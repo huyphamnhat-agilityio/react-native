@@ -9,15 +9,17 @@ import { borderRadius, colors, fontSizes } from 'src/themes';
 import { Button, Text } from '../common';
 import { EditIcon } from '../icons';
 
-// Interfaces
-import { ShippingAddress, StackNavigation } from 'src/interfaces';
+// Types & Interfaces
+import { AddressNavigation, ShippingAddress } from 'src/interfaces';
+
+// Utils
 import { formatFullAddress } from 'src/utils';
 
 export type AddressItemProps = {
   isChecked?: boolean;
   shippingAddress: ShippingAddress;
   onPress?: (address: ShippingAddress) => void;
-  navigation?: StackNavigation;
+  navigation?: AddressNavigation;
 };
 const AddressItem = ({
   isChecked = false,

@@ -1,18 +1,18 @@
-import {Controller, useForm, UseFormTrigger} from 'react-hook-form';
-import {memo, useCallback, useMemo, useState} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import { Controller, useForm, UseFormTrigger } from 'react-hook-form';
+import { memo, useCallback, useMemo, useState } from 'react';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 // Utils
-import {clearErrorOnChange, isEnableSubmit} from 'src/utils';
+import { clearErrorOnChange, isEnableSubmit } from 'src/utils';
 
 // Themes
-import {colors} from 'src/themes';
+import { colors } from 'src/themes';
 
 // Components
-import {Button, TextInput} from '../common';
+import { Button, TextInput } from '../common';
 
 // Icons
-import {EyeIcon} from '../icons';
+import { EyeIcon } from '../icons';
 
 // Constants
 import {
@@ -22,11 +22,11 @@ import {
 } from 'src/constants';
 
 // Types & Interfaces
-import {RegisterFormData, StackNavigation} from 'src/interfaces';
+import { AuthNavigation, RegisterFormData } from 'src/interfaces';
 
 export type RegisterFormProps = {
   onSubmit: (data: RegisterFormData) => Promise<void>;
-  navigation: StackNavigation;
+  navigation: AuthNavigation;
 };
 
 const height = Dimensions.get('window').height;
@@ -60,7 +60,7 @@ export const REGISTER_FORM_VALIDATION = {
         value: REGEX.PASSWORD,
         message: FORM_VALIDATION_MESSAGE.INVALID_PASSWORD,
       },
-      validate: (value: string, {confirmPassword}: RegisterFormData) =>
+      validate: (value: string, { confirmPassword }: RegisterFormData) =>
         !confirmPassword ||
         value === confirmPassword ||
         trigger('confirmPassword'),
@@ -69,7 +69,7 @@ export const REGISTER_FORM_VALIDATION = {
   CONFIRM_PASSWORD: (trigger: UseFormTrigger<RegisterFormData>) => {
     return {
       required: FORM_VALIDATION_MESSAGE.REQUIRED('Confirm password'),
-      validate: (value: string, {password}: RegisterFormData) =>
+      validate: (value: string, { password }: RegisterFormData) =>
         (value === password && trigger('password')) ||
         FORM_VALIDATION_MESSAGE.PASSWORD_NOT_MATCH,
     };
@@ -77,7 +77,7 @@ export const REGISTER_FORM_VALIDATION = {
 };
 
 const RegisterForm = memo(
-  ({onSubmit, navigation: {navigate}}: RegisterFormProps) => {
+  ({ onSubmit, navigation: { navigate } }: RegisterFormProps) => {
     const [isShowPassword, setIsShowPassword] = useState(true);
     const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(true);
 
@@ -93,7 +93,7 @@ const RegisterForm = memo(
       control,
       handleSubmit,
       clearErrors,
-      formState: {errors, dirtyFields, isSubmitting},
+      formState: { errors, dirtyFields, isSubmitting },
       trigger,
     } = useForm<RegisterFormData>({
       mode: 'onBlur',
@@ -131,7 +131,10 @@ const RegisterForm = memo(
           <Controller
             control={control}
             name="name"
-            render={({field: {onChange, ...rest}, fieldState: {error}}) => (
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
               <TextInput
                 font="NunitoSansNormal"
                 label="Name"
@@ -150,7 +153,10 @@ const RegisterForm = memo(
           <Controller
             control={control}
             name="email"
-            render={({field: {onChange, ...rest}, fieldState: {error}}) => (
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
               <TextInput
                 font="NunitoSansNormal"
                 label="Email"
@@ -170,7 +176,10 @@ const RegisterForm = memo(
           <Controller
             control={control}
             name="password"
-            render={({field: {onChange, ...rest}, fieldState: {error}}) => (
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
               <TextInput
                 RightContent={
                   <EyeIcon
@@ -197,7 +206,10 @@ const RegisterForm = memo(
           <Controller
             control={control}
             name="confirmPassword"
-            render={({field: {onChange, ...rest}, fieldState: {error}}) => (
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
               <TextInput
                 RightContent={
                   <EyeIcon

@@ -1,41 +1,65 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   CompositeScreenProps,
   NavigationProp,
   NavigatorScreenParams,
 } from '@react-navigation/native';
-import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {SCREENS} from 'src/constants';
-import {ShippingAddress} from './user';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { SCREENS } from 'src/constants';
+import { ShippingAddress } from './user';
 
-export type HomeTabParamList = {
-  [SCREENS.HOME]: undefined;
-  [SCREENS.FAVORITES]: undefined;
-  [SCREENS.PROFILE]: undefined;
+export type AuthStacksParamList = {
+  [SCREENS.AUTH.BOARDING]: undefined;
+  [SCREENS.AUTH.LOGIN]: undefined;
+  [SCREENS.AUTH.REGISTER]: undefined;
 };
 
-export type AppStackParamList = {
-  [SCREENS.BOARDING]: undefined;
-  [SCREENS.LOGIN]: undefined;
-  [SCREENS.REGISTER]: undefined;
-  [SCREENS.HOME_TABS]: NavigatorScreenParams<HomeTabParamList>;
-  [SCREENS.PRODUCT_DETAIL]: {id: string};
-  [SCREENS.CART]: undefined;
-  [SCREENS.CHECKOUT]: {totalMoney: number};
-  [SCREENS.SUCCESS]: undefined;
-  [SCREENS.SHIPPING_ADDRESS]: undefined;
-  [SCREENS.ADD_OR_EDIT_ADDRESS]: {address?: ShippingAddress};
+export type MainStacksParamList = {
+  [SCREENS.MAIN.HOME_TABS]: NavigatorScreenParams<HomeTabsParamList>;
+  [SCREENS.MAIN.PRODUCT_DETAIL]: { id: string };
+  [SCREENS.MAIN.CART]: undefined;
+  [SCREENS.MAIN.CHECKOUT]: { totalMoney: number };
+  [SCREENS.MAIN.SUCCESS]: undefined;
 };
 
-export type AppStackScreenProps<Screen extends keyof AppStackParamList> =
-  NativeStackScreenProps<AppStackParamList, Screen>;
+export type AddressStacksParamList = {
+  [SCREENS.ADDRESS.SHIPPING_ADDRESS]: undefined;
+  [SCREENS.ADDRESS.ADD_OR_EDIT_ADDRESS]: { address?: ShippingAddress };
+};
 
-export type HomeTabScreenProps<Screen extends keyof HomeTabParamList> =
+export type HomeTabsParamList = {
+  [SCREENS.TABS.HOME]: undefined;
+  [SCREENS.TABS.FAVORITES]: undefined;
+  [SCREENS.TABS.PROFILE]: undefined;
+};
+
+export type AppStacksParamList = {
+  AuthStacks: NavigatorScreenParams<AuthStacksParamList>;
+  MainStacks: NavigatorScreenParams<MainStacksParamList>;
+  AddressStacks: NavigatorScreenParams<AddressStacksParamList>;
+};
+
+export type AuthStacksScreenProps<Screen extends keyof AuthStacksParamList> =
+  NativeStackScreenProps<AuthStacksParamList, Screen>;
+
+export type MainStacksScreenProps<Screen extends keyof MainStacksParamList> =
+  NativeStackScreenProps<MainStacksParamList, Screen>;
+
+export type AddressStacksScreenProps<
+  Screen extends keyof AddressStacksParamList,
+> = NativeStackScreenProps<AddressStacksParamList, Screen>;
+
+export type HomeTabsScreenProps<Screen extends keyof HomeTabsParamList> =
   CompositeScreenProps<
-    BottomTabScreenProps<HomeTabParamList, Screen>,
-    NativeStackScreenProps<AppStackParamList>
+    BottomTabScreenProps<HomeTabsParamList, Screen>,
+    NativeStackScreenProps<MainStacksParamList>
   >;
 
-export type StackNavigation = NavigationProp<AppStackParamList>;
+export type AppStacksScreenProps<Screen extends keyof AppStacksParamList> =
+  NativeStackScreenProps<AppStacksParamList, Screen>;
 
-export type TabNavigation = NavigationProp<HomeTabParamList>;
+export type AppNavigation = NavigationProp<AppStacksParamList>;
+export type MainNavigation = NavigationProp<MainStacksParamList>;
+export type AddressNavigation = NavigationProp<AddressStacksParamList>;
+export type TabNavigation = NavigationProp<HomeTabsParamList>;
+export type AuthNavigation = NavigationProp<AuthStacksParamList>;

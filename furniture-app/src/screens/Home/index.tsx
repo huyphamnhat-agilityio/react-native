@@ -1,27 +1,27 @@
-import {memo, useCallback, useRef, useState} from 'react';
-import {ActivityIndicator, Animated, StyleSheet, View} from 'react-native';
+import { memo, useCallback, useRef, useState } from 'react';
+import { ActivityIndicator, Animated, StyleSheet, View } from 'react-native';
 
 // Components
-import {Button, Text, TextInput} from 'src/components/common';
-import {CategoryList, ProductList} from 'src/components';
+import { Button, Text, TextInput } from 'src/components/common';
+import { CategoryList, ProductList } from 'src/components';
 
 // Icons
-import {CartIcon, SearchIcon} from 'src/components/icons';
+import { CartIcon, SearchIcon } from 'src/components/icons';
 
 // Constants
-import {CATEGORIES} from 'src/constants';
+import { CATEGORIES } from 'src/constants';
 
 // Hooks
-import {useDebounce, useGetInfinitiveProducts} from 'src/hooks';
+import { useDebounce, useGetInfinitiveProducts } from 'src/hooks';
 
 // Types & Interfaces
-import {HomeTabScreenProps} from 'src/interfaces/navigation';
+import { HomeTabsScreenProps } from 'src/interfaces/navigation';
 
 // Themes
-import {colors} from 'src/themes';
+import { colors } from 'src/themes';
 
 const HomeScreen = memo(
-  ({navigation: {navigate}}: HomeTabScreenProps<'Home'>) => {
+  ({ navigation: { navigate } }: HomeTabsScreenProps<'Home'>) => {
     const [category, setCategory] = useState<string>(CATEGORIES[0].title);
     const {
       value: searchQuery,
@@ -125,7 +125,8 @@ const HomeScreen = memo(
               height: searchHeight,
               opacity: searchOpacity,
             },
-          ]}>
+          ]}
+        >
           <TextInput
             inputSize="sm"
             placeholder="Search products..."

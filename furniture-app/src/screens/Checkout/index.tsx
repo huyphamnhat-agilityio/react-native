@@ -1,10 +1,10 @@
-import {memo, useCallback, useState} from 'react';
-import {useQueryClient} from '@tanstack/react-query';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {useShallow} from 'zustand/shallow';
+import { memo, useCallback, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useShallow } from 'zustand/shallow';
 
 // Components
-import {Button} from 'src/components/common';
+import { Button } from 'src/components/common';
 import {
   DeliveryMethodCard,
   PaymentCard,
@@ -13,36 +13,36 @@ import {
 } from 'src/components';
 
 // Themes
-import {colors} from 'src/themes';
+import { colors } from 'src/themes';
 
 // Store
-import {useUserStore} from 'src/store';
+import { useUserStore } from 'src/store';
 
 // Types & Interfaces
-import {AppStackScreenProps} from 'src/interfaces';
+import { MainStacksScreenProps } from 'src/interfaces';
 
 // Hooks
-import {useUpdateCart} from 'src/hooks';
+import { useUpdateCart } from 'src/hooks';
 
 // Constants
-import {PLACEHOLDER_ADDRESS, QUERY_KEY} from 'src/constants';
+import { PLACEHOLDER_ADDRESS, QUERY_KEY } from 'src/constants';
 
 const CheckoutScreen = memo(
   ({
     navigation,
     route: {
-      params: {totalMoney},
+      params: { totalMoney },
     },
-  }: AppStackScreenProps<'Checkout'>) => {
+  }: MainStacksScreenProps<'Checkout'>) => {
     const [isLoading, setIsLoading] = useState(false);
-    const {currentAddress, userId} = useUserStore(
+    const { currentAddress, userId } = useUserStore(
       useShallow(state => ({
         currentAddress: state.currentAddress ?? PLACEHOLDER_ADDRESS,
         userId: state.user?.id ?? '',
       })),
     );
 
-    const {mutateAsync: updateCart} = useUpdateCart();
+    const { mutateAsync: updateCart } = useUpdateCart();
     const queryClient = useQueryClient();
 
     const handleCheckoutPress = useCallback(async () => {
@@ -54,8 +54,8 @@ const CheckoutScreen = memo(
         },
         {
           onSuccess: () => {
-            queryClient.setQueryData(QUERY_KEY.CARTS({id: userId}), {
-              ...queryClient.getQueryData(QUERY_KEY.CARTS({id: userId})),
+            queryClient.setQueryData(QUERY_KEY.CARTS({ id: userId }), {
+              ...queryClient.getQueryData(QUERY_KEY.CARTS({ id: userId })),
               items: [],
             });
           },
@@ -65,7 +65,7 @@ const CheckoutScreen = memo(
       setIsLoading(false);
       navigation.reset({
         index: 1,
-        routes: [{name: 'HomeTabs'}, {name: 'Success'}],
+        routes: [{ name: 'HomeTabs' }, { name: 'Success' }],
       });
     }, [updateCart, userId, queryClient, navigation]);
 
@@ -75,7 +75,6 @@ const CheckoutScreen = memo(
           <ShippingAddressCard
             name={currentAddress.name}
             address={currentAddress.address}
-            navigation={navigation}
           />
 
           <PaymentCard number="**** **** **** 3947" />

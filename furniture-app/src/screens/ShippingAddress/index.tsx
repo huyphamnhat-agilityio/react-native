@@ -12,7 +12,7 @@ import { PlusIcon } from 'src/components/icons';
 import { MEDIUM_DEVICE_HEIGHT } from 'src/constants';
 
 // Interfaces
-import { AppStackScreenProps } from 'src/interfaces';
+import { AddressStacksScreenProps } from 'src/interfaces';
 
 // Stores
 import { useUserStore } from 'src/store';
@@ -24,7 +24,7 @@ const height = Dimensions.get('window').height;
 
 const ShippingAddressScreen = ({
   navigation,
-}: AppStackScreenProps<'ShippingAddress'>) => {
+}: AddressStacksScreenProps<'ShippingAddress'>) => {
   const {
     currentAddress,
     setCurrentAddress,

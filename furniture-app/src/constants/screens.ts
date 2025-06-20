@@ -1,15 +1,26 @@
 export const SCREENS = {
-  BOARDING: 'Boarding',
-  LOGIN: 'Login',
-  REGISTER: 'Register',
-  HOME_TABS: 'HomeTabs',
-  HOME: 'Home',
-  FAVORITES: 'Favorites',
-  PROFILE: 'Profile',
-  PRODUCT_DETAIL: 'ProductDetail',
-  CART: 'Cart',
-  CHECKOUT: 'Checkout',
-  SUCCESS: 'Success',
-  SHIPPING_ADDRESS: 'ShippingAddress',
-  ADD_OR_EDIT_ADDRESS: 'AddOrEditAddress',
+  AUTH: {
+    BOARDING: 'Boarding',
+    LOGIN: 'Login',
+    REGISTER: 'Register',
+  },
+
+  MAIN: {
+    HOME_TABS: 'HomeTabs',
+    PRODUCT_DETAIL: 'ProductDetail',
+    CART: 'Cart',
+    CHECKOUT: 'Checkout',
+    SUCCESS: 'Success',
+  },
+
+  TABS: {
+    HOME: 'Home',
+    FAVORITES: 'Favorites',
+    PROFILE: 'Profile',
+  },
+
+  ADDRESS: {
+    SHIPPING_ADDRESS: 'ShippingAddress',
+    ADD_OR_EDIT_ADDRESS: 'AddOrEditAddress',
+  },
 } as const;

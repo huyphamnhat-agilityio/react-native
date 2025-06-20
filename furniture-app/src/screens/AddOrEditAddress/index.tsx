@@ -12,7 +12,7 @@ import { SUCCESS_MESSAGE } from 'src/constants';
 import { useUpdateUser } from 'src/hooks';
 
 // Interfaces
-import { AppStackScreenProps, ShippingAddress } from 'src/interfaces';
+import { AddressStacksScreenProps, ShippingAddress } from 'src/interfaces';
 
 // Store
 import { useUserStore } from 'src/store';
@@ -20,7 +20,7 @@ import { useUserStore } from 'src/store';
 const AddOrEditAddress = ({
   route,
   navigation: { goBack },
-}: AppStackScreenProps<'AddOrEditAddress'>) => {
+}: AddressStacksScreenProps<'AddOrEditAddress'>) => {
   const { address: currentAddress } = route.params;
 
   const {

@@ -1,12 +1,12 @@
 import { getPerformance } from '@react-native-firebase/perf';
 import { NavigationContainer } from '@react-navigation/native';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import AppStackNavigation from './AppStackNavigation';
 import { AnimatedBootSplash } from './AnimatedBootSplash';
 import { linking, navigate, navigationRef } from './navigationConfig';
 import notifee, { EventType } from '@notifee/react-native';
 import { getMessaging } from '@react-native-firebase/messaging';
 import { InteractionManager } from 'react-native';
+import AppStacks from './AppStacks';
 
 // Store
 import { useUserStore } from 'src/store';
@@ -109,7 +109,7 @@ const Navigation = memo(() => {
       onReady={handleReady}
       onStateChange={handleStateChange}
     >
-      <AppStackNavigation />
+      <AppStacks />
       {visible && <AnimatedBootSplash onAnimationEnd={handleReady} />}
     </NavigationContainer>
   );

@@ -1,28 +1,32 @@
-import {memo, useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
+import { memo, useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 // Icons
-import {EditIcon} from 'src/components/icons';
+import { EditIcon } from 'src/components/icons';
 
 // Components
-import {Button, Text} from 'src/components/common';
+import { Button, Text } from 'src/components/common';
 
 // Themes
-import {borderRadius, colors} from 'src/themes';
+import { borderRadius, colors } from 'src/themes';
 
 // Interfaces
-import {StackNavigation} from 'src/interfaces';
+import { AppNavigation } from 'src/interfaces';
 
 export type ShippingAddressCardProps = {
   name: string;
   address: string;
-  navigation: StackNavigation;
 };
 
 const ShippingAddressCard = memo(
-  ({name, address, navigation}: ShippingAddressCardProps) => {
+  ({ name, address }: ShippingAddressCardProps) => {
+    const navigation = useNavigation<AppNavigation>();
+
     const handleNavigateToShippingAddress = useCallback(() => {
-      navigation?.navigate('ShippingAddress');
+      navigation?.navigate('AddressStacks', {
+        screen: 'ShippingAddress',
+      });
     }, [navigation]);
 
     return (
@@ -43,7 +47,8 @@ const ShippingAddressCard = memo(
             style={styles.name}
             font="NunitoSansBold"
             size="base"
-            textVariant="secondary">
+            textVariant="secondary"
+          >
             {name}
           </Text>
 
@@ -54,7 +59,8 @@ const ShippingAddressCard = memo(
             size="xs"
             textVariant="quaternary"
             numberOfLines={2}
-            style={styles.address}>
+            style={styles.address}
+          >
             {address}
           </Text>
         </View>
@@ -82,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     gap: 10,
   },
-  name: {paddingHorizontal: 20, paddingTop: 15},
+  name: { paddingHorizontal: 20, paddingTop: 15 },
   divider: {
     height: 2,
     width: '100%',
