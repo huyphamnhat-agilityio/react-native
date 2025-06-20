@@ -24,3 +24,9 @@ export const SCREENS = {
     ADD_OR_EDIT_ADDRESS: 'AddOrEditAddress',
   },
 } as const;
+
+export const STACKS = {
+  AUTH_STACKS: 'AuthStacks',
+  MAIN_STACKS: 'MainStacks',
+  ADDRESS_STACKS: 'AddressStacks',
+} as const;

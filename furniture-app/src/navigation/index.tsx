@@ -12,10 +12,13 @@ import AppStacks from './AppStacks';
 import { useUserStore } from 'src/store';
 
 // Hooks
-import { useInitialNotifeeNavigation } from 'src/hooks';
+import { useHandleInitialURL, useInitialNotifeeNavigation } from 'src/hooks';
 
 // Services
 import { onMessageReceived, onRegisterFirebaseMessaging } from 'src/services';
+
+// Constants
+import { SCREENS } from 'src/constants';
 
 const Navigation = memo(() => {
   const [visible, setVisible] = useState(true);
@@ -25,6 +28,8 @@ const Navigation = memo(() => {
   const isHydrated = useUserStore(state => state.isHydrated);
 
   useInitialNotifeeNavigation(isNavReady && isHydrated);
+
+  useHandleInitialURL(isNavReady && isHydrated);
 
   const routeNameRef = useRef<string | undefined>(undefined);
 
@@ -68,14 +73,17 @@ const Navigation = memo(() => {
       await notifee.requestPermission();
     })();
 
-    notifee.onForegroundEvent(({ type, detail }) => {
+    notifee.onForegroundEvent(async ({ type, detail }) => {
       if (
         type === EventType.PRESS &&
         detail.notification?.data?.type === 'ProductDetail'
       ) {
         const id = detail.notification.data.id;
 
-        navigate('ProductDetail', { id });
+        navigate('MainStacks', {
+          screen: SCREENS.MAIN.PRODUCT_DETAIL,
+          params: { id },
+        });
       }
     });
 
@@ -86,7 +94,10 @@ const Navigation = memo(() => {
       ) {
         const id = detail.notification.data.id;
 
-        navigate('ProductDetail', { id });
+        navigate('MainStacks', {
+          screen: SCREENS.MAIN.PRODUCT_DETAIL,
+          params: { id },
+        });
       }
     });
 

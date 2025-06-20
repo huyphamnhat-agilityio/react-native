@@ -1,25 +1,23 @@
-import {useEffect, useState} from 'react';
+import { useEffect } from 'react';
 import notifee from '@notifee/react-native';
-import {navigate} from 'src/navigation/navigationConfig';
-import {useUserStore} from 'src/store';
+import { navigate } from 'src/navigation/navigationConfig';
+import { useUserStore } from 'src/store';
+import { SCREENS, STACKS } from 'src/constants';
 
 export const useInitialNotifeeNavigation = (isNavigationReady: boolean) => {
-  const user = useUserStore(state => state.user);
-  const [pendingProductId, setPendingProductId] = useState<string | null>(null);
+  const accessToken = useUserStore(state => state.accessToken);
 
   useEffect(() => {
     notifee.getInitialNotification().then(notification => {
       const data = notification?.notification?.data;
-      if (data?.type === 'ProductDetail' && data?.id) {
-        setPendingProductId(data.id as string);
+      if (data?.type === SCREENS.MAIN.PRODUCT_DETAIL && data?.id) {
+        isNavigationReady &&
+          accessToken &&
+          navigate(STACKS.MAIN_STACKS, {
+            screen: SCREENS.MAIN.PRODUCT_DETAIL,
+            params: { id: data.id },
+          });
       }
     });
-  }, []);
-
-  useEffect(() => {
-    if (isNavigationReady && pendingProductId && user) {
-      navigate('ProductDetail', {id: pendingProductId});
-      setPendingProductId(null);
-    }
-  }, [isNavigationReady, pendingProductId, user]);
+  }, [isNavigationReady, accessToken]);
 };

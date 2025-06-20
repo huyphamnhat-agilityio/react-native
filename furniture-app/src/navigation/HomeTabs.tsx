@@ -115,6 +115,20 @@ const HomeTabs = memo(() => {
     <HomeTab.Navigator
       initialRouteName={SCREENS.TABS.HOME}
       screenOptions={{
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontSize: fontSizes.sm,
+          fontFamily: fontFamilies.MerriweatherBold,
+          color: colors.secondary,
+        },
+        headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: colors.white,
+        },
+        headerRightContainerStyle: {
+          alignSelf: 'center',
+          paddingRight: 16,
+        },
         headerShown: false,
         tabBarShowLabel: false,
         tabBarInactiveTintColor: colors.disabled,
@@ -126,59 +140,32 @@ const HomeTabs = memo(() => {
       }}
     >
       <HomeTab.Screen
-        options={{
-          tabBarIcon: HomeTabBarIconComponent,
-        }}
         name={SCREENS.TABS.HOME}
         component={HomeScreen}
+        options={{
+          tabBarIcon: HomeTabBarIconComponent,
+          headerShown: false,
+        }}
       />
       <HomeTab.Screen
+        name={SCREENS.TABS.FAVORITES}
+        component={FavoritesScreen}
         options={{
           tabBarIcon: FavoritesTabIconComponent,
           title: SCREENS.TABS.FAVORITES,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontSize: fontSizes.sm,
-            fontFamily: fontFamilies.MerriweatherBold,
-            color: colors.secondary,
-          },
           headerShown: true,
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: colors.white,
-          },
-          headerRightContainerStyle: {
-            alignSelf: 'center',
-            paddingRight: 16,
-          },
           headerRight: CartButton,
         }}
-        name={SCREENS.TABS.FAVORITES}
-        component={FavoritesScreen}
       />
       <HomeTab.Screen
+        name={SCREENS.TABS.PROFILE}
+        component={ProfileScreen}
         options={{
           tabBarIcon: ProfileTabIconComponent,
           title: SCREENS.TABS.PROFILE,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontSize: fontSizes.sm,
-            fontFamily: fontFamilies.MerriweatherBold,
-            color: colors.secondary,
-          },
           headerShown: true,
-          headerShadowVisible: false,
-          headerStyle: {
-            backgroundColor: colors.white,
-          },
-          headerRightContainerStyle: {
-            alignSelf: 'center',
-            paddingRight: 16,
-          },
           headerRight: LogoutButton,
         }}
-        name={SCREENS.TABS.PROFILE}
-        component={ProfileScreen}
       />
     </HomeTab.Navigator>
   );

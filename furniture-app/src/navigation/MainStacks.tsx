@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { memo, useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 // Constants
 import { SCREENS } from 'src/constants';
@@ -31,27 +30,39 @@ import HomeTabs from './HomeTabs';
 const MainStack = createNativeStackNavigator<MainStacksParamList>();
 
 const MainStacks = memo(() => {
-  const { goBack } = useNavigation();
-
   const HeaderLeft = useCallback(
-    () => (
+    (navigation: any) => (
       <Button
         style={styles.button}
         bgVariant="none"
         IconLeft={<BackArrowIcon />}
-        onPress={goBack}
+        onPress={navigation.goBack}
       />
     ),
-    [goBack],
+    [],
   );
 
   return (
-    <MainStack.Navigator>
+    <MainStack.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerTitleStyle: {
+          fontSize: fontSizes.sm,
+          fontFamily: fontFamilies.MerriweatherBold,
+          color: colors.secondary,
+        },
+        headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: colors.white,
+        },
+      }}
+    >
       <MainStack.Screen
         name={SCREENS.MAIN.HOME_TABS}
         component={HomeTabs}
         options={{ headerShown: false }}
       />
+
       <MainStack.Screen
         name={SCREENS.MAIN.PRODUCT_DETAIL}
         component={ProductDetailScreen}
@@ -61,37 +72,21 @@ const MainStacks = memo(() => {
       <MainStack.Screen
         name={SCREENS.MAIN.CART}
         component={CartScreen}
-        options={{
+        options={({ navigation }) => ({
           title: 'My cart',
           headerShown: true,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontSize: fontSizes.sm,
-            fontFamily: fontFamilies.MerriweatherBold,
-            color: colors.secondary,
-          },
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: colors.white },
-          headerLeft: HeaderLeft,
-        }}
+          headerLeft: () => HeaderLeft(navigation),
+        })}
       />
 
       <MainStack.Screen
         name={SCREENS.MAIN.CHECKOUT}
         component={CheckoutScreen}
-        options={{
+        options={({ navigation }) => ({
           title: 'Check out',
           headerShown: true,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontSize: fontSizes.sm,
-            fontFamily: fontFamilies.MerriweatherBold,
-            color: colors.secondary,
-          },
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: colors.white },
-          headerLeft: HeaderLeft,
-        }}
+          headerLeft: () => HeaderLeft(navigation),
+        })}
       />
 
       <MainStack.Screen

@@ -1,15 +1,15 @@
-export {CATEGORIES} from './category';
+export { CATEGORIES } from './category';
 export {
   FORM_VALIDATION_MESSAGE,
   SUCCESS_MESSAGE,
   ERROR_MESSAGE,
 } from './message';
-export {QUERY_KEY} from './query';
-export {REGEX} from './regex';
-export {MEDIUM_DEVICE_HEIGHT} from './resolution';
-export {RESOURCES} from './resource';
-export {SCREENS} from './screens';
-export {SETTINGS} from './settings';
-export {PLACEHOLDER_AVATAR_URL} from './image';
-export {PLACEHOLDER_ADDRESS} from './address';
-export {PRODUCT_PAGE_SIZE} from './pagination';
+export { QUERY_KEY } from './query';
+export { REGEX } from './regex';
+export { MEDIUM_DEVICE_HEIGHT } from './resolution';
+export { RESOURCES } from './resource';
+export { SCREENS, STACKS } from './screens';
+export { SETTINGS } from './settings';
+export { PLACEHOLDER_AVATAR_URL } from './image';
+export { PLACEHOLDER_ADDRESS } from './address';
+export { PRODUCT_PAGE_SIZE } from './pagination';

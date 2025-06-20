@@ -34,6 +34,7 @@ import { BackArrowIcon, MarkIcon, StarIcon } from 'src/components/icons';
 import {
   MEDIUM_DEVICE_HEIGHT,
   QUERY_KEY,
+  SCREENS,
   SUCCESS_MESSAGE,
 } from 'src/constants';
 
@@ -47,7 +48,7 @@ import {
 } from 'src/hooks';
 
 // Types & Interfaces
-import { AppStackScreenProps, Cart, Favorites } from 'src/interfaces';
+import { Cart, Favorites, MainStacksScreenProps } from 'src/interfaces';
 
 // Stores
 import { useUserStore } from 'src/store';
@@ -66,8 +67,8 @@ const ProductDetailScreen = memo(
     route: {
       params: { id },
     },
-    navigation: { goBack },
-  }: AppStackScreenProps<'ProductDetail'>) => {
+    navigation: { goBack, canGoBack, navigate },
+  }: MainStacksScreenProps<'ProductDetail'>) => {
     const [quantity, setQuantity] = useState(1);
 
     const userId = useUserStore(state => state.user?.id) ?? '';
@@ -116,7 +117,15 @@ const ProductDetailScreen = memo(
       [progress],
     );
 
-    const handleBack = useCallback(() => goBack(), [goBack]);
+    const handleBack = useCallback(() => {
+      if (canGoBack()) {
+        goBack();
+      } else {
+        navigate(SCREENS.MAIN.HOME_TABS, {
+          screen: SCREENS.TABS.HOME,
+        });
+      }
+    }, [canGoBack, goBack, navigate]);
 
     const queryClient = useQueryClient();
 
