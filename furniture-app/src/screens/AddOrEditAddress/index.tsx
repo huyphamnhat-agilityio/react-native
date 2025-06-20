@@ -52,7 +52,6 @@ const AddOrEditAddress = ({
             },
           ];
 
-      console.log(updatedAddress);
       await updateUserAddress(
         {
           id: userId,

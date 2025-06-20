@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Controller, useForm } from 'react-hook-form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import uuid from 'react-native-uuid';
@@ -120,166 +120,170 @@ const ShippingAddressForm = ({ onSubmit, data }: RegisterFormProps) => {
     <KeyboardAwareScrollView
       style={styles.container}
       keyboardShouldPersistTaps="handled"
+      contentContainerStyle={styles.contentContainer}
     >
-      <Controller
-        control={control}
-        name="name"
-        render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-          <TextInput
-            containerStyle={styles.input}
-            innerBorderBottomWidth={0}
-            labelDistance={4}
-            labelSize="tiny"
-            labelVariant="quaternary"
-            label="Full name"
-            placeholder="Ex: Bruno Pham"
-            errorPosition="outer"
-            isDisabled={isSubmitting}
-            maxLength={50}
-            errorStyle={styles.error}
-            isError={!!error?.message}
-            errorMessage={error?.message}
-            onChangeText={handleInputChange('name', onChange)}
-            {...rest}
-          />
-        )}
-        rules={SHIPPING_FORM_VALIDATION.NAME}
-      />
-      <Controller
-        control={control}
-        name="address"
-        render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-          <TextInput
-            containerStyle={styles.input}
-            innerBorderBottomWidth={0}
-            labelDistance={4}
-            labelSize="tiny"
-            labelVariant="quaternary"
-            label="Address"
-            placeholder="Ex: 25 Robert Latouche Street"
-            errorPosition="outer"
-            maxLength={255}
-            isDisabled={isSubmitting}
-            errorStyle={styles.error}
-            isError={!!error?.message}
-            errorMessage={error?.message}
-            onChangeText={handleInputChange('address', onChange)}
-            {...rest}
-          />
-        )}
-        rules={SHIPPING_FORM_VALIDATION.ADDRESS}
-      />
+      <View style={styles.wrapper}>
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
+            <TextInput
+              containerStyle={styles.input}
+              innerBorderBottomWidth={0}
+              labelDistance={4}
+              labelSize="tiny"
+              labelVariant="quaternary"
+              label="Full name"
+              placeholder="Ex: Bruno Pham"
+              errorPosition="outer"
+              isDisabled={isSubmitting}
+              maxLength={50}
+              errorStyle={styles.error}
+              isError={!!error?.message}
+              errorMessage={error?.message}
+              onChangeText={handleInputChange('name', onChange)}
+              {...rest}
+            />
+          )}
+          rules={SHIPPING_FORM_VALIDATION.NAME}
+        />
+        <Controller
+          control={control}
+          name="address"
+          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
+            <TextInput
+              containerStyle={styles.input}
+              innerBorderBottomWidth={0}
+              labelDistance={4}
+              labelSize="tiny"
+              labelVariant="quaternary"
+              label="Address"
+              placeholder="Ex: 25 Robert Latouche Street"
+              errorPosition="outer"
+              maxLength={255}
+              isDisabled={isSubmitting}
+              errorStyle={styles.error}
+              isError={!!error?.message}
+              errorMessage={error?.message}
+              onChangeText={handleInputChange('address', onChange)}
+              {...rest}
+            />
+          )}
+          rules={SHIPPING_FORM_VALIDATION.ADDRESS}
+        />
 
-      <Controller
-        control={control}
-        name="postalCode"
-        render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-          <TextInput
-            containerStyle={styles.input}
-            innerBorderBottomWidth={0}
-            labelDistance={4}
-            labelSize="tiny"
-            labelVariant="quaternary"
-            label="Postal Code"
-            placeholder="Ex: 12345"
-            errorPosition="outer"
-            maxLength={10}
-            isDisabled={isSubmitting}
-            errorStyle={styles.error}
-            isError={!!error?.message}
-            errorMessage={error?.message}
-            onChangeText={handleInputChange('postalCode', onChange)}
-            {...rest}
-          />
-        )}
-        rules={SHIPPING_FORM_VALIDATION.POSTAL_CODE}
-      />
+        <Controller
+          control={control}
+          name="postalCode"
+          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
+            <TextInput
+              containerStyle={styles.input}
+              innerBorderBottomWidth={0}
+              labelDistance={4}
+              labelSize="tiny"
+              labelVariant="quaternary"
+              label="Postal Code"
+              placeholder="Ex: 12345"
+              errorPosition="outer"
+              maxLength={10}
+              isDisabled={isSubmitting}
+              errorStyle={styles.error}
+              isError={!!error?.message}
+              errorMessage={error?.message}
+              onChangeText={handleInputChange('postalCode', onChange)}
+              {...rest}
+            />
+          )}
+          rules={SHIPPING_FORM_VALIDATION.POSTAL_CODE}
+        />
 
-      <Controller
-        control={control}
-        name="country"
-        render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-          <Dropdown
-            data={MOCK_COUNTRIES}
-            labelField="label"
-            valueField="value"
-            placeholder="Select Country"
-            placeholderStyle={{
-              color: colors.text.placeholder,
-            }}
-            labelSize="tiny"
-            labelVariant="quaternary"
-            search
-            disable={isSubmitting}
-            onChange={handleDropdownChange('country', onChange)}
-            labelDistance={4}
-            label="Country"
-            isError={!!error?.message}
-            errorStyle={styles.error}
-            errorMessage={error?.message}
-            mainContainerStyle={styles.input}
-            {...rest}
-          />
-        )}
-        rules={SHIPPING_FORM_VALIDATION.COUNTRY}
-      />
+        <Controller
+          control={control}
+          name="country"
+          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
+            <Dropdown
+              data={MOCK_COUNTRIES}
+              labelField="label"
+              valueField="value"
+              placeholder="Select Country"
+              placeholderStyle={{
+                color: colors.text.placeholder,
+              }}
+              labelSize="tiny"
+              labelVariant="quaternary"
+              search
+              disable={isSubmitting}
+              onChange={handleDropdownChange('country', onChange)}
+              labelDistance={4}
+              label="Country"
+              isError={!!error?.message}
+              errorStyle={styles.error}
+              errorMessage={error?.message}
+              mainContainerStyle={styles.input}
+              {...rest}
+            />
+          )}
+          rules={SHIPPING_FORM_VALIDATION.COUNTRY}
+        />
 
-      <Controller
-        control={control}
-        name="city"
-        render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-          <Dropdown
-            data={MOCK_CITIES}
-            labelField="label"
-            valueField="value"
-            placeholder="Select City"
-            placeholderStyle={{
-              color: colors.text.placeholder,
-            }}
-            labelSize="tiny"
-            labelVariant="quaternary"
-            search
-            disable={isSubmitting}
-            onChange={handleDropdownChange('city', onChange)}
-            labelDistance={4}
-            label="City"
-            isError={!!error?.message}
-            errorStyle={styles.error}
-            errorMessage={error?.message}
-            mainContainerStyle={styles.input}
-            {...rest}
-          />
-        )}
-        rules={SHIPPING_FORM_VALIDATION.CITY}
-      />
-      <Controller
-        control={control}
-        name="district"
-        render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-          <Dropdown
-            data={MOCK_DISTRICTS}
-            labelField="label"
-            valueField="value"
-            placeholder="Select District"
-            placeholderStyle={{
-              color: colors.text.placeholder,
-            }}
-            labelSize="tiny"
-            labelVariant="quaternary"
-            search
-            disable={isSubmitting}
-            onChange={handleDropdownChange('district', onChange)}
-            labelDistance={4}
-            label="District"
-            isError={!!error?.message}
-            errorStyle={styles.error}
-            errorMessage={error?.message}
-            mainContainerStyle={styles.input}
-            {...rest}
-          />
-        )}
-        rules={SHIPPING_FORM_VALIDATION.DISTRICT}
-      />
+        <Controller
+          control={control}
+          name="city"
+          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
+            <Dropdown
+              data={MOCK_CITIES}
+              labelField="label"
+              valueField="value"
+              placeholder="Select City"
+              placeholderStyle={{
+                color: colors.text.placeholder,
+              }}
+              labelSize="tiny"
+              labelVariant="quaternary"
+              search
+              disable={isSubmitting}
+              onChange={handleDropdownChange('city', onChange)}
+              labelDistance={4}
+              label="City"
+              isError={!!error?.message}
+              errorStyle={styles.error}
+              errorMessage={error?.message}
+              mainContainerStyle={styles.input}
+              {...rest}
+            />
+          )}
+          rules={SHIPPING_FORM_VALIDATION.CITY}
+        />
+
+        <Controller
+          control={control}
+          name="district"
+          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
+            <Dropdown
+              data={MOCK_DISTRICTS}
+              labelField="label"
+              valueField="value"
+              placeholder="Select District"
+              placeholderStyle={{
+                color: colors.text.placeholder,
+              }}
+              labelSize="tiny"
+              labelVariant="quaternary"
+              search
+              disable={isSubmitting}
+              onChange={handleDropdownChange('district', onChange)}
+              labelDistance={4}
+              label="District"
+              isError={!!error?.message}
+              errorStyle={styles.error}
+              errorMessage={error?.message}
+              mainContainerStyle={styles.input}
+              {...rest}
+            />
+          )}
+          rules={SHIPPING_FORM_VALIDATION.DISTRICT}
+        />
+      </View>
       <Button
         width="100%"
         title="SAVE ADDRESS"
@@ -299,8 +303,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     paddingHorizontal: 20,
-    gap: 20,
     paddingBottom: 12,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    gap: 20,
+  },
+  wrapper: {
+    flexGrow: 1,
+    gap: 20,
   },
   input: {
     borderColor: colors.border.alternative,
@@ -314,7 +326,6 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 16,
-    marginTop: 'auto',
   },
 });
 
