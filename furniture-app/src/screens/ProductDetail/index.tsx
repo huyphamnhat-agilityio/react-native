@@ -1,42 +1,35 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import { useQueryClient } from '@tanstack/react-query';
 import { memo, useCallback, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Dimensions,
   ScrollView,
   StyleSheet,
   ToastAndroid,
   View,
 } from 'react-native';
-import {
-  Extrapolation,
-  interpolate,
-  useSharedValue,
-} from 'react-native-reanimated';
-import Carousel, {
-  ICarouselInstance,
-  Pagination,
-} from 'react-native-reanimated-carousel';
+import { useSharedValue } from 'react-native-reanimated';
 import {
   getCrashlytics,
   recordError,
 } from '@react-native-firebase/crashlytics';
 
+import {
+  ICarouselInstance,
+  Pagination,
+} from 'react-native-reanimated-carousel';
+
+import notifee, { AndroidImportance } from '@notifee/react-native';
+
 // Components
-import { Button, QuantityControl, Text } from 'src/components/common';
+import { Button } from 'src/components/common';
+import { ProductDetailCarousel, ProductDetailContent } from './components';
 
 // Icons
-import { BackArrowIcon, MarkIcon, StarIcon } from 'src/components/icons';
+import { BackArrowIcon } from 'src/components/icons';
 
 // Constants
-import {
-  MEDIUM_DEVICE_HEIGHT,
-  QUERY_KEY,
-  SCREENS,
-  SUCCESS_MESSAGE,
-} from 'src/constants';
+import { QUERY_KEY, SCREENS, SUCCESS_MESSAGE } from 'src/constants';
 
 // Hooks
 import {
@@ -47,20 +40,14 @@ import {
   useUpdateFavorites,
 } from 'src/hooks';
 
-// Types & Interfaces
-import { Cart, Favorites, MainStacksScreenProps } from 'src/interfaces';
-
 // Stores
 import { useUserStore } from 'src/store';
 
 // Themes
 import { borderRadius, colors } from 'src/themes';
 
-import notifee, { AndroidImportance } from '@notifee/react-native';
-import FastImage from '@d11/react-native-fast-image';
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
+// Types & Interfaces
+import { MainStacksScreenProps } from 'src/interfaces';
 
 const ProductDetailScreen = memo(
   ({
@@ -80,9 +67,7 @@ const ProductDetailScreen = memo(
     const { items: currentCartItems = [] } = currentCart || {};
 
     const { data: currentFavorites, isLoading: isLoadingFavorites } =
-      useGetFavorites({
-        id: userId,
-      });
+      useGetFavorites({ id: userId });
 
     const { items: currentFavoritesItems = [] } = currentFavorites || {};
 
@@ -91,11 +76,11 @@ const ProductDetailScreen = memo(
 
     const { mutateAsync: updateFavorites, isPending: isAddingToFavorites } =
       useUpdateFavorites();
+
     const progress = useSharedValue<number>(0);
+    const ref = useRef<ICarouselInstance | null>(null);
 
-    const ref = useRef<ICarouselInstance>(null);
-
-    const { data, isLoading, error } = useProductDetail(id);
+    const { data, isLoading, error: productDetailError } = useProductDetail(id);
 
     const {
       id: productId = '',
@@ -109,8 +94,9 @@ const ProductDetailScreen = memo(
 
     const onPressPagination = useCallback(
       (index: number) => {
+        const current = progress.get();
         ref.current?.scrollTo({
-          count: index - progress.get(),
+          count: index - current,
           animated: true,
         });
       },
@@ -151,7 +137,7 @@ const ProductDetailScreen = memo(
             },
           ];
 
-      const cartPayload: Omit<Cart, 'id'> = {
+      const cartPayload = {
         userId,
         items: updatedItems,
       };
@@ -173,11 +159,7 @@ const ProductDetailScreen = memo(
           Alert.alert(
             'Add item to cart failed',
             error.message,
-            [
-              {
-                text: 'Ok',
-              },
-            ],
+            [{ text: 'Ok' }],
             { cancelable: true },
           );
         },
@@ -231,9 +213,9 @@ const ProductDetailScreen = memo(
         item => item.id === productId,
       )
         ? currentFavoritesItems.filter(item => item.id !== productId)
-        : [...currentFavoritesItems, ...(data !== undefined ? [data] : [])];
+        : [...currentFavoritesItems, ...(data ? [data] : [])];
 
-      const favoritesPayload: Omit<Favorites, 'id'> = {
+      const favoritesPayload = {
         userId,
         items: updatedItems,
       };
@@ -260,11 +242,7 @@ const ProductDetailScreen = memo(
           Alert.alert(
             'Mark item as favorite failed',
             error.message,
-            [
-              {
-                text: 'Ok',
-              },
-            ],
+            [{ text: 'Ok' }],
             { cancelable: true },
           );
         },
@@ -288,16 +266,11 @@ const ProductDetailScreen = memo(
       );
     }
 
-    if (error) {
+    if (productDetailError) {
       Alert.alert(
         'Get Product Detail Failed',
-        error.message,
-        [
-          {
-            text: 'Return Home',
-            onPress: goBack,
-          },
-        ],
+        productDetailError.message,
+        [{ text: 'Return Home', onPress: goBack }],
         { cancelable: true },
       );
     }
@@ -306,139 +279,33 @@ const ProductDetailScreen = memo(
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
           <View style={styles.carouselWrapper}>
-            <Carousel
+            <ProductDetailCarousel
               ref={ref}
-              width={width * 0.86}
-              height={height * 0.5}
-              style={styles.carousel}
               data={variants}
-              renderItem={({ item }) => (
-                <FastImage
-                  source={{
-                    uri: item.image,
-                  }}
-                  style={styles.image}
-                  resizeMode="stretch"
-                />
-              )}
-              onProgressChange={progress}
-            />
-
-            {/* Image Carousel Pagination */}
-            <Pagination.Custom
-              size={15}
               progress={progress}
-              data={variants}
-              dotStyle={styles.dot}
-              activeDotStyle={styles.activeDot}
-              containerStyle={styles.pagination}
-              horizontal
-              onPress={onPressPagination}
-              customReanimatedStyle={(progress, index, length) => {
-                let val = Math.abs(progress - index);
-                if (index === 0 && progress > length - 1) {
-                  val = Math.abs(progress - length);
-                }
-                return {
-                  transform: [
-                    {
-                      translateY: interpolate(
-                        val,
-                        [0, 1],
-                        [0, 0],
-                        Extrapolation.CLAMP,
-                      ),
-                    },
-                  ],
-                };
-              }}
+              onPressPagination={onPressPagination}
             />
           </View>
 
-          <View style={styles.content}>
-            <Text
-              numberOfLines={1}
-              font="GelasioMedium"
-              size="lg"
-              textVariant="secondary"
-            >
-              {name}
-            </Text>
-
-            <View style={styles.wrapper}>
-              <Text
-                style={styles.price}
-                font="NunitoSansBold"
-                size="xxl"
-                textVariant="secondary"
-              >
-                $ {price}
-              </Text>
-
-              <QuantityControl quantity={quantity} setQuantity={setQuantity} />
-            </View>
-
-            <View style={styles.stat}>
-              <View style={styles.rate}>
-                <StarIcon width={20} height={20} color={colors.yellow} />
-                <Text font="NunitoSansBold" size="base" textVariant="secondary">
-                  {rating}
-                </Text>
-              </View>
-
-              <Text
-                font="NunitoSansSemiBold"
-                size="sm"
-                textVariant="quaternary"
-              >
-                (${reviewCount} reviews)
-              </Text>
-            </View>
-
-            <ScrollView style={styles.descriptionWrapper}>
-              <Text font="NunitoSansLight" size="sm" textVariant="quaternary">
-                {description}
-              </Text>
-            </ScrollView>
-            <View style={styles.footer}>
-              <View style={styles.buttonWrapper}>
-                <Button
-                  bgVariant="secondary"
-                  rounded="md"
-                  style={styles.buttonMark}
-                  disabled={isAddingToFavorites || isLoadingFavorites}
-                  IconLeft={
-                    <MarkIcon
-                      fill={isMarkAsFavorite ? colors.primary : 'none'}
-                      color={colors.primary}
-                    />
-                  }
-                  onPress={handleAddToFavorites}
-                />
-
-                <Button
-                  rounded="md"
-                  title="Add to cart"
-                  titleFont="NunitoSansSemiBold"
-                  titleSize="md"
-                  disabled={isAddingToCart || isLoadingCart}
-                  style={styles.buttonAddToCart}
-                  onPress={handleAddToCart}
-                />
-              </View>
-            </View>
-          </View>
+          <ProductDetailContent
+            name={name}
+            price={price}
+            rating={rating}
+            reviewCount={reviewCount}
+            description={description}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            isMarkAsFavorite={isMarkAsFavorite}
+            isAddingToFavorites={isAddingToFavorites}
+            isLoadingFavorites={isLoadingFavorites}
+            isAddingToCart={isAddingToCart}
+            isLoadingCart={isLoadingCart}
+            handleAddToFavorites={handleAddToFavorites}
+            handleAddToCart={handleAddToCart}
+          />
         </ScrollView>
 
-        <Button
-          rounded="sm"
-          bgVariant="white"
-          IconLeft={<BackArrowIcon />}
-          style={styles.buttonBack}
-          onPress={handleBack}
-        />
-
-        {/* Color Carousel Pagination */}
+        {/* Color Carousel restored */}
         <Pagination.Custom<{ color: string }>
           progress={progress}
           data={variants.map(({ color }) => ({ color }))}
@@ -459,6 +326,14 @@ const ProductDetailScreen = memo(
             />
           )}
         />
+
+        <Button
+          rounded="sm"
+          bgVariant="white"
+          IconLeft={<BackArrowIcon />}
+          style={styles.buttonBack}
+          onPress={handleBack}
+        />
       </View>
     );
   },
@@ -472,6 +347,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
   },
+  carouselWrapper: {
+    position: 'relative',
+    overflow: 'visible',
+  },
   buttonBack: {
     position: 'absolute',
     top: 53,
@@ -483,81 +362,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4,
     },
-    boxShadow: '',
     shadowOpacity: 0.2,
     shadowRadius: 40,
     elevation: 40,
-  },
-  carouselWrapper: {
-    position: 'relative',
-    overflow: 'visible',
-  },
-  carousel: {
-    alignSelf: 'flex-end',
-  },
-  dot: {
-    height: 4,
-    backgroundColor: colors.background.secondary,
-    borderRadius: borderRadius.xs,
-  },
-  activeDot: {
-    width: 30,
-    overflow: 'hidden',
-    backgroundColor: colors.secondary,
-  },
-  pagination: {
-    gap: 10,
-    position: 'absolute',
-    bottom: 30,
-    right: 60,
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    borderBottomLeftRadius: borderRadius.xxl,
-  },
-  content: {
-    flex: 1,
-    gap: height >= MEDIUM_DEVICE_HEIGHT ? 10 : 4,
-    marginTop: 12,
-    paddingHorizontal: 25,
-    paddingBottom: 10,
-  },
-  wrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  stat: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 20,
-  },
-  rate: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  descriptionWrapper: {
-    height: height * (height >= MEDIUM_DEVICE_HEIGHT ? 0.185 : 0.1),
-  },
-  footer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  buttonWrapper: {
-    flexDirection: 'row',
-    gap: 15,
-  },
-  buttonMark: {
-    padding: 18,
-    width: 60,
-  },
-  buttonAddToCart: {
-    flex: 1,
-    paddingVertical: 16,
-  },
-  price: {
-    width: '66%',
   },
   colorPagination: {
     backgroundColor: colors.white,
@@ -575,7 +382,6 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4,
     },
-    boxShadow: '',
     shadowOpacity: 0.2,
     shadowRadius: 40,
     elevation: 40,
