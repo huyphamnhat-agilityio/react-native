@@ -10,6 +10,7 @@ import { AppStacksParamList } from 'src/interfaces';
 import MainStacks from './MainStacks';
 import AddressStacks from './AddressStacks';
 import AuthStacks from './AuthStacks';
+import { STACKS } from 'src/constants';
 
 const AppStack = createNativeStackNavigator<AppStacksParamList>();
 
@@ -20,11 +21,14 @@ const AppStacks = memo(() => {
     <AppStack.Navigator screenOptions={{ headerShown: false }}>
       {accessToken ? (
         <>
-          <AppStack.Screen name="MainStacks" component={MainStacks} />
-          <AppStack.Screen name="AddressStacks" component={AddressStacks} />
+          <AppStack.Screen name={STACKS.MAIN_STACKS} component={MainStacks} />
+          <AppStack.Screen
+            name={STACKS.ADDRESS_STACKS}
+            component={AddressStacks}
+          />
         </>
       ) : (
-        <AppStack.Screen name="AuthStacks" component={AuthStacks} />
+        <AppStack.Screen name={STACKS.AUTH_STACKS} component={AuthStacks} />
       )}
     </AppStack.Navigator>
   );
