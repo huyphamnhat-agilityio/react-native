@@ -7,15 +7,12 @@ import {
 } from '@react-native-firebase/crashlytics';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
-// Icons
-import { LogoIcon } from 'src/components/icons';
-
 // Components
-import { Text } from 'src/components/common';
+import { LoginHeader } from './components';
 import { LoginForm } from 'src/components';
 
 // Themes
-import { borderRadius, colors } from 'src/themes';
+import { colors } from 'src/themes';
 
 // Hooks
 import { useLogin } from 'src/hooks';
@@ -36,6 +33,7 @@ const LoginScreen = memo(({ navigation }: AuthStacksScreenProps<'Login'>) => {
     })),
   );
 
+  // ✅ Keep your side effects exactly as-is
   const handleSubmit = useCallback(
     async (data: LoginFormData) => {
       await login(data, {
@@ -72,28 +70,14 @@ const LoginScreen = memo(({ navigation }: AuthStacksScreenProps<'Login'>) => {
     },
     [login, setAccessToken, setUser],
   );
+
   return (
     <KeyboardAwareScrollView
       style={styles.container}
       keyboardShouldPersistTaps="handled"
     >
-      <View style={styles.logo}>
-        <View style={styles.stroke} />
-        <LogoIcon />
-        <View style={styles.stroke} />
-      </View>
+      <LoginHeader />
       <View style={styles.wrapper}>
-        <Text
-          font="MerriweatherNormal"
-          size="xl"
-          textVariant="alternative"
-          style={styles.title}
-        >
-          Hello ! {'\n'}
-          <Text font="MerriweatherBold" size="lg" textVariant="secondary">
-            WELCOME BACK
-          </Text>
-        </Text>
         <LoginForm navigation={navigation} onSubmit={handleSubmit} />
       </View>
     </KeyboardAwareScrollView>
@@ -106,31 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     gap: 20,
   },
-  contentContainer: {
-    flexGrow: 1,
-  },
-  logo: {
-    marginTop: 20,
-    paddingHorizontal: 30,
-    height: 64,
-    gap: 20,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  stroke: {
-    flex: 1,
-    height: 1,
-    backgroundColor: colors.divider,
-    borderRadius: borderRadius.tiny,
-  },
   wrapper: {
     gap: 20,
-  },
-  title: {
-    lineHeight: 45,
-    paddingLeft: 30,
   },
 });
 
