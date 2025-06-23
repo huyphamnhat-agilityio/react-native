@@ -27,6 +27,9 @@ import { useUpdateCart } from 'src/hooks';
 // Constants
 import { PLACEHOLDER_ADDRESS, QUERY_KEY } from 'src/constants';
 
+// Utils
+import { formatFullAddress } from 'src/utils';
+
 const CheckoutScreen = memo(
   ({
     navigation,
@@ -74,7 +77,7 @@ const CheckoutScreen = memo(
         <View style={styles.wrapper}>
           <ShippingAddressCard
             name={currentAddress.name}
-            address={currentAddress.address}
+            address={formatFullAddress(currentAddress)}
           />
 
           <PaymentCard number="**** **** **** 3947" />

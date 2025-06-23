@@ -2,9 +2,7 @@ import { getPerformance } from '@react-native-firebase/perf';
 import { NavigationContainer } from '@react-navigation/native';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatedBootSplash } from './AnimatedBootSplash';
-import { linking, navigate, navigationRef } from './navigationConfig';
-import notifee, { EventType } from '@notifee/react-native';
-import { getMessaging } from '@react-native-firebase/messaging';
+import { linking, navigationRef } from './navigationConfig';
 import { InteractionManager } from 'react-native';
 import AppStacks from './AppStacks';
 
@@ -12,13 +10,11 @@ import AppStacks from './AppStacks';
 import { useUserStore } from 'src/store';
 
 // Hooks
-import { useHandleInitialURL, useInitialNotifeeNavigation } from 'src/hooks';
-
-// Services
-import { onMessageReceived, onRegisterFirebaseMessaging } from 'src/services';
-
-// Constants
-import { SCREENS } from 'src/constants';
+import {
+  useHandleInitialURL,
+  useInitialNotifeeNavigation,
+  useInitNotificationListener,
+} from 'src/hooks';
 
 const Navigation = memo(() => {
   const [visible, setVisible] = useState(true);
@@ -30,6 +26,8 @@ const Navigation = memo(() => {
   useInitialNotifeeNavigation(isNavReady && isHydrated);
 
   useHandleInitialURL(isNavReady && isHydrated);
+
+  useInitNotificationListener();
 
   const routeNameRef = useRef<string | undefined>(undefined);
 
@@ -67,51 +65,6 @@ const Navigation = memo(() => {
       return;
     }
   }, [isHydrated]);
-
-  useEffect(() => {
-    (async () => {
-      await notifee.requestPermission();
-    })();
-
-    notifee.onForegroundEvent(async ({ type, detail }) => {
-      if (
-        type === EventType.PRESS &&
-        detail.notification?.data?.type === 'ProductDetail'
-      ) {
-        const id = detail.notification.data.id;
-
-        navigate('MainStacks', {
-          screen: SCREENS.MAIN.PRODUCT_DETAIL,
-          params: { id },
-        });
-      }
-    });
-
-    notifee.onBackgroundEvent(async ({ type, detail }) => {
-      if (
-        type === EventType.PRESS &&
-        detail.notification?.data?.type === 'ProductDetail'
-      ) {
-        const id = detail.notification.data.id;
-
-        navigate('MainStacks', {
-          screen: SCREENS.MAIN.PRODUCT_DETAIL,
-          params: { id },
-        });
-      }
-    });
-
-    (async () => {
-      await onRegisterFirebaseMessaging();
-    })();
-
-    const unsubscribeForegroundMessage =
-      getMessaging().onMessage(onMessageReceived);
-
-    return () => {
-      unsubscribeForegroundMessage();
-    };
-  }, []);
 
   return (
     <NavigationContainer

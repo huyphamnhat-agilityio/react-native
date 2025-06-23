@@ -3,9 +3,12 @@ import {
   getMessaging,
   getToken,
 } from '@react-native-firebase/messaging';
-import notifee, {AndroidImportance} from '@notifee/react-native';
-import {getCrashlytics, recordError} from '@react-native-firebase/crashlytics';
-import {colors} from 'src/themes';
+import notifee, { AndroidImportance } from '@notifee/react-native';
+import {
+  getCrashlytics,
+  recordError,
+} from '@react-native-firebase/crashlytics';
+import { colors } from 'src/themes';
 
 const messaging = getMessaging();
 

@@ -1,13 +1,17 @@
+// BoardingScreen.tsx
 import { memo, useCallback } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
-// Components
-import { Button, Text } from 'src/components/common';
 
 // Constants
 import { SCREENS } from 'src/constants';
 
 // Interfaces
 import { AuthStacksScreenProps } from 'src/interfaces';
+
+// Components
+import { BoardingButton, BoardingContent } from './components';
+
+// Components
 
 const BoardingScreen = memo(
   ({ navigation: { navigate } }: AuthStacksScreenProps<'Boarding'>) => {
@@ -22,39 +26,8 @@ const BoardingScreen = memo(
           resizeMode="cover"
           style={styles.image}
         >
-          <View style={styles.content}>
-            <View>
-              <View style={styles.title}>
-                <Text font="GelasioSemiBold" size="lg" textVariant="tertiary">
-                  MAKE YOUR
-                </Text>
-
-                <Text font="GelasioBold" size="xl" textVariant="secondary">
-                  HOME BEAUTIFUL
-                </Text>
-              </View>
-
-              <Text
-                style={styles.description}
-                font="NunitoSansNormal"
-                size="base"
-                textVariant="quaternary"
-              >
-                The best simple place where you discover most wonderful
-                furnitures and make your home beautiful
-              </Text>
-            </View>
-          </View>
-          <View style={styles.wrapper}>
-            <Button
-              titleFont="GelasioSemiBold"
-              titleSize="base"
-              title="Get Started"
-              rounded="xs"
-              style={styles.button}
-              onPress={handlePress}
-            />
-          </View>
+          <BoardingContent />
+          <BoardingButton onPress={handlePress} />
         </ImageBackground>
       </View>
     );
@@ -68,28 +41,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'center',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignSelf: 'center',
-  },
-  title: {
-    paddingLeft: 30,
-    marginBottom: 35,
-    gap: 16,
-  },
-  description: {
-    paddingLeft: 60,
-    paddingRight: 30,
-    textAlign: 'justify',
-    lineHeight: 35,
-  },
-  wrapper: { flex: 1 / 1.25, justifyContent: 'center' },
-  button: {
-    paddingHorizontal: 28,
-    paddingVertical: 16,
-    alignSelf: 'center',
   },
 });
 

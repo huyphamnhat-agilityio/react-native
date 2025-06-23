@@ -208,7 +208,7 @@ const ProductDetailScreen = memo(
 
       await notifee.displayNotification({
         title: 'Furniture App',
-        body: 'A new product detail has been added to your favorite.',
+        body: 'A new product has been added to your favorites.',
         android: {
           channelId,
           smallIcon: 'ic_notification',

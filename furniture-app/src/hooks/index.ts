@@ -13,5 +13,8 @@ export {
   useUpdateFavorites,
   useGetFavorites,
 } from './favorites';
-export { useInitialNotifeeNavigation } from './notification';
+export {
+  useInitialNotifeeNavigation,
+  useInitNotificationListener,
+} from './notification';
 export { useHandleInitialURL } from './linking';

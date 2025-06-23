@@ -4,7 +4,7 @@ import { SCREENS, STACKS } from 'src/constants';
 import { navigate } from 'src/navigation/navigationConfig';
 import { useUserStore } from 'src/store';
 
-export function useHandleInitialURL(isReady: boolean) {
+export const useHandleInitialURL = (isReady: boolean) => {
   const accessToken = useUserStore(state => state.accessToken);
 
   useEffect(() => {
@@ -23,4 +23,4 @@ export function useHandleInitialURL(isReady: boolean) {
       }
     });
   }, [isReady, accessToken]);
-}
+};
