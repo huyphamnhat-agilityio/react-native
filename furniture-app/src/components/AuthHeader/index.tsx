@@ -1,12 +1,11 @@
-import { memo } from 'react';
+import { memo, PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { LogoIcon } from 'src/components/icons';
-import { Text } from 'src/components/common';
 
 // Themes
 import { borderRadius, colors } from 'src/themes';
 
-const LoginHeader = memo(() => {
+const AuthHeader = memo(({ children }: PropsWithChildren) => {
   return (
     <>
       <View style={styles.logo}>
@@ -14,17 +13,7 @@ const LoginHeader = memo(() => {
         <LogoIcon />
         <View style={styles.stroke} />
       </View>
-      <Text
-        font="MerriweatherNormal"
-        size="xl"
-        textVariant="alternative"
-        style={styles.title}
-      >
-        Hello ! {'\n'}
-        <Text font="MerriweatherBold" size="lg" textVariant="secondary">
-          WELCOME BACK
-        </Text>
-      </Text>
+      {children}
     </>
   );
 });
@@ -46,12 +35,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.divider,
     borderRadius: borderRadius.tiny,
   },
-  title: {
-    lineHeight: 45,
-    paddingLeft: 30,
-  },
 });
 
-LoginHeader.displayName = 'LoginHeader';
+AuthHeader.displayName = 'AuthHeader';
 
-export default LoginHeader;
+export default AuthHeader;

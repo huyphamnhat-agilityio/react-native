@@ -1,24 +1,22 @@
 import { memo, useCallback } from 'react';
 import { useShallow } from 'zustand/shallow';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import {
   getCrashlytics,
   recordError,
 } from '@react-native-firebase/crashlytics';
-
-// Icons
-import { LogoIcon } from 'src/components/icons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 // Components
 import { Text } from 'src/components/common';
-import { RegisterForm } from 'src/components';
+import { AuthHeader, RegisterForm } from 'src/components';
 
 // Themes
 import { borderRadius, colors } from 'src/themes';
 
 // Types & Interfaces
 import {
-  AppStackScreenProps,
+  AuthStacksScreenProps,
   RegisterFormData,
   UserPayload,
 } from 'src/interfaces';
@@ -28,11 +26,12 @@ import { useCreateCart, useCreateFavorites, useRegister } from 'src/hooks';
 
 // Store
 import { useUserStore } from 'src/store';
+
+// Constants
 import { PLACEHOLDER_AVATAR_URL } from 'src/constants';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 const RegisterScreen = memo(
-  ({ navigation }: AppStackScreenProps<'Register'>) => {
+  ({ navigation }: AuthStacksScreenProps<'Register'>) => {
     const { mutateAsync: registerUser } = useRegister();
 
     const { mutate: createCart } = useCreateCart();
@@ -123,12 +122,7 @@ const RegisterScreen = memo(
         style={styles.container}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.logo}>
-          <View style={styles.stroke} />
-          <LogoIcon />
-          <View style={styles.stroke} />
-        </View>
-        <View style={styles.wrapper}>
+        <AuthHeader>
           <Text
             font="MerriweatherBold"
             size="lg"
@@ -137,8 +131,9 @@ const RegisterScreen = memo(
           >
             WELCOME
           </Text>
-          <RegisterForm navigation={navigation} onSubmit={handleSubmit} />
-        </View>
+        </AuthHeader>
+
+        <RegisterForm navigation={navigation} onSubmit={handleSubmit} />
       </KeyboardAwareScrollView>
     );
   },

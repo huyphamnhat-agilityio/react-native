@@ -8,8 +8,7 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 // Components
-import { LoginHeader } from './components';
-import { LoginForm } from 'src/components';
+import { AuthHeader, LoginForm } from 'src/components';
 
 // Themes
 import { colors } from 'src/themes';
@@ -22,6 +21,7 @@ import { AuthStacksScreenProps, LoginFormData } from 'src/interfaces';
 
 // Store
 import { useUserStore } from 'src/store';
+import { Text } from 'src/components/common';
 
 const LoginScreen = memo(({ navigation }: AuthStacksScreenProps<'Login'>) => {
   const { mutateAsync: login } = useLogin();
@@ -76,7 +76,20 @@ const LoginScreen = memo(({ navigation }: AuthStacksScreenProps<'Login'>) => {
       style={styles.container}
       keyboardShouldPersistTaps="handled"
     >
-      <LoginHeader />
+      <AuthHeader>
+        <Text
+          font="MerriweatherNormal"
+          size="xl"
+          textVariant="alternative"
+          style={styles.title}
+        >
+          Hello ! {'\n'}
+          <Text font="MerriweatherBold" size="lg" textVariant="secondary">
+            WELCOME BACK
+          </Text>
+        </Text>
+      </AuthHeader>
+
       <View style={styles.wrapper}>
         <LoginForm navigation={navigation} onSubmit={handleSubmit} />
       </View>
@@ -92,6 +105,10 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     gap: 20,
+  },
+  title: {
+    lineHeight: 45,
+    paddingLeft: 30,
   },
 });
 
