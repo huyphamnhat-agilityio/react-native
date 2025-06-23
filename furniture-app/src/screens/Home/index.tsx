@@ -2,17 +2,14 @@ import { memo, useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, StyleSheet, View } from 'react-native';
 
 // Components
-import { Button, Text, TextInput } from 'src/components/common';
 import { CategoryList, ProductList } from 'src/components';
-
-// Icons
-import { CartIcon, SearchIcon } from 'src/components/icons';
-
-// Constants
-import { CATEGORIES } from 'src/constants';
+import { HomeHeader, HomeSearchBar } from './components';
 
 // Hooks
 import { useDebounce, useGetInfinitiveProducts } from 'src/hooks';
+
+// Constants
+import { CATEGORIES } from 'src/constants';
 
 // Types & Interfaces
 import { HomeTabsScreenProps } from 'src/interfaces/navigation';
@@ -77,17 +74,16 @@ const HomeScreen = memo(
       (categoryTitle: string) => {
         categoryTitle !== category && setCategory(categoryTitle);
       },
-      [category, setCategory],
+      [category],
     );
 
     const handleProductCardPress = useCallback(
       (id: string) => () => {
-        navigate('ProductDetail', {
-          id,
-        });
+        navigate('ProductDetail', { id });
       },
       [navigate],
     );
+
     const searchHeight = searchAnimation.interpolate({
       inputRange: [0, 1],
       outputRange: [0, 40],
@@ -100,41 +96,17 @@ const HomeScreen = memo(
 
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <SearchIcon onPress={toggleSearch} />
-          <View style={styles.headerTitle}>
-            <Text font="GelasioNormal" size="base" textVariant="alternative">
-              Make home
-            </Text>
-            <Text font="GelasioBold" size="base">
-              BEAUTIFUL
-            </Text>
-          </View>
-          <Button
-            style={styles.button}
-            bgVariant="none"
-            IconLeft={<CartIcon />}
-            onPress={handleNavigateToCart}
-          />
-        </View>
+        <HomeHeader
+          onToggleSearch={toggleSearch}
+          onNavigateToCart={handleNavigateToCart}
+        />
 
-        <Animated.View
-          style={[
-            styles.searchContainer,
-            {
-              height: searchHeight,
-              opacity: searchOpacity,
-            },
-          ]}
-        >
-          <TextInput
-            inputSize="sm"
-            placeholder="Search products..."
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            autoCapitalize="none"
-          />
-        </Animated.View>
+        <HomeSearchBar
+          searchHeight={searchHeight}
+          searchOpacity={searchOpacity}
+          searchQuery={searchQuery}
+          onChangeQuery={setSearchQuery}
+        />
 
         <CategoryList category={category} setCategory={handleSetCategory} />
 
@@ -165,30 +137,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingHorizontal: 20,
   },
-  header: {
-    marginTop: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    height: 50,
-    justifyContent: 'space-between',
-  },
-  headerTitle: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   wrapper: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  button: {
-    padding: 0,
-    marginTop: 8,
-  },
-  searchContainer: {
-    overflow: 'hidden',
   },
 });
 

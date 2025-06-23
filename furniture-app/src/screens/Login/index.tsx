@@ -21,12 +21,12 @@ import { borderRadius, colors } from 'src/themes';
 import { useLogin } from 'src/hooks';
 
 // Types & Interfaces
-import { AppStackScreenProps, LoginFormData } from 'src/interfaces';
+import { AuthStacksScreenProps, LoginFormData } from 'src/interfaces';
 
 // Store
 import { useUserStore } from 'src/store';
 
-const LoginScreen = memo(({ navigation }: AppStackScreenProps<'Login'>) => {
+const LoginScreen = memo(({ navigation }: AuthStacksScreenProps<'Login'>) => {
   const { mutateAsync: login } = useLogin();
 
   const { setUser, setAccessToken } = useUserStore(
