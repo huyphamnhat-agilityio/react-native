@@ -6,20 +6,18 @@ import {
   QuantityControl,
   Text,
 } from 'src/components/common';
+import { BottomSheetProps } from 'src/components/common/BottomSheet';
 import { Product } from 'src/interfaces';
 import { borderRadius, colors } from 'src/themes';
 
-interface FavoriteBottomSheetProps {
+export type FavoriteBottomSheetProps = {
   selectedProduct: Product | null;
   selectedVariant: { color: string; image: string } | null;
   setSelectedVariant: (variant: { color: string; image: string }) => void;
   quantity: number;
   setQuantity: (q: number) => void;
-  isOpen: any;
-  isDisabled: boolean;
-  onClose: () => void;
   onAddToCart: () => void;
-}
+} & Omit<BottomSheetProps, 'children'>;
 
 const FavoriteBottomSheet = memo(
   ({
@@ -32,6 +30,7 @@ const FavoriteBottomSheet = memo(
     isDisabled,
     onClose,
     onAddToCart,
+    ...rest
   }: FavoriteBottomSheetProps) => {
     return (
       <BottomSheet
@@ -39,6 +38,7 @@ const FavoriteBottomSheet = memo(
         isOpen={isOpen}
         onClose={onClose}
         style={styles.actionSheet}
+        {...rest}
       >
         <Text style={styles.actionTitle}>Choose color and quantity</Text>
         <View style={styles.actionWrapper}>
