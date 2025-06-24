@@ -44,20 +44,6 @@ export const useInitNotificationListener = () => {
       }
     });
 
-    notifee.onBackgroundEvent(async ({ type, detail }) => {
-      if (
-        type === EventType.PRESS &&
-        detail.notification?.data?.type === 'ProductDetail'
-      ) {
-        const id = detail.notification.data.id;
-
-        navigate(STACKS.MAIN_STACKS, {
-          screen: SCREENS.MAIN.PRODUCT_DETAIL,
-          params: { id },
-        });
-      }
-    });
-
     (async () => {
       await onRegisterFirebaseMessaging();
     })();

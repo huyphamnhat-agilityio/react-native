@@ -6,8 +6,25 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import Navigation from 'src/navigation';
 import { onMessageReceived } from 'src/services';
+import notifee, { EventType } from '@notifee/react-native';
+import { navigate } from 'src/navigation/navigationConfig';
+import { SCREENS, STACKS } from 'src/constants';
 
 getMessaging().setBackgroundMessageHandler(onMessageReceived);
+
+notifee.onBackgroundEvent(async ({ type, detail }) => {
+  if (
+    type === EventType.PRESS &&
+    detail.notification?.data?.type === 'ProductDetail'
+  ) {
+    const id = detail.notification.data.id;
+
+    navigate(STACKS.MAIN_STACKS, {
+      screen: SCREENS.MAIN.PRODUCT_DETAIL,
+      params: { id },
+    });
+  }
+});
 
 const queryClient = new QueryClient({
   defaultOptions: {
