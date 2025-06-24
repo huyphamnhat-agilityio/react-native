@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {Animated, Dimensions, Platform} from 'react-native';
+import { useState } from 'react';
+import { Animated, Dimensions, Platform, StyleSheet } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 
 const useNativeDriver = Platform.OS !== 'web';
@@ -8,17 +8,17 @@ type Props = {
   onAnimationEnd: () => void;
 };
 
-export const AnimatedBootSplash = ({onAnimationEnd}: Props) => {
+export const AnimatedBootSplash = ({ onAnimationEnd }: Props) => {
   const [opacity] = useState(() => new Animated.Value(1));
   const [translateY] = useState(() => new Animated.Value(0));
 
-  const {container, logo} = BootSplash.useHideAnimation({
+  const { container, logo } = BootSplash.useHideAnimation({
     manifest: require('assets/bootsplash/manifest.json'),
 
     logo: require('assets/bootsplash/logo.png'),
 
     animate: () => {
-      const {height} = Dimensions.get('window');
+      const { height } = Dimensions.get('window');
 
       Animated.stagger(250, [
         Animated.spring(translateY, {
@@ -43,11 +43,19 @@ export const AnimatedBootSplash = ({onAnimationEnd}: Props) => {
   });
 
   return (
-    <Animated.View {...container} style={[container.style, {opacity}]}>
+    <Animated.View {...container} style={[container.style, { opacity }]}>
       <Animated.Image
         {...logo}
-        style={[logo.style, {transform: [{translateY}]}]}
+        style={[logo.style, { transform: [{ translateY }] }, styles.logo]}
       />
     </Animated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
+});
