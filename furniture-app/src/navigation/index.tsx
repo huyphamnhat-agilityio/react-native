@@ -52,12 +52,15 @@ const Navigation = memo(() => {
   };
 
   const handleReady = useCallback(() => {
-    if (isHydrated) {
-      setVisible(false);
-    }
     setIsNavReady(true);
     routeNameRef.current =
       navigationRef.current?.getCurrentRoute?.()?.name ?? undefined;
+  }, []);
+
+  const handleEndAnimation = useCallback(() => {
+    if (isHydrated) {
+      setVisible(false);
+    }
   }, [isHydrated]);
 
   useEffect(() => {
@@ -74,7 +77,7 @@ const Navigation = memo(() => {
       onStateChange={handleStateChange}
     >
       <AppStacks />
-      {visible && <AnimatedBootSplash onAnimationEnd={handleReady} />}
+      {visible && <AnimatedBootSplash onAnimationEnd={handleEndAnimation} />}
     </NavigationContainer>
   );
 });
