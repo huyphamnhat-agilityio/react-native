@@ -10,7 +10,7 @@ import {
 import { useUserStore } from 'src/store';
 
 // Constants
-import { MEDIUM_DEVICE_HEIGHT, QUERY_KEY } from 'src/constants';
+import { MEDIUM_DEVICE_HEIGHT, QUERY_KEY, SCREENS } from 'src/constants';
 
 // Themes
 import { colors } from 'src/themes';
@@ -44,7 +44,7 @@ const CartScreen = memo(({ navigation: { navigate } }: CartScreenProps) => {
   const totalMoney = getTotalMoney(items);
 
   const handleCheckout = useCallback(
-    () => navigate('Checkout', { totalMoney }),
+    () => navigate(SCREENS.MAIN.CHECKOUT, { totalMoney }),
     [navigate, totalMoney],
   );
 

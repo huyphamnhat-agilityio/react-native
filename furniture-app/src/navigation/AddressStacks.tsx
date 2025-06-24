@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { memo, useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
 
 // Constants
 import { SCREENS } from 'src/constants';
@@ -24,18 +23,16 @@ import { AddressStacksParamList } from 'src/interfaces';
 const AddressStack = createNativeStackNavigator<AddressStacksParamList>();
 
 const AddressStacks = memo(() => {
-  const { goBack } = useNavigation();
-
   const HeaderLeft = useCallback(
-    () => (
+    (navigation: any) => (
       <Button
         style={styles.button}
         bgVariant="none"
         IconLeft={<BackArrowIcon />}
-        onPress={goBack}
+        onPress={navigation.goBack}
       />
     ),
-    [goBack],
+    [],
   );
 
   return (
@@ -43,7 +40,7 @@ const AddressStacks = memo(() => {
       <AddressStack.Screen
         name={SCREENS.ADDRESS.SHIPPING_ADDRESS}
         component={ShippingAddressScreen}
-        options={{
+        options={({ navigation }) => ({
           title: 'Shipping Address',
           headerTitleAlign: 'center',
           headerTitleStyle: {
@@ -53,14 +50,14 @@ const AddressStacks = memo(() => {
           },
           headerShadowVisible: false,
           headerStyle: { backgroundColor: colors.white },
-          headerLeft: HeaderLeft,
-        }}
+          headerLeft: () => HeaderLeft(navigation),
+        })}
       />
 
       <AddressStack.Screen
         name={SCREENS.ADDRESS.ADD_OR_EDIT_ADDRESS}
         component={AddOrEditAddressScreen}
-        options={({ route }) => ({
+        options={({ route, navigation }) => ({
           title: route.params?.address
             ? 'Edit Shipping Address'
             : 'Add Shipping Address',
@@ -72,7 +69,7 @@ const AddressStacks = memo(() => {
           },
           headerShadowVisible: false,
           headerStyle: { backgroundColor: colors.white },
-          headerLeft: HeaderLeft,
+          headerLeft: () => HeaderLeft(navigation),
         })}
       />
     </AddressStack.Navigator>

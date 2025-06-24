@@ -9,7 +9,7 @@ import { HomeHeader, HomeSearchBar } from './components';
 import { useDebounce, useGetInfinitiveProducts } from 'src/hooks';
 
 // Constants
-import { CATEGORIES } from 'src/constants';
+import { CATEGORIES, SCREENS } from 'src/constants';
 
 // Types & Interfaces
 import { HomeTabsScreenProps } from 'src/interfaces/navigation';
@@ -66,7 +66,7 @@ const HomeScreen = memo(
     }, [isSearchVisible, searchAnimation, setSearchQuery]);
 
     const handleNavigateToCart = useCallback(
-      () => navigate('Cart'),
+      () => navigate(SCREENS.MAIN.CART),
       [navigate],
     );
 
@@ -79,7 +79,7 @@ const HomeScreen = memo(
 
     const handleProductCardPress = useCallback(
       (id: string) => () => {
-        navigate('ProductDetail', { id });
+        navigate(SCREENS.MAIN.PRODUCT_DETAIL, { id });
       },
       [navigate],
     );

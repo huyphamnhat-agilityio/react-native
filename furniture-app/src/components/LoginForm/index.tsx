@@ -19,6 +19,7 @@ import {
   FORM_VALIDATION_MESSAGE,
   MEDIUM_DEVICE_HEIGHT,
   REGEX,
+  SCREENS,
 } from 'src/constants';
 
 // Types & Interfaces
@@ -98,7 +99,7 @@ const LoginForm = memo(
     }, [dirtyFieldList, errors]);
 
     const navigateToRegister = useCallback(() => {
-      navigate('Register');
+      navigate(SCREENS.AUTH.REGISTER);
     }, [navigate]);
     return (
       <View style={styles.container}>

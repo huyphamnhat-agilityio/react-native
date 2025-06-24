@@ -14,6 +14,9 @@ import { borderRadius, colors } from 'src/themes';
 // Interfaces
 import { AppNavigation } from 'src/interfaces';
 
+// Constants
+import { SCREENS, STACKS } from 'src/constants';
+
 export type ShippingAddressCardProps = {
   name: string;
   address: string;
@@ -24,8 +27,8 @@ const ShippingAddressCard = memo(
     const navigation = useNavigation<AppNavigation>();
 
     const handleNavigateToShippingAddress = useCallback(() => {
-      navigation?.navigate('AddressStacks', {
-        screen: 'ShippingAddress',
+      navigation?.navigate(STACKS.ADDRESS_STACKS, {
+        screen: SCREENS.ADDRESS.SHIPPING_ADDRESS,
       });
     }, [navigation]);
 
@@ -85,7 +88,7 @@ const styles = StyleSheet.create({
     elevation: 40,
     borderRadius: borderRadius.md,
     zIndex: 99,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     gap: 10,
   },
   name: { paddingHorizontal: 20, paddingTop: 15 },

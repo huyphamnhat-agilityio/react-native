@@ -37,7 +37,7 @@ export const useInitNotificationListener = () => {
       ) {
         const id = detail.notification.data.id;
 
-        navigate('MainStacks', {
+        navigate(STACKS.MAIN_STACKS, {
           screen: SCREENS.MAIN.PRODUCT_DETAIL,
           params: { id },
         });
@@ -51,7 +51,7 @@ export const useInitNotificationListener = () => {
       ) {
         const id = detail.notification.data.id;
 
-        navigate('MainStacks', {
+        navigate(STACKS.MAIN_STACKS, {
           screen: SCREENS.MAIN.PRODUCT_DETAIL,
           params: { id },
         });

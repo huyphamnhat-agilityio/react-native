@@ -15,6 +15,9 @@ import { AddressNavigation, ShippingAddress } from 'src/interfaces';
 // Utils
 import { formatFullAddress } from 'src/utils';
 
+// Constants
+import { SCREENS } from 'src/constants';
+
 export type AddressItemProps = {
   isChecked?: boolean;
   shippingAddress: ShippingAddress;
@@ -32,7 +35,9 @@ const AddressItem = ({
   }, [onPress, shippingAddress]);
 
   const handleNavigateToEditAddress = useCallback(() => {
-    navigation?.navigate('AddOrEditAddress', { address: shippingAddress });
+    navigation?.navigate(SCREENS.ADDRESS.ADD_OR_EDIT_ADDRESS, {
+      address: shippingAddress,
+    });
   }, [navigation, shippingAddress]);
 
   return (

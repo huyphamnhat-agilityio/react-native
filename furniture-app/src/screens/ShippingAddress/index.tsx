@@ -9,7 +9,7 @@ import { Button } from 'src/components/common';
 import { PlusIcon } from 'src/components/icons';
 
 // Constants
-import { MEDIUM_DEVICE_HEIGHT } from 'src/constants';
+import { MEDIUM_DEVICE_HEIGHT, SCREENS } from 'src/constants';
 
 // Interfaces
 import { AddressStacksScreenProps } from 'src/interfaces';
@@ -38,7 +38,9 @@ const ShippingAddressScreen = ({
   );
 
   const navigateToAddAddress = () => {
-    navigation.navigate('AddOrEditAddress', { address: undefined });
+    navigation.navigate(SCREENS.ADDRESS.ADD_OR_EDIT_ADDRESS, {
+      address: undefined,
+    });
   };
 
   return (

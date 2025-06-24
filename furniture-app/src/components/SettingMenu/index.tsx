@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import SettingItem from '../SettingItem';
 
 // Constants
-import { SETTINGS } from 'src/constants';
+import { SCREENS, SETTINGS, STACKS } from 'src/constants';
 
 // Store
 import { useUserStore } from 'src/store';
@@ -29,8 +29,8 @@ const SettingMenu = ({ style, ...rest }: SettingMenuProps) => {
           shippingAddress.length,
         )}
         handlePress={() =>
-          navigate('AddressStacks', {
-            screen: 'ShippingAddress',
+          navigate(STACKS.ADDRESS_STACKS, {
+            screen: SCREENS.ADDRESS.SHIPPING_ADDRESS,
           })
         }
       />

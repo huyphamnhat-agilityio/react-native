@@ -86,7 +86,10 @@ const HomeTabs = memo(() => {
     [],
   );
 
-  const handleNavigateToCart = useCallback(() => navigate('Cart'), [navigate]);
+  const handleNavigateToCart = useCallback(
+    () => navigate(SCREENS.MAIN.CART),
+    [navigate],
+  );
 
   const LogoutButton = useCallback(
     () => (
