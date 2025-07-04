@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Text should render correctly 1`] = `
+<Text
+  style={
+    [
+      {
+        "includeFontPadding": false,
+      },
+      {
+        "color": "#33907C",
+        "fontFamily": "Montserrat_500Medium",
+        "fontSize": 14,
+      },
+      undefined,
+    ]
+  }
+/>
+`;

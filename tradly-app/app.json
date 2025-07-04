@@ -1,0 +1,68 @@
+{
+  "expo": {
+    "name": "tradly-app",
+    "slug": "tradly-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "tradlyapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.huy.phamnhat.tradlyapp"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "node_modules/@expo-google-fonts/montserrat/100Thin/Montserrat_100Thin.ttf",
+            "node_modules/@expo-google-fonts/montserrat/100Thin_Italic/Montserrat_100Thin_Italic.ttf",
+            "node_modules/@expo-google-fonts/montserrat/200ExtraLight/Montserrat_200ExtraLight.ttf",
+            "node_modules/@expo-google-fonts/montserrat/200ExtraLight_Italic/Montserrat_200ExtraLight_Italic.ttf",
+            "node_modules/@expo-google-fonts/montserrat/300Light/Montserrat_300Light.ttf",
+            "node_modules/@expo-google-fonts/montserrat/300Light_Italic/Montserrat_300Light_Italic.ttf",
+            "node_modules/@expo-google-fonts/montserrat/400Regular/Montserrat_400Regular.ttf",
+            "node_modules/@expo-google-fonts/montserrat/400Regular_Italic/Montserrat_400Regular_Italic.ttf",
+            "node_modules/@expo-google-fonts/montserrat/500Medium/Montserrat_500Medium.ttf",
+            "node_modules/@expo-google-fonts/montserrat/500Medium_Italic/Montserrat_500Medium_Italic.ttf",
+            "node_modules/@expo-google-fonts/montserrat/600SemiBold/Montserrat_600SemiBold.ttf",
+            "node_modules/@expo-google-fonts/montserrat/600SemiBold_Italic/Montserrat_600SemiBold_Italic.ttf",
+            "node_modules/@expo-google-fonts/montserrat/700Bold/Montserrat_700Bold.ttf",
+            "node_modules/@expo-google-fonts/montserrat/700Bold_Italic/Montserrat_700Bold_Italic.ttf",
+            "node_modules/@expo-google-fonts/montserrat/800ExtraBold/Montserrat_800ExtraBold.ttf",
+            "node_modules/@expo-google-fonts/montserrat/800ExtraBold_Italic/Montserrat_800ExtraBold_Italic.ttf",
+            "node_modules/@expo-google-fonts/montserrat/900Black/Montserrat_900Black.ttf",
+            "node_modules/@expo-google-fonts/montserrat/900Black_Italic/Montserrat_900Black_Italic.ttf"
+          ]
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
