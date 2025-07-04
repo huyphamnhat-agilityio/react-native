@@ -59,6 +59,16 @@
             "node_modules/@expo-google-fonts/montserrat/900Black_Italic/Montserrat_900Black_Italic.ttf"
           ]
         }
+      ],
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "./assets/images/onboarding_one.png",
+            "./assets/images/onboarding_two.png",
+            "./assets/images/onboarding_three.png"
+          ]
+        }
       ]
     ],
     "experiments": {
