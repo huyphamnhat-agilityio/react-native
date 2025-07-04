@@ -9,8 +9,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "prepare": "husky",
-    "test": "jest --watchAll"
+    "prepare": "cd ../ && husky tradly-app/.husky"
   },
   "dependencies": {
     "@expo-google-fonts/montserrat": "^0.4.1",
@@ -19,45 +18,50 @@
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
     "@tanstack/react-query": "^5.81.5",
-    "@testing-library/react-native": "^13.2.0",
-    "expo": "~53.0.16",
+    "@types/jest": "^30.0.0",
+    "expo": "~53.0.17",
     "expo-blur": "~14.1.5",
-    "expo-constants": "~17.1.6",
+    "expo-constants": "~17.1.7",
     "expo-font": "~13.3.2",
     "expo-haptics": "~14.1.4",
     "expo-image": "~2.3.2",
-    "expo-linking": "~7.1.6",
-    "expo-router": "~5.1.2",
-    "expo-splash-screen": "~0.30.9",
+    "expo-linking": "~7.1.7",
+    "expo-router": "~5.1.3",
+    "expo-splash-screen": "~0.30.10",
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.5",
     "expo-system-ui": "~5.0.10",
     "expo-web-browser": "~14.2.0",
     "jest": "~29.7.0",
-    "jest-expo": "~53.0.8",
-    "react": "^19.1.0",
+    "jest-expo": "~53.0.9",
+    "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-native": "^0.80.1",
+    "react-native": "0.79.5",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-web": "~0.20.0",
-    "react-native-webview": "13.13.5",
-    "react-test-renderer": "^19.1.0"
+    "react-native-webview": "13.13.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@types/jest": "^30.0.0",
-    "@types/react": "^19.1.8",
+    "@testing-library/react-native": "^13.2.0",
+    "@types/react": "~19.0.10",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
     "typescript": "~5.8.3"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(?:.pnpm/)?((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg))"
+    ]
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
@@ -66,12 +70,6 @@
     ],
     "**/*.{html,json,css,scss,md,mdx}": [
       "prettier -w"
-    ]
-  },
-  "jest": {
-    "preset": "jest-expo",
-    "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)"
     ]
   },
   "private": true

@@ -8,6 +8,8 @@ export const colors = {
   white: "#FFFFFF",
 
   black: "#000000",
+
+  danger: "#6a1c1c",
 } as const;
 
 export const text = {
@@ -16,6 +18,7 @@ export const text = {
   tertiary: colors.gray_200,
   white: colors.white,
   black: colors.black,
+  danger: colors.danger,
 } as const;
 
 export const background = {
