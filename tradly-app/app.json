@@ -69,7 +69,8 @@
             "./assets/images/onboarding_three.png"
           ]
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
