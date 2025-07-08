@@ -1,34 +1,84 @@
-import { Image } from "expo-image";
+import { ICarouselInstance } from "react-native-reanimated-carousel";
+import { useSharedValue } from "react-native-reanimated";
 import { StyleSheet, View } from "react-native";
-import { background, borderRadius } from "@/themes";
-import { Button, Text } from "@/components/common";
+import { useCallback, useRef, useState } from "react";
+
+// Themes
+import { background } from "@/themes";
+
+// Components
+import { Button } from "@/components/common";
+import { OnboardingCarousel } from "@/components/ui/onboarding";
+
+// Constants
+import { ONBOARDING_SLIDES } from "@/constants";
 
 const Onboarding = () => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.background} />
-      <View style={styles.content}>
-        <View style={styles.contentWrapper}>
-          <View style={styles.imageWrapper}>
-            <Image
-              source={{ uri: "onboarding_one" }}
-              contentFit="contain"
-              style={styles.image}
-            />
-          </View>
+  const ref = useRef<ICarouselInstance | null>(null);
+  const progress = useSharedValue<number>(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-          <Text style={styles.description} font="Montserrat_500Medium" size={5}>
-            Empowering Artisans, Farmers & Micro Business
-          </Text>
-        </View>
+  const onPressPagination = useCallback(
+    (index: number) => {
+      const current = progress.get();
+      ref.current?.scrollTo({
+        count: index - current,
+        animated: true,
+      });
+    },
+    [progress],
+  );
+
+  const handleScrollToNext = useCallback(() => {
+    const current = progress.get();
+    if (current === ONBOARDING_SLIDES.length - 1) {
+      return;
+    }
+
+    ref.current?.scrollTo({
+      count: 1,
+      animated: true,
+    });
+  }, [progress]);
+
+  const renderBoardingButton = useCallback(() => {
+    if (currentIndex === ONBOARDING_SLIDES.length - 1) {
+      return (
         <Button
           variant="primary"
           titleFont="Montserrat_600SemiBold"
           rounded={6}
-          title="Next"
+          title="Finish"
           style={styles.button}
+          onPress={() => {}}
         />
-      </View>
+      );
+    }
+    return (
+      <Button
+        variant="primary"
+        titleFont="Montserrat_600SemiBold"
+        rounded={6}
+        title="Next"
+        style={styles.button}
+        onPress={handleScrollToNext}
+      />
+    );
+  }, [currentIndex, handleScrollToNext]);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.background} />
+
+      <OnboardingCarousel
+        ref={ref}
+        data={ONBOARDING_SLIDES}
+        progress={progress}
+        onPressPagination={onPressPagination}
+        setCurrentIndex={setCurrentIndex}
+      />
+
+      <View style={styles.buttonWrapper}>{renderBoardingButton()}</View>
     </View>
   );
 };
@@ -36,9 +86,10 @@ const Onboarding = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: background.white,
     position: "relative",
+    backgroundColor: background.white,
+    justifyContent: "flex-end",
+    paddingBottom: 30,
   },
   background: {
     position: "absolute",
@@ -47,39 +98,14 @@ const styles = StyleSheet.create({
     height: "45%",
     backgroundColor: background.primary,
   },
-  content: {
+  buttonWrapper: {
+    width: "100%",
     paddingHorizontal: 30,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  contentWrapper: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    gap: 40,
-  },
-  description: {
-    textAlign: "center",
-    paddingHorizontal: 20,
-    lineHeight: 30,
-  },
-  imageWrapper: {
-    paddingTop: 50,
-    backgroundColor: background.white,
-    borderRadius: borderRadius[2],
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
   },
   button: {
     width: "100%",
     paddingVertical: 15,
-  },
-  image: {
-    width: 300,
-    height: 240,
+    marginTop: 30,
   },
 });
 export default Onboarding;
