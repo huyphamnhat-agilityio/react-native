@@ -5,13 +5,14 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
+import { SharedValue } from "react-native-reanimated";
 
 // Themes
 import { background, borderRadius, colors } from "@/themes";
 
 // Components
 import { Text } from "@/components/common";
-import { SharedValue } from "react-native-reanimated";
+
 export type OnboardingCarouselProps = {
   data: { image: string; description: string }[];
   progress: SharedValue<number>;
@@ -128,4 +129,7 @@ const styles = StyleSheet.create({
     height: 240,
   },
 });
+
+OnboardingCarousel.displayName = "OnboardingCarousel";
+
 export default OnboardingCarousel;

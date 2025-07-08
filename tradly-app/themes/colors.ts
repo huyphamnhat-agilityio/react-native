@@ -10,7 +10,7 @@ export const colors = {
 
   black: "#000000",
 
-  danger: "#6a1c1c",
+  danger: "#810c0c",
 } as const;
 
 export const text = {

@@ -9,6 +9,13 @@ const AuthLayout = () => {
         options={{
           headerShown: false,
         }}
+        redirect
+      />
+      <Stack.Screen
+        name="login"
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack>
   );

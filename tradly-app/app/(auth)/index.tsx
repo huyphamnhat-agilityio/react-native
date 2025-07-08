@@ -12,6 +12,7 @@ import { OnboardingCarousel } from "@/components/ui/onboarding";
 
 // Constants
 import { ONBOARDING_SLIDES } from "@/constants";
+import { router } from "expo-router";
 
 const Onboarding = () => {
   const ref = useRef<ICarouselInstance | null>(null);
@@ -50,7 +51,9 @@ const Onboarding = () => {
           rounded={6}
           title="Finish"
           style={styles.button}
-          onPress={() => {}}
+          onPress={() => {
+            router.navigate("/(auth)/login");
+          }}
         />
       );
     }
