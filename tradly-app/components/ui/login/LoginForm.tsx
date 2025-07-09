@@ -117,6 +117,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
               placeholder="Password"
               font="Montserrat_400Regular"
               inputVariant="white"
+              onSubmitEditing={handleSubmit(onSubmit)}
               inputSize={4.5}
               wrapperStyle={styles.input}
               secureTextEntry

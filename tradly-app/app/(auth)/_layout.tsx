@@ -1,6 +1,8 @@
 import { Stack } from "expo-router";
+import { useUserStore } from "@/store";
 
 const AuthLayout = () => {
+  const isFirstTimeLogin = useUserStore((state) => state.isFirstTimeLogin);
   return (
     <Stack>
       <Stack.Screen
@@ -8,7 +10,7 @@ const AuthLayout = () => {
         options={{
           headerShown: false,
         }}
-        redirect
+        redirect={!isFirstTimeLogin}
       />
       <Stack.Screen
         name="login"

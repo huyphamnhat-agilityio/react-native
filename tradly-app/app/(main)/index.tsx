@@ -1,11 +1,22 @@
-import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Text } from "@/components/common";
+
+// Components
+import { Button, Text } from "@/components/common";
+
+// Icons
+import { CartIcon } from "@/components/icons";
+
+// Store
+import { useUserStore } from "@/store";
 
 const Home = () => {
+  const logout = useUserStore((state) => state.clearUserSession);
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
+      <Button onPress={logout} title="Logout" />
+      <CartIcon fill="pink" />
+      <Button title="Slow" />
     </View>
   );
 };
