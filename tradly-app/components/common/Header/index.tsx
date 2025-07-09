@@ -10,12 +10,13 @@ import { WishlistIcon, CartIcon } from "@/components/icons";
 
 // Themes
 import { background, fontFamilies, fontSizes } from "@/themes";
+import { memo } from "react";
 
 export type HeaderProps = {
   isTitleOnly?: boolean;
   title: string;
 };
-const Header = ({ isTitleOnly, title }: HeaderProps) => {
+const Header = memo(({ isTitleOnly, title }: HeaderProps) => {
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
       <View
@@ -34,7 +35,7 @@ const Header = ({ isTitleOnly, title }: HeaderProps) => {
       </View>
     </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -56,5 +57,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
 });
+
+Header.displayName = "Header";
 
 export default Header;

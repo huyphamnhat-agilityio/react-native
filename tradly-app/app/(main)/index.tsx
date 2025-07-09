@@ -1,22 +1,12 @@
 import { StyleSheet, View } from "react-native";
 
 // Components
-import { Button, Text } from "@/components/common";
-
-// Icons
-import { CartIcon } from "@/components/icons";
-
-// Store
-import { useUserStore } from "@/store";
+import { BannerList } from "@/components/ui/home";
 
 const Home = () => {
-  const logout = useUserStore((state) => state.clearUserSession);
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Button onPress={logout} title="Logout" />
-      <CartIcon fill="pink" />
-      <Button title="Slow" />
+      <BannerList style={styles.list} />
     </View>
   );
 };
@@ -24,6 +14,9 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  list: {
+    marginTop: 12,
   },
 });
 
