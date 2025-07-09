@@ -1,22 +1,30 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 // Components
-import { BannerList } from "@/components/ui/home";
+import { BannerList, CategoryList } from "@/components/ui/home";
+
+// Themes
+import { colors } from "@/themes";
 
 const Home = () => {
   return (
-    <View style={styles.container}>
-      <BannerList style={styles.list} />
-    </View>
+    <ScrollView style={styles.container}>
+      <BannerList style={styles.banner} />
+      <CategoryList style={styles.category} />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.white,
   },
-  list: {
+  banner: {
     marginTop: 12,
+  },
+  category: {
+    marginTop: 16,
   },
 });
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { FlatList, StyleProp, StyleSheet, ViewStyle } from "react-native";
 
 // Components
@@ -10,18 +10,20 @@ import { BANNERS } from "@/mocks";
 export type BannerListProps = {
   style?: StyleProp<ViewStyle>;
 };
-const BannerList = ({ style }: BannerListProps) => {
+
+const BannerList = memo(({ style }: BannerListProps) => {
   return (
     <FlatList
       data={BANNERS}
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.container}
+      keyExtractor={(item) => item.id}
       renderItem={({ item }) => <BannerItem {...item} />}
       style={style}
     />
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -29,5 +31,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
 });
+
+BannerList.displayName = "BannerList";
 
 export default BannerList;

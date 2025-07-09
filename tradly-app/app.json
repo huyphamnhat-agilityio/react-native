@@ -66,7 +66,16 @@
           "assets": [
             "./assets/images/onboarding_one.png",
             "./assets/images/onboarding_two.png",
-            "./assets/images/onboarding_three.png"
+            "./assets/images/onboarding_three.png",
+            "./assets/images/banner_one.jpg",
+            "./assets/images/beverages.jpg",
+            "./assets/images/bread_and_bakery.jpg",
+            "./assets/images/egg.jpg",
+            "./assets/images/frozen_veg.jpg",
+            "./assets/images/fruit.jpg",
+            "./assets/images/homecare.jpg",
+            "./assets/images/pet_care.jpg",
+            "./assets/images/vegetables.jpg"
           ]
         }
       ],

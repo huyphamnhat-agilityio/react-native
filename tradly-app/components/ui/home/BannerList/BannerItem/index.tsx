@@ -1,7 +1,7 @@
 import { Button, Text } from "@/components/common";
 import { borderRadius, colors } from "@/themes";
 import { ImageBackground } from "expo-image";
-import React from "react";
+import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 
 export type BannerItemProps = {
@@ -10,46 +10,47 @@ export type BannerItemProps = {
   title: string;
   buttonText: string;
 };
-const BannerItem = ({
-  id,
-  imageUrl = "",
-  title = "",
-  buttonText = "",
-}: BannerItemProps) => {
-  return imageUrl ? (
-    <ImageBackground
-      source={{ uri: imageUrl }}
-      style={styles.container}
-      imageStyle={styles.image}
-    >
-      <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
-        {title}
-      </Text>
-      <Button
-        variant="transparent"
-        titleFont="Montserrat_700Bold"
-        titleSize={3}
-        title={buttonText}
-        rounded={3.5}
-        style={styles.button}
-      />
-    </ImageBackground>
-  ) : (
-    <View style={[styles.container, { backgroundColor: colors.black }]}>
-      <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
-        {title}
-      </Text>
-      <Button
-        variant="transparent"
-        titleFont="Montserrat_700Bold"
-        titleSize={3}
-        title={buttonText}
-        rounded={3.5}
-        style={styles.button}
-      />
-    </View>
-  );
-};
+const BannerItem = memo(
+  ({ id, imageUrl = "", title = "", buttonText = "" }: BannerItemProps) => {
+    return imageUrl ? (
+      <ImageBackground
+        source={{ uri: imageUrl }}
+        style={styles.container}
+        imageStyle={styles.image}
+        key={id}
+      >
+        <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
+          {title}
+        </Text>
+        <Button
+          variant="transparent"
+          titleFont="Montserrat_700Bold"
+          titleSize={3}
+          title={buttonText}
+          rounded={3.5}
+          style={styles.button}
+        />
+      </ImageBackground>
+    ) : (
+      <View
+        key={id}
+        style={[styles.container, { backgroundColor: colors.black }]}
+      >
+        <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
+          {title}
+        </Text>
+        <Button
+          variant="transparent"
+          titleFont="Montserrat_700Bold"
+          titleSize={3}
+          title={buttonText}
+          rounded={3.5}
+          style={styles.button}
+        />
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -69,4 +70,6 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius[2],
   },
 });
+
+BannerItem.displayName = "BannerItem";
 export default BannerItem;

@@ -9,6 +9,6 @@ export const ONBOARDING_SLIDES: { image: string; description: string }[] = [
   },
   {
     image: "onboarding_three",
-    description: " Donate, Invest & Support infrastructure projects",
+    description: "Donate, Invest & Support infrastructure projects",
   },
 ];
