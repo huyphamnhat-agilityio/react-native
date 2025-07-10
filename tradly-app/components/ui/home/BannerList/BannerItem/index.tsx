@@ -1,8 +1,12 @@
-import { Button, Text } from "@/components/common";
-import { borderRadius, colors } from "@/themes";
 import { ImageBackground } from "expo-image";
 import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
+
+// Themes
+import { borderRadius, colors } from "@/themes";
+
+// Components
+import { Button, Text } from "@/components/common";
 
 export type BannerItemProps = {
   id: string;

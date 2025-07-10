@@ -10,6 +10,7 @@ import { memo } from "react";
 export type CategoryListProps = {
   style?: StyleProp<ViewStyle>;
 };
+
 const CategoryList = memo(({ style }: CategoryListProps) => {
   return (
     <FlatList

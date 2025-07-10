@@ -4,3 +4,5 @@ export { BorderRadius } from "./metrics";
 export { LoginFormData } from "./form";
 export { User, UserPayload } from "./user";
 export { AuthResponse } from "./auth";
+export { Product } from "./product";
+export { Store } from "./store";

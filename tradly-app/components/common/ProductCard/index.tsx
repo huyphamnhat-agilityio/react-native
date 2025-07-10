@@ -10,26 +10,27 @@ import { background, borderRadius } from "@/themes";
 
 // Constants
 import { SCREEN_WIDTH } from "@/constants";
+import { Product } from "@/interfaces";
 
-const ProductCard = () => {
+const ProductCard = ({ id, name, imageUrl, price }: Product) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={id}>
       <Image
         source={{
-          uri: "https://i.ibb.co/d4SRdGNM/images-q-tbn-ANd9-Gc-Sr-HRLzy-N58z-G4nfch3oq-A3ohg-6-V1-D0mmg-s.jpg",
+          uri: imageUrl,
         }}
         style={styles.image}
       />
       <View style={styles.content}>
         <Text textVariant="quaternary" font="Montserrat_500Medium" size={3.5}>
-          Product Title
+          {name}
         </Text>
         <View style={styles.description}>
           <Text textVariant="secondary" font="Montserrat_500Medium" size={3.5}>
             Tradly
           </Text>
           <Text textVariant="primary" font="Montserrat_600SemiBold" size={3.5}>
-            $99.99
+            ${price}
           </Text>
         </View>
       </View>
@@ -43,13 +44,10 @@ const styles = StyleSheet.create({
     backgroundColor: background.white,
     borderRadius: borderRadius["2.5"],
     flexDirection: "column",
-    marginTop: 12,
-    marginRight: 16,
-    marginLeft: 16,
   },
   image: {
     width: SCREEN_WIDTH / 2 - 25,
-    height: SCREEN_WIDTH / 2 - 15,
+    height: SCREEN_WIDTH / 2 - 65,
     borderTopStartRadius: borderRadius["2.5"],
     borderTopEndRadius: borderRadius["2.5"],
   },
