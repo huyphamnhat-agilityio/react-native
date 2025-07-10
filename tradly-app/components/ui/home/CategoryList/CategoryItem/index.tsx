@@ -16,7 +16,7 @@ export type CategoryItemProps = {
 
 const CategoryItem = memo(({ id, imageUrl, title }: CategoryItemProps) => {
   return (
-    <TouchableOpacity key={id}>
+    <TouchableOpacity key={id} activeOpacity={0.8}>
       <ImageBackground source={{ uri: imageUrl }} style={styles.container}>
         <Text textVariant="white" font="Montserrat_600SemiBold" size={2.75}>
           {title}

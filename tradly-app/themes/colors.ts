@@ -3,8 +3,10 @@ export const colors = {
   green_100: "#13B58C",
   green_200: "#33907C",
 
-  gray_100: "#4F4F4F",
-  gray_200: "#4A4A4A",
+  gray_50: "#DCDCDC",
+  gray_100: "#A6A6A6",
+  gray_200: "#848484",
+  gray_300: "#4A4A4A",
 
   white: "#FFFFFF",
 
@@ -17,6 +19,8 @@ export const text = {
   primary: colors.green_200,
   secondary: colors.gray_100,
   tertiary: colors.gray_200,
+  quaternary: colors.gray_300,
+  alternative: colors.gray_50,
   white: colors.white,
   black: colors.black,
   danger: colors.danger,

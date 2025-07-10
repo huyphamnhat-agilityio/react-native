@@ -1,22 +1,30 @@
 import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { memo } from "react";
 
 // Components
 import Text from "../Text";
 import Button from "../Button";
+import { Input } from "..";
 
 // Icons
-import { WishlistIcon, CartIcon } from "@/components/icons";
+import { WishlistIcon, CartIcon, SearchIcon } from "@/components/icons";
 
 // Themes
-import { background, fontFamilies, fontSizes } from "@/themes";
-import { memo } from "react";
+import {
+  background,
+  borderRadius,
+  fontFamilies,
+  fontSizes,
+  text,
+} from "@/themes";
 
 export type HeaderProps = {
   isTitleOnly?: boolean;
   title: string;
+  includeSearchBar?: boolean;
 };
-const Header = memo(({ isTitleOnly, title }: HeaderProps) => {
+const Header = memo(({ isTitleOnly, title, includeSearchBar }: HeaderProps) => {
   return (
     <SafeAreaView edges={["top"]} style={styles.container}>
       <View
@@ -33,6 +41,18 @@ const Header = memo(({ isTitleOnly, title }: HeaderProps) => {
           </View>
         )}
       </View>
+
+      {includeSearchBar && (
+        <Input
+          LeftContent={<SearchIcon />}
+          placeholder="Search Product"
+          placeholderTextColor={text.alternative}
+          font="Montserrat_500Medium"
+          inputSize={4.5}
+          inputVariant="black"
+          wrapperStyle={styles.input}
+        />
+      )}
     </SafeAreaView>
   );
 });
@@ -40,12 +60,15 @@ const Header = memo(({ isTitleOnly, title }: HeaderProps) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: background.primary,
+    flexDirection: "column",
+    gap: 20,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
   },
   inner: {
     minHeight: 56,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 16,
   },
   title: {
     color: background.white,
@@ -55,6 +78,13 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
     gap: 16,
+  },
+  input: {
+    paddingLeft: 16,
+    paddingVertical: 12,
+    borderRadius: borderRadius[6],
+    backgroundColor: background.white,
+    gap: 20,
   },
 });
 
