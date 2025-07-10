@@ -7,5 +7,99 @@
       "avatar": "https://i.ibb.co/RpGXkKYx/profile-placeholder.png",
       "id": 1
     }
+  ],
+  "products": [
+    [
+      {
+        "id": "1",
+        "name": "Chicken Eggs",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/BbP5WTb/How-chickens-make-eggs-Focus-Fill-Wy-Iw-Lj-Aw-Iiwi-MC4w-MCIs-MTIw-MCw2-Mjhd.jpg",
+        "description": "Fresh organic eggs from free-range chickens.",
+        "price": 3.99,
+        "condition": "Organic"
+      },
+      {
+        "id": "2",
+        "name": "Duck Eggs",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/zHFH3cKy/images-q-tbn-ANd9-Gc-T-g-F9-Zq-ZDrk-FV22-C6-JFM3-LMFb-Pcg-Tdhev5xw-s.jpg",
+        "description": "Larger and richer than chicken eggs, perfect for baking.",
+        "price": 5.5,
+        "condition": "Free-Range"
+      },
+      {
+        "id": "3",
+        "name": "Quail Eggs",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/KJrFx29/quail-eggs-2.jpg",
+        "description": "Small, speckled gourmet eggs with a creamy flavor.",
+        "price": 4.25,
+        "condition": "Organic"
+      },
+      {
+        "id": "4",
+        "name": "Goose Eggs",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/N6hvFwFp/images-q-tbn-ANd9-Gc-Ts-Ka-TJewk-FIx-S80-Iwps63ponbj-LJrq-Jzg2-Aw-s.jpg",
+        "description": "Extra-large eggs with thick shells and rich yolk.",
+        "price": 7.99,
+        "condition": "Farm-Raised"
+      },
+      {
+        "id": "5",
+        "name": "Ostrich Egg",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/C5Y6zzJ8/PXL-20220525-210113274-1024x1024.jpg",
+        "description": "Massive eggs—one can feed a family. Mild flavor.",
+        "price": 39.99,
+        "condition": "Free-Range"
+      },
+      {
+        "id": "6",
+        "name": "Turkey Eggs",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/bjNsd5n9/turkeyeggs-Creative-Family-e942a598ca8049e993bb06ae65fecb60.jpg",
+        "description": "Rare and tasty eggs with thick shells and a creamy texture.",
+        "price": 6.5,
+        "condition": "Farm-Raised"
+      },
+      {
+        "id": "7",
+        "name": "Emu Egg",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/YB2zgwsK/images-q-tbn-ANd9-Gc-Twe8n-Cd-KWGdw-Jb-I7c88-Fys-PYBQpd-Anck-GKWA-s.jpg",
+        "description": "Dark green eggs with a mild flavor and impressive size.",
+        "price": 24.99,
+        "condition": "Organic"
+      },
+      {
+        "id": "8",
+        "name": "Caviar (Salmon Roe)",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/NdNNY5G3/Caviar-thumbnail.jpg",
+        "description": "Bright orange fish eggs from wild salmon. Delicate and salty.",
+        "price": 29.99,
+        "condition": "Preserved"
+      },
+      {
+        "id": "9",
+        "name": "Cod Roe",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/xqLBnhVz/Screen-Shot2021-02-05at19-55-02-grande.png",
+        "description": "Mild, delicate roe used in spreads and Japanese cuisine.",
+        "price": 8.99,
+        "condition": "Preserved"
+      },
+      {
+        "id": "10",
+        "name": "Flying Fish Roe (Tobiko)",
+        "category": "Eggs",
+        "imageUrl": "https://i.ibb.co/pvQdyZ9p/tobiko.jpg",
+        "description": "Crunchy, colorful roe used in sushi and garnishes.",
+        "price": 11.99,
+        "condition": "Preserved"
+      }
+    ]
   ]
 }
