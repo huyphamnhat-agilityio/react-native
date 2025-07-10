@@ -6,6 +6,7 @@ import { memo } from "react";
 import Text from "../Text";
 import Button from "../Button";
 import Input from "../Input";
+import FiltersBar from "../FiltersBar";
 
 // Icons
 import { WishlistIcon, CartIcon, SearchIcon } from "@/components/icons";
@@ -23,39 +24,49 @@ export type HeaderProps = {
   isTitleOnly?: boolean;
   title: string;
   includeSearchBar?: boolean;
+  includeFiltersBar?: boolean;
 };
-const Header = memo(({ isTitleOnly, title, includeSearchBar }: HeaderProps) => {
-  return (
-    <SafeAreaView edges={["top"]} style={styles.container}>
-      <View
-        style={[
-          styles.inner,
-          { justifyContent: isTitleOnly ? "center" : "space-between" },
-        ]}
-      >
-        <Text style={styles.title}>{title}</Text>
-        {isTitleOnly ? null : (
-          <View style={styles.actions}>
-            <Button IconLeft={<WishlistIcon />} />
-            <Button IconLeft={<CartIcon />} />
-          </View>
-        )}
-      </View>
+const Header = memo(
+  ({
+    isTitleOnly,
+    title,
+    includeSearchBar,
+    includeFiltersBar,
+  }: HeaderProps) => {
+    return (
+      <SafeAreaView edges={["top"]} style={styles.container}>
+        <View
+          style={[
+            styles.inner,
+            { justifyContent: isTitleOnly ? "center" : "space-between" },
+          ]}
+        >
+          <Text style={styles.title}>{title}</Text>
+          {isTitleOnly ? null : (
+            <View style={styles.actions}>
+              <Button IconLeft={<WishlistIcon />} />
+              <Button IconLeft={<CartIcon />} />
+            </View>
+          )}
+        </View>
 
-      {includeSearchBar && (
-        <Input
-          LeftContent={<SearchIcon />}
-          placeholder="Search Product"
-          placeholderTextColor={text.alternative}
-          font="Montserrat_500Medium"
-          inputSize={4.5}
-          inputVariant="black"
-          wrapperStyle={styles.input}
-        />
-      )}
-    </SafeAreaView>
-  );
-});
+        {includeSearchBar && (
+          <Input
+            LeftContent={<SearchIcon />}
+            placeholder="Search Product"
+            placeholderTextColor={text.alternative}
+            font="Montserrat_500Medium"
+            inputSize={4.5}
+            inputVariant="black"
+            wrapperStyle={styles.input}
+          />
+        )}
+
+        {includeFiltersBar && <FiltersBar />}
+      </SafeAreaView>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

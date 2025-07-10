@@ -10,6 +10,8 @@ import { background, borderRadius } from "@/themes";
 
 // Constants
 import { SCREEN_WIDTH } from "@/constants";
+
+// Interfaces
 import { Product } from "@/interfaces";
 
 const ProductCard = ({ id, name, imageUrl, price }: Product) => {

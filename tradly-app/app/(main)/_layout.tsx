@@ -4,38 +4,59 @@ import { Tabs } from "expo-router";
 import { Header } from "@/components/common";
 
 // Icons
-import { HomeIcon } from "@/components/icons";
+import { HomeIcon, SearchIcon } from "@/components/icons";
 
 // Themes
 import { fontFamilies, fontSizes, text } from "@/themes";
 import { useCallback } from "react";
 
 const AuthLayout = () => {
-  const renderTabBarIcon = useCallback(
+  const renderHomeTabBarIcon = useCallback(
     ({ color }: { focused: boolean; color: string; size: number }) => {
       return <HomeIcon fill={color} />;
     },
     [],
   );
 
-  const renderHeader = useCallback(() => {
+  const renderBrowseTabBarIcon = useCallback(
+    ({ color }: { focused: boolean; color: string; size: number }) => {
+      return <SearchIcon fill={color} />;
+    },
+    [],
+  );
+
+  const renderHomeHeader = useCallback(() => {
     return <Header title="Home" />;
   }, []);
+
+  const renderBrowseHeader = useCallback(() => {
+    return <Header title="Browse" includeSearchBar includeFiltersBar />;
+  }, []);
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: text.primary,
+        tabBarInactiveTintColor: text.secondary,
+        tabBarLabelStyle: {
+          fontFamily: fontFamilies.Montserrat_700Bold,
+          fontSize: fontSizes[2.5],
+          textAlign: "center",
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-          tabBarActiveTintColor: text.primary,
-          tabBarInactiveTintColor: text.secondary,
-          tabBarLabelStyle: {
-            fontFamily: fontFamilies.Montserrat_700Bold,
-            fontSize: fontSizes[2.5],
-            textAlign: "center",
-          },
-          tabBarIcon: renderTabBarIcon,
-          header: renderHeader,
+          tabBarIcon: renderHomeTabBarIcon,
+          header: renderHomeHeader,
+        }}
+      />
+
+      <Tabs.Screen
+        name="browse"
+        options={{
+          tabBarIcon: renderBrowseTabBarIcon,
+          header: renderBrowseHeader,
         }}
       />
     </Tabs>
