@@ -6,13 +6,14 @@ import { StyleSheet, View } from "react-native";
 import Text from "../Text";
 
 // Themes
-import { background, borderRadius } from "@/themes";
+import { background, border, borderRadius } from "@/themes";
 
 // Constants
 import { SCREEN_WIDTH } from "@/constants";
 
 // Interfaces
 import { Product } from "@/interfaces";
+import { TradlyIcon } from "@/components/icons";
 
 const ProductCard = ({ id, name, imageUrl, price }: Product) => {
   return (
@@ -28,9 +29,16 @@ const ProductCard = ({ id, name, imageUrl, price }: Product) => {
           {name}
         </Text>
         <View style={styles.description}>
-          <Text textVariant="secondary" font="Montserrat_500Medium" size={3.5}>
-            Tradly
-          </Text>
+          <View style={styles.wrapper}>
+            <TradlyIcon />
+            <Text
+              textVariant="secondary"
+              font="Montserrat_500Medium"
+              size={3.5}
+            >
+              Tradly
+            </Text>
+          </View>
           <Text textVariant="primary" font="Montserrat_600SemiBold" size={3.5}>
             ${price}
           </Text>
@@ -45,6 +53,8 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH / 2 - 25,
     backgroundColor: background.white,
     borderRadius: borderRadius["2.5"],
+    borderColor: border.black_opacity_10,
+    borderWidth: 1,
     flexDirection: "column",
   },
   image: {
@@ -58,9 +68,15 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     gap: 16,
   },
+  wrapper: {
+    flexDirection: "row",
+    gap: 6,
+    alignItems: "center",
+  },
   description: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 export default ProductCard;

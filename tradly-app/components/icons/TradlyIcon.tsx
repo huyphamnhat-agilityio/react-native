@@ -1,0 +1,31 @@
+import { colors } from "@/themes";
+import Svg, { Path, SvgProps } from "react-native-svg";
+
+const TradlyIcon = ({
+  width = 22,
+  height = 22,
+  fill = colors.green_200,
+  ...props
+}: SvgProps) => {
+  return (
+    <Svg
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      fill="none"
+      {...props}
+    >
+      <Path
+        d="M20.7319 10.8945C20.7319 5.34389 16.2923 0.844238 10.8157 0.844238C5.33907 0.844238 0.899414 5.34389 0.899414 10.8945C0.899414 16.4451 5.33907 20.9447 10.8157 20.9447C16.2923 20.9447 20.7319 16.4451 20.7319 10.8945Z"
+        fill={fill}
+        stroke="white"
+      />
+      <Path
+        d="M6.84912 7.29053V5.86914H14.7821V7.29053H11.6837V14.9144H9.94753V7.29053H6.84912Z"
+        fill="white"
+      />
+    </Svg>
+  );
+};
+
+export default TradlyIcon;

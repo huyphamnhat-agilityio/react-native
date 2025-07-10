@@ -12,6 +12,7 @@ export const colors = {
   white_50: "#F6F9FF",
 
   black: "#000000",
+  black_opacity_10: "#0000001A",
 
   danger: "#810c0c",
 } as const;
@@ -34,6 +35,7 @@ export const background = {
 } as const;
 
 export const border = {
+  black_opacity_10: colors.black_opacity_10,
   white: colors.white,
   none: "transparent",
 } as const;

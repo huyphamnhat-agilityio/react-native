@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     height: SCREEN_WIDTH / 2 + 15,
     backgroundColor: background.white,
     borderRadius: borderRadius["2.5"],
+    borderColor: border.black_opacity_10,
+    borderWidth: 1,
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",

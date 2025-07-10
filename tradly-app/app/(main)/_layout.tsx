@@ -47,6 +47,7 @@ const AuthLayout = () => {
       <Tabs.Screen
         name="index"
         options={{
+          title: "Home",
           tabBarIcon: renderHomeTabBarIcon,
           header: renderHomeHeader,
         }}
@@ -55,6 +56,7 @@ const AuthLayout = () => {
       <Tabs.Screen
         name="browse"
         options={{
+          title: "Browse",
           tabBarIcon: renderBrowseTabBarIcon,
           header: renderBrowseHeader,
         }}
