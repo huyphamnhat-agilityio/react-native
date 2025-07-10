@@ -5,7 +5,7 @@ import { memo } from "react";
 // Components
 import Text from "../Text";
 import Button from "../Button";
-import { Input } from "..";
+import Input from "../Input";
 
 // Icons
 import { WishlistIcon, CartIcon, SearchIcon } from "@/components/icons";

@@ -2,15 +2,17 @@ import { ScrollView, StyleSheet } from "react-native";
 
 // Components
 import { BannerList, CategoryList } from "@/components/ui/home";
+import { ProductCard } from "@/components/common";
 
 // Themes
-import { colors } from "@/themes";
+import { background } from "@/themes";
 
 const Home = () => {
   return (
     <ScrollView style={styles.container}>
       <BannerList style={styles.banner} />
       <CategoryList style={styles.category} />
+      <ProductCard />
     </ScrollView>
   );
 };
@@ -18,7 +20,7 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: background.primary,
   },
   banner: {
     marginTop: 12,

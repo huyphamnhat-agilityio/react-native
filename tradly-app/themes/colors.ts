@@ -9,6 +9,7 @@ export const colors = {
   gray_300: "#4A4A4A",
 
   white: "#FFFFFF",
+  white_50: "#F6F9FF",
 
   black: "#000000",
 
@@ -28,6 +29,7 @@ export const text = {
 
 export const background = {
   primary: colors.green_200,
+  secondary: colors.white_50,
   white: colors.white,
 } as const;
 
