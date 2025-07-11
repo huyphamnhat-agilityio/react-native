@@ -8,6 +8,7 @@ const middlewares = jsonServer.defaults();
 
 const rules = auth.rewriter({
   users: 600,
+  products: 440,
 });
 
 server.db = router.db;
