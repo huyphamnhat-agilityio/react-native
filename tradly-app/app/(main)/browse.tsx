@@ -1,33 +1,51 @@
-import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 // Themes
-import { background } from "@/themes";
+import { background, colors } from "@/themes";
 
 // Components
-import { ProductList } from "@/components/ui/browse";
-import { Button, CategorySelectionModal } from "@/components/common";
+import { ProductList } from "@/components/common";
+
+// Hooks
+import { useGetProducts } from "@/hooks";
+
+// Store
+import { useFilterStore } from "@/store";
 
 const Browse = () => {
-  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const currentCategory = useFilterStore((state) => state.category);
+
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+    fetchNextPage,
+    hasNextPage,
+    resetData,
+    isError,
+    error,
+  } = useGetProducts({
+    category: {
+      _like: currentCategory,
+    },
+  });
   return (
     <View style={styles.container}>
-      <ProductList />
-
-      <Button
-        title="test modal"
-        onPress={() => setCategoryModalVisible(true)}
-      />
-
-      <CategorySelectionModal
-        visible={categoryModalVisible}
-        onToggle={() => setCategoryModalVisible((prev) => !prev)}
-        onClose={() => setCategoryModalVisible(false)}
-        style={{
-          width: "80%",
-          height: 200,
-        }}
-      />
+      {isLoading ? (
+        <View style={styles.wrapper}>
+          <ActivityIndicator size="large" color={colors.green_200} />
+        </View>
+      ) : (
+        <ProductList
+          products={data}
+          fetchNextPage={isError ? undefined : fetchNextPage}
+          hasNextPage={hasNextPage}
+          isRefreshing={isLoading}
+          isFetching={isFetching}
+          resetData={resetData}
+          errorMessage={error?.message}
+        />
+      )}
     </View>
   );
 };
@@ -38,6 +56,11 @@ const styles = StyleSheet.create({
     backgroundColor: background.secondary,
     paddingTop: 10,
     paddingHorizontal: 20,
+  },
+  wrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 export default Browse;

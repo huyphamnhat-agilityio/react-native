@@ -13,7 +13,9 @@ const queryClient = new QueryClient({
 });
 export default function RootLayout() {
   const accessToken = useUserStore((state) => state.accessToken);
-
+  if (__DEV__) {
+    import("../ReactotronConfig");
+  }
   return (
     <KeyboardProvider>
       <QueryClientProvider client={queryClient}>

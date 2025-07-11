@@ -4,7 +4,7 @@ export { default as Input } from "./Input";
 export { default as Header } from "./Header";
 export { default as ProductCard } from "./ProductCard";
 export { default as Filters } from "./FiltersBar";
-export { default as ProductCardList } from "./ProductCardList";
+export { default as ProductList } from "./ProductList";
 export { default as Modal } from "./Modal";
 export { default as CategorySelectionModal } from "./CategorySelectionModal";
 export { default as CategorySelectItem } from "./CategorySelectItem";

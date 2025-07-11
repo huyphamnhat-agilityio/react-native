@@ -30,7 +30,7 @@ const FiltersBar = memo(({ style }: FiltersBarProps) => {
     <View style={[styles.container, style]}>
       <Button
         variant="transparent"
-        title="Sort by price"
+        title="Sort by"
         titleFont="Montserrat_500Medium"
         titleSize={3.5}
         rounded={6}

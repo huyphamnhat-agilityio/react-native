@@ -21,3 +21,21 @@ export const FORM_VALIDATION_MESSAGES = {
     unit: string;
   }) => `Max ${item} size is ${size}${unit}`,
 };
+
+export const ERROR_MESSAGE: Record<string, Record<number, string>> = {
+  LOGIN: {
+    400: "User not found! Please check your email and try again.",
+    404: "Login failed! Please check your email or password and try again.",
+    500: "Login failed! The server is unavailable now. Please try again later.",
+  },
+  REGISTER: {
+    400: "User already exists! Please check your email and try again.",
+    404: "Registration failed! Please check your email or password and try again.",
+    500: "Registration failed! The server is unavailable now. Please try again later.",
+  },
+  PRODUCT_LIST: {
+    401: "You are not authorized to access this resource. Please log in and try again.",
+    404: "No product match with the selected filters and keywords",
+    500: "Failed to load product list. Please try again later.",
+  },
+} as const;

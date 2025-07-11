@@ -20,7 +20,7 @@ export const getProducts = async ({
   };
 
   const result = await fetchApiWithAuth<Product[]>(
-    `${process.env.API_URL}/${RESOURCES.PRODUCTS}${toQueryString(query)}`,
+    `${process.env.EXPO_PUBLIC_API_URL}/${RESOURCES.PRODUCTS}${toQueryString(query)}`,
   );
 
   return result;
@@ -30,7 +30,7 @@ export const getProduct = async ({
   queryKey: [{ id }],
 }: QueryContexts["PRODUCT"]) => {
   const product = await fetchApiWithAuth<Product>(
-    `${process.env.API_URL}/${RESOURCES.PRODUCTS}/${id}`,
+    `${process.env.EXPO_PUBLIC_API_URL}/${RESOURCES.PRODUCTS}/${id}`,
   );
 
   return product;
