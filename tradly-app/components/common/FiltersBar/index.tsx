@@ -1,7 +1,9 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { memo, useCallback, useState } from "react";
 
 // Components
 import Button from "../Button";
+import CategorySelectionModal from "../CategorySelectionModal";
 
 // Icons
 import { CategoryIcon, LocationIcon, SortIcon } from "@/components/icons";
@@ -10,12 +12,25 @@ export type FiltersBarProps = {
   style?: StyleProp<ViewStyle>;
 };
 
-const FiltersBar = ({ style }: FiltersBarProps) => {
+const FiltersBar = memo(({ style }: FiltersBarProps) => {
+  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+
+  const handleToggleCategoryModal = useCallback(() => {
+    setCategoryModalVisible((prev) => !prev);
+  }, []);
+
+  const handleCloseCategoryModal = useCallback(() => {
+    setCategoryModalVisible(false);
+  }, []);
+
+  const handleOpenCategoryModal = useCallback(() => {
+    setCategoryModalVisible(true);
+  }, []);
   return (
     <View style={[styles.container, style]}>
       <Button
         variant="transparent"
-        title="Sort by"
+        title="Sort by price"
         titleFont="Montserrat_500Medium"
         titleSize={3.5}
         rounded={6}
@@ -40,10 +55,23 @@ const FiltersBar = ({ style }: FiltersBarProps) => {
         rounded={6}
         IconLeft={<CategoryIcon />}
         style={styles.button}
+        onPress={handleOpenCategoryModal}
       />
+
+      {categoryModalVisible && (
+        <CategorySelectionModal
+          visible={categoryModalVisible}
+          onToggle={handleToggleCategoryModal}
+          onClose={handleCloseCategoryModal}
+          style={{
+            width: "80%",
+            height: 200,
+          }}
+        />
+      )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -57,4 +85,5 @@ const styles = StyleSheet.create({
   },
 });
 
+FiltersBar.displayName = "FiltersBar";
 export default FiltersBar;

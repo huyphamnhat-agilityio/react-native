@@ -13,6 +13,7 @@ export const colors = {
 
   black: "#000000",
   black_opacity_10: "#0000001A",
+  black_opacity_30: "#0000004D",
 
   danger: "#810c0c",
 } as const;
@@ -31,6 +32,7 @@ export const text = {
 export const background = {
   primary: colors.green_200,
   secondary: colors.white_50,
+  backdrop: colors.black_opacity_30,
   white: colors.white,
 } as const;
 

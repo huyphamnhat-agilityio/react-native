@@ -1,6 +1,10 @@
-import { RESOURCES } from "@/constants";
 import { fetchApi } from "./fetch";
+
+// Interfaces
 import { AuthResponse, UserPayload } from "@/interfaces";
+
+// Constants
+import { RESOURCES } from "@/constants";
 
 export const login = async (
   payload: Pick<UserPayload, "email" | "password">,

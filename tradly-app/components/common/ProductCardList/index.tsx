@@ -6,6 +6,7 @@ import { Product } from "@/interfaces";
 
 // Components
 import ProductCard from "../ProductCard";
+import Text from "../Text";
 
 export type ProductPreviewListProps = {
   style?: StyleProp<ViewStyle>;
@@ -22,6 +23,16 @@ const ProductList = ({ style, data }: ProductPreviewListProps) => {
       columnWrapperStyle={styles.wrapper}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <ProductCard {...item} />}
+      ListEmptyComponent={
+        <Text
+          font="Montserrat_600SemiBold"
+          textVariant="secondary"
+          size={4}
+          style={styles.message}
+        >
+          No product match with the selected filters and keywords
+        </Text>
+      }
     />
   );
 };
@@ -32,6 +43,9 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     gap: 10,
+  },
+  message: {
+    textAlign: "center",
   },
 });
 export default ProductList;
