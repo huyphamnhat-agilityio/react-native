@@ -8,3 +8,5 @@ export { default as ProductList } from "./ProductList";
 export { default as Modal } from "./Modal";
 export { default as CategorySelectionModal } from "./CategorySelectionModal";
 export { default as CategorySelectItem } from "./CategorySelectItem";
+export { default as SortSelectITem } from "./SortSelectItem";
+export { default as SortModal } from "./SortModal";

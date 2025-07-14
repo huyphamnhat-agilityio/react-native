@@ -1,4 +1,5 @@
 import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { useShallow } from "zustand/shallow";
 
 // Themes
 import { background, colors } from "@/themes";
@@ -13,7 +14,13 @@ import { useGetProducts } from "@/hooks";
 import { useFilterStore } from "@/store";
 
 const Browse = () => {
-  const currentCategory = useFilterStore((state) => state.category);
+  const { currentCategory, currentOrder, currentSortField } = useFilterStore(
+    useShallow((state) => ({
+      currentCategory: state.category,
+      currentSortField: state.sortField,
+      currentOrder: state.order,
+    })),
+  );
 
   const {
     data = [],
@@ -28,6 +35,8 @@ const Browse = () => {
     category: {
       _like: currentCategory,
     },
+    _sort: currentSortField,
+    _order: currentOrder,
   });
   return (
     <View style={styles.container}>

@@ -4,6 +4,7 @@ import { memo, useCallback, useState } from "react";
 // Components
 import Button from "../Button";
 import CategorySelectionModal from "../CategorySelectionModal";
+import SortModal from "../SortModal";
 
 // Icons
 import { CategoryIcon, LocationIcon, SortIcon } from "@/components/icons";
@@ -14,6 +15,7 @@ export type FiltersBarProps = {
 
 const FiltersBar = memo(({ style }: FiltersBarProps) => {
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [sortModalVisible, setSortModalVisible] = useState(false);
 
   const handleToggleCategoryModal = useCallback(() => {
     setCategoryModalVisible((prev) => !prev);
@@ -26,6 +28,18 @@ const FiltersBar = memo(({ style }: FiltersBarProps) => {
   const handleOpenCategoryModal = useCallback(() => {
     setCategoryModalVisible(true);
   }, []);
+
+  const handleToggleSortModal = useCallback(() => {
+    setSortModalVisible((prev) => !prev);
+  }, []);
+
+  const handleCloseSortModal = useCallback(() => {
+    setSortModalVisible(false);
+  }, []);
+
+  const handleOpenSortModal = useCallback(() => {
+    setSortModalVisible(true);
+  }, []);
   return (
     <View style={[styles.container, style]}>
       <Button
@@ -36,6 +50,7 @@ const FiltersBar = memo(({ style }: FiltersBarProps) => {
         rounded={6}
         IconLeft={<SortIcon />}
         style={styles.button}
+        onPress={handleOpenSortModal}
       />
 
       <Button
@@ -63,6 +78,18 @@ const FiltersBar = memo(({ style }: FiltersBarProps) => {
           visible={categoryModalVisible}
           onToggle={handleToggleCategoryModal}
           onClose={handleCloseCategoryModal}
+          style={{
+            width: "80%",
+            height: 200,
+          }}
+        />
+      )}
+
+      {sortModalVisible && (
+        <SortModal
+          visible={sortModalVisible}
+          onToggle={handleToggleSortModal}
+          onClose={handleCloseSortModal}
           style={{
             width: "80%",
             height: 200,

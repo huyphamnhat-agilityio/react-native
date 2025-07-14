@@ -8,22 +8,31 @@ import { borderRadius } from "@/themes";
 // Components
 import Text from "../Text";
 
-export type CategorySelectItemProps = {
+export type SortSelectItemProps = {
   title: string;
+  label: string;
+  value: string;
   selected?: boolean;
-  onSelect?: (category: string) => void;
+  onSelect?: (sort: string, order: string) => void;
   onClose?: () => void;
 };
 
-const CategorySelectItem = memo(
-  ({ title, onSelect, onClose, selected = false }: CategorySelectItemProps) => {
+const SortSelectItem = memo(
+  ({
+    title,
+    label,
+    value,
+    onSelect,
+    onClose,
+    selected = false,
+  }: SortSelectItemProps) => {
     const handleSelect = useCallback(() => {
       if (selected) {
         return;
       }
-      onSelect?.(title);
+      onSelect?.(label, value);
       onClose?.();
-    }, [onClose, onSelect, selected, title]);
+    }, [label, onClose, onSelect, selected, value]);
 
     return (
       <TouchableOpacity style={styles.container} onPress={handleSelect}>
@@ -51,5 +60,5 @@ const styles = StyleSheet.create({
   },
 });
 
-CategorySelectItem.displayName = "CategorySelectItem";
-export default CategorySelectItem;
+SortSelectItem.displayName = "SortSelectItem";
+export default SortSelectItem;

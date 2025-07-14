@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
   },
   overlay: {
     backgroundColor: background.backdrop,
-
     position: "absolute",
     top: 0,
     bottom: 0,
