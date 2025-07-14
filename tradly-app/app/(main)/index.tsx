@@ -4,24 +4,42 @@ import { ScrollView, StyleSheet } from "react-native";
 import {
   BannerList,
   CategoryList,
-  NewProductList,
-  PopularProductList,
+  ProductPreview,
   StoreList,
 } from "@/components/ui/home";
 
 // Themes
 import { background } from "@/themes";
 
+// Hooks
+import { useGetProducts, useHandleExpiredToken } from "@/hooks";
+
 const Home = () => {
+  const { data, error, isLoading } = useGetProducts();
+
+  useHandleExpiredToken(JSON.parse(error?.message ?? "{}"));
+
   return (
     <ScrollView style={styles.container}>
       <BannerList style={styles.banner} />
 
       <CategoryList style={styles.category} />
 
-      <NewProductList style={styles.productList} />
+      <ProductPreview
+        style={styles.productList}
+        title="New Product"
+        data={data}
+        errorMessage={error?.message}
+        isLoading={isLoading}
+      />
 
-      <PopularProductList style={styles.productList} />
+      <ProductPreview
+        style={styles.productList}
+        title="Popular Product"
+        data={data}
+        errorMessage={error?.message}
+        isLoading={isLoading}
+      />
 
       <StoreList style={styles.storeList} />
     </ScrollView>

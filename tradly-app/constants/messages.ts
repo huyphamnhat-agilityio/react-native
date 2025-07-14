@@ -39,3 +39,7 @@ export const ERROR_MESSAGE: Record<string, Record<number, string>> = {
     500: "Failed to load product list. Please try again later.",
   },
 } as const;
+
+export const SERVER_RESPONSE_MESSAGE = {
+  JWT_EXPIRED: "jwt expired",
+} as const;
