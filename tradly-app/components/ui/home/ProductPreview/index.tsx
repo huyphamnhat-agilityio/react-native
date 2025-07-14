@@ -8,8 +8,7 @@ import {
 } from "react-native";
 
 // Components
-import ProductPreviewList from "../../../common/ProductPreviewList";
-import { Button, Text } from "@/components/common";
+import { Button, ProductPreviewList, Text } from "@/components/common";
 
 // Types & Interfaces
 import { Product } from "@/interfaces";

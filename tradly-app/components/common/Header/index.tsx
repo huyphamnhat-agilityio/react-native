@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
 // Components
 import Text from "../Text";
@@ -19,6 +19,8 @@ import {
   fontSizes,
   text,
 } from "@/themes";
+import { useDebounce } from "@/hooks";
+import { useFilterStore } from "@/store";
 
 export type HeaderProps = {
   isTitleOnly?: boolean;
@@ -33,6 +35,16 @@ const Header = memo(
     includeSearchBar,
     includeFiltersBar,
   }: HeaderProps) => {
+    const setSearchQuery = useFilterStore((state) => state.setSearchQuery);
+    const {
+      value: search,
+      debouncedValue: debouncedSearch,
+      setValue: setSearch,
+    } = useDebounce("", 500);
+
+    useEffect(() => {
+      setSearchQuery(debouncedSearch);
+    }, [debouncedSearch, setSearchQuery]);
     return (
       <SafeAreaView edges={["top"]} style={styles.container}>
         <View
@@ -59,6 +71,8 @@ const Header = memo(
             inputSize={4.5}
             inputVariant="black"
             wrapperStyle={styles.input}
+            value={search}
+            onChangeText={setSearch}
           />
         )}
 

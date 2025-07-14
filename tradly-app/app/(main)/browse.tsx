@@ -14,11 +14,17 @@ import { useGetProducts } from "@/hooks";
 import { useFilterStore } from "@/store";
 
 const Browse = () => {
-  const { currentCategory, currentOrder, currentSortField } = useFilterStore(
+  const {
+    currentCategory,
+    currentOrder,
+    currentSortField,
+    currentSearchQuery,
+  } = useFilterStore(
     useShallow((state) => ({
       currentCategory: state.category,
       currentSortField: state.sortField,
       currentOrder: state.order,
+      currentSearchQuery: state.searchQuery,
     })),
   );
 
@@ -34,6 +40,9 @@ const Browse = () => {
   } = useGetProducts({
     category: {
       _like: currentCategory,
+    },
+    name: {
+      _like: currentSearchQuery,
     },
     _sort: currentSortField,
     _order: currentOrder,

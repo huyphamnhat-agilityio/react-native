@@ -10,3 +10,4 @@ export { default as CategorySelectionModal } from "./CategorySelectionModal";
 export { default as CategorySelectItem } from "./CategorySelectItem";
 export { default as SortSelectITem } from "./SortSelectItem";
 export { default as SortModal } from "./SortModal";
+export { default as ProductPreviewList } from "./ProductPreviewList";
