@@ -11,94 +11,100 @@ import { CategoryIcon, LocationIcon, SortIcon } from "@/components/icons";
 
 export type FiltersBarProps = {
   style?: StyleProp<ViewStyle>;
+  includeCategorySelection?: boolean;
 };
 
-const FiltersBar = memo(({ style }: FiltersBarProps) => {
-  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
-  const [sortModalVisible, setSortModalVisible] = useState(false);
+const FiltersBar = memo(
+  ({ style, includeCategorySelection = true }: FiltersBarProps) => {
+    const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+    const [sortModalVisible, setSortModalVisible] = useState(false);
 
-  const handleToggleCategoryModal = useCallback(() => {
-    setCategoryModalVisible((prev) => !prev);
-  }, []);
+    const handleToggleCategoryModal = useCallback(() => {
+      setCategoryModalVisible((prev) => !prev);
+    }, []);
 
-  const handleCloseCategoryModal = useCallback(() => {
-    setCategoryModalVisible(false);
-  }, []);
+    const handleCloseCategoryModal = useCallback(() => {
+      setCategoryModalVisible(false);
+    }, []);
 
-  const handleOpenCategoryModal = useCallback(() => {
-    setCategoryModalVisible(true);
-  }, []);
+    const handleOpenCategoryModal = useCallback(() => {
+      setCategoryModalVisible(true);
+    }, []);
 
-  const handleToggleSortModal = useCallback(() => {
-    setSortModalVisible((prev) => !prev);
-  }, []);
+    const handleToggleSortModal = useCallback(() => {
+      setSortModalVisible((prev) => !prev);
+    }, []);
 
-  const handleCloseSortModal = useCallback(() => {
-    setSortModalVisible(false);
-  }, []);
+    const handleCloseSortModal = useCallback(() => {
+      setSortModalVisible(false);
+    }, []);
 
-  const handleOpenSortModal = useCallback(() => {
-    setSortModalVisible(true);
-  }, []);
-  return (
-    <View style={[styles.container, style]}>
-      <Button
-        variant="transparent"
-        title="Sort by"
-        titleFont="Montserrat_500Medium"
-        titleSize={3.5}
-        rounded={6}
-        IconLeft={<SortIcon />}
-        style={styles.button}
-        onPress={handleOpenSortModal}
-      />
-
-      <Button
-        variant="transparent"
-        title="Location"
-        titleFont="Montserrat_500Medium"
-        titleSize={3.5}
-        rounded={6}
-        IconLeft={<LocationIcon />}
-        style={styles.button}
-      />
-      <Button
-        variant="transparent"
-        title="Category"
-        titleFont="Montserrat_500Medium"
-        titleSize={3.5}
-        rounded={6}
-        IconLeft={<CategoryIcon />}
-        style={styles.button}
-        onPress={handleOpenCategoryModal}
-      />
-
-      {categoryModalVisible && (
-        <CategorySelectionModal
-          visible={categoryModalVisible}
-          onToggle={handleToggleCategoryModal}
-          onClose={handleCloseCategoryModal}
-          style={{
-            width: "80%",
-            height: 200,
-          }}
+    const handleOpenSortModal = useCallback(() => {
+      setSortModalVisible(true);
+    }, []);
+    return (
+      <View style={[styles.container, style]}>
+        <Button
+          variant="transparent"
+          title="Sort by"
+          titleFont="Montserrat_500Medium"
+          titleSize={3.5}
+          rounded={6}
+          IconLeft={<SortIcon />}
+          style={styles.button}
+          onPress={handleOpenSortModal}
         />
-      )}
 
-      {sortModalVisible && (
-        <SortModal
-          visible={sortModalVisible}
-          onToggle={handleToggleSortModal}
-          onClose={handleCloseSortModal}
-          style={{
-            width: "80%",
-            height: 200,
-          }}
+        <Button
+          variant="transparent"
+          title="Location"
+          titleFont="Montserrat_500Medium"
+          titleSize={3.5}
+          rounded={6}
+          IconLeft={<LocationIcon />}
+          style={styles.button}
         />
-      )}
-    </View>
-  );
-});
+
+        {includeCategorySelection && (
+          <Button
+            variant="transparent"
+            title="Category"
+            titleFont="Montserrat_500Medium"
+            titleSize={3.5}
+            rounded={6}
+            IconLeft={<CategoryIcon />}
+            style={styles.button}
+            onPress={handleOpenCategoryModal}
+          />
+        )}
+
+        {categoryModalVisible && (
+          <CategorySelectionModal
+            visible={categoryModalVisible}
+            onToggle={handleToggleCategoryModal}
+            onClose={handleCloseCategoryModal}
+            style={{
+              width: "80%",
+              height: 200,
+            }}
+          />
+        )}
+
+        {sortModalVisible && (
+          <SortModal
+            visible={sortModalVisible}
+            onToggle={handleToggleSortModal}
+            onClose={handleCloseSortModal}
+            style={{
+              width: "80%",
+              height: 200,
+            }}
+          />
+        )}
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

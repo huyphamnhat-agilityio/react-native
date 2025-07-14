@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 // Components
 import Text from "../Text";
@@ -17,7 +17,7 @@ import { TradlyIcon } from "@/components/icons";
 
 const ProductCard = ({ id, name, imageUrl, price }: Product) => {
   return (
-    <View style={styles.container} key={id}>
+    <TouchableOpacity activeOpacity={0.7} style={styles.container} key={id}>
       <Image
         source={{
           uri: imageUrl,
@@ -25,7 +25,12 @@ const ProductCard = ({ id, name, imageUrl, price }: Product) => {
         style={styles.image}
       />
       <View style={styles.content}>
-        <Text textVariant="quaternary" font="Montserrat_500Medium" size={3.5}>
+        <Text
+          numberOfLines={1}
+          textVariant="quaternary"
+          font="Montserrat_500Medium"
+          size={3.5}
+        >
           {name}
         </Text>
         <View style={styles.description}>
@@ -39,12 +44,17 @@ const ProductCard = ({ id, name, imageUrl, price }: Product) => {
               Tradly
             </Text>
           </View>
-          <Text textVariant="primary" font="Montserrat_600SemiBold" size={3.5}>
+          <Text
+            numberOfLines={1}
+            textVariant="primary"
+            font="Montserrat_600SemiBold"
+            size={3.5}
+          >
             ${price}
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

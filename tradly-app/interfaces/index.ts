@@ -9,3 +9,4 @@ export { Store } from "./store";
 export { QueryParams } from "./query";
 export { QueryContexts } from "./queryKey";
 export { Category } from "./category";
+export { CategoryRouteParams } from "./navigation";

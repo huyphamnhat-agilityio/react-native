@@ -21,11 +21,21 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <Stack>
           <Stack.Protected guard={!accessToken}>
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="(auth_stacks)"
+              options={{ headerShown: false }}
+            />
           </Stack.Protected>
 
           <Stack.Protected guard={!!accessToken}>
-            <Stack.Screen name="(main)" options={{ headerShown: false }} />
+            <Stack.Screen name="(main_tabs)" options={{ headerShown: false }} />
+          </Stack.Protected>
+
+          <Stack.Protected guard={!!accessToken}>
+            <Stack.Screen
+              name="(main_stacks)"
+              options={{ headerShown: false }}
+            />
           </Stack.Protected>
         </Stack>
       </QueryClientProvider>

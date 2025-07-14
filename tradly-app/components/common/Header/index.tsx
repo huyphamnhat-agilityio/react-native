@@ -1,6 +1,8 @@
+import { useRouter } from "expo-router";
 import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { memo, useEffect } from "react";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 // Components
 import Text from "../Text";
@@ -19,21 +21,29 @@ import {
   fontSizes,
   text,
 } from "@/themes";
+
+// Hooks
 import { useDebounce } from "@/hooks";
+
+// Store
 import { useFilterStore } from "@/store";
 
 export type HeaderProps = {
   isTitleOnly?: boolean;
   title: string;
+  includeBackButton?: boolean;
   includeSearchBar?: boolean;
   includeFiltersBar?: boolean;
+  includeCategorySelection?: boolean;
 };
 const Header = memo(
   ({
     isTitleOnly,
     title,
+    includeBackButton,
     includeSearchBar,
     includeFiltersBar,
+    includeCategorySelection = true,
   }: HeaderProps) => {
     const setSearchQuery = useFilterStore((state) => state.setSearchQuery);
     const {
@@ -41,6 +51,8 @@ const Header = memo(
       debouncedValue: debouncedSearch,
       setValue: setSearch,
     } = useDebounce("", 500);
+
+    const { back } = useRouter();
 
     useEffect(() => {
       setSearchQuery(debouncedSearch);
@@ -53,7 +65,16 @@ const Header = memo(
             { justifyContent: isTitleOnly ? "center" : "space-between" },
           ]}
         >
+          {includeBackButton && (
+            <Button
+              IconLeft={<AntDesign name="arrowleft" size={24} color="white" />}
+              style={styles.backButton}
+              onPress={back}
+            />
+          )}
+
           <Text style={styles.title}>{title}</Text>
+
           {isTitleOnly ? null : (
             <View style={styles.actions}>
               <Button IconLeft={<WishlistIcon />} />
@@ -76,7 +97,9 @@ const Header = memo(
           />
         )}
 
-        {includeFiltersBar && <FiltersBar />}
+        {includeFiltersBar && (
+          <FiltersBar includeCategorySelection={includeCategorySelection} />
+        )}
       </SafeAreaView>
     );
   },
@@ -110,6 +133,12 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius[6],
     backgroundColor: background.white,
     gap: 20,
+  },
+  backButton: {
+    position: "absolute",
+    top: "30%",
+    left: 0,
+    padding: 0,
   },
 });
 

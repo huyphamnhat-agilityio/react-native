@@ -52,7 +52,7 @@ const SortModal = memo(({ onClose, ...rest }: SortModalProps) => {
   return (
     <Modal {...rest}>
       <FlatList
-        data={SORTS.PRICE}
+        data={SORTS}
         renderItem={handlerRenderItem}
         contentContainerStyle={{
           gap: 8,

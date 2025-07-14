@@ -10,7 +10,7 @@ import { HomeIcon, SearchIcon } from "@/components/icons";
 import { fontFamilies, fontSizes, text } from "@/themes";
 import { useCallback } from "react";
 
-const AuthLayout = () => {
+const MainTabsLayout = () => {
   const renderHomeTabBarIcon = useCallback(
     ({ color }: { focused: boolean; color: string; size: number }) => {
       return <HomeIcon fill={color} />;
@@ -32,6 +32,7 @@ const AuthLayout = () => {
   const renderBrowseHeader = useCallback(() => {
     return <Header title="Browse" includeSearchBar includeFiltersBar />;
   }, []);
+
   return (
     <Tabs
       screenOptions={{
@@ -65,4 +66,4 @@ const AuthLayout = () => {
   );
 };
 
-export default AuthLayout;
+export default MainTabsLayout;

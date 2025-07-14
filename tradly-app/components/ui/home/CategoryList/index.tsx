@@ -20,6 +20,7 @@ const CategoryList = memo(({ style }: CategoryListProps) => {
     ({ item }: { item: Category }) => <CategoryItem {...item} />,
     [],
   );
+
   return (
     <FlatList
       data={CATEGORIES.slice(1)}

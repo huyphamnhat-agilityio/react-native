@@ -52,7 +52,7 @@ const Onboarding = () => {
           title="Finish"
           style={styles.button}
           onPress={() => {
-            router.navigate("/(auth)/login");
+            router.navigate("/(auth_stacks)/login");
           }}
         />
       );

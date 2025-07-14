@@ -7,6 +7,7 @@ import { Text } from "@/components/common";
 
 // Constants
 import { SCREEN_WIDTH } from "@/constants";
+import { Link } from "expo-router";
 
 export type CategoryItemProps = {
   id: string;
@@ -16,13 +17,21 @@ export type CategoryItemProps = {
 
 const CategoryItem = memo(({ id, imageUrl, title }: CategoryItemProps) => {
   return (
-    <TouchableOpacity key={id} activeOpacity={0.8}>
-      <ImageBackground source={{ uri: imageUrl }} style={styles.container}>
-        <Text textVariant="white" font="Montserrat_600SemiBold" size={2.75}>
-          {title}
-        </Text>
-      </ImageBackground>
-    </TouchableOpacity>
+    <Link
+      href={{
+        pathname: "/(main_stacks)/category/[category]",
+        params: { category: title },
+      }}
+      asChild
+    >
+      <TouchableOpacity key={id} activeOpacity={0.8}>
+        <ImageBackground source={{ uri: imageUrl }} style={styles.container}>
+          <Text textVariant="white" font="Montserrat_600SemiBold" size={2.75}>
+            {title}
+          </Text>
+        </ImageBackground>
+      </TouchableOpacity>
+    </Link>
   );
 });
 
