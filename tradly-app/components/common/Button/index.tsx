@@ -24,7 +24,7 @@ export type ButtonProps = TouchableOpacityProps & {
   IconRight?: React.ReactElement;
   isLoading?: boolean;
   rounded?: BorderRadius;
-  variant?: "primary" | "secondary" | "transparent";
+  variant?: "primary" | "secondary" | "alternative" | "transparent";
   style?: StyleProp<ViewStyle>;
   title?: string;
   titleFont?: FontFamily;
@@ -117,6 +117,9 @@ const bgVariantStyle = StyleSheet.create({
   secondary: {
     backgroundColor: background.white,
   },
+  alternative: {
+    backgroundColor: background.white_opacity_30,
+  },
   transparent: {
     backgroundColor: "transparent",
   },
@@ -129,6 +132,9 @@ const textVariantStyle = StyleSheet.create({
   secondary: {
     color: text.primary,
   },
+  alternative: {
+    color: text.white_opacity_30,
+  },
   transparent: {
     color: text.white,
   },
@@ -140,6 +146,9 @@ const borderVariantStyle = StyleSheet.create({
   },
   secondary: {
     borderColor: border.none,
+  },
+  alternative: {
+    borderColor: border.white_opacity_30,
   },
   transparent: {
     borderColor: border.white,

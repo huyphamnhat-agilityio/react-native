@@ -3,58 +3,76 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 // Components
+import { Link } from "expo-router";
 import Text from "../Text";
 
 // Themes
 import { background, border, borderRadius } from "@/themes";
 
 // Constants
-import { SCREEN_WIDTH } from "@/constants";
+import { MEDIUM_DEVICE_HEIGHT, SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
 
 // Interfaces
 import { Product } from "@/interfaces";
-import { TradlyIcon } from "@/components/icons";
 
-const ProductCard = ({ id, name, imageUrl, price }: Product) => {
+// Icons
+import { TradlyIcon } from "@/components/icons";
+import { formatNumberWithThousandSeparator } from "@/utils";
+
+const ProductCard = ({ id, name, imageUrl, price, originalPrice }: Product) => {
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.container} key={id}>
-      <Image
-        source={{
-          uri: imageUrl,
-        }}
-        style={styles.image}
-      />
-      <View style={styles.content}>
-        <Text
-          numberOfLines={1}
-          textVariant="quaternary"
-          font="Montserrat_500Medium"
-          size={3.5}
-        >
-          {name}
-        </Text>
-        <View style={styles.description}>
-          <View style={styles.wrapper}>
-            <TradlyIcon />
-            <Text
-              textVariant="secondary"
-              font="Montserrat_500Medium"
-              size={3.5}
-            >
-              Tradly
-            </Text>
-          </View>
+    <Link
+      href={{ pathname: "/(main_stacks)/product/[id]", params: { id } }}
+      asChild
+    >
+      <TouchableOpacity activeOpacity={0.7} style={styles.container} key={id}>
+        <Image
+          source={{
+            uri: imageUrl,
+          }}
+          style={styles.image}
+        />
+        <View style={styles.content}>
           <Text
             numberOfLines={1}
-            textVariant="primary"
-            font="Montserrat_600SemiBold"
-            size={3.5}
+            textVariant="quaternary"
+            font="Montserrat_500Medium"
           >
-            ${price}
+            {name}
           </Text>
+          <View style={styles.description}>
+            <View style={styles.wrapper}>
+              <TradlyIcon />
+              <Text
+                textVariant="secondary"
+                font="Montserrat_500Medium"
+                size={SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 3.5 : 2.5}
+              >
+                Tradly
+              </Text>
+            </View>
+            <View style={styles.priceWrapper}>
+              <Text
+                numberOfLines={1}
+                textVariant="quaternary"
+                font="Montserrat_400Regular"
+                size={2.5}
+                style={styles.originalPrice}
+              >
+                {formatNumberWithThousandSeparator(originalPrice)}
+              </Text>
+              <Text
+                numberOfLines={1}
+                textVariant="primary"
+                font="Montserrat_600SemiBold"
+              >
+                {formatNumberWithThousandSeparator(price)}
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Link>
   );
 };
 
@@ -80,13 +98,21 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flexDirection: "row",
-    gap: 6,
+    gap: SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 6 : 4,
     alignItems: "center",
   },
   description: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  priceWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 6 : 4,
+  },
+  originalPrice: {
+    textDecorationLine: "line-through",
   },
 });
 export default ProductCard;

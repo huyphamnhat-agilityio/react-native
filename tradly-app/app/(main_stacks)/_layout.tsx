@@ -25,6 +25,13 @@ const MainStacksLayout = () => {
           };
         }}
       />
+
+      <Stack.Screen
+        name="product/[id]"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 };

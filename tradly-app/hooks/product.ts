@@ -1,11 +1,15 @@
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useCallback } from "react";
 
 // Constants
 import { PRODUCT_PAGE_SIZE, QUERY_KEY } from "@/constants";
 
 // Services
-import { getProducts } from "@/services/products";
+import { getProduct, getProducts } from "@/services/products";
 
 // Types & Interfaces
 import { Product, QueryParams } from "@/interfaces";
@@ -39,3 +43,9 @@ export const useGetProducts = (params?: QueryParams<Product>) => {
     ...rest,
   };
 };
+
+export const useGetProductDetail = (id: string) =>
+  useQuery({
+    queryKey: QUERY_KEY.PRODUCT(id),
+    queryFn: getProduct,
+  });
