@@ -1,5 +1,5 @@
 import { Image } from "expo-image";
-import React from "react";
+import { memo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 // Components
@@ -17,64 +17,68 @@ import { Product } from "@/interfaces";
 
 // Icons
 import { TradlyIcon } from "@/components/icons";
+
+// Utils
 import { formatNumberWithThousandSeparator } from "@/utils";
 
-const ProductCard = ({ id, name, imageUrl, price, originalPrice }: Product) => {
-  return (
-    <Link
-      href={{ pathname: "/(main_stacks)/product/[id]", params: { id } }}
-      asChild
-    >
-      <TouchableOpacity activeOpacity={0.7} style={styles.container} key={id}>
-        <Image
-          source={{
-            uri: imageUrl,
-          }}
-          style={styles.image}
-        />
-        <View style={styles.content}>
-          <Text
-            numberOfLines={1}
-            textVariant="quaternary"
-            font="Montserrat_500Medium"
-          >
-            {name}
-          </Text>
-          <View style={styles.description}>
-            <View style={styles.wrapper}>
-              <TradlyIcon />
-              <Text
-                textVariant="secondary"
-                font="Montserrat_500Medium"
-                size={SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 3.5 : 2.5}
-              >
-                Tradly
-              </Text>
-            </View>
-            <View style={styles.priceWrapper}>
-              <Text
-                numberOfLines={1}
-                textVariant="quaternary"
-                font="Montserrat_400Regular"
-                size={2.5}
-                style={styles.originalPrice}
-              >
-                {formatNumberWithThousandSeparator(originalPrice)}
-              </Text>
-              <Text
-                numberOfLines={1}
-                textVariant="primary"
-                font="Montserrat_600SemiBold"
-              >
-                {formatNumberWithThousandSeparator(price)}
-              </Text>
+const ProductCard = memo(
+  ({ id, name, imageUrl, price, originalPrice }: Product) => {
+    return (
+      <Link
+        href={{ pathname: "/(main_stacks)/product/[id]", params: { id } }}
+        asChild
+      >
+        <TouchableOpacity activeOpacity={0.7} style={styles.container} key={id}>
+          <Image
+            source={{
+              uri: imageUrl,
+            }}
+            style={styles.image}
+          />
+          <View style={styles.content}>
+            <Text
+              numberOfLines={1}
+              textVariant="quaternary"
+              font="Montserrat_500Medium"
+            >
+              {name}
+            </Text>
+            <View style={styles.description}>
+              <View style={styles.wrapper}>
+                <TradlyIcon />
+                <Text
+                  textVariant="secondary"
+                  font="Montserrat_500Medium"
+                  size={SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 3.5 : 2.5}
+                >
+                  Tradly
+                </Text>
+              </View>
+              <View style={styles.priceWrapper}>
+                <Text
+                  numberOfLines={1}
+                  textVariant="quaternary"
+                  font="Montserrat_400Regular"
+                  size={2.5}
+                  style={styles.originalPrice}
+                >
+                  {formatNumberWithThousandSeparator(originalPrice)}
+                </Text>
+                <Text
+                  numberOfLines={1}
+                  textVariant="primary"
+                  font="Montserrat_600SemiBold"
+                >
+                  {formatNumberWithThousandSeparator(price)}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    </Link>
-  );
-};
+        </TouchableOpacity>
+      </Link>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -115,4 +119,6 @@ const styles = StyleSheet.create({
     textDecorationLine: "line-through",
   },
 });
+
+ProductCard.displayName = "ProductCard";
 export default ProductCard;

@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { memo, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 // Components
@@ -52,7 +52,19 @@ const Header = memo(
       setValue: setSearch,
     } = useDebounce("", 500);
 
-    const { back } = useRouter();
+    const { back, canGoBack, navigate } = useRouter();
+
+    const handleGoBack = useCallback(() => {
+      if (canGoBack()) {
+        back();
+      } else {
+        navigate("/(main_tabs)");
+      }
+    }, [back, canGoBack, navigate]);
+
+    const handleNavigateToCart = useCallback(() => {
+      navigate("/cart");
+    }, [navigate]);
 
     useEffect(() => {
       setSearchQuery(debouncedSearch);
@@ -69,7 +81,7 @@ const Header = memo(
             <Button
               IconLeft={<AntDesign name="arrowleft" size={24} color="white" />}
               style={styles.backButton}
-              onPress={back}
+              onPress={handleGoBack}
             />
           )}
 
@@ -78,7 +90,7 @@ const Header = memo(
           {isTitleOnly ? null : (
             <View style={styles.actions}>
               <Button IconLeft={<WishlistIcon />} />
-              <Button IconLeft={<CartIcon />} />
+              <Button IconLeft={<CartIcon />} onPress={handleNavigateToCart} />
             </View>
           )}
         </View>

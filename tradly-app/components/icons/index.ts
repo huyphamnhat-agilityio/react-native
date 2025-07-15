@@ -7,3 +7,5 @@ export { default as LocationIcon } from "./LocationIcon";
 export { default as CategoryIcon } from "./CategoryIcon";
 export { default as TradlyIcon } from "./TradlyIcon";
 export { default as TradlyBigIcon } from "./TradlyBigIcon";
+export { default as MinusIcon } from "./MinusIcon";
+export { default as PlusIcon } from "./PlusIcon";

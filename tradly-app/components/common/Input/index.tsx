@@ -41,7 +41,7 @@ export type TextInputProps = TextInputBaseProps & {
   errorStyle?: StyleProp<TextStyle>;
 };
 
-const TextInput = memo(
+const Input = memo(
   forwardRef(
     (
       {
@@ -143,6 +143,6 @@ const styles = StyleSheet.create({
   },
 });
 
-TextInput.displayName = "TextInput";
+Input.displayName = "Input";
 
-export default TextInput;
+export default Input;

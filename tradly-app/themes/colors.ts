@@ -10,6 +10,7 @@ export const colors = {
 
   white: "#FFFFFF",
   white_50: "#F6F9FF",
+  white_opacity_10: "#FFFFFF1A",
   white_opacity_30: "#FFFFFF4D",
 
   black: "#000000",
@@ -34,6 +35,7 @@ export const text = {
 export const background = {
   primary: colors.green_200,
   secondary: colors.white_50,
+  white_opacity_10: colors.white_opacity_10,
   white_opacity_30: colors.white_opacity_30,
   backdrop: colors.black_opacity_30,
   white: colors.white,
