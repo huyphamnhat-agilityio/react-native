@@ -26,9 +26,8 @@ const ProductDetailTitle = memo(
           <Text font="Montserrat_700Bold" textVariant="primary" size={4.5}>
             {formatNumberWithThousandSeparator(price)}
           </Text>
-          <Text font="Montserrat_500Medium" textVariant="quaternary">
+          <Text textVariant="quaternary">
             <Text
-              font="Montserrat_500Medium"
               textVariant="quaternary"
               size={3.5}
               style={styles.originalPrice}

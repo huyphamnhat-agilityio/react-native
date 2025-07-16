@@ -100,7 +100,6 @@ const Header = memo(
             LeftContent={<SearchIcon />}
             placeholder="Search Product"
             placeholderTextColor={text.alternative}
-            font="Montserrat_500Medium"
             inputSize={4.5}
             inputVariant="black"
             wrapperStyle={styles.input}

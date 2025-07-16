@@ -41,7 +41,7 @@ const SortSelectItem = memo(
           value={selected}
           pointerEvents="none"
         />
-        <Text textVariant="quaternary" font="Montserrat_500Medium" size={3.5}>
+        <Text textVariant="quaternary" size={3.5}>
           {title === "" ? "All" : title}
         </Text>
       </TouchableOpacity>

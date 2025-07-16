@@ -47,7 +47,6 @@ const FiltersBar = memo(
         <Button
           variant="transparent"
           title="Sort by"
-          titleFont="Montserrat_500Medium"
           titleSize={3.5}
           rounded={6}
           IconLeft={<SortIcon />}
@@ -58,7 +57,6 @@ const FiltersBar = memo(
         <Button
           variant="transparent"
           title="Location"
-          titleFont="Montserrat_500Medium"
           titleSize={3.5}
           rounded={6}
           IconLeft={<LocationIcon />}
@@ -69,7 +67,6 @@ const FiltersBar = memo(
           <Button
             variant="transparent"
             title="Category"
-            titleFont="Montserrat_500Medium"
             titleSize={3.5}
             rounded={6}
             IconLeft={<CategoryIcon />}

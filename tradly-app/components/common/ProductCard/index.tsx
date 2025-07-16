@@ -36,11 +36,7 @@ const ProductCard = memo(
             style={styles.image}
           />
           <View style={styles.content}>
-            <Text
-              numberOfLines={1}
-              textVariant="quaternary"
-              font="Montserrat_500Medium"
-            >
+            <Text numberOfLines={1} textVariant="quaternary">
               {name}
             </Text>
             <View style={styles.description}>
@@ -48,7 +44,6 @@ const ProductCard = memo(
                 <TradlyIcon />
                 <Text
                   textVariant="secondary"
-                  font="Montserrat_500Medium"
                   size={SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 3.5 : 2.5}
                 >
                   Tradly

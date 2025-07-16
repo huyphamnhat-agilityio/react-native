@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Alert, StyleSheet, ToastAndroid, View } from "react-native";
+import { useRouter } from "expo-router";
 
 // Themes
 import { background } from "@/themes";
@@ -24,10 +25,14 @@ import { QUERY_KEY } from "@/constants";
 
 // Types & Interfaces
 import { CartTotal, Cart as CartType } from "@/interfaces";
+
+// Utils
 import { getCartSummary } from "@/utils";
 
 const Cart = () => {
   const userId = useUserStore((state) => state.user?.id) ?? "";
+
+  const { navigate } = useRouter();
 
   const [{ totalPrice, totalQuantity }, setCartTotal] = useState<CartTotal>({
     totalPrice: 0,
@@ -127,13 +132,18 @@ const Cart = () => {
     [items, queryClient, updateCart, userId],
   );
 
+  const handleNavigateToAddress = useCallback(() => {
+    navigate("/(main_stacks)/address");
+  }, [navigate]);
+
   useEffect(() => {
     const cartTotal = getCartSummary(items);
     setCartTotal(cartTotal);
   }, [items]);
+
   return (
     <View style={styles.container}>
-      <NewAddressButton />
+      <NewAddressButton onPress={handleNavigateToAddress} />
 
       <CartItemList
         data={items}

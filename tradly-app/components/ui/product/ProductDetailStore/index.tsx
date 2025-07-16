@@ -15,13 +15,12 @@ const ProductDetailStore = memo(() => {
     <View style={styles.storeWrapper}>
       <View style={styles.storeInfo}>
         <TradlyBigIcon />
-        <Text font="Montserrat_500Medium" textVariant="quaternary" size={3.5}>
+        <Text textVariant="quaternary" size={3.5}>
           Tradly Store
         </Text>
       </View>
       <Button
         title="Follow"
-        titleFont="Montserrat_500Medium"
         titleSize={3}
         rounded={6}
         style={styles.followButton}

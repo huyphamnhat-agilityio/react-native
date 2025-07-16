@@ -62,7 +62,6 @@ const QuantityControl = memo(
           inputWidth={30}
           inputHeight={20}
           inputMode="numeric"
-          font="Montserrat_500Medium"
           inputVariant="quaternary"
           textAlign="center"
           isDisabled={isDisabled}

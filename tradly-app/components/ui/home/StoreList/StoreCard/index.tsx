@@ -16,16 +16,11 @@ const StoreCard = ({ id, name, avatar, background }: Store) => {
     >
       <View style={styles.wrapper}>
         <Image source={{ uri: avatar }} style={styles.avatar} />
-        <Text textVariant="quaternary" font="Montserrat_500Medium" size={3.5}>
+        <Text textVariant="quaternary" size={3.5}>
           {name}
         </Text>
       </View>
-      <Button
-        title="Follow"
-        titleFont="Montserrat_500Medium"
-        titleSize={3}
-        style={styles.button}
-      />
+      <Button title="Follow" titleSize={3} style={styles.button} />
     </ImageBackground>
   );
 };

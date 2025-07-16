@@ -38,11 +38,7 @@ const OnboardingCarousel = memo(
               />
             </View>
 
-            <Text
-              style={styles.description}
-              font="Montserrat_500Medium"
-              size={5}
-            >
+            <Text style={styles.description} size={5}>
               {item.description}
             </Text>
           </View>

@@ -28,20 +28,16 @@ const CartBill = memo(({ totalPrice, totalQuantity }: CartBillProps) => {
 
         <View style={styles.detailRow}>
           <View style={styles.detailLabel}>
-            <Text textVariant="black" font="Montserrat_500Medium">
+            <Text textVariant="black">
               Price ({totalQuantity} item{totalQuantity > 1 && "s"})
             </Text>
-            <Text textVariant="black" font="Montserrat_500Medium">
-              Delivery Fee
-            </Text>
+            <Text textVariant="black">Delivery Fee</Text>
           </View>
           <View style={styles.detailValue}>
-            <Text textVariant="black" font="Montserrat_500Medium">
+            <Text textVariant="black">
               {formatNumberWithThousandSeparator(totalPrice)}
             </Text>
-            <Text textVariant="black" font="Montserrat_500Medium">
-              Info
-            </Text>
+            <Text textVariant="black">Info</Text>
           </View>
         </View>
       </View>

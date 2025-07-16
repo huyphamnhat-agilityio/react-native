@@ -7,15 +7,17 @@ import { background } from "@/themes";
 // Components
 import { Text } from "@/components/common";
 
-const NewAddressButton = memo(() => {
+export type NewAddressButtonProps = {
+  onPress?: () => void;
+};
+const NewAddressButton = memo(({ onPress }: NewAddressButtonProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.7} style={styles.addNewAddressWrapper}>
-      <Text
-        font="Montserrat_500Medium"
-        size={3.5}
-        textVariant="quaternary"
-        style={styles.textCentered}
-      >
+    <TouchableOpacity
+      activeOpacity={0.7}
+      style={styles.addNewAddressWrapper}
+      onPress={onPress}
+    >
+      <Text size={3.5} textVariant="quaternary" style={styles.textCentered}>
         + Add New Address
       </Text>
     </TouchableOpacity>

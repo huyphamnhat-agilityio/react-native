@@ -33,6 +33,7 @@ export type TextInputProps = TextInputBaseProps & {
   labelSize?: FontSize;
   labelVariant?: TextVariant;
   labelDistance?: number;
+  labelFont?: FontFamily;
   inputWidth?: DimensionValue;
   inputHeight?: DimensionValue;
   backgroundColor?: ColorValue;
@@ -51,6 +52,7 @@ const Input = memo(
         inputSize = 3.5,
         inputVariant = "primary",
         labelVariant = "primary",
+        labelFont = "Montserrat_500Medium",
         LeftContent,
         RightContent,
         numberOfLines = 1,
@@ -83,7 +85,11 @@ const Input = memo(
             ]}
           >
             {label && (
-              <Text font={font} size={labelSize} textVariant={labelVariant}>
+              <Text
+                font={labelFont}
+                size={labelSize}
+                textVariant={labelVariant}
+              >
                 {label}
               </Text>
             )}

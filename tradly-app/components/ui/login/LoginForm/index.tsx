@@ -136,7 +136,6 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
       <Button
         title="Login"
         variant="secondary"
-        titleFont="Montserrat_500Medium"
         titleSize={4}
         rounded={6}
         style={styles.button}

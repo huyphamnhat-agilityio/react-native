@@ -32,7 +32,7 @@ const Login = () => {
       await login(data, {
         onSuccess: (response) => {
           const {
-            user: { id, email, name, avatar },
+            user: { id, email, name, avatar, address },
             accessToken,
           } = response;
 
@@ -41,6 +41,7 @@ const Login = () => {
             email,
             name,
             avatar,
+            address,
           });
 
           setAccessToken(accessToken);
@@ -68,12 +69,7 @@ const Login = () => {
       keyboardShouldPersistTaps="handled"
     >
       <View style={styles.contentWrapper}>
-        <Text
-          font="Montserrat_500Medium"
-          size={6}
-          textVariant="white"
-          style={styles.text}
-        >
+        <Text size={6} textVariant="white" style={styles.text}>
           Welcome to tradly
         </Text>
 
@@ -85,7 +81,7 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: background.primary,
     justifyContent: "center",
     alignItems: "center",

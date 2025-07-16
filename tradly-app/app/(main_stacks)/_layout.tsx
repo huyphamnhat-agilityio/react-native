@@ -12,6 +12,11 @@ const MainStacksLayout = () => {
     () => <Header title="My Cart" includeBackButton isTitleOnly />,
     [],
   );
+
+  const handleRenderAddressHeader = useCallback(
+    () => <Header title="Add a new address" includeBackButton isTitleOnly />,
+    [],
+  );
   return (
     <Stack>
       <Stack.Screen
@@ -43,8 +48,14 @@ const MainStacksLayout = () => {
       <Stack.Screen
         name="cart"
         options={{
-          title: "Cart",
           header: handleRenderCartHeader,
+        }}
+      />
+
+      <Stack.Screen
+        name="address"
+        options={{
+          header: handleRenderAddressHeader,
         }}
       />
     </Stack>

@@ -69,6 +69,7 @@ const CartItem = memo(
         didMount.current = true;
       }
     }, [debouncedQuantity, handleChangeQuantity]);
+
     return (
       <View style={styles.cartItemContainer}>
         <View style={styles.cartItemWrapper}>
@@ -80,14 +81,12 @@ const CartItem = memo(
           />
 
           <View style={styles.cartItemContent}>
-            <Text font="Montserrat_500Medium" textVariant="quaternary">
-              {productName}
-            </Text>
+            <Text textVariant="quaternary">{productName}</Text>
             <View style={styles.cartItemPriceWrapper}>
               <Text font="Montserrat_700Bold" size={4.5}>
                 ${price}
               </Text>
-              <Text font="Montserrat_500Medium" textVariant="secondary">
+              <Text textVariant="secondary">
                 <Text
                   style={styles.cartItemOriginalPrice}
                   textVariant="secondary"
@@ -109,11 +108,7 @@ const CartItem = memo(
           style={styles.cartItemFooter}
           onPress={handleRemoveItem}
         >
-          <Text
-            font="Montserrat_500Medium"
-            textVariant="secondary"
-            style={styles.textCentered}
-          >
+          <Text textVariant="secondary" style={styles.textCentered}>
             Remove
           </Text>
         </TouchableOpacity>
