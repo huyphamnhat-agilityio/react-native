@@ -249,5 +249,12 @@
       "location": "Mexico City, Mexico",
       "condition": "Organic"
     }
+  ],
+  "carts": [
+    {
+      "userId": "1",
+      "items": [],
+      "id": 1
+    }
   ]
 }
