@@ -10,7 +10,15 @@ import { background, colors } from "@/themes";
 // Components
 import { Text } from "@/components/common";
 
-const CartBill = memo(() => {
+// Types & Interfaces
+import { CartTotal } from "@/interfaces";
+
+// Utils
+import { formatNumberWithThousandSeparator } from "@/utils";
+
+export type CartBillProps = CartTotal;
+
+const CartBill = memo(({ totalPrice, totalQuantity }: CartBillProps) => {
   return (
     <View style={styles.cartBillWrapper}>
       <View style={styles.cartBillDetail}>
@@ -21,7 +29,7 @@ const CartBill = memo(() => {
         <View style={styles.detailRow}>
           <View style={styles.detailLabel}>
             <Text textVariant="black" font="Montserrat_500Medium">
-              Price (1 item)
+              Price ({totalQuantity} item{totalQuantity > 1 && "s"})
             </Text>
             <Text textVariant="black" font="Montserrat_500Medium">
               Delivery Fee
@@ -29,7 +37,7 @@ const CartBill = memo(() => {
           </View>
           <View style={styles.detailValue}>
             <Text textVariant="black" font="Montserrat_500Medium">
-              $25
+              {formatNumberWithThousandSeparator(totalPrice)}
             </Text>
             <Text textVariant="black" font="Montserrat_500Medium">
               Info
@@ -45,7 +53,7 @@ const CartBill = memo(() => {
           Total
         </Text>
         <Text font="Montserrat_700Bold" size={4.5} textVariant="black">
-          $25
+          {formatNumberWithThousandSeparator(totalPrice)}
         </Text>
       </View>
     </View>

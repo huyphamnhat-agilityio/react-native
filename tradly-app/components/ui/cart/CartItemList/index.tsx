@@ -1,233 +1,95 @@
-import { Image } from "expo-image";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import { memo, useState } from "react";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import { memo } from "react";
 
 // Components
-import { QuantityControl, Text } from "@/components/common";
+import { Text } from "@/components/common";
+import CartItem from "../CartItem";
 
 // Themes
-import { background, borderRadius, colors } from "@/themes";
+import { colors } from "@/themes";
 
-const CartItemList = memo(() => {
-  const [quantity, setQuantity] = useState(1);
+// Types & Interfaces
+import { CartItemData } from "@/interfaces";
 
-  return (
-    <ScrollView
-      style={styles.cartContainer}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <View style={styles.cartItemContainer}>
-        <View style={styles.cartItemWrapper}>
-          <Image
-            source={{
-              uri: "https://i.ibb.co/BbP5WTb/How-chickens-make-eggs-Focus-Fill-Wy-Iw-Lj-Aw-Iiwi-MC4w-MCIs-MTIw-MCw2-Mjhd.jpg",
-            }}
-            style={styles.cartItemImage}
-          />
+export type CartItemListProps = {
+  data: CartItemData[];
+  isLoading?: boolean;
+  errorMessage?: string;
+  onRemove: (id: string) => void;
+  onUpdateQuantity: (id: string, quantity: number) => Promise<void>;
+};
 
-          <View style={styles.cartItemContent}>
-            <Text font="Montserrat_500Medium" textVariant="quaternary">
-              Coca Cola
-            </Text>
-            <View style={styles.cartItemPriceWrapper}>
-              <Text font="Montserrat_700Bold" size={4.5}>
-                $25
-              </Text>
-              <Text font="Montserrat_500Medium" textVariant="secondary">
-                <Text
-                  style={styles.cartItemOriginalPrice}
-                  textVariant="secondary"
-                >
-                  $50
-                </Text>{" "}
-                50% off
-              </Text>
-            </View>
-            <QuantityControl quantity={quantity} setQuantity={setQuantity} />
-          </View>
+const CartItemList = memo(
+  ({
+    data = [],
+    isLoading,
+    errorMessage,
+    onRemove,
+    onUpdateQuantity,
+  }: CartItemListProps) => {
+    const handleRenderItem = ({ item }: { item: CartItemData }) => {
+      return (
+        <CartItem {...item} onUpdate={onUpdateQuantity} onRemove={onRemove} />
+      );
+    };
+
+    if (isLoading) {
+      return (
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color={colors.green_200} />
         </View>
-        <View style={styles.cartItemSeparator} />
-        <TouchableOpacity activeOpacity={0.5} style={styles.cartItemFooter}>
-          <Text
-            font="Montserrat_500Medium"
-            textVariant="secondary"
-            style={styles.textCentered}
-          >
-            Remove
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.cartItemContainer}>
-        <View style={styles.cartItemWrapper}>
-          <Image
-            source={{
-              uri: "https://i.ibb.co/BbP5WTb/How-chickens-make-eggs-Focus-Fill-Wy-Iw-Lj-Aw-Iiwi-MC4w-MCIs-MTIw-MCw2-Mjhd.jpg",
-            }}
-            style={styles.cartItemImage}
-          />
+      );
+    }
 
-          <View style={styles.cartItemContent}>
-            <Text font="Montserrat_500Medium" textVariant="quaternary">
-              Coca Cola
-            </Text>
-            <View style={styles.cartItemPriceWrapper}>
-              <Text font="Montserrat_700Bold" size={4.5}>
-                $25
-              </Text>
-              <Text font="Montserrat_500Medium" textVariant="secondary">
-                <Text
-                  style={styles.cartItemOriginalPrice}
-                  textVariant="secondary"
-                >
-                  $50
-                </Text>{" "}
-                50% off
-              </Text>
-            </View>
-            <QuantityControl quantity={quantity} setQuantity={setQuantity} />
-          </View>
-        </View>
-        <View style={styles.cartItemSeparator} />
-        <TouchableOpacity activeOpacity={0.5} style={styles.cartItemFooter}>
-          <Text
-            font="Montserrat_500Medium"
-            textVariant="secondary"
-            style={styles.textCentered}
-          >
-            Remove
+    if (errorMessage) {
+      return (
+        <View style={styles.centered}>
+          <Text font="Montserrat_600SemiBold" textVariant="secondary" size={4}>
+            {errorMessage}
           </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.cartItemContainer}>
-        <View style={styles.cartItemWrapper}>
-          <Image
-            source={{
-              uri: "https://i.ibb.co/BbP5WTb/How-chickens-make-eggs-Focus-Fill-Wy-Iw-Lj-Aw-Iiwi-MC4w-MCIs-MTIw-MCw2-Mjhd.jpg",
-            }}
-            style={styles.cartItemImage}
-          />
+        </View>
+      );
+    }
 
-          <View style={styles.cartItemContent}>
-            <Text font="Montserrat_500Medium" textVariant="quaternary">
-              Coca Cola
-            </Text>
-            <View style={styles.cartItemPriceWrapper}>
-              <Text font="Montserrat_700Bold" size={4.5}>
-                $25
-              </Text>
-              <Text font="Montserrat_500Medium" textVariant="secondary">
-                <Text
-                  style={styles.cartItemOriginalPrice}
-                  textVariant="secondary"
-                >
-                  $50
-                </Text>{" "}
-                50% off
-              </Text>
-            </View>
-            <QuantityControl quantity={quantity} setQuantity={setQuantity} />
-          </View>
-        </View>
-        <View style={styles.cartItemSeparator} />
-        <TouchableOpacity activeOpacity={0.5} style={styles.cartItemFooter}>
+    return (
+      <FlatList
+        style={styles.cartContainer}
+        contentContainerStyle={styles.contentContainer}
+        data={data}
+        renderItem={handleRenderItem}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={
           <Text
-            font="Montserrat_500Medium"
+            font="Montserrat_600SemiBold"
             textVariant="secondary"
-            style={styles.textCentered}
+            size={4}
+            style={styles.message}
           >
-            Remove
+            No product was added in cart.
           </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.cartItemContainer}>
-        <View style={styles.cartItemWrapper}>
-          <Image
-            source={{
-              uri: "https://i.ibb.co/BbP5WTb/How-chickens-make-eggs-Focus-Fill-Wy-Iw-Lj-Aw-Iiwi-MC4w-MCIs-MTIw-MCw2-Mjhd.jpg",
-            }}
-            style={styles.cartItemImage}
-          />
-
-          <View style={styles.cartItemContent}>
-            <Text font="Montserrat_500Medium" textVariant="quaternary">
-              Coca Cola
-            </Text>
-            <View style={styles.cartItemPriceWrapper}>
-              <Text font="Montserrat_700Bold" size={4.5}>
-                $25
-              </Text>
-              <Text font="Montserrat_500Medium" textVariant="secondary">
-                <Text
-                  style={styles.cartItemOriginalPrice}
-                  textVariant="secondary"
-                >
-                  $50
-                </Text>{" "}
-                50% off
-              </Text>
-            </View>
-            <QuantityControl quantity={quantity} setQuantity={setQuantity} />
-          </View>
-        </View>
-        <View style={styles.cartItemSeparator} />
-        <TouchableOpacity activeOpacity={0.5} style={styles.cartItemFooter}>
-          <Text
-            font="Montserrat_500Medium"
-            textVariant="secondary"
-            style={styles.textCentered}
-          >
-            Remove
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
-});
+        }
+      />
+    );
+  },
+);
 
 const styles = StyleSheet.create({
-  textCentered: {
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     textAlign: "center",
   },
   cartContainer: {
     marginTop: 8,
   },
   contentContainer: {
-    gap: 8,
+    gap: 6,
   },
-  cartItemContainer: {
-    paddingTop: 28,
-    shadowColor: background.backdrop,
-    elevation: 40,
-    backgroundColor: background.white,
-  },
-  cartItemWrapper: {
-    flexDirection: "row",
-    gap: 16,
-    paddingLeft: 16,
-  },
-  cartItemImage: {
-    width: 102,
-    height: 102,
-    borderRadius: borderRadius["2.5"],
-  },
-  cartItemContent: {
-    gap: 12,
-  },
-  cartItemPriceWrapper: {
-    flexDirection: "row",
-    gap: 12,
-    alignItems: "center",
-  },
-  cartItemOriginalPrice: {
-    textDecorationLine: "line-through",
-  },
-  cartItemSeparator: {
-    height: 0.5,
-    backgroundColor: colors.gray_50,
-    marginTop: 12,
-  },
-  cartItemFooter: {
-    paddingVertical: 12,
+
+  message: {
+    textAlign: "center",
+    marginVertical: "auto",
   },
 });
 

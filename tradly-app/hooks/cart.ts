@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 // Types & Interfaces
-import { Cart, QueryParams } from "@/interfaces";
+import { Cart, CartItemData, QueryParams } from "@/interfaces";
 
 // Constants
 import { QUERY_KEY } from "@/constants";
@@ -16,6 +16,11 @@ export const useGetCart = (params?: QueryParams<Pick<Cart, "userId" | "id">>) =>
   });
 
 export const useUpdateCart = () =>
-  useMutation({
+  useMutation<
+    void,
+    Error,
+    { userId: string; items: CartItemData[] },
+    { previousData?: Cart }
+  >({
     mutationFn: updateCart,
   });

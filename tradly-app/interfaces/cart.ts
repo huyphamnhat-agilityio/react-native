@@ -18,3 +18,8 @@ export type Cart = {
   userId: string;
   items: CartItemData[];
 };
+
+export type CartTotal = {
+  totalQuantity: number;
+  totalPrice: number;
+};

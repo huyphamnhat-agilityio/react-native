@@ -4,6 +4,7 @@ interface UseDebouncedValueReturn<T> {
   value: T;
   debouncedValue: T;
   setValue: (newValue: T) => void;
+  setInitialValue: (newValue: T) => void;
 }
 
 export const useDebounce = <T>(
@@ -35,5 +36,6 @@ export const useDebounce = <T>(
     value, // Immediate value
     debouncedValue, // Debounced value
     setValue: updateValue, // Function to update both values
+    setInitialValue: setValue, // Set immediate value
   };
 };

@@ -20,8 +20,9 @@ export const getCart = async ({
 
 export const updateCart = async (payload: Omit<Cart, "id">) => {
   const { userId, items } = payload;
+
   await fetchApiWithAuth<Cart>(
-    `${process.env.API_URL}/${RESOURCES.CARTS}/${userId}`,
+    `${process.env.EXPO_PUBLIC_API_URL}/${RESOURCES.CARTS}/${userId}`,
     {
       method: "PATCH",
       body: JSON.stringify({ items }),

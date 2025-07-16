@@ -43,3 +43,10 @@ export const ERROR_MESSAGE: Record<string, Record<number, string>> = {
 export const SERVER_RESPONSE_MESSAGE = {
   JWT_EXPIRED: "jwt expired",
 } as const;
+
+export const SUCCESS_MESSAGE = {
+  ADD_TO_CART: "The product has been added to cart!",
+  ADD_ADDRESS: "The address has been added successfully!",
+  UPDATE_ADDRESS: "The address has been updated successfully!",
+  UPLOAD_IMAGE: "The image has been uploaded successfully!",
+} as const;

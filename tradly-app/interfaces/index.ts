@@ -10,4 +10,4 @@ export { QueryParams } from "./query";
 export { QueryContexts } from "./queryKey";
 export { Category } from "./category";
 export { CategoryRouteParams, ProductDetailRouteParams } from "./navigation";
-export { Cart, CartItemData, CartPayload } from "./cart";
+export { Cart, CartItemData, CartPayload, CartTotal } from "./cart";

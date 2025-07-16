@@ -1,6 +1,14 @@
 import { useCallback, useRef } from "react";
 import { useLocalSearchParams } from "expo-router";
-import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
+import { useQueryClient } from "@tanstack/react-query";
+import {
+  ActivityIndicator,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  ToastAndroid,
+  View,
+} from "react-native";
 import { ICarouselInstance } from "react-native-reanimated-carousel";
 import { useSharedValue } from "react-native-reanimated";
 
@@ -19,7 +27,18 @@ import {
 } from "@/components/ui/product";
 
 // Hooks
-import { useGetProductDetail, useHandleExpiredToken } from "@/hooks";
+import {
+  useGetCart,
+  useGetProductDetail,
+  useHandleExpiredToken,
+  useUpdateCart,
+} from "@/hooks";
+
+// Store
+import { useUserStore } from "@/store";
+
+// Constants
+import { QUERY_KEY, SUCCESS_MESSAGE } from "@/constants";
 
 const ProductDetail = () => {
   const { id } = useLocalSearchParams();
@@ -36,6 +55,7 @@ const ProductDetail = () => {
     category = "",
     location = "",
     description = "",
+    id: productId = "",
   } = data || {};
 
   const ref = useRef<ICarouselInstance | null>(null);
@@ -52,6 +72,80 @@ const ProductDetail = () => {
     [progress],
   );
 
+  const userId = useUserStore((state) => state.user?.id) ?? "";
+
+  const { data: currentCart, isLoading: isLoadingCart } = useGetCart({
+    id: userId,
+  });
+
+  const { items: currentCartItems = [] } = currentCart || {};
+
+  const { mutateAsync: updateCart, isPending } = useUpdateCart();
+
+  const queryClient = useQueryClient();
+
+  const handleAddToCart = useCallback(async () => {
+    const itemId = `${userId}-${productId}`;
+    const updatedItems = currentCartItems.some((item) => item.id === itemId)
+      ? currentCartItems.map((item) =>
+          item.id === itemId
+            ? {
+                ...item,
+                quantity:
+                  item.quantity < 999 ? item.quantity + 1 : item.quantity,
+              }
+            : item,
+        )
+      : [
+          ...currentCartItems,
+          {
+            id: itemId,
+            productId,
+            productName: name,
+            quantity: 1,
+            price,
+            image: imageUrl,
+            originalPrice,
+          },
+        ];
+
+    const cartPayload = {
+      userId,
+      items: updatedItems,
+    };
+
+    await updateCart(cartPayload, {
+      onSuccess: () => {
+        queryClient.setQueryData(QUERY_KEY.CARTS({ id: userId }), {
+          ...queryClient.getQueryData(QUERY_KEY.CARTS({ id: userId })),
+          items: updatedItems,
+        });
+        ToastAndroid.showWithGravity(
+          SUCCESS_MESSAGE.ADD_TO_CART,
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP,
+        );
+      },
+      onError: (error) => {
+        Alert.alert(
+          "Add item to cart failed",
+          error.message,
+          [{ text: "Ok" }],
+          { cancelable: true },
+        );
+      },
+    });
+  }, [
+    currentCartItems,
+    imageUrl,
+    name,
+    originalPrice,
+    price,
+    productId,
+    queryClient,
+    updateCart,
+    userId,
+  ]);
   if (isLoading) {
     return (
       <View style={styles.centered}>
@@ -106,7 +200,6 @@ const ProductDetail = () => {
         <ProductDetailAdditional />
       </ScrollView>
 
-      {/* Sticky Bottom Button */}
       <View style={styles.buttonWrapper}>
         <Button
           title="Add to Cart"
@@ -114,6 +207,8 @@ const ProductDetail = () => {
           titleSize={4.5}
           rounded="full"
           style={styles.addToCartButton}
+          disabled={isPending || isLoadingCart}
+          onPress={handleAddToCart}
         />
       </View>
     </View>
