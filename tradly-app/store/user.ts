@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { User } from "@/interfaces";
+import { User, UserAddress } from "@/interfaces";
 import { SecureStorage } from "@/utils";
 
 export type UserStore = {
@@ -12,11 +12,12 @@ export type UserStore = {
   setAccessToken: (token: string) => void;
   clearUserSession: () => void;
   setUserAvatar: (avatar: string) => void;
+  setUserAddress: (address: UserAddress) => void;
 };
 
 export const useUserStore = create(
   persist(
-    immer<UserStore>((set, get) => ({
+    immer<UserStore>((set) => ({
       user: undefined,
       accessToken: undefined,
       currentAddress: undefined,
@@ -37,6 +38,14 @@ export const useUserStore = create(
             state.user.avatar = avatar;
           }
         }),
+
+      setUserAddress: (address) => {
+        set((state) => {
+          if (state.user) {
+            state.user.address = address;
+          }
+        });
+      },
       clearUserSession: () =>
         set((state) => {
           state.user = undefined;

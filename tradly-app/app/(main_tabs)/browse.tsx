@@ -8,7 +8,7 @@ import { background, colors } from "@/themes";
 import { ProductList } from "@/components/common";
 
 // Hooks
-import { useGetProducts } from "@/hooks";
+import { useGetProducts, useHandleExpiredToken } from "@/hooks";
 
 // Store
 import { useFilterStore } from "@/store";
@@ -47,6 +47,9 @@ const Browse = () => {
     _sort: currentSortField,
     _order: currentOrder,
   });
+
+  useHandleExpiredToken(JSON.parse(error?.message ?? "{}"));
+
   return (
     <View style={styles.container}>
       {isLoading ? (

@@ -10,7 +10,17 @@ import { MEDIUM_DEVICE_HEIGHT, SCREEN_HEIGHT } from "@/constants";
 // Themes
 import { background } from "@/themes";
 
-const CartFooter = memo(() => {
+// Store
+import { useUserStore } from "@/store";
+
+// Utils
+import { isFulfilledObject } from "@/utils";
+
+export type CartFooterProps = {
+  canCheckout?: boolean;
+};
+const CartFooter = memo(({ canCheckout = false }: CartFooterProps) => {
+  const userAddress = useUserStore((state) => state.user?.address);
   return (
     <View style={styles.cartFooter}>
       <Button
@@ -19,6 +29,7 @@ const CartFooter = memo(() => {
         titleSize={4.5}
         style={styles.paymentButton}
         rounded="full"
+        disabled={!isFulfilledObject(userAddress) || !canCheckout}
       />
     </View>
   );

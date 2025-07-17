@@ -1,121 +1,84 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useCallback } from "react";
+import { Alert, StyleSheet, ToastAndroid } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 // Components
-import { Button, Input } from "@/components/common";
+import { AddressForm } from "@/components/ui/address";
 
 // Themes
-import { background, colors } from "@/themes";
+import { background } from "@/themes";
+
+// Hooks
+import { useUpdateUser } from "@/hooks";
+import { useUserStore } from "@/store";
+import { useShallow } from "zustand/shallow";
+import { UserAddress } from "@/interfaces";
+import { SUCCESS_MESSAGE } from "@/constants";
+import { useRouter } from "expo-router";
 
 const Address = () => {
+  const { back } = useRouter();
+  const {
+    userAddress,
+    setUserAddress,
+    userId = "",
+  } = useUserStore(
+    useShallow((state) => ({
+      userAddress: state.user?.address,
+      setUserAddress: state.setUserAddress,
+      userId: state.user?.id,
+    })),
+  );
+
+  const { mutateAsync: updateUserAddress } = useUpdateUser();
+
+  const handleSubmit = useCallback(
+    async (data: UserAddress) => {
+      await updateUserAddress(
+        { id: userId, address: data },
+        {
+          onSuccess: () => {
+            ToastAndroid.showWithGravity(
+              userAddress
+                ? SUCCESS_MESSAGE.UPDATE_ADDRESS
+                : SUCCESS_MESSAGE.ADD_ADDRESS,
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM,
+            );
+            setUserAddress(data);
+            back();
+          },
+          onError: (error) => {
+            Alert.alert(
+              "Error",
+              error.message,
+              [
+                {
+                  text: "Ok",
+                },
+              ],
+              { cancelable: true },
+            );
+          },
+        },
+      );
+    },
+    [back, setUserAddress, updateUserAddress, userAddress, userId],
+  );
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <View style={styles.formWrapper}>
-        <Input
-          label="Name"
-          labelVariant="secondary"
-          labelSize={3.5}
-          labelFont="Montserrat_400Regular"
-          labelDistance={8}
-          inputSize={4}
-          inputVariant="quaternary"
-          style={styles.textInput}
-        />
-
-        <Input
-          label="Phone"
-          labelVariant="secondary"
-          labelSize={3.5}
-          labelFont="Montserrat_400Regular"
-          labelDistance={8}
-          inputSize={4}
-          inputMode="tel"
-          inputVariant="quaternary"
-          style={styles.textInput}
-        />
-
-        <Input
-          label="Street address"
-          labelVariant="secondary"
-          labelSize={3.5}
-          labelFont="Montserrat_400Regular"
-          labelDistance={8}
-          inputSize={4}
-          inputVariant="quaternary"
-          style={styles.textInput}
-        />
-
-        <Input
-          label="City"
-          labelVariant="secondary"
-          labelSize={3.5}
-          labelFont="Montserrat_400Regular"
-          labelDistance={8}
-          inputSize={4}
-          inputVariant="quaternary"
-          style={styles.textInput}
-        />
-
-        <Input
-          label="State"
-          labelVariant="secondary"
-          labelSize={3.5}
-          labelFont="Montserrat_400Regular"
-          labelDistance={8}
-          inputSize={4}
-          inputVariant="quaternary"
-          style={styles.textInput}
-        />
-
-        <Input
-          label="Zipcode"
-          labelVariant="secondary"
-          labelSize={3.5}
-          labelFont="Montserrat_400Regular"
-          labelDistance={8}
-          inputSize={4}
-          inputVariant="quaternary"
-          inputMode="numeric"
-          style={styles.textInput}
-        />
-      </View>
-
-      <View style={styles.buttonWrapper}>
-        <Button
-          title="Save"
-          titleFont="Montserrat_600SemiBold"
-          titleSize={4.5}
-          style={styles.button}
-          rounded="full"
-        />
-      </View>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.scrollContent}
+      keyboardShouldPersistTaps="handled"
+    >
+      <AddressForm data={userAddress} onSubmit={handleSubmit} />
     </KeyboardAwareScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollContent: {
     flexGrow: 1,
     backgroundColor: background.white,
-    justifyContent: "space-between",
-    paddingBottom: "10%",
-  },
-  formWrapper: {
-    padding: 20,
-    gap: 16,
-  },
-  textInput: {
-    width: "100%",
-    borderBottomColor: colors.gray_50,
-    borderBottomWidth: 0.5,
-  },
-  buttonWrapper: {
-    paddingHorizontal: 32,
-  },
-  button: {
-    width: "100%",
-    paddingVertical: 16,
   },
 });
 

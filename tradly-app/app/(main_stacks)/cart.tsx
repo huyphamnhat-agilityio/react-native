@@ -106,6 +106,7 @@ const Cart = () => {
 
   const handleUpdateQuantity = useCallback(
     async (id: string, quantity: number) => {
+      console.log("update quantity", id, quantity);
       const updatedItems = items.map((item) =>
         item.id === id ? { ...item, quantity } : item,
       );
@@ -155,7 +156,7 @@ const Cart = () => {
 
       <CartBill totalPrice={totalPrice} totalQuantity={totalQuantity} />
 
-      <CartFooter />
+      <CartFooter canCheckout={items.length > 0} />
     </View>
   );
 };

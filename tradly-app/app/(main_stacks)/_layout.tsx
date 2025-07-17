@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { Stack } from "expo-router";
 
 // Types & Interfaces
@@ -6,16 +6,26 @@ import { CategoryRouteParams } from "@/interfaces";
 
 // Components
 import { Header } from "@/components/common";
+import { useUserStore } from "@/store";
+import { isFulfilledObject } from "@/utils";
 
 const MainStacksLayout = () => {
+  const userAddress = useUserStore((state) => state.user?.address);
+
   const handleRenderCartHeader = useCallback(
     () => <Header title="My Cart" includeBackButton isTitleOnly />,
     [],
   );
 
+  const addressHeaderTitle = useMemo(
+    () =>
+      isFulfilledObject(userAddress) ? "Edit address" : "Add a new address",
+    [userAddress],
+  );
+
   const handleRenderAddressHeader = useCallback(
-    () => <Header title="Add a new address" includeBackButton isTitleOnly />,
-    [],
+    () => <Header title={addressHeaderTitle} includeBackButton isTitleOnly />,
+    [addressHeaderTitle],
   );
   return (
     <Stack>
