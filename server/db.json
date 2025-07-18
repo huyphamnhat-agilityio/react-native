@@ -1,13 +1,4 @@
 {
-  "users": [
-    {
-      "email": "tradly@gmail.com",
-      "password": "$2a$10$XPf6xnpyVnLaMt8xYuMGeeTPCIKPDYjC9HfhWS2q4q0loqJD7gJzC",
-      "name": "Tradly User",
-      "avatar": "https://i.ibb.co/RpGXkKYx/profile-placeholder.png",
-      "id": 1
-    }
-  ],
   "products": [
     {
       "id": "1",
@@ -248,6 +239,24 @@
       "priceType": "Negotiable",
       "location": "Mexico City, Mexico",
       "condition": "Organic"
+    }
+  ],
+  "users": [
+    {
+      "email": "tradly@gmail.com",
+      "password": "$2a$10$XPf6xnpyVnLaMt8xYuMGeeTPCIKPDYjC9HfhWS2q4q0loqJD7gJzC",
+      "name": "Tradly User",
+      "avatar": "https://i.ibb.co/RpGXkKYx/profile-placeholder.png",
+      "id": 1,
+      "address": {
+        "name": "",
+        "phone": "",
+        "streetAddress": "",
+        "city": "",
+        "state": "",
+        "zipcode": ""
+      },
+      "cards": []
     }
   ],
   "carts": [
