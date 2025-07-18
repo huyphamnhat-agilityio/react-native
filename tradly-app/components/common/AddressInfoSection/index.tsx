@@ -1,11 +1,19 @@
-import { memo, useMemo } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useRouter } from "expo-router";
+import { memo, useCallback, useMemo } from "react";
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 
 // Themes
 import { background } from "@/themes";
 
 // Components
-import { Button, Text } from "@/components/common";
+import Text from "../Text";
+import Button from "../Button";
 
 // Store
 import { useUserStore } from "@/store";
@@ -13,11 +21,17 @@ import { useUserStore } from "@/store";
 // Utils
 import { generateDeliveryInfo, isFulfilledObject } from "@/utils";
 
-export type NewAddressButtonProps = {
-  onPress?: () => void;
+export type AddressInfoSectionProps = {
+  style?: StyleProp<ViewStyle>;
 };
-const NewAddressButton = memo(({ onPress }: NewAddressButtonProps) => {
+const AddressInfoSection = memo(({ style }: AddressInfoSectionProps) => {
   const userAddress = useUserStore((state) => state.user?.address);
+
+  const { navigate } = useRouter();
+
+  const handleNavigateToAddress = useCallback(() => {
+    navigate("/(main_stacks)/address");
+  }, [navigate]);
 
   const buttonText = useMemo(() => {
     return isFulfilledObject(userAddress)
@@ -26,7 +40,7 @@ const NewAddressButton = memo(({ onPress }: NewAddressButtonProps) => {
   }, [userAddress]);
 
   return isFulfilledObject(userAddress) ? (
-    <View style={styles.editAddressWrapper}>
+    <View style={[styles.editAddressWrapper, style]}>
       <Text
         numberOfLines={2}
         textVariant="quaternary"
@@ -40,14 +54,14 @@ const NewAddressButton = memo(({ onPress }: NewAddressButtonProps) => {
         titleSize={3}
         rounded="full"
         style={styles.button}
-        onPress={onPress}
+        onPress={handleNavigateToAddress}
       />
     </View>
   ) : (
     <TouchableOpacity
       activeOpacity={0.7}
       style={styles.addNewAddressWrapper}
-      onPress={onPress}
+      onPress={handleNavigateToAddress}
     >
       <Text textVariant="quaternary" style={styles.textCentered}>
         {buttonText}
@@ -79,5 +93,5 @@ const styles = StyleSheet.create({
   },
 });
 
-NewAddressButton.displayName = "NewAddressButton";
-export default NewAddressButton;
+AddressInfoSection.displayName = "AddressInfoSection";
+export default AddressInfoSection;

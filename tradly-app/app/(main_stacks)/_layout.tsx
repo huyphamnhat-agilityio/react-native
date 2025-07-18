@@ -27,6 +27,11 @@ const MainStacksLayout = () => {
     () => <Header title={addressHeaderTitle} includeBackButton isTitleOnly />,
     [addressHeaderTitle],
   );
+
+  const handleRenderPaymentHeader = useCallback(
+    () => <Header title="Payment Option" includeBackButton isTitleOnly />,
+    [],
+  );
   return (
     <Stack>
       <Stack.Screen
@@ -66,6 +71,13 @@ const MainStacksLayout = () => {
         name="address"
         options={{
           header: handleRenderAddressHeader,
+        }}
+      />
+
+      <Stack.Screen
+        name="payment"
+        options={{
+          header: handleRenderPaymentHeader,
         }}
       />
     </Stack>

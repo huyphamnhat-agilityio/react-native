@@ -11,6 +11,7 @@ export const colors = {
   white: "#FFFFFF",
   white_50: "#F6F9FF",
   white_opacity_10: "#FFFFFF1A",
+  white_opacity_20: "#FFFFFF33",
   white_opacity_30: "#FFFFFF4D",
 
   black: "#000000",
@@ -27,6 +28,7 @@ export const text = {
   quaternary: colors.gray_300,
   alternative: colors.gray_50,
   white: colors.white,
+  white_opacity_20: colors.white_opacity_20,
   white_opacity_30: colors.white_opacity_30,
   black: colors.black,
   danger: colors.danger,
@@ -42,6 +44,8 @@ export const background = {
 } as const;
 
 export const border = {
+  secondary: colors.gray_100,
+  alternative: colors.gray_50,
   black_opacity_10: colors.black_opacity_10,
   white_opacity_30: colors.white_opacity_30,
   white: colors.white,

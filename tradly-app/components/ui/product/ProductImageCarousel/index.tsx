@@ -19,11 +19,11 @@ export type OnboardingCarouselProps = {
   onPressPagination: (index: number) => void;
 };
 
+const carouselHeight = SCREEN_HEIGHT * 0.3;
+
 const ProductImageCarousel = memo(
   forwardRef<ICarouselInstance, OnboardingCarouselProps>(
     ({ data, progress, onPressPagination }, ref) => {
-      const carouselHeight = SCREEN_HEIGHT * 0.3;
-
       const handleRenderItem = useCallback(
         ({ item }: { item: { image: string } }) => (
           <Image

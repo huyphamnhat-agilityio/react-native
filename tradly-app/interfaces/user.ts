@@ -6,6 +6,15 @@ export type UserAddress = {
   state: string;
   zipcode: string;
 };
+
+export type UserCard = {
+  id: string;
+  holderName: string;
+  cardNumber: string;
+  expiresDates: string;
+  cvc: string;
+};
+
 export type User = {
   id: string;
   email: string;
@@ -13,6 +22,7 @@ export type User = {
   name: string;
   avatar: string;
   address: UserAddress;
+  cards: UserCard[];
 };
 
 export type UserPayload = Omit<User, "id">;

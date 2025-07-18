@@ -32,7 +32,7 @@ const Login = () => {
       await login(data, {
         onSuccess: (response) => {
           const {
-            user: { id, email, name, avatar, address },
+            user: { id, email, name, avatar, address, cards },
             accessToken,
           } = response;
 
@@ -42,6 +42,7 @@ const Login = () => {
             name,
             avatar,
             address,
+            cards,
           });
 
           setAccessToken(accessToken);

@@ -18,22 +18,27 @@ import { isFulfilledObject } from "@/utils";
 
 export type CartFooterProps = {
   canCheckout?: boolean;
+  onNavigate?: () => void;
 };
-const CartFooter = memo(({ canCheckout = false }: CartFooterProps) => {
-  const userAddress = useUserStore((state) => state.user?.address);
-  return (
-    <View style={styles.cartFooter}>
-      <Button
-        title="Continue to Payment"
-        titleFont="Montserrat_600SemiBold"
-        titleSize={4.5}
-        style={styles.paymentButton}
-        rounded="full"
-        disabled={!isFulfilledObject(userAddress) || !canCheckout}
-      />
-    </View>
-  );
-});
+const CartFooter = memo(
+  ({ onNavigate, canCheckout = false }: CartFooterProps) => {
+    const userAddress = useUserStore((state) => state.user?.address);
+
+    return (
+      <View style={styles.cartFooter}>
+        <Button
+          title="Continue to Payment"
+          titleFont="Montserrat_600SemiBold"
+          titleSize={4.5}
+          style={styles.paymentButton}
+          rounded="full"
+          disabled={!isFulfilledObject(userAddress) || !canCheckout}
+          onPress={onNavigate}
+        />
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   cartFooter: {

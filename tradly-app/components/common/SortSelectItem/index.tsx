@@ -1,4 +1,3 @@
-import { Checkbox } from "expo-checkbox";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { memo, useCallback } from "react";
 
@@ -7,6 +6,7 @@ import { borderRadius } from "@/themes";
 
 // Components
 import Text from "../Text";
+import Checkbox from "../Checkbox";
 
 export type SortSelectItemProps = {
   title: string;
@@ -36,11 +36,7 @@ const SortSelectItem = memo(
 
     return (
       <TouchableOpacity style={styles.container} onPress={handleSelect}>
-        <Checkbox
-          style={styles.checkbox}
-          value={selected}
-          pointerEvents="none"
-        />
+        <Checkbox active={selected} onPress={handleSelect} />
         <Text textVariant="quaternary" size={3.5}>
           {title === "" ? "All" : title}
         </Text>
@@ -54,6 +50,7 @@ const styles = StyleSheet.create({
     height: 30,
     gap: 10,
     flexDirection: "row",
+    alignItems: "center",
   },
   checkbox: {
     borderRadius: borderRadius.full,

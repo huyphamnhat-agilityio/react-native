@@ -2,7 +2,7 @@ export { TextVariant, BackgroundVariant, BorderVariant } from "./colors";
 export { FontSize, FontFamily } from "./typography";
 export { BorderRadius } from "./metrics";
 export { LoginFormData } from "./form";
-export { User, UserPayload, UserAddress } from "./user";
+export { User, UserPayload, UserAddress, UserCard } from "./user";
 export { AuthResponse } from "./auth";
 export { Product } from "./product";
 export { Store } from "./store";

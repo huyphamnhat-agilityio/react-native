@@ -75,7 +75,9 @@
             "./assets/images/fruit.jpg",
             "./assets/images/homecare.jpg",
             "./assets/images/pet_care.jpg",
-            "./assets/images/vegetables.jpg"
+            "./assets/images/vegetables.jpg",
+            "./assets/images/visa.jpg",
+            "./assets/images/mastercard.png"
           ]
         }
       ],

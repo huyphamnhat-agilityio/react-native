@@ -12,6 +12,7 @@ const CategoryIcon = ({
       height={height}
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
+      {...props}
     >
       <Mask
         id="mask0_0_1625"

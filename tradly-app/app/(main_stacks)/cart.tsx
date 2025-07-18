@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Alert, StyleSheet, ToastAndroid, View } from "react-native";
 import { useRouter } from "expo-router";
@@ -7,12 +7,8 @@ import { useRouter } from "expo-router";
 import { background } from "@/themes";
 
 // Components
-import {
-  CartBill,
-  CartFooter,
-  CartItemList,
-  NewAddressButton,
-} from "@/components/ui/cart";
+import { CartBill, CartFooter, CartItemList } from "@/components/ui/cart";
+import { AddressInfoSection } from "@/components/common";
 
 // Hooks
 import { useGetCart, useHandleExpiredToken, useUpdateCart } from "@/hooks";
@@ -30,7 +26,7 @@ import { CartTotal, Cart as CartType } from "@/interfaces";
 import { getCartSummary } from "@/utils";
 
 const Cart = () => {
-  const userId = useUserStore((state) => state.user?.id) ?? "";
+  const userId = useUserStore((state) => state.user?.id ?? "");
 
   const { navigate } = useRouter();
 
@@ -46,7 +42,7 @@ const Cart = () => {
 
   useHandleExpiredToken(JSON.parse(error?.message ?? "{}"));
 
-  const { items = [] } = data || {};
+  const items = useMemo(() => data?.items ?? [], [data]);
 
   const handleConfirmRemove = useCallback(
     async (id: string) => {
@@ -106,7 +102,6 @@ const Cart = () => {
 
   const handleUpdateQuantity = useCallback(
     async (id: string, quantity: number) => {
-      console.log("update quantity", id, quantity);
       const updatedItems = items.map((item) =>
         item.id === id ? { ...item, quantity } : item,
       );
@@ -133,9 +128,12 @@ const Cart = () => {
     [items, queryClient, updateCart, userId],
   );
 
-  const handleNavigateToAddress = useCallback(() => {
-    navigate("/(main_stacks)/address");
-  }, [navigate]);
+  const handleNavigateToPayment = useCallback(() => {
+    navigate({
+      pathname: "/(main_stacks)/payment",
+      params: { totalPrice, totalQuantity },
+    });
+  }, [navigate, totalPrice, totalQuantity]);
 
   useEffect(() => {
     const cartTotal = getCartSummary(items);
@@ -144,7 +142,7 @@ const Cart = () => {
 
   return (
     <View style={styles.container}>
-      <NewAddressButton onPress={handleNavigateToAddress} />
+      <AddressInfoSection />
 
       <CartItemList
         data={items}
@@ -156,7 +154,10 @@ const Cart = () => {
 
       <CartBill totalPrice={totalPrice} totalQuantity={totalQuantity} />
 
-      <CartFooter canCheckout={items.length > 0} />
+      <CartFooter
+        canCheckout={items.length > 0}
+        onNavigate={handleNavigateToPayment}
+      />
     </View>
   );
 };

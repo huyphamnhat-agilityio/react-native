@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   cartBillDetail: {
     paddingHorizontal: 16,
-    gap: SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 20 : 0,
+    gap: SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 8 : 0,
   },
   detailRow: {
     flexDirection: "row",

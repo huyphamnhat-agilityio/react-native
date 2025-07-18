@@ -42,7 +42,9 @@ import { QUERY_KEY, SUCCESS_MESSAGE } from "@/constants";
 
 const ProductDetail = () => {
   const { id } = useLocalSearchParams();
+
   const { data, isLoading, error } = useGetProductDetail(id as string);
+
   useHandleExpiredToken(JSON.parse(error?.message ?? "{}"));
 
   const {
