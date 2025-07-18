@@ -1,7 +1,6 @@
 import { forwardRef, memo, Ref } from "react";
 import {
   ColorValue,
-  DimensionValue,
   StyleProp,
   StyleSheet,
   TextInput as TextInputBase,
@@ -34,8 +33,6 @@ export type TextInputProps = TextInputBaseProps & {
   labelVariant?: TextVariant;
   labelDistance?: number;
   labelFont?: FontFamily;
-  inputWidth?: DimensionValue;
-  inputHeight?: DimensionValue;
   backgroundColor?: ColorValue;
   containerStyle?: StyleProp<ViewStyle>;
   wrapperStyle?: StyleProp<ViewStyle>;
@@ -60,8 +57,6 @@ const Input = memo(
         isDisabled = false,
         isError = false,
         errorMessage = "",
-        inputWidth = "94%",
-        inputHeight = "auto",
         backgroundColor,
         labelDistance,
         containerStyle,
@@ -76,57 +71,49 @@ const Input = memo(
 
       const opacity = isEditable ? 1 : 0.5;
       return (
-        <View>
-          <View
-            style={[
-              styles.container,
-              { opacity, backgroundColor, gap: labelDistance },
-              containerStyle,
-            ]}
-          >
-            {label && (
-              <Text
-                font={labelFont}
-                size={labelSize}
-                textVariant={labelVariant}
-              >
-                {label}
-              </Text>
-            )}
-            <View style={[styles.wrapper, wrapperStyle]}>
-              {LeftContent}
-              <TextInputBase
-                ref={ref}
-                placeholderTextColor={placeholderTextColor}
-                numberOfLines={numberOfLines}
-                style={[
-                  styles.input,
-                  {
-                    fontSize: fontSizes[`${inputSize}`],
-                    color: text[`${inputVariant}`],
-                    fontFamily: fontFamilies[`${font}`],
-                    width: inputWidth,
-                    height: inputHeight,
-                  },
-                  style,
-                ]}
-                editable={isEditable}
-                {...props}
-              />
-              {RightContent}
-            </View>
-
-            {isError && !!errorMessage && (
-              <Text
-                style={errorStyle}
-                font={font}
-                size={labelSize}
-                textVariant="danger"
-              >
-                {errorMessage}
-              </Text>
-            )}
+        <View
+          style={[
+            styles.container,
+            { opacity, backgroundColor, gap: labelDistance },
+            containerStyle,
+          ]}
+        >
+          {label && (
+            <Text font={labelFont} size={labelSize} textVariant={labelVariant}>
+              {label}
+            </Text>
+          )}
+          <View style={[styles.wrapper, wrapperStyle]}>
+            {LeftContent}
+            <TextInputBase
+              ref={ref}
+              placeholderTextColor={placeholderTextColor}
+              numberOfLines={numberOfLines}
+              style={[
+                styles.input,
+                {
+                  fontSize: fontSizes[`${inputSize}`],
+                  color: text[`${inputVariant}`],
+                  fontFamily: fontFamilies[`${font}`],
+                },
+                style,
+              ]}
+              editable={isEditable}
+              {...props}
+            />
+            {RightContent}
           </View>
+
+          {isError && !!errorMessage && (
+            <Text
+              style={errorStyle}
+              font={font}
+              size={labelSize}
+              textVariant="danger"
+            >
+              {errorMessage}
+            </Text>
+          )}
         </View>
       );
     },
@@ -144,6 +131,8 @@ const styles = StyleSheet.create({
   },
 
   input: {
+    width: "100%",
+    height: "auto",
     paddingVertical: 0,
     paddingHorizontal: 0,
   },

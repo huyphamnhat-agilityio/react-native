@@ -17,7 +17,7 @@ import { useUserStore } from "@/store";
 import { background, border, borderRadius, colors } from "@/themes";
 import { formatNumberWithThousandSeparator, isFulfilledObject } from "@/utils";
 import { ImageBackground } from "expo-image";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
@@ -30,6 +30,8 @@ import { CarouselRenderItemInfo } from "react-native-reanimated-carousel/lib/typ
 const carouselHeight = SCREEN_HEIGHT * 0.25;
 const Payment = () => {
   const { totalPrice = "{}", totalQuantity = "{}" } = useLocalSearchParams();
+
+  const { navigate } = useRouter();
 
   const formattedTotalPrice: number = JSON.parse(totalPrice as string) ?? 0;
   const formattedTotalQuantity: number =
@@ -71,6 +73,10 @@ const Payment = () => {
     [progress],
   );
 
+  const handleNavigateToAddCard = useCallback(
+    () => navigate("/(main_stacks)/card"),
+    [navigate],
+  );
   const handleRenderItem = useCallback(
     ({
       item: { id, cardNumber, cvc, expiresDates, holderName },
@@ -141,6 +147,7 @@ const Payment = () => {
           activeOpacity={0.5}
           disabled={selectedPayment === "CASH"}
           style={styles.emptyCardWrapper}
+          onPress={handleNavigateToAddCard}
         >
           <PlusIcon width={22} height={22} color={colors.gray_100} />
           <Text
@@ -152,8 +159,9 @@ const Payment = () => {
           </Text>
         </TouchableOpacity>
       ),
-    [selectedPayment],
+    [handleNavigateToAddCard, selectedPayment],
   );
+
   return (
     <View style={styles.container}>
       <View style={styles.paymentContainer}>

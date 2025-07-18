@@ -1,5 +1,6 @@
 export const FORM_VALIDATION_MESSAGES = {
   REQUIRED: (item: string) => `${item} must not be empty.`,
+  IS_REQUIRED: "Required",
   ALL_WHITE_SPACE: (item: string) => `${item} cannot contain only whitespace.`,
   INVALID: (item: string) => `${item} is invalid. Please try again.`,
   MIN_LENGTH: (item: string, min: number) =>
@@ -47,6 +48,7 @@ export const SERVER_RESPONSE_MESSAGE = {
 export const SUCCESS_MESSAGE = {
   ADD_TO_CART: "The product has been added to cart!",
   ADD_ADDRESS: "The address has been added successfully!",
+  ADD_CARD: "Your card has been added successfully!",
   UPDATE_ADDRESS: "The address has been updated successfully!",
   UPLOAD_IMAGE: "The image has been uploaded successfully!",
 } as const;

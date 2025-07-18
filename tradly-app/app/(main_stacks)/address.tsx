@@ -1,6 +1,8 @@
 import React, { useCallback } from "react";
-import { Alert, StyleSheet, ToastAndroid } from "react-native";
+import { StyleSheet, ToastAndroid } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { useShallow } from "zustand/shallow";
+import { useRouter } from "expo-router";
 
 // Components
 import { AddressForm } from "@/components/ui/address";
@@ -10,11 +12,18 @@ import { background } from "@/themes";
 
 // Hooks
 import { useUpdateUser } from "@/hooks";
+
+// Store
 import { useUserStore } from "@/store";
-import { useShallow } from "zustand/shallow";
+
+// Types
 import { UserAddress } from "@/interfaces";
+
+// Constants
 import { SUCCESS_MESSAGE } from "@/constants";
-import { useRouter } from "expo-router";
+
+// Utils
+import { isFulfilledObject } from "@/utils";
 
 const Address = () => {
   const { back } = useRouter();
@@ -39,7 +48,7 @@ const Address = () => {
         {
           onSuccess: () => {
             ToastAndroid.showWithGravity(
-              userAddress
+              isFulfilledObject(userAddress)
                 ? SUCCESS_MESSAGE.UPDATE_ADDRESS
                 : SUCCESS_MESSAGE.ADD_ADDRESS,
               ToastAndroid.SHORT,
@@ -49,15 +58,10 @@ const Address = () => {
             back();
           },
           onError: (error) => {
-            Alert.alert(
-              "Error",
+            ToastAndroid.showWithGravity(
               error.message,
-              [
-                {
-                  text: "Ok",
-                },
-              ],
-              { cancelable: true },
+              ToastAndroid.SHORT,
+              ToastAndroid.BOTTOM,
             );
           },
         },

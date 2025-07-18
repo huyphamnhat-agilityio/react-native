@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -45,7 +45,15 @@ const ProductDetail = () => {
 
   const { data, isLoading, error } = useGetProductDetail(id as string);
 
-  useHandleExpiredToken(JSON.parse(error?.message ?? "{}"));
+  const parsedErrorMessage = useMemo(() => {
+    try {
+      return JSON.parse(error?.message ?? "{}");
+    } catch {
+      return {};
+    }
+  }, [error]);
+
+  useHandleExpiredToken(parsedErrorMessage);
 
   const {
     name = "",

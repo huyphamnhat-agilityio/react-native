@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { User, UserAddress } from "@/interfaces";
+import { User, UserAddress, UserCard } from "@/interfaces";
 import { SecureStorage } from "@/utils";
 
 export type UserStore = {
@@ -13,6 +13,7 @@ export type UserStore = {
   clearUserSession: () => void;
   setUserAvatar: (avatar: string) => void;
   setUserAddress: (address: UserAddress) => void;
+  setUserCards: (card: UserCard) => void;
 };
 
 export const useUserStore = create(
@@ -38,11 +39,17 @@ export const useUserStore = create(
             state.user.avatar = avatar;
           }
         }),
-
       setUserAddress: (address) => {
         set((state) => {
           if (state.user) {
             state.user.address = address;
+          }
+        });
+      },
+      setUserCards: (card) => {
+        set((state) => {
+          if (state.user) {
+            state.user.cards = [...state.user.cards, card];
           }
         });
       },

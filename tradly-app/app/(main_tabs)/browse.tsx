@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useShallow } from "zustand/shallow";
 
@@ -48,7 +49,15 @@ const Browse = () => {
     _order: currentOrder,
   });
 
-  useHandleExpiredToken(JSON.parse(error?.message ?? "{}"));
+  const parsedErrorMessage = useMemo(() => {
+    try {
+      return JSON.parse(error?.message ?? "{}");
+    } catch {
+      return {};
+    }
+  }, [error]);
+
+  useHandleExpiredToken(parsedErrorMessage);
 
   return (
     <View style={styles.container}>

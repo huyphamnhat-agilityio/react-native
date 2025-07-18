@@ -23,3 +23,16 @@ export const parseToInt = (value: string, min: number, max: number) => {
 
   return number;
 };
+
+export const maskCardNumber = (cardNumber: string) => {
+  const clean = cardNumber.replace(/\s+/g, "");
+
+  if (clean.length !== 16) return cardNumber;
+
+  return [
+    cardNumber.slice(0, 4),
+    cardNumber.slice(4, 6) + "**",
+    "****",
+    cardNumber.slice(12, 16),
+  ].join(" ");
+};

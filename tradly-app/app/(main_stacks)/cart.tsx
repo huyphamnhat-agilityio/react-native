@@ -40,7 +40,15 @@ const Cart = () => {
 
   const queryClient = useQueryClient();
 
-  useHandleExpiredToken(JSON.parse(error?.message ?? "{}"));
+  const parsedErrorMessage = useMemo(() => {
+    try {
+      return JSON.parse(error?.message ?? "{}");
+    } catch {
+      return {};
+    }
+  }, [error]);
+
+  useHandleExpiredToken(parsedErrorMessage);
 
   const items = useMemo(() => data?.items ?? [], [data]);
 

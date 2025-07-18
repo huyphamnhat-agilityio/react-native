@@ -59,11 +59,10 @@ const QuantityControl = memo(
         />
         <Input
           testID="quantity-input"
-          inputWidth={30}
-          inputHeight={20}
           inputMode="numeric"
           inputVariant="quaternary"
           textAlign="center"
+          containerStyle={styles.input}
           isDisabled={isDisabled}
           onChangeText={handleOnChange}
           value={quantity.toString()}
@@ -95,6 +94,10 @@ const styles = StyleSheet.create({
     borderColor: colors.black,
     borderWidth: 1,
     borderRadius: borderRadius["1.5"],
+  },
+  input: {
+    width: 30,
+    height: 20,
   },
 });
 

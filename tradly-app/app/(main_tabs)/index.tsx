@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 // Components
@@ -17,7 +18,15 @@ import { useGetProducts, useHandleExpiredToken } from "@/hooks";
 const Home = () => {
   const { data, error, isLoading } = useGetProducts();
 
-  useHandleExpiredToken(JSON.parse(error?.message ?? "{}"));
+  const parsedErrorMessage = useMemo(() => {
+    try {
+      return JSON.parse(error?.message ?? "{}");
+    } catch {
+      return {};
+    }
+  }, [error]);
+
+  useHandleExpiredToken(parsedErrorMessage);
 
   return (
     <ScrollView style={styles.container}>

@@ -253,6 +253,7 @@ const AddressForm = memo(({ onSubmit, data }: AddressFormProps) => {
               isError={!!error?.message}
               errorMessage={error?.message}
               onChangeText={handleInputChange("zipcode", onChange)}
+              onSubmitEditing={handleSubmit(onSubmit)}
               {...rest}
             />
           )}
