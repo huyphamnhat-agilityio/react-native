@@ -14,7 +14,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "googleServicesFile": "./android/app/google-services.json"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.huy.phamnhat.tradlyapp"
@@ -86,6 +87,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c542c506-821d-4bd1-bf95-c23a10cf7009"
+      }
     }
   }
 }

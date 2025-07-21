@@ -1,3 +1,4 @@
+import { usePushNotifications } from "@/hooks";
 import { useUserStore } from "@/store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
@@ -16,6 +17,13 @@ export default function RootLayout() {
   if (__DEV__) {
     import("../ReactotronConfig");
   }
+
+  const { expoPushToken, notification } = usePushNotifications();
+
+  console.log(JSON.stringify(notification, undefined, 2));
+
+  console.log("Token:", expoPushToken);
+
   return (
     <KeyboardProvider>
       <QueryClientProvider client={queryClient}>
