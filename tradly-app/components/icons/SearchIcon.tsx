@@ -12,6 +12,7 @@ const SearchIcon = ({
       height={height}
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
+      {...props}
     >
       <Mask
         id="mask0_0_4363"

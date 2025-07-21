@@ -10,3 +10,4 @@ export { default as TradlyBigIcon } from "./TradlyBigIcon";
 export { default as MinusIcon } from "./MinusIcon";
 export { default as PlusIcon } from "./PlusIcon";
 export { default as CheckIcon } from "./CheckIcon";
+export { default as ProfileIcon } from "./ProfileIcon";

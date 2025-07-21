@@ -1,14 +1,14 @@
+import { useCallback } from "react";
 import { Tabs } from "expo-router";
 
 // Components
 import { Header } from "@/components/common";
 
 // Icons
-import { HomeIcon, SearchIcon } from "@/components/icons";
+import { HomeIcon, ProfileIcon, SearchIcon } from "@/components/icons";
 
 // Themes
 import { fontFamilies, fontSizes, text } from "@/themes";
-import { useCallback } from "react";
 
 const MainTabsLayout = () => {
   const renderHomeTabBarIcon = useCallback(
@@ -25,12 +25,23 @@ const MainTabsLayout = () => {
     [],
   );
 
+  const renderProfileTabBarIcon = useCallback(
+    ({ color }: { focused: boolean; color: string; size: number }) => {
+      return <ProfileIcon fill={color} />;
+    },
+    [],
+  );
+
   const renderHomeHeader = useCallback(() => {
     return <Header title="Home" />;
   }, []);
 
   const renderBrowseHeader = useCallback(() => {
     return <Header title="Browse" includeSearchBar includeFiltersBar />;
+  }, []);
+
+  const renderHProfileHeader = useCallback(() => {
+    return <Header title="Profile" />;
   }, []);
 
   return (
@@ -60,6 +71,14 @@ const MainTabsLayout = () => {
           title: "Browse",
           tabBarIcon: renderBrowseTabBarIcon,
           header: renderBrowseHeader,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: renderProfileTabBarIcon,
+          header: renderHProfileHeader,
         }}
       />
     </Tabs>

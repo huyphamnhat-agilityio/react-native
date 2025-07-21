@@ -20,6 +20,7 @@ export type User = {
   email: string;
   password: string;
   name: string;
+  phone: number;
   avatar: string;
   address: UserAddress;
   cards: UserCard[];

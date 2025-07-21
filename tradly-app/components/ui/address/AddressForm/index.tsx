@@ -150,7 +150,7 @@ const AddressForm = memo(({ onSubmit, data }: AddressFormProps) => {
               inputSize={4}
               inputMode="tel"
               inputVariant="quaternary"
-              maxLength={13}
+              maxLength={12}
               style={styles.textInput}
               isDisabled={isSubmitting}
               isError={!!error?.message}
