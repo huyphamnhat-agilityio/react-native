@@ -1,6 +1,12 @@
 import { RelativePathString, useRouter } from "expo-router";
 import { Fragment, memo, useCallback } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from "react-native";
 
 // Components
 import { Text } from "@/components/common";
@@ -10,9 +16,15 @@ import { background, borderRadius, colors } from "@/themes";
 
 // Constants
 import { SETTINGS_OPTIONS } from "@/constants";
+
+// Store
 import { useUserStore } from "@/store";
 
-const SettingMenu = memo(() => {
+export type SettingMenuProps = {
+  style?: StyleProp<ViewStyle>;
+};
+
+const SettingMenu = memo(({ style }: SettingMenuProps) => {
   const { navigate } = useRouter();
 
   const clearUserSession = useUserStore((state) => state.clearUserSession);
@@ -31,27 +43,29 @@ const SettingMenu = memo(() => {
   );
 
   return (
-    <View style={styles.settingsWrapper}>
-      {SETTINGS_OPTIONS.map((item, index) => (
-        <Fragment key={item.id}>
-          <TouchableOpacity
-            onPress={() =>
-              item.title === "Logout"
-                ? handleLogout()
-                : handleNavigate(item.destination as RelativePathString)
-            }
-          >
-            <Text
-              textVariant={item.title === "Logout" ? "primary" : "quaternary"}
+    <View style={style}>
+      <View style={styles.settingsWrapper}>
+        {SETTINGS_OPTIONS.map((item, index) => (
+          <Fragment key={item.id}>
+            <TouchableOpacity
+              onPress={() =>
+                item.title === "Logout"
+                  ? handleLogout()
+                  : handleNavigate(item.destination as RelativePathString)
+              }
             >
-              {item.title}
-            </Text>
-          </TouchableOpacity>
-          {index !== SETTINGS_OPTIONS.length - 1 && (
-            <View style={styles.separator} />
-          )}
-        </Fragment>
-      ))}
+              <Text
+                textVariant={item.title === "Logout" ? "primary" : "quaternary"}
+              >
+                {item.title}
+              </Text>
+            </TouchableOpacity>
+            {index !== SETTINGS_OPTIONS.length - 1 && (
+              <View style={styles.separator} />
+            )}
+          </Fragment>
+        ))}
+      </View>
     </View>
   );
 });

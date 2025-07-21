@@ -2,7 +2,7 @@ export const SETTINGS_OPTIONS = [
   {
     id: "1",
     title: "Edit Profile",
-    destination: "",
+    destination: "/(main_stacks)/edit_profile",
   },
   {
     id: "2",

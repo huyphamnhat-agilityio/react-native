@@ -14,3 +14,4 @@ export { default as ProductPreviewList } from "./ProductPreviewList";
 export { default as QuantityControl } from "./QuantityControl";
 export { default as Checkbox } from "./Checkbox";
 export { default as AddressInfoSection } from "./AddressInfoSection";
+export { default as BottomSheet, BottomSheetProps } from "./BottomSheet";

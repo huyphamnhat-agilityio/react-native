@@ -41,6 +41,11 @@ const MainStacksLayout = () => {
     () => <Header title="Add Card" includeBackButton isTitleOnly />,
     [],
   );
+
+  const handleRenderEditProfileHeader = useCallback(
+    () => <Header title="Edit Profile" includeBackButton isTitleOnly />,
+    [],
+  );
   return (
     <Stack>
       <Stack.Screen
@@ -101,6 +106,13 @@ const MainStacksLayout = () => {
         name="order"
         options={{
           headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="edit_profile"
+        options={{
+          header: handleRenderEditProfileHeader,
         }}
       />
     </Stack>

@@ -224,6 +224,7 @@ const CardForm = memo(({ onSubmit }: CardFormProps) => {
                   isError={!!error?.message}
                   errorMessage={error?.message}
                   onChangeText={handleInputChange("cvc", onChange)}
+                  onSubmitEditing={handleSubmit(onSubmit)}
                   {...rest}
                 />
               )}

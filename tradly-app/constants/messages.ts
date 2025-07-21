@@ -51,4 +51,5 @@ export const SUCCESS_MESSAGE = {
   ADD_CARD: "Your card has been added successfully!",
   UPDATE_ADDRESS: "The address has been updated successfully!",
   UPLOAD_IMAGE: "The image has been uploaded successfully!",
+  UPDATE_USER: "Your user profile has been updated successfully!",
 } as const;
