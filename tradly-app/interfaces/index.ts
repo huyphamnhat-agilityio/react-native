@@ -11,3 +11,4 @@ export { QueryContexts } from "./queryKey";
 export { Category } from "./category";
 export { CategoryRouteParams, ProductDetailRouteParams } from "./navigation";
 export { Cart, CartItemData, CartPayload, CartTotal } from "./cart";
+export { PaymentOption } from "./payment";

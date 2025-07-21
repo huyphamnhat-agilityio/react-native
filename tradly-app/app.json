@@ -77,7 +77,8 @@
             "./assets/images/pet_care.jpg",
             "./assets/images/vegetables.jpg",
             "./assets/images/visa.jpg",
-            "./assets/images/mastercard.png"
+            "./assets/images/mastercard.png",
+            "./assets/images/order_success.png"
           ]
         }
       ],

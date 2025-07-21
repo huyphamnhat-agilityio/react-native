@@ -23,52 +23,57 @@ import { generateDeliveryInfo, isFulfilledObject } from "@/utils";
 
 export type AddressInfoSectionProps = {
   style?: StyleProp<ViewStyle>;
+  disabled?: boolean;
 };
-const AddressInfoSection = memo(({ style }: AddressInfoSectionProps) => {
-  const userAddress = useUserStore((state) => state.user?.address);
+const AddressInfoSection = memo(
+  ({ style, disabled }: AddressInfoSectionProps) => {
+    const userAddress = useUserStore((state) => state.user?.address);
 
-  const { navigate } = useRouter();
+    const { navigate } = useRouter();
 
-  const handleNavigateToAddress = useCallback(() => {
-    navigate("/(main_stacks)/address");
-  }, [navigate]);
+    const handleNavigateToAddress = useCallback(() => {
+      navigate("/(main_stacks)/address");
+    }, [navigate]);
 
-  const buttonText = useMemo(() => {
-    return isFulfilledObject(userAddress)
-      ? generateDeliveryInfo(userAddress!)
-      : "+ Add New Address";
-  }, [userAddress]);
+    const buttonText = useMemo(() => {
+      return isFulfilledObject(userAddress)
+        ? generateDeliveryInfo(userAddress!)
+        : "+ Add New Address";
+    }, [userAddress]);
 
-  return isFulfilledObject(userAddress) ? (
-    <View style={[styles.editAddressWrapper, style]}>
-      <Text
-        numberOfLines={2}
-        textVariant="quaternary"
-        style={styles.deliveryText}
-      >
-        {buttonText}
-      </Text>
+    return isFulfilledObject(userAddress) ? (
+      <View style={[styles.editAddressWrapper, style]}>
+        <Text
+          numberOfLines={2}
+          textVariant="quaternary"
+          style={styles.deliveryText}
+        >
+          {buttonText}
+        </Text>
 
-      <Button
-        title="Change"
-        titleSize={3}
-        rounded="full"
-        style={styles.button}
+        <Button
+          title="Change"
+          titleSize={3}
+          rounded="full"
+          style={styles.button}
+          onPress={handleNavigateToAddress}
+          disabled={disabled}
+        />
+      </View>
+    ) : (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={styles.addNewAddressWrapper}
         onPress={handleNavigateToAddress}
-      />
-    </View>
-  ) : (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={styles.addNewAddressWrapper}
-      onPress={handleNavigateToAddress}
-    >
-      <Text textVariant="quaternary" style={styles.textCentered}>
-        {buttonText}
-      </Text>
-    </TouchableOpacity>
-  );
-});
+        disabled={disabled}
+      >
+        <Text textVariant="quaternary" style={styles.textCentered}>
+          {buttonText}
+        </Text>
+      </TouchableOpacity>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   addNewAddressWrapper: {

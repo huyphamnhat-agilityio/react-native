@@ -6,7 +6,11 @@ import { CategoryRouteParams } from "@/interfaces";
 
 // Components
 import { Header } from "@/components/common";
+
+// Store
 import { useUserStore } from "@/store";
+
+// Utils
 import { isFulfilledObject } from "@/utils";
 
 const MainStacksLayout = () => {
@@ -90,6 +94,13 @@ const MainStacksLayout = () => {
         name="card"
         options={{
           header: handleRenderCardHeader,
+        }}
+      />
+
+      <Stack.Screen
+        name="order"
+        options={{
+          headerShown: false,
         }}
       />
     </Stack>
