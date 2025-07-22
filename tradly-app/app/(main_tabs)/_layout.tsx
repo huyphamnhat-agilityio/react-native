@@ -10,6 +10,9 @@ import { HomeIcon, ProfileIcon, SearchIcon } from "@/components/icons";
 // Themes
 import { fontFamilies, fontSizes, text } from "@/themes";
 
+// Hooks
+import { useNotificationObserver } from "@/hooks";
+
 const MainTabsLayout = () => {
   const renderHomeTabBarIcon = useCallback(
     ({ color }: { focused: boolean; color: string; size: number }) => {
@@ -43,6 +46,8 @@ const MainTabsLayout = () => {
   const renderHProfileHeader = useCallback(() => {
     return <Header title="Profile" />;
   }, []);
+
+  useNotificationObserver();
 
   return (
     <Tabs

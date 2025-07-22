@@ -7,13 +7,16 @@ import Constants from "expo-constants";
 import { Platform } from "react-native";
 import { colors } from "@/themes";
 import { handleNeverAskAgain } from "@/utils";
+import { Href, router } from "expo-router";
+import { useNotificationStore } from "@/store";
+import { useShallow } from "zustand/shallow";
 
 export interface PushNotificationState {
   expoPushToken?: Notifications.ExpoPushToken;
   notification?: Notifications.Notification;
 }
 
-export const usePushNotifications = (): PushNotificationState => {
+export const useInitPushNotifications = (): PushNotificationState => {
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldPlaySound: true,
@@ -27,11 +30,10 @@ export const usePushNotifications = (): PushNotificationState => {
     Notifications.ExpoPushToken | undefined
   >();
 
-  const [notification, setNotification] = useState<
-    Notifications.Notification | undefined
-  >();
+  const setNotificationGlobal = useNotificationStore(
+    (state) => state.setNotification,
+  );
 
-  const notificationListener = useRef<Notifications.EventSubscription>(null);
   const responseListener = useRef<Notifications.EventSubscription>(null);
 
   async function registerForPushNotificationsAsync() {
@@ -79,24 +81,52 @@ export const usePushNotifications = (): PushNotificationState => {
       setExpoPushToken(token);
     });
 
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        setNotificationGlobal(response.notification);
       });
 
     return () => {
-      notificationListener.current?.remove();
       responseListener.current?.remove();
     };
-  }, []);
+  }, [setNotificationGlobal]);
 
   return {
     expoPushToken,
-    notification,
   };
 };
+
+export const useNotificationObserver = () => {
+  const { notification, setNotification } = useNotificationStore(
+    useShallow((state) => ({
+      notification: state.notification,
+      setNotification: state.setNotification,
+    })),
+  );
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        setNotification(response.notification);
+      },
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, [setNotification]);
+
+  useEffect(() => {
+    if (notification) {
+      setNotification(undefined);
+      redirect(notification);
+    }
+  });
+};
+
+function redirect(notification: Notifications.Notification) {
+  const url = notification.request.content.data?.url as Href;
+  if (url) {
+    router.push(url);
+  }
+}
