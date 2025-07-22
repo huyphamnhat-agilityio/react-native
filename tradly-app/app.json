@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#33907C"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.huy.phamnhat.tradlyapp",
@@ -33,7 +33,7 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#33907C"
         }
       ],
       [
@@ -87,6 +87,8 @@
       [
         "expo-notifications",
         {
+          "icon": "./assets/images/adaptive-icon.png",
+          "color": "#33907C",
           "enableBackgroundRemoteNotifications": true
         }
       ]
