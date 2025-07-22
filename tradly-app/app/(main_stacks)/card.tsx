@@ -62,7 +62,10 @@ const Card = () => {
     [back, currentCards, setUserCards, updateUser, userId],
   );
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
+    >
       <CardForm onSubmit={handleAddCard} />
     </KeyboardAwareScrollView>
   );

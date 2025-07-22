@@ -17,7 +17,6 @@ export const usePushNotifications = (): PushNotificationState => {
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldPlaySound: true,
-      shouldShowAlert: true,
       shouldSetBadge: true,
       shouldShowBanner: true,
       shouldShowList: true,
@@ -50,9 +49,15 @@ export const usePushNotifications = (): PushNotificationState => {
         handleNeverAskAgain("Notifications");
       }
 
-      token = await Notifications.getExpoPushTokenAsync({
-        projectId: Constants.expoConfig?.extra?.eas.projectId,
-      });
+      try {
+        token = await Notifications.getExpoPushTokenAsync({
+          projectId: Constants.expoConfig?.extra?.eas.projectId,
+        });
+      } catch (error) {
+        console.log("Error while getting token:", error);
+      }
+
+      console.log("expoPushToken:", token);
     } else {
       console.log("Must be using a physical device for Push notifications");
     }

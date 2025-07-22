@@ -18,11 +18,7 @@ export default function RootLayout() {
     import("../ReactotronConfig");
   }
 
-  const { expoPushToken, notification } = usePushNotifications();
-
-  console.log(JSON.stringify(notification, undefined, 2));
-
-  console.log("Token:", expoPushToken);
+  usePushNotifications();
 
   return (
     <KeyboardProvider>
