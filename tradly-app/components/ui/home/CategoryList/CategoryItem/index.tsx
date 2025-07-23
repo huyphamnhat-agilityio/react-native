@@ -25,8 +25,12 @@ const CategoryItem = memo(({ id, imageUrl, title }: CategoryItemProps) => {
       asChild
     >
       <TouchableOpacity key={id} activeOpacity={0.8}>
-        <ImageBackground source={{ uri: imageUrl }} style={styles.container}>
-          <Text textVariant="white" font="Montserrat_600SemiBold" size={2.75}>
+        <ImageBackground
+          source={{ uri: imageUrl }}
+          style={styles.container}
+          cachePolicy="memory-disk"
+        >
+          <Text textVariant="white" font="Montserrat_600SemiBold" size={2.5}>
             {title}
           </Text>
         </ImageBackground>
@@ -37,7 +41,7 @@ const CategoryItem = memo(({ id, imageUrl, title }: CategoryItemProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH / 4 - 1,
+    width: SCREEN_WIDTH / 4,
     height: SCREEN_WIDTH / 4 - 1,
     justifyContent: "center",
     alignItems: "center",

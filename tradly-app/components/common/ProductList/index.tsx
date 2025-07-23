@@ -1,10 +1,9 @@
 import { memo, useCallback } from "react";
 import {
   ActivityIndicator,
-  FlatList,
   RefreshControl,
-  StyleProp,
   StyleSheet,
+  View,
   ViewStyle,
 } from "react-native";
 import {
@@ -12,6 +11,7 @@ import {
   InfiniteData,
   InfiniteQueryObserverResult,
 } from "@tanstack/react-query";
+import { FlashList } from "@shopify/flash-list";
 
 // Types & Interfaces
 import { Product } from "@/interfaces";
@@ -27,7 +27,7 @@ import { ERROR_MESSAGE } from "@/constants";
 import { colors } from "@/themes";
 
 export type ProductPreviewListProps = {
-  style?: StyleProp<ViewStyle>;
+  style?: ViewStyle;
   products: Product[];
   fetchNextPage?: (
     options?: FetchNextPageOptions,
@@ -65,17 +65,22 @@ const ProductList = memo(
       ({ item }: { item: Product }) => <ProductCard {...item} />,
       [],
     );
+
+    const ItemSeparatorComponent = useCallback(
+      () => <View style={styles.wrapper} />,
+      [],
+    );
+
     return (
-      <FlatList
+      <FlashList
         data={products}
         numColumns={2}
         style={style}
-        contentContainerStyle={styles.container}
-        columnWrapperStyle={styles.wrapper}
         keyExtractor={(item) => item.id}
         renderItem={handleRenderItem}
         onEndReached={handleFetchNextPage}
         onEndReachedThreshold={0.5}
+        ItemSeparatorComponent={ItemSeparatorComponent}
         ListFooterComponent={
           hasNextPage ? (
             <ActivityIndicator size="large" color={colors.green_200} />
@@ -101,10 +106,10 @@ const ProductList = memo(
 
 const styles = StyleSheet.create({
   container: {
-    gap: 10,
+    padding: 0,
   },
   wrapper: {
-    gap: 10,
+    height: 6,
   },
   message: {
     textAlign: "center",

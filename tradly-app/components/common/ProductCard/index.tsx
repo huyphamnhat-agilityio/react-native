@@ -34,6 +34,7 @@ const ProductCard = memo(
               uri: imageUrl,
             }}
             style={styles.image}
+            cachePolicy="memory-disk"
           />
           <View style={styles.content}>
             <Text numberOfLines={1} textVariant="quaternary">
