@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import {
   ActivityIndicator,
   StyleProp,
@@ -15,6 +15,7 @@ import { Product } from "@/interfaces";
 
 // Constants
 import { SCREEN_WIDTH } from "@/constants";
+import { useRouter } from "expo-router";
 
 export type NewProductListProps = {
   style?: StyleProp<ViewStyle>;
@@ -32,13 +33,25 @@ const ProductPreview = memo(
     errorMessage,
     isLoading,
   }: NewProductListProps) => {
+    const { navigate } = useRouter();
+
+    const handleNavigateToBrowse = useCallback(
+      () => navigate("/(main_tabs)/browse"),
+      [navigate],
+    );
+
     return (
       <View style={[styles.wrapper, style]}>
         <View style={styles.header}>
           <Text textVariant="quaternary" font="Montserrat_700Bold" size={4.5}>
             {title}
           </Text>
-          <Button title="See All" rounded={6} style={styles.button} />
+          <Button
+            title="See All"
+            rounded={6}
+            style={styles.button}
+            onPress={handleNavigateToBrowse}
+          />
         </View>
 
         {isLoading ? (

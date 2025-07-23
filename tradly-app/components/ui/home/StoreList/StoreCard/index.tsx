@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: SCREEN_WIDTH / 2 - 25,
+    width: SCREEN_WIDTH / 2 - 27,
     height: SCREEN_WIDTH / 4 + 5,
     borderTopStartRadius: borderRadius["2.5"],
     borderTopEndRadius: borderRadius["2.5"],

@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { ICarouselInstance } from "react-native-reanimated-carousel";
 import { useSharedValue } from "react-native-reanimated";
+import * as Notifications from "expo-notifications";
 
 // Themes
 import { background, colors } from "@/themes";
@@ -95,6 +96,17 @@ const ProductDetail = () => {
   const queryClient = useQueryClient();
 
   const handleAddToCart = useCallback(async () => {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Expo title",
+        body: "A product have been add to cart",
+        data: {
+          url: `/(main_stacks)/product/${productId}`,
+        },
+      },
+      trigger: null,
+    });
+
     const itemId = `${userId}-${productId}`;
     const updatedItems = currentCartItems.some((item) => item.id === itemId)
       ? currentCartItems.map((item) =>

@@ -19,7 +19,11 @@ import { Product } from "@/interfaces";
 // Components
 import ProductCard from "../ProductCard";
 import Text from "../Text";
+
+// Constants
 import { ERROR_MESSAGE } from "@/constants";
+
+// Themes
 import { colors } from "@/themes";
 
 export type ProductPreviewListProps = {
@@ -56,6 +60,11 @@ const ProductList = memo(
     }, [fetchNextPage, hasNextPage, isFetching]);
 
     const handleRefresh = useCallback(() => resetData?.(), [resetData]);
+
+    const handleRenderItem = useCallback(
+      ({ item }: { item: Product }) => <ProductCard {...item} />,
+      [],
+    );
     return (
       <FlatList
         data={products}
@@ -64,7 +73,7 @@ const ProductList = memo(
         contentContainerStyle={styles.container}
         columnWrapperStyle={styles.wrapper}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <ProductCard {...item} />}
+        renderItem={handleRenderItem}
         onEndReached={handleFetchNextPage}
         onEndReachedThreshold={0.5}
         ListFooterComponent={

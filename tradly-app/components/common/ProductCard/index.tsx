@@ -42,23 +42,11 @@ const ProductCard = memo(
             <View style={styles.description}>
               <View style={styles.wrapper}>
                 <TradlyIcon />
-                <Text
-                  textVariant="secondary"
-                  size={SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 3.5 : 2.5}
-                >
+                <Text textVariant="secondary" size={3.5}>
                   Tradly
                 </Text>
               </View>
               <View style={styles.priceWrapper}>
-                <Text
-                  numberOfLines={1}
-                  textVariant="quaternary"
-                  font="Montserrat_400Regular"
-                  size={2.5}
-                  style={styles.originalPrice}
-                >
-                  {formatNumberWithThousandSeparator(originalPrice)}
-                </Text>
                 <Text
                   numberOfLines={1}
                   textVariant="primary"
@@ -85,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   image: {
-    width: SCREEN_WIDTH / 2 - 25,
+    width: SCREEN_WIDTH / 2 - 26,
     height: SCREEN_WIDTH / 2 - 65,
     borderTopStartRadius: borderRadius["2.5"],
     borderTopEndRadius: borderRadius["2.5"],
@@ -97,7 +85,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flexDirection: "row",
-    gap: SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 6 : 4,
+    gap: 2,
     alignItems: "center",
   },
   description: {
