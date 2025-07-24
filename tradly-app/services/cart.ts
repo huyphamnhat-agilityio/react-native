@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 import { fetchApiWithAuth } from "./fetch";
 
 // Constants
@@ -6,13 +7,13 @@ import { RESOURCES } from "@/constants";
 // Types & Interfaces
 import { Cart, QueryContexts } from "@/interfaces";
 
+const API_URL = Constants.expoConfig?.extra?.API_URL;
+
 export const getCart = async ({
   queryKey: [{ params }],
 }: QueryContexts["CARTS"]) => {
   const result = await fetchApiWithAuth<Cart>(
-    `${process.env.EXPO_PUBLIC_API_URL}/${RESOURCES.CARTS}${
-      params?.id ? `/${params.id}` : ""
-    }`,
+    `${API_URL}/${RESOURCES.CARTS}${params?.id ? `/${params.id}` : ""}`,
   );
 
   return result;
@@ -21,11 +22,8 @@ export const getCart = async ({
 export const updateCart = async (payload: Omit<Cart, "id">) => {
   const { userId, items } = payload;
 
-  await fetchApiWithAuth<Cart>(
-    `${process.env.EXPO_PUBLIC_API_URL}/${RESOURCES.CARTS}/${userId}`,
-    {
-      method: "PATCH",
-      body: JSON.stringify({ items }),
-    },
-  );
+  await fetchApiWithAuth<Cart>(`${API_URL}/${RESOURCES.CARTS}/${userId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ items }),
+  });
 };

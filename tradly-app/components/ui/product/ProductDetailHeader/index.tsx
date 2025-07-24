@@ -12,7 +12,7 @@ import { background, colors } from "@/themes";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Feather from "@expo/vector-icons/Feather";
+import { CartIcon } from "@/components/icons";
 
 const ProductDetailHeader = memo(() => {
   const { back, canGoBack, navigate } = useRouter();
@@ -24,6 +24,11 @@ const ProductDetailHeader = memo(() => {
       navigate("/(main_tabs)");
     }
   }, [back, canGoBack, navigate]);
+
+  const handleNavigateToCart = useCallback(
+    () => navigate("/(main_stacks)/cart"),
+    [navigate],
+  );
 
   return (
     <>
@@ -55,9 +60,8 @@ const ProductDetailHeader = memo(() => {
           <Button
             rounded="full"
             variant="alternative"
-            IconRight={
-              <Feather name="more-vertical" size={24} color={colors.white} />
-            }
+            onPress={handleNavigateToCart}
+            IconRight={<CartIcon width={24} height={24} />}
           />
         </View>
       </View>

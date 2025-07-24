@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 import { fetchApiWithAuth } from "./fetch";
 
 // Constants
@@ -8,6 +9,8 @@ import { Product, QueryContexts, QueryParams } from "@/interfaces";
 
 // Utils
 import { toQueryString } from "@/utils";
+
+const API_URL = Constants.expoConfig?.extra?.API_URL;
 
 export const getProducts = async ({
   queryKey: [{ params }],
@@ -20,7 +23,7 @@ export const getProducts = async ({
   };
 
   const result = await fetchApiWithAuth<Product[]>(
-    `${process.env.EXPO_PUBLIC_API_URL}/${RESOURCES.PRODUCTS}${toQueryString(query)}`,
+    `${API_URL}/${RESOURCES.PRODUCTS}${toQueryString(query)}`,
   );
 
   return result;
@@ -30,7 +33,7 @@ export const getProduct = async ({
   queryKey: [{ id }],
 }: QueryContexts["PRODUCT"]) => {
   const product = await fetchApiWithAuth<Product>(
-    `${process.env.EXPO_PUBLIC_API_URL}/${RESOURCES.PRODUCTS}/${id}`,
+    `${API_URL}/${RESOURCES.PRODUCTS}/${id}`,
   );
 
   return product;

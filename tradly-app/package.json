@@ -58,7 +58,8 @@
     "expo-device": "~7.1.4",
     "expo-dev-client": "~5.2.4",
     "expo-task-manager": "~13.1.6",
-    "@shopify/flash-list": "2.0.0-rc.12"
+    "@shopify/flash-list": "2.0.0-rc.12",
+    "@expo/config": "^11.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

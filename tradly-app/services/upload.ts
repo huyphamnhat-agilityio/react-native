@@ -1,11 +1,15 @@
+import Constants from "expo-constants";
 import { fetchApi } from "./fetch";
 
 // Types & Interfaces
 import { ImgBBResponse } from "@/interfaces";
 
+const UPLOAD_IMAGE_URL = Constants.expoConfig?.extra?.UPLOAD_IMAGE_URL;
+const IMGBB_API_KEY = Constants.expoConfig?.extra?.IMGBB_API_KEY;
+
 export const uploadImage = async (image: FormData): Promise<string> => {
   const response = await fetchApi<ImgBBResponse>(
-    `${process.env.EXPO_PUBLIC_UPLOAD_IMAGE_URL}?key=${process.env.EXPO_PUBLIC_IMGBB_API_KEY}`,
+    `${UPLOAD_IMAGE_URL}?key=${IMGBB_API_KEY}`,
     {
       headers: {
         "Content-Type": "multipart/form-data",
