@@ -5,7 +5,7 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
-import { SharedValue } from "react-native-reanimated";
+import Animated, { FadeInLeft, SharedValue } from "react-native-reanimated";
 
 // Themes
 import { background, borderRadius, colors } from "@/themes";
@@ -47,7 +47,7 @@ const OnboardingCarousel = memo(
       );
 
       return (
-        <View style={styles.content}>
+        <Animated.View entering={FadeInLeft} style={styles.content}>
           <Carousel
             ref={ref}
             width={SCREEN_WIDTH - 60}
@@ -87,7 +87,7 @@ const OnboardingCarousel = memo(
             horizontal
             onPress={onPressPagination}
           />
-        </View>
+        </Animated.View>
       );
     },
   ),

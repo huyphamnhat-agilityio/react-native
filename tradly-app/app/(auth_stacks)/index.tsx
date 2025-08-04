@@ -1,5 +1,5 @@
 import { ICarouselInstance } from "react-native-reanimated-carousel";
-import { useSharedValue } from "react-native-reanimated";
+import Animated, { FadeInLeft, useSharedValue } from "react-native-reanimated";
 import { StyleSheet, View } from "react-native";
 import { useCallback, useRef, useState } from "react";
 
@@ -81,7 +81,9 @@ const Onboarding = () => {
         setCurrentIndex={setCurrentIndex}
       />
 
-      <View style={styles.buttonWrapper}>{renderBoardingButton()}</View>
+      <Animated.View entering={FadeInLeft} style={styles.buttonWrapper}>
+        {renderBoardingButton()}
+      </Animated.View>
     </View>
   );
 };

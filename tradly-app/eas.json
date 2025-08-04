@@ -21,7 +21,8 @@
     "standalone": {
       "android": {
         "buildType": "apk"
-      }
+      },
+      "environment": "preview"
     }
   },
   "submit": {
