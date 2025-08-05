@@ -1,9 +1,10 @@
 import { Image } from "expo-image";
 import { memo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
+import { Link } from "expo-router";
 
 // Components
-import { Link } from "expo-router";
 import Text from "../Text";
 
 // Themes
@@ -21,14 +22,14 @@ import { TradlyIcon } from "@/components/icons";
 // Utils
 import { formatNumberWithThousandSeparator } from "@/utils";
 
-const ProductCard = memo(
-  ({ id, name, imageUrl, price, originalPrice }: Product) => {
-    return (
+const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
+  return (
+    <Animated.View entering={FadeIn.duration(500)} key={id}>
       <Link
         href={{ pathname: "/(main_stacks)/product/[id]", params: { id } }}
         asChild
       >
-        <TouchableOpacity activeOpacity={0.7} style={styles.container} key={id}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.container}>
           <Image
             source={{
               uri: imageUrl,
@@ -60,9 +61,9 @@ const ProductCard = memo(
           </View>
         </TouchableOpacity>
       </Link>
-    );
-  },
-);
+    </Animated.View>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {

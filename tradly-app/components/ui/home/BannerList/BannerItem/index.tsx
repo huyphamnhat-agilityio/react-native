@@ -1,6 +1,7 @@
 import { ImageBackground } from "expo-image";
 import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 // Themes
 import { borderRadius, colors } from "@/themes";
@@ -16,42 +17,44 @@ export type BannerItemProps = {
 };
 const BannerItem = memo(
   ({ id, imageUrl = "", title = "", buttonText = "" }: BannerItemProps) => {
+    const entering = FadeIn.duration(500);
+
     return imageUrl ? (
-      <ImageBackground
-        source={{ uri: imageUrl }}
-        style={styles.container}
-        imageStyle={styles.image}
-        key={id}
-      >
-        <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
-          {title}
-        </Text>
-        <Button
-          variant="transparent"
-          titleFont="Montserrat_700Bold"
-          titleSize={3}
-          title={buttonText}
-          rounded={3.5}
-          style={styles.button}
-        />
-      </ImageBackground>
+      <Animated.View entering={entering} key={id}>
+        <ImageBackground
+          source={{ uri: imageUrl }}
+          style={styles.container}
+          imageStyle={styles.image}
+        >
+          <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
+            {title}
+          </Text>
+          <Button
+            variant="transparent"
+            titleFont="Montserrat_700Bold"
+            titleSize={3}
+            title={buttonText}
+            rounded={3.5}
+            style={styles.button}
+          />
+        </ImageBackground>
+      </Animated.View>
     ) : (
-      <View
-        key={id}
-        style={[styles.container, { backgroundColor: colors.black }]}
-      >
-        <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
-          {title}
-        </Text>
-        <Button
-          variant="transparent"
-          titleFont="Montserrat_700Bold"
-          titleSize={3}
-          title={buttonText}
-          rounded={3.5}
-          style={styles.button}
-        />
-      </View>
+      <Animated.View entering={entering} key={id}>
+        <View style={[styles.container, { backgroundColor: colors.black }]}>
+          <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
+            {title}
+          </Text>
+          <Button
+            variant="transparent"
+            titleFont="Montserrat_700Bold"
+            titleSize={3}
+            title={buttonText}
+            rounded={3.5}
+            style={styles.button}
+          />
+        </View>
+      </Animated.View>
     );
   },
 );

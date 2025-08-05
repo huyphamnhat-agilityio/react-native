@@ -1,4 +1,4 @@
-import { FlatList, StyleProp, ViewStyle } from "react-native";
+import { StyleProp, ViewStyle } from "react-native";
 
 import { memo, useCallback } from "react";
 
@@ -10,6 +10,7 @@ import CategoryItem from "./CategoryItem";
 
 // Interfaces
 import { Category } from "@/interfaces";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 export type CategoryListProps = {
   style?: StyleProp<ViewStyle>;
@@ -21,8 +22,11 @@ const CategoryList = memo(({ style }: CategoryListProps) => {
     [],
   );
 
+  const entering = FadeIn.duration(500);
+
   return (
-    <FlatList
+    <Animated.FlatList
+      entering={entering}
       data={CATEGORIES.slice(1)}
       scrollEnabled={false}
       numColumns={4}

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   loadingWrapper: {
-    height: SCREEN_WIDTH / 2 - 65,
+    height: SCREEN_WIDTH / 2,
     justifyContent: "center",
     alignItems: "center",
   },
