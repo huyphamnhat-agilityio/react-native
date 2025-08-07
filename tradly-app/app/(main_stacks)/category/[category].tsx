@@ -5,12 +5,13 @@ import { useLocalSearchParams } from "expo-router";
 import { background, colors } from "@/themes";
 
 // Hooks
-import { useGetProducts } from "@/hooks";
+import { useGetProducts, useHandleExpiredToken } from "@/hooks";
 
 // Components
 import { ProductList } from "@/components/common";
 import { useShallow } from "zustand/shallow";
 import { useFilterStore } from "@/store";
+import { useMemo } from "react";
 
 const ProductWithCategory = () => {
   const { category } = useLocalSearchParams();
@@ -42,6 +43,16 @@ const ProductWithCategory = () => {
     _sort: currentSortField,
     _order: currentOrder,
   });
+
+  const parsedErrorMessage = useMemo(() => {
+    try {
+      return JSON.parse(error?.message ?? "{}");
+    } catch {
+      return {};
+    }
+  }, [error]);
+
+  useHandleExpiredToken(parsedErrorMessage);
 
   return (
     <View style={styles.container}>

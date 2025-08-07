@@ -9,6 +9,7 @@ import { SCREEN_HEIGHT } from "@/constants";
 
 // Themes
 import { background } from "@/themes";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 export type ProductDetailDescriptionProps = {
   description: string;
@@ -26,7 +27,10 @@ const ProductDetailDescription = memo(
     location,
   }: ProductDetailDescriptionProps) => {
     return (
-      <View style={styles.contentWrapper}>
+      <Animated.View
+        entering={FadeIn.duration(500)}
+        style={styles.contentWrapper}
+      >
         <ScrollView style={styles.descriptionWrapper} nestedScrollEnabled>
           <Text
             font="Montserrat_400Regular"
@@ -51,7 +55,7 @@ const ProductDetailDescription = memo(
             <Text textVariant="quaternary">{location}</Text>
           </View>
         </View>
-      </View>
+      </Animated.View>
     );
   },
 );

@@ -1,11 +1,11 @@
 import { Image } from "expo-image";
 import { forwardRef, memo, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
-import { SharedValue } from "react-native-reanimated";
+import Animated, { FadeIn, SharedValue } from "react-native-reanimated";
 
 // Themes
 import { colors } from "@/themes";
@@ -36,7 +36,7 @@ const ProductImageCarousel = memo(
       );
 
       return (
-        <View style={styles.content}>
+        <Animated.View entering={FadeIn.duration(500)} style={styles.content}>
           <Carousel
             ref={ref}
             width={SCREEN_WIDTH}
@@ -68,7 +68,7 @@ const ProductImageCarousel = memo(
             horizontal
             onPress={onPressPagination}
           />
-        </View>
+        </Animated.View>
       );
     },
   ),

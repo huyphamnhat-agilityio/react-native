@@ -4,13 +4,13 @@ import { FlatList } from "react-native";
 
 // Components
 import Modal, { ModalProps } from "../Modal";
-
-// Mocks
+import SortSelectItem from "../SortSelectItem";
 
 // Store
 import { useFilterStore } from "@/store";
+
+// Constants
 import { SORTS } from "@/constants";
-import SortSelectItem from "../SortSelectItem";
 
 export type SortModalProps = { onClose?: () => void } & ModalProps;
 

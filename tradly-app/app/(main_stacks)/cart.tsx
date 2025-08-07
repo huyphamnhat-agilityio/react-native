@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Alert, StyleSheet, ToastAndroid, View } from "react-native";
+import { Alert, StyleSheet, ToastAndroid } from "react-native";
 import { useRouter } from "expo-router";
 
 // Themes
@@ -24,6 +24,7 @@ import { CartTotal, Cart as CartType } from "@/interfaces";
 
 // Utils
 import { getCartSummary } from "@/utils";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 const Cart = () => {
   const userId = useUserStore((state) => state.user?.id ?? "");
@@ -149,7 +150,7 @@ const Cart = () => {
   }, [items]);
 
   return (
-    <View style={styles.container}>
+    <Animated.View entering={FadeIn.duration(500)} style={styles.container}>
       <AddressInfoSection />
 
       <CartItemList
@@ -166,7 +167,7 @@ const Cart = () => {
         canCheckout={items.length > 0}
         onNavigate={handleNavigateToPayment}
       />
-    </View>
+    </Animated.View>
   );
 };
 

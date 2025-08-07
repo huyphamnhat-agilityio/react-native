@@ -7,10 +7,9 @@ import {
   ScrollView,
   StyleSheet,
   ToastAndroid,
-  View,
 } from "react-native";
 import { ICarouselInstance } from "react-native-reanimated-carousel";
-import { useSharedValue } from "react-native-reanimated";
+import Animated, { FadeIn, useSharedValue } from "react-native-reanimated";
 import * as Notifications from "expo-notifications";
 
 // Themes
@@ -168,26 +167,29 @@ const ProductDetail = () => {
     updateCart,
     userId,
   ]);
+
+  const entering = FadeIn.duration(500);
+
   if (isLoading) {
     return (
-      <View style={styles.centered}>
+      <Animated.View entering={entering} style={styles.centered}>
         <ActivityIndicator size="large" color={colors.green_200} />
-      </View>
+      </Animated.View>
     );
   }
 
   if (error) {
     return (
-      <View style={styles.centered}>
+      <Animated.View entering={entering} style={styles.centered}>
         <Text font="Montserrat_600SemiBold" textVariant="secondary" size={4}>
           {error.message}
         </Text>
-      </View>
+      </Animated.View>
     );
   }
 
   return (
-    <View style={styles.wrapper}>
+    <Animated.View entering={entering} style={styles.wrapper}>
       <ProductDetailHeader />
 
       <ScrollView
@@ -222,7 +224,7 @@ const ProductDetail = () => {
         <ProductDetailAdditional />
       </ScrollView>
 
-      <View style={styles.buttonWrapper}>
+      <Animated.View entering={entering} style={styles.buttonWrapper}>
         <Button
           title="Add to Cart"
           titleFont="Montserrat_600SemiBold"
@@ -232,8 +234,8 @@ const ProductDetail = () => {
           disabled={isPending || isLoadingCart}
           onPress={handleAddToCart}
         />
-      </View>
-    </View>
+      </Animated.View>
+    </Animated.View>
   );
 };
 

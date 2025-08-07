@@ -27,6 +27,7 @@ import { useDebounce } from "@/hooks";
 
 // Store
 import { useFilterStore } from "@/store";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 export type HeaderProps = {
   isTitleOnly?: boolean;
@@ -71,7 +72,8 @@ const Header = memo(
     }, [debouncedSearch, setSearchQuery]);
     return (
       <SafeAreaView edges={["top"]} style={styles.container}>
-        <View
+        <Animated.View
+          entering={FadeIn.duration(500)}
           style={[
             styles.inner,
             { justifyContent: isTitleOnly ? "center" : "space-between" },
@@ -93,7 +95,7 @@ const Header = memo(
               <Button IconLeft={<CartIcon />} onPress={handleNavigateToCart} />
             </View>
           )}
-        </View>
+        </Animated.View>
 
         {includeSearchBar && (
           <Input

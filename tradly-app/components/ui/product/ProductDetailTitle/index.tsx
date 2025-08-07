@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 // Components
 import { Text } from "@/components/common";
@@ -18,7 +19,10 @@ export type ProductDetailTitleProps = {
 const ProductDetailTitle = memo(
   ({ name, price, originalPrice }: ProductDetailTitleProps) => {
     return (
-      <View style={styles.titleWrapper}>
+      <Animated.View
+        entering={FadeIn.duration(500)}
+        style={styles.titleWrapper}
+      >
         <Text font="Montserrat_700Bold" textVariant="quaternary" size={4.5}>
           {name}
         </Text>
@@ -37,7 +41,7 @@ const ProductDetailTitle = memo(
             {Math.round(getSalePercentage(originalPrice, price))}% off
           </Text>
         </View>
-      </View>
+      </Animated.View>
     );
   },
 );

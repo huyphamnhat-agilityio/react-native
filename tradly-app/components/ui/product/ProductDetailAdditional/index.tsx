@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 // Components
 import { Text } from "@/components/common";
@@ -9,7 +10,10 @@ import { background } from "@/themes";
 
 const ProductDetailAdditional = memo(() => {
   return (
-    <View style={styles.deliveryWrapper}>
+    <Animated.View
+      entering={FadeIn.duration(500)}
+      style={styles.deliveryWrapper}
+    >
       <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
         Additional Details
       </Text>
@@ -27,7 +31,7 @@ const ProductDetailAdditional = memo(() => {
           Home Delivery Available, Cash On Delivery
         </Text>
       </View>
-    </View>
+    </Animated.View>
   );
 });
 

@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 // Icons
 import { TradlyBigIcon } from "@/components/icons";
@@ -12,7 +13,7 @@ import { background } from "@/themes";
 
 const ProductDetailStore = memo(() => {
   return (
-    <View style={styles.storeWrapper}>
+    <Animated.View entering={FadeIn.duration(500)} style={styles.storeWrapper}>
       <View style={styles.storeInfo}>
         <TradlyBigIcon />
         <Text textVariant="quaternary" size={3.5}>
@@ -25,7 +26,7 @@ const ProductDetailStore = memo(() => {
         rounded={6}
         style={styles.followButton}
       />
-    </View>
+    </Animated.View>
   );
 });
 
