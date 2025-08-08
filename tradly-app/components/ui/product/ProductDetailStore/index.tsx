@@ -13,7 +13,7 @@ import { background } from "@/themes";
 
 const ProductDetailStore = memo(() => {
   return (
-    <Animated.View entering={FadeIn.duration(500)} style={styles.storeWrapper}>
+    <Animated.View entering={FadeIn} style={styles.storeWrapper}>
       <View style={styles.storeInfo}>
         <TradlyBigIcon />
         <Text textVariant="quaternary" size={3.5}>

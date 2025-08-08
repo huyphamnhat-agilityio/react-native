@@ -27,10 +27,7 @@ const ProductDetailDescription = memo(
     location,
   }: ProductDetailDescriptionProps) => {
     return (
-      <Animated.View
-        entering={FadeIn.duration(500)}
-        style={styles.contentWrapper}
-      >
+      <Animated.View entering={FadeIn} style={styles.contentWrapper}>
         <ScrollView style={styles.descriptionWrapper} nestedScrollEnabled>
           <Text
             font="Montserrat_400Regular"

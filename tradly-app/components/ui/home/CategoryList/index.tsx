@@ -22,7 +22,7 @@ const CategoryList = memo(({ style }: CategoryListProps) => {
     [],
   );
 
-  const entering = FadeIn.duration(500);
+  const entering = FadeIn;
 
   return (
     <Animated.FlatList

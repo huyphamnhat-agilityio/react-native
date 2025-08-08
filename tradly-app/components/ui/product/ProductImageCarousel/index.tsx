@@ -36,7 +36,7 @@ const ProductImageCarousel = memo(
       );
 
       return (
-        <Animated.View entering={FadeIn.duration(500)} style={styles.content}>
+        <Animated.View entering={FadeIn} style={styles.content}>
           <Carousel
             ref={ref}
             width={SCREEN_WIDTH}

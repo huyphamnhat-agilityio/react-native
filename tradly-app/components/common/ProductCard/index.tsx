@@ -24,7 +24,7 @@ import { formatNumberWithThousandSeparator } from "@/utils";
 
 const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
   return (
-    <Animated.View entering={FadeIn.duration(500)} key={id}>
+    <Animated.View entering={FadeIn} key={id}>
       <Link
         href={{ pathname: "/(main_stacks)/product/[id]", params: { id } }}
         asChild

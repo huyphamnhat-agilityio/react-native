@@ -1,7 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useMemo, useState } from "react";
-import { StyleSheet, ToastAndroid, View } from "react-native";
+import { StyleSheet, ToastAndroid } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 // Components
 import { AddressInfoSection } from "@/components/common";
@@ -97,7 +98,7 @@ const Payment = () => {
   }, [canDismiss, dismissAll, queryClient, replace, updateCart, userId]);
 
   return (
-    <View style={styles.container}>
+    <Animated.View entering={FadeIn} style={styles.container}>
       <PaymentCardCarousel
         data={userCards}
         setSelectedCardIndex={setSelectedCardIndex}
@@ -120,7 +121,7 @@ const Payment = () => {
         disabled={isPending}
         handleCheckout={handleCheckout}
       />
-    </View>
+    </Animated.View>
   );
 };
 

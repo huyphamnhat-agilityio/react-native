@@ -10,10 +10,7 @@ import { background } from "@/themes";
 
 const ProductDetailAdditional = memo(() => {
   return (
-    <Animated.View
-      entering={FadeIn.duration(500)}
-      style={styles.deliveryWrapper}
-    >
+    <Animated.View entering={FadeIn} style={styles.deliveryWrapper}>
       <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
         Additional Details
       </Text>

@@ -17,7 +17,7 @@ export type BannerItemProps = {
 };
 const BannerItem = memo(
   ({ id, imageUrl = "", title = "", buttonText = "" }: BannerItemProps) => {
-    const entering = FadeIn.duration(500);
+    const entering = FadeIn;
 
     return imageUrl ? (
       <Animated.View entering={entering} key={id}>

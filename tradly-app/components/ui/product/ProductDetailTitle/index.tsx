@@ -19,10 +19,7 @@ export type ProductDetailTitleProps = {
 const ProductDetailTitle = memo(
   ({ name, price, originalPrice }: ProductDetailTitleProps) => {
     return (
-      <Animated.View
-        entering={FadeIn.duration(500)}
-        style={styles.titleWrapper}
-      >
+      <Animated.View entering={FadeIn} style={styles.titleWrapper}>
         <Text font="Montserrat_700Bold" textVariant="quaternary" size={4.5}>
           {name}
         </Text>

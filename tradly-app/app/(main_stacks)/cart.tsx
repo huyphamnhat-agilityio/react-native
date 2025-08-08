@@ -150,7 +150,7 @@ const Cart = () => {
   }, [items]);
 
   return (
-    <Animated.View entering={FadeIn.duration(500)} style={styles.container}>
+    <Animated.View entering={FadeIn} style={styles.container}>
       <AddressInfoSection />
 
       <CartItemList

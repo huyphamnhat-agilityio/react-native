@@ -1,4 +1,5 @@
 import { StyleSheet, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 // Themes
 import { background } from "@/themes";
@@ -8,13 +9,13 @@ import { ProfileInfo, SettingMenu } from "@/components/ui/profile";
 
 const Profile = () => {
   return (
-    <View style={styles.container}>
+    <Animated.View entering={FadeIn} style={styles.container}>
       <View style={styles.background} />
 
       <ProfileInfo />
 
       <SettingMenu style={styles.settingsWrapper} />
-    </View>
+    </Animated.View>
   );
 };
 

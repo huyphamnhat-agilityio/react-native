@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { memo, useCallback, useEffect } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 // Components
 import Text from "../Text";
@@ -27,7 +28,6 @@ import { useDebounce } from "@/hooks";
 
 // Store
 import { useFilterStore } from "@/store";
-import Animated, { FadeIn } from "react-native-reanimated";
 
 export type HeaderProps = {
   isTitleOnly?: boolean;
@@ -72,47 +72,53 @@ const Header = memo(
     }, [debouncedSearch, setSearchQuery]);
     return (
       <SafeAreaView edges={["top"]} style={styles.container}>
-        <Animated.View
-          entering={FadeIn.duration(500)}
-          style={[
-            styles.inner,
-            { justifyContent: isTitleOnly ? "center" : "space-between" },
-          ]}
-        >
-          {includeBackButton && (
-            <Button
-              IconLeft={<AntDesign name="arrowleft" size={24} color="white" />}
-              style={styles.backButton}
-              onPress={handleGoBack}
+        <Animated.View entering={FadeIn} style={styles.wrapper}>
+          <View
+            style={[
+              styles.inner,
+              { justifyContent: isTitleOnly ? "center" : "space-between" },
+            ]}
+          >
+            {includeBackButton && (
+              <Button
+                IconLeft={
+                  <AntDesign name="arrowleft" size={24} color="white" />
+                }
+                style={styles.backButton}
+                onPress={handleGoBack}
+              />
+            )}
+
+            <Text style={styles.title}>{title}</Text>
+
+            {isTitleOnly ? null : (
+              <View style={styles.actions}>
+                <Button IconLeft={<WishlistIcon />} />
+                <Button
+                  IconLeft={<CartIcon />}
+                  onPress={handleNavigateToCart}
+                />
+              </View>
+            )}
+          </View>
+
+          {includeSearchBar && (
+            <Input
+              LeftContent={<SearchIcon />}
+              placeholder="Search Product"
+              placeholderTextColor={text.alternative}
+              inputSize={4.5}
+              inputVariant="black"
+              wrapperStyle={styles.input}
+              value={search}
+              onChangeText={setSearch}
             />
           )}
 
-          <Text style={styles.title}>{title}</Text>
-
-          {isTitleOnly ? null : (
-            <View style={styles.actions}>
-              <Button IconLeft={<WishlistIcon />} />
-              <Button IconLeft={<CartIcon />} onPress={handleNavigateToCart} />
-            </View>
+          {includeFiltersBar && (
+            <FiltersBar includeCategorySelection={includeCategorySelection} />
           )}
         </Animated.View>
-
-        {includeSearchBar && (
-          <Input
-            LeftContent={<SearchIcon />}
-            placeholder="Search Product"
-            placeholderTextColor={text.alternative}
-            inputSize={4.5}
-            inputVariant="black"
-            wrapperStyle={styles.input}
-            value={search}
-            onChangeText={setSearch}
-          />
-        )}
-
-        {includeFiltersBar && (
-          <FiltersBar includeCategorySelection={includeCategorySelection} />
-        )}
       </SafeAreaView>
     );
   },
@@ -121,6 +127,8 @@ const Header = memo(
 const styles = StyleSheet.create({
   container: {
     backgroundColor: background.primary,
+  },
+  wrapper: {
     flexDirection: "column",
     gap: 20,
     paddingHorizontal: 16,

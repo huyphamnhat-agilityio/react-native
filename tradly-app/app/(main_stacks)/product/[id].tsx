@@ -168,7 +168,7 @@ const ProductDetail = () => {
     userId,
   ]);
 
-  const entering = FadeIn.duration(500);
+  const entering = FadeIn;
 
   if (isLoading) {
     return (
