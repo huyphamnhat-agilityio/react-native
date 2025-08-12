@@ -2,6 +2,7 @@ import { memo, useCallback, useMemo } from "react";
 import { Controller, RegisterOptions, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 
 // Types
 import { User } from "@/interfaces";
@@ -22,10 +23,8 @@ export type EditUserFormData = Pick<User, "email" | "name" | "phone">;
 
 export type EditProfileFormProps = {
   data?: Partial<User>;
-  imageUri?: string;
   onSubmit: (data: EditUserFormData) => Promise<void>;
   onOpenSheet?: () => void;
-  isDirty?: boolean;
 };
 
 const REQUIRED_FIELDS: (keyof EditUserFormData)[] = ["name", "phone", "email"];
@@ -61,13 +60,8 @@ const EDIT_USER_FORM_VALIDATION: Record<
 };
 
 const EditProfileForm = memo(
-  ({
-    data,
-    imageUri,
-    onOpenSheet,
-    onSubmit,
-    isDirty = false,
-  }: EditProfileFormProps) => {
+  ({ data, onOpenSheet, onSubmit }: EditProfileFormProps) => {
+    const { navigate } = useRouter();
     const {
       control,
       handleSubmit,
@@ -107,15 +101,12 @@ const EditProfileForm = memo(
     return (
       <View style={styles.wrapper}>
         <View style={styles.formWrapper}>
-          <Image
-            source={{ uri: imageUri || data?.avatar }}
-            style={styles.avatar}
-          />
+          <Image source={{ uri: data?.avatar }} style={styles.avatar} />
           <Button
             title="Change Avatar"
             rounded={3}
             style={styles.avatarButton}
-            onPress={onOpenSheet}
+            onPress={() => navigate("/(main_stacks)/edit_avatar")}
             disabled={isSubmitting}
           />
           <Controller
@@ -208,7 +199,7 @@ const EditProfileForm = memo(
             titleSize={4.5}
             style={styles.button}
             rounded="full"
-            disabled={(isDisabled && !isDirty) || isSubmitting}
+            disabled={isDisabled || isSubmitting}
             onPress={handleSubmit(onSubmit)}
           />
         </View>

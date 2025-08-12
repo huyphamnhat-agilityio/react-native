@@ -15,3 +15,4 @@ export { default as QuantityControl } from "./QuantityControl";
 export { default as Checkbox } from "./Checkbox";
 export { default as AddressInfoSection } from "./AddressInfoSection";
 export { default as BottomSheet, BottomSheetProps } from "./BottomSheet";
+export { default as IconButton } from "./IconButton";

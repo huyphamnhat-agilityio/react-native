@@ -15,14 +15,12 @@ import { handleNeverAskAgain } from "@/utils";
 import { useCallback } from "react";
 
 export type ProfileBottomSheetProps = {
-  setImageBase64: React.Dispatch<React.SetStateAction<string>>;
   setImageUri: React.Dispatch<React.SetStateAction<string>>;
 } & Omit<BottomSheetProps, "children">;
 
 const ImagePickerBottomSheet = ({
   isOpen,
   onClose,
-  setImageBase64,
   setImageUri,
   ...rest
 }: ProfileBottomSheetProps) => {
@@ -53,15 +51,8 @@ const ImagePickerBottomSheet = ({
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
       setImageUri(result.assets[0].uri);
-      result.assets[0].base64 && setImageBase64(result.assets[0].base64);
     }
-  }, [
-    cameraPermission,
-    onClose,
-    requestCameraPermission,
-    setImageBase64,
-    setImageUri,
-  ]);
+  }, [cameraPermission, onClose, requestCameraPermission, setImageUri]);
 
   const openGallery = async () => {
     if (!mediaLibraryPermission || mediaLibraryPermission.granted === false) {
@@ -84,7 +75,6 @@ const ImagePickerBottomSheet = ({
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
       setImageUri(result.assets[0].uri);
-      result.assets[0].base64 && setImageBase64(result.assets[0].base64);
     }
   };
   return (

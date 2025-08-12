@@ -9,3 +9,4 @@ export * from "./sorts";
 export * from "./card";
 export * from "./payment";
 export * from "./settings";
+export * from "./emoji";

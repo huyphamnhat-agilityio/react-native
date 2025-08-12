@@ -8,30 +8,30 @@ import { Text } from "@/components/common";
 // Themes
 import { border, borderRadius } from "@/themes";
 
-// Store
-import { useUserStore } from "@/store";
+// Types
+import { User } from "@/interfaces";
 
 export type ProfileInfoProps = {
   style?: StyleProp<ViewStyle>;
+  data?: Partial<User>;
 };
 
-const ProfileInfo = memo(({ style }: ProfileInfoProps) => {
-  const user = useUserStore((state) => state.user);
-
+const ProfileInfo = memo(({ style, data }: ProfileInfoProps) => {
+  const { avatar = "", email = "", name = "", phone = "" } = data || {};
   return (
     <View style={[styles.wrapper, style]}>
       <View style={styles.profileWrapper}>
-        <Image source={{ uri: user?.avatar }} style={styles.avatar} />
+        <Image source={{ uri: avatar }} style={styles.avatar} />
 
         <View style={styles.profileInfoWrapper}>
           <Text textVariant="white" font="Montserrat_700Bold">
-            {user?.name}
+            {name}
           </Text>
           <Text textVariant="white" size={3}>
-            {user?.phone}
+            {phone}
           </Text>
           <Text textVariant="white" size={3}>
-            {user?.email}
+            {email}
           </Text>
         </View>
       </View>

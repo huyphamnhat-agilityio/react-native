@@ -41,6 +41,7 @@ export const background = {
   white_opacity_30: colors.white_opacity_30,
   backdrop: colors.black_opacity_30,
   white: colors.white,
+  black: colors.black,
 } as const;
 
 export const border = {

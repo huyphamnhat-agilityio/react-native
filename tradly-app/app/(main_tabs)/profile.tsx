@@ -7,12 +7,17 @@ import { background } from "@/themes";
 // Components
 import { ProfileInfo, SettingMenu } from "@/components/ui/profile";
 
+// Stores
+import { useUserStore } from "@/store";
+
 const Profile = () => {
+  const user = useUserStore((state) => state.user);
+
   return (
     <Animated.View entering={FadeIn} style={styles.container}>
       <View style={styles.background} />
 
-      <ProfileInfo />
+      <ProfileInfo data={user} />
 
       <SettingMenu style={styles.settingsWrapper} />
     </Animated.View>

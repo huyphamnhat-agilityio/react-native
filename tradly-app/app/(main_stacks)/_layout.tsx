@@ -46,6 +46,11 @@ const MainStacksLayout = () => {
     () => <Header title="Edit Profile" includeBackButton isTitleOnly />,
     [],
   );
+
+  const handleRenderEditAvatarHeader = useCallback(
+    () => <Header title="Edit Avatar" includeBackButton isTitleOnly />,
+    [],
+  );
   return (
     <Stack>
       <Stack.Screen
@@ -113,6 +118,13 @@ const MainStacksLayout = () => {
         name="edit_profile"
         options={{
           header: handleRenderEditProfileHeader,
+        }}
+      />
+
+      <Stack.Screen
+        name="edit_avatar"
+        options={{
+          header: handleRenderEditAvatarHeader,
         }}
       />
     </Stack>

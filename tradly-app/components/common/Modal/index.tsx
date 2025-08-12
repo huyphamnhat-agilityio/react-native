@@ -29,9 +29,16 @@ const Modal = memo(
     isDisabled = false,
     style,
     children,
+    animationType = "fade",
+    ...rest
   }: PropsWithChildren<ModalProps>) => {
     return (
-      <ModalBase animationType="fade" visible={visible} transparent={true}>
+      <ModalBase
+        animationType={animationType}
+        visible={visible}
+        transparent={true}
+        {...rest}
+      >
         <TouchableOpacity
           disabled={isDisabled}
           style={styles.overlay}
