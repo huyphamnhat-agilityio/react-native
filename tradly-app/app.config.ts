@@ -104,7 +104,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     typedRoutes: true,
   },
   extra: {
-    router: {},
     eas: {
       projectId: "c542c506-821d-4bd1-bf95-c23a10cf7009",
     },
