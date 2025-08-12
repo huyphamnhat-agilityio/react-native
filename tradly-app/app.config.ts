@@ -20,7 +20,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     edgeToEdgeEnabled: true,
     package: "com.huy.phamnhat.tradlyapp",
-    googleServicesFile: "./google-services.json",
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
   },
   web: {
     bundler: "metro",
