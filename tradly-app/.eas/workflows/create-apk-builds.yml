@@ -9,7 +9,3 @@ jobs:
     params:
       platform: android
       profile: standalone
-  fingerprint:
-    name: Tradly Fingerprint
-    type: fingerprint
-    environment: preview
