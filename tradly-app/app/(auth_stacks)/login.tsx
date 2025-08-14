@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { useShallow } from "zustand/shallow";
+import Animated from "react-native-reanimated";
 
 // Components
 import { Text } from "@/components/common";
@@ -15,8 +16,12 @@ import { useLogin } from "@/hooks";
 
 // Stores
 import { useUserStore } from "@/store";
+
+// Types
 import { LoginFormData } from "@/interfaces";
-import Animated, { FadeInLeft } from "react-native-reanimated";
+
+// Constants
+import { fadeIn1000 } from "@/constants";
 
 const Login = () => {
   const { mutateAsync: login } = useLogin();
@@ -71,13 +76,15 @@ const Login = () => {
       contentContainerStyle={styles.container}
       keyboardShouldPersistTaps="handled"
     >
-      <Animated.View entering={FadeInLeft} style={styles.contentWrapper}>
-        <Text size={6} textVariant="white" style={styles.text}>
-          Welcome to tradly
-        </Text>
+      <View style={styles.contentWrapper}>
+        <Animated.View entering={fadeIn1000}>
+          <Text size={6} textVariant="white" style={styles.text}>
+            Welcome to tradly
+          </Text>
+        </Animated.View>
 
         <LoginForm onSubmit={handleSubmit} />
-      </Animated.View>
+      </View>
     </KeyboardAwareScrollView>
   );
 };

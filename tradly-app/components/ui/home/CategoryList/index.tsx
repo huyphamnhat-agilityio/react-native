@@ -18,7 +18,11 @@ export type CategoryListProps = {
 
 const CategoryList = memo(({ style }: CategoryListProps) => {
   const handlerRenderItem = useCallback(
-    ({ item }: { item: Category }) => <CategoryItem {...item} />,
+    ({ item }: { item: Category }) => (
+      <Animated.View entering={FadeIn.duration(200 + 100 * Number(item.id))}>
+        <CategoryItem {...item} />
+      </Animated.View>
+    ),
     [],
   );
 

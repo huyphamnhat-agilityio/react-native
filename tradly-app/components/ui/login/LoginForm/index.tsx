@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
+import Animated from "react-native-reanimated";
 
 // Components
 import { Button, Input, Text } from "@/components/common";
@@ -9,8 +10,18 @@ import { Button, Input, Text } from "@/components/common";
 import { border, borderRadius } from "@/themes";
 
 // Constants
-import { FORM_VALIDATION_MESSAGES, REGEX } from "@/constants";
+import {
+  fadeInDown800,
+  fadeInLeft800,
+  fadeInRight800,
+  FORM_VALIDATION_MESSAGES,
+  REGEX,
+} from "@/constants";
+
+// Types
 import { LoginFormData } from "@/interfaces";
+
+// Utils
 import { clearErrorOnChange, isEnableSubmit } from "@/utils";
 
 const REQUIRED_FIELDS: (keyof LoginFormData)[] = ["email", "password"];
@@ -76,98 +87,118 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
     });
   }, [dirtyFieldList, errors]);
 
+  // Animation variables
+
   return (
     <View style={styles.formWrapper}>
-      <Text
-        font="Montserrat_400Regular"
-        size={4}
-        textVariant="white"
-        style={styles.text}
-      >
-        Login to your account
-      </Text>
+      <Animated.View entering={fadeInLeft800}>
+        <Text
+          font="Montserrat_400Regular"
+          size={4}
+          textVariant="white"
+          style={styles.text}
+        >
+          Login to your account
+        </Text>
+      </Animated.View>
 
       <View style={{ display: "flex", gap: 16 }}>
-        <Controller
-          control={control}
-          name="email"
-          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-            <Input
-              placeholder="Email"
-              font="Montserrat_400Regular"
-              inputVariant="white"
-              inputSize={4.5}
-              wrapperStyle={styles.input}
-              onChangeText={handleInputChange("email", onChange)}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              isDisabled={isSubmitting}
-              errorStyle={styles.errorMessage}
-              {...rest}
-            />
-          )}
-          rules={LOGIN_FORM_VALIDATION.EMAIL}
-        />
+        <Animated.View entering={fadeInRight800}>
+          <Controller
+            control={control}
+            name="email"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <Input
+                placeholder="Email"
+                font="Montserrat_400Regular"
+                inputVariant="white"
+                inputSize={4.5}
+                wrapperStyle={styles.input}
+                onChangeText={handleInputChange("email", onChange)}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                isDisabled={isSubmitting}
+                errorStyle={styles.errorMessage}
+                {...rest}
+              />
+            )}
+            rules={LOGIN_FORM_VALIDATION.EMAIL}
+          />
+        </Animated.View>
 
-        <Controller
-          control={control}
-          name="password"
-          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-            <Input
-              placeholder="Password"
-              font="Montserrat_400Regular"
-              inputVariant="white"
-              onSubmitEditing={handleSubmit(onSubmit)}
-              inputSize={4.5}
-              wrapperStyle={styles.input}
-              secureTextEntry
-              onChangeText={handleInputChange("password", onChange)}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              isDisabled={isSubmitting}
-              errorStyle={styles.errorMessage}
-              {...rest}
-            />
-          )}
-          rules={LOGIN_FORM_VALIDATION.PASSWORD}
-        />
+        <Animated.View entering={fadeInLeft800}>
+          <Controller
+            control={control}
+            name="password"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <Input
+                placeholder="Password"
+                font="Montserrat_400Regular"
+                inputVariant="white"
+                onSubmitEditing={handleSubmit(onSubmit)}
+                inputSize={4.5}
+                wrapperStyle={styles.input}
+                secureTextEntry
+                onChangeText={handleInputChange("password", onChange)}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                isDisabled={isSubmitting}
+                errorStyle={styles.errorMessage}
+                {...rest}
+              />
+            )}
+            rules={LOGIN_FORM_VALIDATION.PASSWORD}
+          />
+        </Animated.View>
       </View>
 
-      <Button
-        title="Login"
-        variant="secondary"
-        titleSize={4}
-        rounded={6}
-        style={styles.button}
-        disabled={isDisabled || isSubmitting}
-        onPress={handleSubmit(onSubmit)}
-      />
+      <Animated.View entering={fadeInDown800}>
+        <Button
+          title="Login"
+          variant="secondary"
+          titleSize={4}
+          rounded={6}
+          style={styles.button}
+          disabled={isDisabled || isSubmitting}
+          onPress={handleSubmit(onSubmit)}
+        />
+      </Animated.View>
 
-      <Text
-        font="Montserrat_400Regular"
-        textVariant="white"
-        size={4.5}
-        style={styles.text}
-      >
-        Forgot your password?
-      </Text>
-
-      <Text
-        font="Montserrat_400Regular"
-        textVariant="white"
-        size={4.5}
-        style={styles.text}
-      >
-        Don&apos;t have an account?{" "}
+      <Animated.View entering={fadeInLeft800}>
         <Text
-          font="Montserrat_600SemiBold"
+          font="Montserrat_400Regular"
           textVariant="white"
           size={4.5}
           style={styles.text}
         >
-          Sign up
+          Forgot your password?
         </Text>
-      </Text>
+      </Animated.View>
+
+      <Animated.View entering={fadeInRight800}>
+        <Text
+          font="Montserrat_400Regular"
+          textVariant="white"
+          size={4.5}
+          style={styles.text}
+        >
+          Don&apos;t have an account?{" "}
+          <Text
+            font="Montserrat_600SemiBold"
+            textVariant="white"
+            size={4.5}
+            style={styles.text}
+          >
+            Sign up
+          </Text>
+        </Text>
+      </Animated.View>
     </View>
   );
 });

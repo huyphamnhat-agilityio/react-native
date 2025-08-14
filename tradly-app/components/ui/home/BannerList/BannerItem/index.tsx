@@ -1,13 +1,16 @@
 import { ImageBackground } from "expo-image";
 import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 // Themes
 import { borderRadius, colors } from "@/themes";
 
 // Components
 import { Button, Text } from "@/components/common";
+
+// Constants
+import { fadeIn800 } from "@/constants";
 
 export type BannerItemProps = {
   id: string;
@@ -17,10 +20,8 @@ export type BannerItemProps = {
 };
 const BannerItem = memo(
   ({ id, imageUrl = "", title = "", buttonText = "" }: BannerItemProps) => {
-    const entering = FadeIn;
-
     return imageUrl ? (
-      <Animated.View entering={entering} key={id}>
+      <Animated.View entering={fadeIn800} key={id}>
         <ImageBackground
           source={{ uri: imageUrl }}
           style={styles.container}
@@ -40,7 +41,7 @@ const BannerItem = memo(
         </ImageBackground>
       </Animated.View>
     ) : (
-      <Animated.View entering={entering} key={id}>
+      <Animated.View entering={fadeIn800} key={id}>
         <View style={[styles.container, { backgroundColor: colors.black }]}>
           <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
             {title}

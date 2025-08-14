@@ -51,7 +51,6 @@ const EmojiSticker = memo(
       clampPosition();
     });
 
-    // Combine gestures so pinch + drag can work together
     const combinedGesture = Gesture.Simultaneous(drag, pinch);
 
     const animatedStyle = useAnimatedStyle(() => ({
