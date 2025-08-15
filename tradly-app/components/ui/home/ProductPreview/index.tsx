@@ -14,8 +14,9 @@ import { Button, ProductPreviewList, Text } from "@/components/common";
 import { Product } from "@/interfaces";
 
 // Constants
-import { SCREEN_WIDTH } from "@/constants";
+import { fadeInLeft400, fadeInRight400, SCREEN_WIDTH } from "@/constants";
 import { useRouter } from "expo-router";
+import Animated from "react-native-reanimated";
 
 export type NewProductListProps = {
   style?: StyleProp<ViewStyle>;
@@ -43,15 +44,19 @@ const ProductPreview = memo(
     return (
       <View style={[styles.wrapper, style]}>
         <View style={styles.header}>
-          <Text textVariant="quaternary" font="Montserrat_700Bold" size={4.5}>
-            {title}
-          </Text>
-          <Button
-            title="See All"
-            rounded={6}
-            style={styles.button}
-            onPress={handleNavigateToBrowse}
-          />
+          <Animated.View entering={fadeInLeft400}>
+            <Text textVariant="quaternary" font="Montserrat_700Bold" size={4.5}>
+              {title}
+            </Text>
+          </Animated.View>
+          <Animated.View entering={fadeInRight400}>
+            <Button
+              title="See All"
+              rounded={6}
+              style={styles.button}
+              onPress={handleNavigateToBrowse}
+            />
+          </Animated.View>
         </View>
 
         {isLoading ? (

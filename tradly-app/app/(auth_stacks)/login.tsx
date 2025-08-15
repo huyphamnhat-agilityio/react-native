@@ -21,7 +21,7 @@ import { useUserStore } from "@/store";
 import { LoginFormData } from "@/interfaces";
 
 // Constants
-import { fadeIn1000 } from "@/constants";
+import { fadeIn500 } from "@/constants";
 
 const Login = () => {
   const { mutateAsync: login } = useLogin();
@@ -77,7 +77,7 @@ const Login = () => {
       keyboardShouldPersistTaps="handled"
     >
       <View style={styles.contentWrapper}>
-        <Animated.View entering={fadeIn1000}>
+        <Animated.View entering={fadeIn500}>
           <Text size={6} textVariant="white" style={styles.text}>
             Welcome to tradly
           </Text>

@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 // Icons
 import { TradlyBigIcon } from "@/components/icons";
@@ -11,22 +11,27 @@ import { Button, Text } from "@/components/common";
 // Themes
 import { background } from "@/themes";
 
+// Constants
+import { fadeInLeft400, fadeInRight400 } from "@/constants";
+
 const ProductDetailStore = memo(() => {
   return (
-    <Animated.View entering={FadeIn} style={styles.storeWrapper}>
-      <View style={styles.storeInfo}>
+    <View style={styles.storeWrapper}>
+      <Animated.View entering={fadeInLeft400} style={styles.storeInfo}>
         <TradlyBigIcon />
         <Text textVariant="quaternary" size={3.5}>
           Tradly Store
         </Text>
-      </View>
-      <Button
-        title="Follow"
-        titleSize={3}
-        rounded={6}
-        style={styles.followButton}
-      />
-    </Animated.View>
+      </Animated.View>
+      <Animated.View entering={fadeInRight400}>
+        <Button
+          title="Follow"
+          titleSize={3}
+          rounded={6}
+          style={styles.followButton}
+        />
+      </Animated.View>
+    </View>
   );
 });
 

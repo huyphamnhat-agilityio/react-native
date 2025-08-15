@@ -32,9 +32,9 @@ const ProductDetailHeader = memo(() => {
 
   return (
     <>
-      {/* Sticky Top Bar */}
       <View style={styles.statusOffset} />
 
+      {/* Sticky Top Bar */}
       <View style={styles.headerWrapper}>
         <Button
           rounded="full"

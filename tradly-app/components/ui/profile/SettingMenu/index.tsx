@@ -7,6 +7,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
+import Animated from "react-native-reanimated";
 
 // Components
 import { Text } from "@/components/common";
@@ -15,7 +16,7 @@ import { Text } from "@/components/common";
 import { background, borderRadius, colors } from "@/themes";
 
 // Constants
-import { SETTINGS_OPTIONS } from "@/constants";
+import { fadeInDown400, SETTINGS_OPTIONS } from "@/constants";
 
 // Store
 import { useUserStore } from "@/store";
@@ -43,7 +44,7 @@ const SettingMenu = memo(({ style }: SettingMenuProps) => {
   );
 
   return (
-    <View style={style}>
+    <Animated.View entering={fadeInDown400} style={style}>
       <View style={styles.settingsWrapper}>
         {SETTINGS_OPTIONS.map((item, index) => (
           <Fragment key={item.id}>
@@ -66,7 +67,7 @@ const SettingMenu = memo(({ style }: SettingMenuProps) => {
           </Fragment>
         ))}
       </View>
-    </View>
+    </Animated.View>
   );
 });
 

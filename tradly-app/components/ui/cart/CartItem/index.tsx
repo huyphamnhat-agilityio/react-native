@@ -13,6 +13,7 @@ import { CartItemData } from "@/interfaces";
 
 // Hooks
 import { useDebounce } from "@/hooks";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 export type CartItemProps = CartItemData & {
   quantity: number;
@@ -71,7 +72,7 @@ const CartItem = memo(
     }, [debouncedQuantity, handleChangeQuantity]);
 
     return (
-      <View style={styles.cartItemContainer}>
+      <Animated.View entering={FadeInDown} style={styles.cartItemContainer}>
         <View style={styles.cartItemWrapper}>
           <Image
             source={{
@@ -112,7 +113,7 @@ const CartItem = memo(
             Remove
           </Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     );
   },
 );

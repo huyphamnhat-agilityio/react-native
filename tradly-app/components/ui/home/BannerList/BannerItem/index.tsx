@@ -10,7 +10,7 @@ import { borderRadius, colors } from "@/themes";
 import { Button, Text } from "@/components/common";
 
 // Constants
-import { fadeIn800 } from "@/constants";
+import { fadeIn400 } from "@/constants";
 
 export type BannerItemProps = {
   id: string;
@@ -21,7 +21,7 @@ export type BannerItemProps = {
 const BannerItem = memo(
   ({ id, imageUrl = "", title = "", buttonText = "" }: BannerItemProps) => {
     return imageUrl ? (
-      <Animated.View entering={fadeIn800} key={id}>
+      <Animated.View entering={fadeIn400} key={id}>
         <ImageBackground
           source={{ uri: imageUrl }}
           style={styles.container}
@@ -41,7 +41,7 @@ const BannerItem = memo(
         </ImageBackground>
       </Animated.View>
     ) : (
-      <Animated.View entering={fadeIn800} key={id}>
+      <Animated.View entering={fadeIn400} key={id}>
         <View style={[styles.container, { backgroundColor: colors.black }]}>
           <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
             {title}

@@ -11,9 +11,9 @@ import { border, borderRadius } from "@/themes";
 
 // Constants
 import {
-  fadeInDown800,
-  fadeInLeft800,
-  fadeInRight800,
+  fadeInDown400,
+  fadeInLeft400,
+  fadeInRight400,
   FORM_VALIDATION_MESSAGES,
   REGEX,
 } from "@/constants";
@@ -91,7 +91,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
 
   return (
     <View style={styles.formWrapper}>
-      <Animated.View entering={fadeInLeft800}>
+      <Animated.View entering={fadeInLeft400}>
         <Text
           font="Montserrat_400Regular"
           size={4}
@@ -103,7 +103,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
       </Animated.View>
 
       <View style={{ display: "flex", gap: 16 }}>
-        <Animated.View entering={fadeInRight800}>
+        <Animated.View entering={fadeInRight400}>
           <Controller
             control={control}
             name="email"
@@ -129,7 +129,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
           />
         </Animated.View>
 
-        <Animated.View entering={fadeInLeft800}>
+        <Animated.View entering={fadeInLeft400}>
           <Controller
             control={control}
             name="password"
@@ -158,7 +158,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
         </Animated.View>
       </View>
 
-      <Animated.View entering={fadeInDown800}>
+      <Animated.View entering={fadeInDown400}>
         <Button
           title="Login"
           variant="secondary"
@@ -170,7 +170,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
         />
       </Animated.View>
 
-      <Animated.View entering={fadeInLeft800}>
+      <Animated.View entering={fadeInLeft400}>
         <Text
           font="Montserrat_400Regular"
           textVariant="white"
@@ -181,7 +181,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
         </Text>
       </Animated.View>
 
-      <Animated.View entering={fadeInRight800}>
+      <Animated.View entering={fadeInRight400}>
         <Text
           font="Montserrat_400Regular"
           textVariant="white"

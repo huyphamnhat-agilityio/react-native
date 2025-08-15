@@ -3,10 +3,12 @@ import {
   FadeInDown,
   FadeInLeft,
   FadeInRight,
+  FadeInUp,
 } from "react-native-reanimated";
 
-export const fadeInLeft800 = FadeInLeft.duration(800);
-export const fadeInRight800 = FadeInRight.duration(800);
-export const fadeInDown800 = FadeInDown.duration(800);
-export const fadeIn1000 = FadeIn.duration(1000);
-export const fadeIn800 = FadeIn.duration(800);
+export const fadeInLeft400 = FadeInLeft.duration(400);
+export const fadeInRight400 = FadeInRight.duration(400);
+export const fadeInDown400 = FadeInDown.duration(400);
+export const fadeIn500 = FadeIn.duration(500);
+export const fadeIn400 = FadeIn.duration(400);
+export const fadeInUp400 = FadeInUp.duration(400);

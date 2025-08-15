@@ -1,11 +1,16 @@
 import { memo } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 // Components
 import { Text } from "@/components/common";
 
 // Constants
-import { SCREEN_HEIGHT } from "@/constants";
+import {
+  fadeInLeft400,
+  fadeInRight400,
+  fadeInUp400,
+  SCREEN_HEIGHT,
+} from "@/constants";
 
 // Themes
 import { background } from "@/themes";
@@ -28,7 +33,11 @@ const ProductDetailDescription = memo(
   }: ProductDetailDescriptionProps) => {
     return (
       <Animated.View entering={FadeIn} style={styles.contentWrapper}>
-        <ScrollView style={styles.descriptionWrapper} nestedScrollEnabled>
+        <Animated.ScrollView
+          entering={fadeInUp400}
+          style={styles.descriptionWrapper}
+          nestedScrollEnabled
+        >
           <Text
             font="Montserrat_400Regular"
             textVariant="quaternary"
@@ -36,21 +45,21 @@ const ProductDetailDescription = memo(
           >
             {description}
           </Text>
-        </ScrollView>
+        </Animated.ScrollView>
 
         <View style={styles.detailRow}>
-          <View style={styles.detailLabel}>
+          <Animated.View entering={fadeInLeft400} style={styles.detailLabel}>
             <Text textVariant="tertiary">Condition</Text>
             <Text textVariant="tertiary">Price Type</Text>
             <Text textVariant="tertiary">Category</Text>
             <Text textVariant="tertiary">Location</Text>
-          </View>
-          <View style={styles.detailValue}>
+          </Animated.View>
+          <Animated.View entering={fadeInRight400} style={styles.detailValue}>
             <Text textVariant="quaternary">{condition}</Text>
             <Text textVariant="quaternary">{priceType}</Text>
             <Text textVariant="quaternary">{category}</Text>
             <Text textVariant="quaternary">{location}</Text>
-          </View>
+          </Animated.View>
         </View>
       </Animated.View>
     );

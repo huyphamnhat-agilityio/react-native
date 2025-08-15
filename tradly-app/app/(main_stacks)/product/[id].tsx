@@ -38,7 +38,7 @@ import {
 import { useUserStore } from "@/store";
 
 // Constants
-import { QUERY_KEY, SUCCESS_MESSAGE } from "@/constants";
+import { fadeInDown400, QUERY_KEY, SUCCESS_MESSAGE } from "@/constants";
 
 const ProductDetail = () => {
   const { id } = useLocalSearchParams();
@@ -224,7 +224,7 @@ const ProductDetail = () => {
         <ProductDetailAdditional />
       </ScrollView>
 
-      <Animated.View entering={entering} style={styles.buttonWrapper}>
+      <Animated.View entering={fadeInDown400} style={styles.buttonWrapper}>
         <Button
           title="Add to Cart"
           titleFont="Montserrat_600SemiBold"

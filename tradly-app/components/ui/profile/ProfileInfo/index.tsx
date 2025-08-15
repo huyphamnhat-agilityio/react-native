@@ -1,6 +1,7 @@
 import { Image } from "expo-image";
 import { memo } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import Animated from "react-native-reanimated";
 
 // Components
 import { Text } from "@/components/common";
@@ -10,6 +11,14 @@ import { border, borderRadius } from "@/themes";
 
 // Types
 import { User } from "@/interfaces";
+
+// Constants
+import {
+  fadeIn400,
+  fadeInLeft400,
+  fadeInRight400,
+  fadeInUp400,
+} from "@/constants";
 
 export type ProfileInfoProps = {
   style?: StyleProp<ViewStyle>;
@@ -21,18 +30,27 @@ const ProfileInfo = memo(({ style, data }: ProfileInfoProps) => {
   return (
     <View style={[styles.wrapper, style]}>
       <View style={styles.profileWrapper}>
-        <Image source={{ uri: avatar }} style={styles.avatar} />
+        <Animated.View entering={fadeIn400}>
+          <Image source={{ uri: avatar }} style={styles.avatar} />
+        </Animated.View>
 
         <View style={styles.profileInfoWrapper}>
-          <Text textVariant="white" font="Montserrat_700Bold">
-            {name}
-          </Text>
-          <Text textVariant="white" size={3}>
-            {phone}
-          </Text>
-          <Text textVariant="white" size={3}>
-            {email}
-          </Text>
+          <Animated.View entering={fadeInUp400}>
+            <Text textVariant="white" font="Montserrat_700Bold">
+              {name}
+            </Text>
+          </Animated.View>
+          <Animated.View entering={fadeInLeft400}>
+            <Text textVariant="white" size={3}>
+              {phone}
+            </Text>
+          </Animated.View>
+
+          <Animated.View entering={fadeInRight400}>
+            <Text textVariant="white" size={3}>
+              {email}
+            </Text>
+          </Animated.View>
         </View>
       </View>
     </View>

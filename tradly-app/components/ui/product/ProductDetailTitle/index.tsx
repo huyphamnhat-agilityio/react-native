@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated from "react-native-reanimated";
 
 // Components
 import { Text } from "@/components/common";
@@ -11,6 +11,9 @@ import { background } from "@/themes";
 // Utils
 import { formatNumberWithThousandSeparator, getSalePercentage } from "@/utils";
 
+// Constants
+import { fadeIn400, fadeInLeft400 } from "@/constants";
+
 export type ProductDetailTitleProps = {
   name: string;
   price: number;
@@ -19,24 +22,31 @@ export type ProductDetailTitleProps = {
 const ProductDetailTitle = memo(
   ({ name, price, originalPrice }: ProductDetailTitleProps) => {
     return (
-      <Animated.View entering={FadeIn} style={styles.titleWrapper}>
-        <Text font="Montserrat_700Bold" textVariant="quaternary" size={4.5}>
-          {name}
-        </Text>
+      <Animated.View entering={fadeIn400} style={styles.titleWrapper}>
+        <Animated.View entering={fadeIn400}>
+          <Text font="Montserrat_700Bold" textVariant="quaternary" size={4.5}>
+            {name}
+          </Text>
+        </Animated.View>
         <View style={styles.priceWrapper}>
-          <Text font="Montserrat_700Bold" textVariant="primary" size={4.5}>
-            {formatNumberWithThousandSeparator(price)}
-          </Text>
-          <Text textVariant="quaternary">
-            <Text
-              textVariant="quaternary"
-              size={3.5}
-              style={styles.originalPrice}
-            >
-              {formatNumberWithThousandSeparator(originalPrice)}
-            </Text>{" "}
-            {Math.round(getSalePercentage(originalPrice, price))}% off
-          </Text>
+          <Animated.View entering={fadeInLeft400}>
+            <Text font="Montserrat_700Bold" textVariant="primary" size={4.5}>
+              {formatNumberWithThousandSeparator(price)}
+            </Text>
+          </Animated.View>
+
+          <Animated.View entering={fadeInLeft400}>
+            <Text textVariant="quaternary">
+              <Text
+                textVariant="quaternary"
+                size={3.5}
+                style={styles.originalPrice}
+              >
+                {formatNumberWithThousandSeparator(originalPrice)}
+              </Text>{" "}
+              {Math.round(getSalePercentage(originalPrice, price))}% off
+            </Text>
+          </Animated.View>
         </View>
       </Animated.View>
     );

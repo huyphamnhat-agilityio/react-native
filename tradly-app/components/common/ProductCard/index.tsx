@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
 import { memo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { Link } from "expo-router";
 
 // Components
@@ -24,7 +24,7 @@ import { formatNumberWithThousandSeparator } from "@/utils";
 
 const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
   return (
-    <Animated.View entering={FadeIn} key={id}>
+    <Animated.View entering={FadeInDown} key={id}>
       <Link
         href={{ pathname: "/(main_stacks)/product/[id]", params: { id } }}
         asChild

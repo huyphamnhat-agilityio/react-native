@@ -2,7 +2,12 @@ import { memo } from "react";
 import { StyleSheet, View } from "react-native";
 
 // Constants
-import { MEDIUM_DEVICE_HEIGHT, SCREEN_HEIGHT } from "@/constants";
+import {
+  fadeInLeft400,
+  fadeInRight400,
+  MEDIUM_DEVICE_HEIGHT,
+  SCREEN_HEIGHT,
+} from "@/constants";
 
 // Themes
 import { background, colors } from "@/themes";
@@ -15,6 +20,7 @@ import { CartTotal } from "@/interfaces";
 
 // Utils
 import { formatNumberWithThousandSeparator } from "@/utils";
+import Animated from "react-native-reanimated";
 
 export type CartBillProps = CartTotal;
 
@@ -22,35 +28,42 @@ const CartBill = memo(({ totalPrice, totalQuantity }: CartBillProps) => {
   return (
     <View style={styles.cartBillWrapper}>
       <View style={styles.cartBillDetail}>
-        <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
-          Price Details
-        </Text>
+        <Animated.View entering={fadeInLeft400}>
+          <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
+            Price Details
+          </Text>
+        </Animated.View>
 
         <View style={styles.detailRow}>
-          <View style={styles.detailLabel}>
+          <Animated.View entering={fadeInLeft400} style={styles.detailLabel}>
             <Text textVariant="black">
               Price ({totalQuantity} item{totalQuantity > 1 && "s"})
             </Text>
             <Text textVariant="black">Delivery Fee</Text>
-          </View>
-          <View style={styles.detailValue}>
+          </Animated.View>
+          <Animated.View entering={fadeInRight400} style={styles.detailValue}>
             <Text textVariant="black">
               {formatNumberWithThousandSeparator(totalPrice)}
             </Text>
             <Text textVariant="black">Info</Text>
-          </View>
+          </Animated.View>
         </View>
       </View>
 
       <View style={styles.cartBillSeparator} />
 
       <View style={styles.cartBillTotal}>
-        <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
-          Total
-        </Text>
-        <Text font="Montserrat_700Bold" size={4.5} textVariant="black">
-          {formatNumberWithThousandSeparator(totalPrice)}
-        </Text>
+        <Animated.View entering={fadeInLeft400}>
+          <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
+            Total
+          </Text>
+        </Animated.View>
+
+        <Animated.View entering={fadeInRight400}>
+          <Text font="Montserrat_700Bold" size={4.5} textVariant="black">
+            {formatNumberWithThousandSeparator(totalPrice)}
+          </Text>
+        </Animated.View>
       </View>
     </View>
   );
