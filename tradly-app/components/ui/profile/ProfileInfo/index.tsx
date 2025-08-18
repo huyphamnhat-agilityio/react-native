@@ -13,12 +13,7 @@ import { border, borderRadius } from "@/themes";
 import { User } from "@/interfaces";
 
 // Constants
-import {
-  fadeIn400,
-  fadeInLeft400,
-  fadeInRight400,
-  fadeInUp400,
-} from "@/constants";
+import { fadeInLeft400, fadeInRight400, fadeInUp400 } from "@/constants";
 
 export type ProfileInfoProps = {
   style?: StyleProp<ViewStyle>;
@@ -30,9 +25,15 @@ const ProfileInfo = memo(({ style, data }: ProfileInfoProps) => {
   return (
     <View style={[styles.wrapper, style]}>
       <View style={styles.profileWrapper}>
-        <Animated.View entering={fadeIn400}>
-          <Image source={{ uri: avatar }} style={styles.avatar} />
-        </Animated.View>
+        <Image
+          source={{ uri: avatar }}
+          style={styles.avatar}
+          transition={{
+            duration: 400,
+            effect: "cross-dissolve",
+            timing: "ease-in",
+          }}
+        />
 
         <View style={styles.profileInfoWrapper}>
           <Animated.View entering={fadeInUp400}>

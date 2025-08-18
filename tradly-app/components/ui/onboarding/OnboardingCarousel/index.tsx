@@ -5,14 +5,21 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
-import Animated, { FadeInLeft, SharedValue } from "react-native-reanimated";
+import Animated, { SharedValue } from "react-native-reanimated";
 
 // Themes
 import { background, borderRadius, colors } from "@/themes";
 
 // Components
 import { Text } from "@/components/common";
-import { MEDIUM_DEVICE_HEIGHT, SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
+
+// Constants
+import {
+  fadeInLeft400,
+  MEDIUM_DEVICE_HEIGHT,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from "@/constants";
 
 export type OnboardingCarouselProps = {
   data: { image: string; description: string }[];
@@ -35,6 +42,11 @@ const OnboardingCarousel = memo(
                 source={{ uri: item.image }}
                 contentFit="contain"
                 style={styles.image}
+                transition={{
+                  duration: 400,
+                  effect: "cross-dissolve",
+                  timing: "ease-in",
+                }}
               />
             </View>
 
@@ -47,7 +59,7 @@ const OnboardingCarousel = memo(
       );
 
       return (
-        <Animated.View entering={FadeInLeft} style={styles.content}>
+        <Animated.View entering={fadeInLeft400} style={styles.content}>
           <Carousel
             ref={ref}
             width={SCREEN_WIDTH - 60}

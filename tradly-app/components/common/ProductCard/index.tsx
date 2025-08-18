@@ -36,6 +36,11 @@ const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
             }}
             style={styles.image}
             cachePolicy="memory-disk"
+            transition={{
+              duration: 400,
+              effect: "cross-dissolve",
+              timing: "ease-in",
+            }}
           />
           <View style={styles.content}>
             <Text numberOfLines={1} textVariant="quaternary">

@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 // Components
 import { Text } from "@/components/common";
@@ -14,7 +15,6 @@ import {
 
 // Themes
 import { background } from "@/themes";
-import Animated, { FadeIn } from "react-native-reanimated";
 
 export type ProductDetailDescriptionProps = {
   description: string;

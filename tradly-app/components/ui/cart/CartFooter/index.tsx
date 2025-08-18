@@ -5,7 +5,11 @@ import { StyleSheet, View } from "react-native";
 import { Button } from "@/components/common";
 
 // Constants
-import { MEDIUM_DEVICE_HEIGHT, SCREEN_HEIGHT } from "@/constants";
+import {
+  fadeInDown400,
+  MEDIUM_DEVICE_HEIGHT,
+  SCREEN_HEIGHT,
+} from "@/constants";
 
 // Themes
 import { background } from "@/themes";
@@ -15,6 +19,7 @@ import { useUserStore } from "@/store";
 
 // Utils
 import { isFulfilledObject } from "@/utils";
+import Animated from "react-native-reanimated";
 
 export type CartFooterProps = {
   canCheckout?: boolean;
@@ -26,15 +31,17 @@ const CartFooter = memo(
 
     return (
       <View style={styles.cartFooter}>
-        <Button
-          title="Continue to Payment"
-          titleFont="Montserrat_600SemiBold"
-          titleSize={4.5}
-          style={styles.paymentButton}
-          rounded="full"
-          disabled={!isFulfilledObject(userAddress) || !canCheckout}
-          onPress={onNavigate}
-        />
+        <Animated.View entering={fadeInDown400}>
+          <Button
+            title="Continue to Payment"
+            titleFont="Montserrat_600SemiBold"
+            titleSize={4.5}
+            style={styles.paymentButton}
+            rounded="full"
+            disabled={!isFulfilledObject(userAddress) || !canCheckout}
+            onPress={onNavigate}
+          />
+        </Animated.View>
       </View>
     );
   },

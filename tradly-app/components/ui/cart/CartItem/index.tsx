@@ -79,6 +79,11 @@ const CartItem = memo(
               uri: image,
             }}
             style={styles.cartItemImage}
+            transition={{
+              duration: 400,
+              effect: "cross-dissolve",
+              timing: "ease-in",
+            }}
           />
 
           <View style={styles.cartItemContent}>

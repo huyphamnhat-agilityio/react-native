@@ -2,13 +2,14 @@ import { memo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 // Constants
-import { PAYMENT_OPTIONS } from "@/constants";
+import { fadeInLeft400, fadeInRight400, PAYMENT_OPTIONS } from "@/constants";
 
 // Themes
 import { background, border } from "@/themes";
 
 // Components
 import { Checkbox, Text } from "@/components/common";
+import Animated from "react-native-reanimated";
 
 export type PaymentOptionsProps = {
   selectedPayment: "CARD" | "CASH";
@@ -35,10 +36,14 @@ const PaymentOptions = memo(
               activeOpacity={0.8}
               disabled={disabled}
             >
-              <Checkbox active={isSelected} />
-              <Text textVariant="quaternary" font="Montserrat_600SemiBold">
-                {label}
-              </Text>
+              <Animated.View entering={fadeInLeft400}>
+                <Checkbox active={isSelected} />
+              </Animated.View>
+              <Animated.View entering={fadeInRight400}>
+                <Text textVariant="quaternary" font="Montserrat_600SemiBold">
+                  {label}
+                </Text>
+              </Animated.View>
             </TouchableOpacity>
           );
         })}

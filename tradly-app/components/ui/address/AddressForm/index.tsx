@@ -1,6 +1,7 @@
 import { memo, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Controller, RegisterOptions, useForm } from "react-hook-form";
+import Animated from "react-native-reanimated";
 
 // Components
 import { Button, Input } from "@/components/common";
@@ -12,7 +13,12 @@ import { colors } from "@/themes";
 import { UserAddress } from "@/interfaces";
 
 // Constants
-import { FORM_VALIDATION_MESSAGES, REGEX } from "@/constants";
+import {
+  fadeInDown400,
+  fadeInUp400,
+  FORM_VALIDATION_MESSAGES,
+  REGEX,
+} from "@/constants";
 
 // Utils
 import { clearErrorOnChange, isEnableSubmit } from "@/utils";
@@ -113,155 +119,185 @@ const AddressForm = memo(({ onSubmit, data }: AddressFormProps) => {
   return (
     <View style={styles.inner}>
       <View style={styles.formWrapper}>
-        <Controller
-          control={control}
-          name="name"
-          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-            <Input
-              label="Name"
-              labelVariant="secondary"
-              labelSize={3.5}
-              labelFont="Montserrat_400Regular"
-              labelDistance={8}
-              inputSize={4}
-              maxLength={50}
-              inputVariant="quaternary"
-              style={styles.textInput}
-              isDisabled={isSubmitting}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              onChangeText={handleInputChange("name", onChange)}
-              {...rest}
-            />
-          )}
-          rules={ADDRESS_FORM_VALIDATION.NAME}
-        />
+        <Animated.View entering={fadeInUp400}>
+          <Controller
+            control={control}
+            name="name"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <Input
+                label="Name"
+                labelVariant="secondary"
+                labelSize={3.5}
+                labelFont="Montserrat_400Regular"
+                labelDistance={8}
+                inputSize={4}
+                maxLength={50}
+                inputVariant="quaternary"
+                style={styles.textInput}
+                isDisabled={isSubmitting}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                onChangeText={handleInputChange("name", onChange)}
+                {...rest}
+              />
+            )}
+            rules={ADDRESS_FORM_VALIDATION.NAME}
+          />
+        </Animated.View>
 
-        <Controller
-          control={control}
-          name="phone"
-          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-            <Input
-              label="Phone"
-              labelVariant="secondary"
-              labelSize={3.5}
-              labelFont="Montserrat_400Regular"
-              labelDistance={8}
-              inputSize={4}
-              inputMode="tel"
-              inputVariant="quaternary"
-              maxLength={12}
-              style={styles.textInput}
-              isDisabled={isSubmitting}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              onChangeText={handleInputChange("phone", onChange)}
-              {...rest}
-            />
-          )}
-          rules={ADDRESS_FORM_VALIDATION.PHONE}
-        />
+        <Animated.View entering={fadeInUp400}>
+          <Controller
+            control={control}
+            name="phone"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <Input
+                label="Phone"
+                labelVariant="secondary"
+                labelSize={3.5}
+                labelFont="Montserrat_400Regular"
+                labelDistance={8}
+                inputSize={4}
+                inputMode="tel"
+                inputVariant="quaternary"
+                maxLength={12}
+                style={styles.textInput}
+                isDisabled={isSubmitting}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                onChangeText={handleInputChange("phone", onChange)}
+                {...rest}
+              />
+            )}
+            rules={ADDRESS_FORM_VALIDATION.PHONE}
+          />
+        </Animated.View>
 
-        <Controller
-          control={control}
-          name="streetAddress"
-          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-            <Input
-              label="Street address"
-              labelVariant="secondary"
-              labelSize={3.5}
-              labelFont="Montserrat_400Regular"
-              labelDistance={8}
-              inputSize={4}
-              maxLength={50}
-              inputVariant="quaternary"
-              style={styles.textInput}
-              isDisabled={isSubmitting}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              onChangeText={handleInputChange("streetAddress", onChange)}
-              {...rest}
-            />
-          )}
-          rules={ADDRESS_FORM_VALIDATION.STREET_ADDRESS}
-        />
+        <Animated.View entering={fadeInUp400}>
+          <Controller
+            control={control}
+            name="streetAddress"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <Input
+                label="Street address"
+                labelVariant="secondary"
+                labelSize={3.5}
+                labelFont="Montserrat_400Regular"
+                labelDistance={8}
+                inputSize={4}
+                maxLength={50}
+                inputVariant="quaternary"
+                style={styles.textInput}
+                isDisabled={isSubmitting}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                onChangeText={handleInputChange("streetAddress", onChange)}
+                {...rest}
+              />
+            )}
+            rules={ADDRESS_FORM_VALIDATION.STREET_ADDRESS}
+          />
+        </Animated.View>
 
-        <Controller
-          control={control}
-          name="city"
-          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-            <Input
-              label="City"
-              labelVariant="secondary"
-              labelSize={3.5}
-              labelFont="Montserrat_400Regular"
-              labelDistance={8}
-              inputSize={4}
-              maxLength={50}
-              inputVariant="quaternary"
-              style={styles.textInput}
-              isDisabled={isSubmitting}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              onChangeText={handleInputChange("city", onChange)}
-              {...rest}
-            />
-          )}
-          rules={ADDRESS_FORM_VALIDATION.CITY}
-        />
+        <Animated.View entering={fadeInUp400}>
+          <Controller
+            control={control}
+            name="city"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <Input
+                label="City"
+                labelVariant="secondary"
+                labelSize={3.5}
+                labelFont="Montserrat_400Regular"
+                labelDistance={8}
+                inputSize={4}
+                maxLength={50}
+                inputVariant="quaternary"
+                style={styles.textInput}
+                isDisabled={isSubmitting}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                onChangeText={handleInputChange("city", onChange)}
+                {...rest}
+              />
+            )}
+            rules={ADDRESS_FORM_VALIDATION.CITY}
+          />
+        </Animated.View>
 
-        <Controller
-          control={control}
-          name="state"
-          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-            <Input
-              label="State"
-              labelVariant="secondary"
-              labelSize={3.5}
-              labelFont="Montserrat_400Regular"
-              labelDistance={8}
-              inputSize={4}
-              inputVariant="quaternary"
-              maxLength={50}
-              style={styles.textInput}
-              isDisabled={isSubmitting}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              onChangeText={handleInputChange("state", onChange)}
-              {...rest}
-            />
-          )}
-          rules={ADDRESS_FORM_VALIDATION.STATE}
-        />
+        <Animated.View entering={fadeInUp400}>
+          <Controller
+            control={control}
+            name="state"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <Input
+                label="State"
+                labelVariant="secondary"
+                labelSize={3.5}
+                labelFont="Montserrat_400Regular"
+                labelDistance={8}
+                inputSize={4}
+                inputVariant="quaternary"
+                maxLength={50}
+                style={styles.textInput}
+                isDisabled={isSubmitting}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                onChangeText={handleInputChange("state", onChange)}
+                {...rest}
+              />
+            )}
+            rules={ADDRESS_FORM_VALIDATION.STATE}
+          />
+        </Animated.View>
 
-        <Controller
-          control={control}
-          name="zipcode"
-          render={({ field: { onChange, ...rest }, fieldState: { error } }) => (
-            <Input
-              label="Zipcode"
-              labelVariant="secondary"
-              labelSize={3.5}
-              labelFont="Montserrat_400Regular"
-              labelDistance={8}
-              inputSize={4}
-              inputVariant="quaternary"
-              inputMode="numeric"
-              maxLength={5}
-              style={styles.textInput}
-              isDisabled={isSubmitting}
-              isError={!!error?.message}
-              errorMessage={error?.message}
-              onChangeText={handleInputChange("zipcode", onChange)}
-              onSubmitEditing={handleSubmit(onSubmit)}
-              {...rest}
-            />
-          )}
-          rules={ADDRESS_FORM_VALIDATION.ZIPCODE}
-        />
+        <Animated.View entering={fadeInUp400}>
+          <Controller
+            control={control}
+            name="zipcode"
+            render={({
+              field: { onChange, ...rest },
+              fieldState: { error },
+            }) => (
+              <Input
+                label="Zipcode"
+                labelVariant="secondary"
+                labelSize={3.5}
+                labelFont="Montserrat_400Regular"
+                labelDistance={8}
+                inputSize={4}
+                inputVariant="quaternary"
+                inputMode="numeric"
+                maxLength={5}
+                style={styles.textInput}
+                isDisabled={isSubmitting}
+                isError={!!error?.message}
+                errorMessage={error?.message}
+                onChangeText={handleInputChange("zipcode", onChange)}
+                onSubmitEditing={handleSubmit(onSubmit)}
+                {...rest}
+              />
+            )}
+            rules={ADDRESS_FORM_VALIDATION.ZIPCODE}
+          />
+        </Animated.View>
       </View>
 
-      <View style={styles.buttonWrapper}>
+      <Animated.View entering={fadeInDown400} style={styles.buttonWrapper}>
         <Button
           title="Save"
           titleFont="Montserrat_600SemiBold"
@@ -271,7 +307,7 @@ const AddressForm = memo(({ onSubmit, data }: AddressFormProps) => {
           disabled={isDisabled || isSubmitting}
           onPress={handleSubmit(onSubmit)}
         />
-      </View>
+      </Animated.View>
     </View>
   );
 });
@@ -298,5 +334,6 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
   },
 });
+
 AddressForm.displayName = "AddressForm";
 export default AddressForm;

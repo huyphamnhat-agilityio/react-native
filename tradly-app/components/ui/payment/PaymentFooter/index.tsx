@@ -8,10 +8,18 @@ import { formatNumberWithThousandSeparator } from "@/utils";
 import { Button, Text } from "@/components/common";
 
 // Constants
-import { MEDIUM_DEVICE_HEIGHT, SCREEN_HEIGHT } from "@/constants";
+import {
+  fadeInDown400,
+  fadeInLeft400,
+  fadeInRight400,
+  fadeInUp400,
+  MEDIUM_DEVICE_HEIGHT,
+  SCREEN_HEIGHT,
+} from "@/constants";
 
 // Themes
 import { background } from "@/themes";
+import Animated from "react-native-reanimated";
 
 export type PaymentFooterProps = {
   totalQuantity: number;
@@ -31,35 +39,39 @@ const PaymentFooter = memo(
     return (
       <View style={styles.cartBillWrapper}>
         <View style={styles.cartBillDetail}>
-          <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
-            Price Details
-          </Text>
+          <Animated.View entering={fadeInUp400}>
+            <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
+              Price Details
+            </Text>
+          </Animated.View>
 
           <View style={styles.detailRow}>
-            <View style={styles.detailLabel}>
+            <Animated.View entering={fadeInLeft400} style={styles.detailLabel}>
               <Text textVariant="black">
                 Price ({totalQuantity} item
                 {totalQuantity > 1 && "s"})
               </Text>
-            </View>
-            <View style={styles.detailValue}>
+            </Animated.View>
+            <Animated.View entering={fadeInRight400} style={styles.detailValue}>
               <Text textVariant="black">
                 {formatNumberWithThousandSeparator(totalPrice)}
               </Text>
-            </View>
+            </Animated.View>
           </View>
         </View>
 
         <View style={styles.buttonWrapper}>
-          <Button
-            title="Checkout"
-            rounded="full"
-            titleFont="Montserrat_600SemiBold"
-            titleSize={4.5}
-            style={styles.button}
-            disabled={!canCheckout || disabled}
-            onPress={handleCheckout}
-          />
+          <Animated.View entering={fadeInDown400}>
+            <Button
+              title="Checkout"
+              rounded="full"
+              titleFont="Montserrat_600SemiBold"
+              titleSize={4.5}
+              style={styles.button}
+              disabled={!canCheckout || disabled}
+              onPress={handleCheckout}
+            />
+          </Animated.View>
         </View>
       </View>
     );

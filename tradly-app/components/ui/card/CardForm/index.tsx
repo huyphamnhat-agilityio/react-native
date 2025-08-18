@@ -12,11 +12,17 @@ import { Button, Input } from "@/components/common";
 import { clearErrorOnChange, generateRandomID, isEnableSubmit } from "@/utils";
 
 // Constants
-import { FORM_VALIDATION_MESSAGES, REGEX } from "@/constants";
+import {
+  fadeInUp400,
+  fadeInDown400,
+  FORM_VALIDATION_MESSAGES,
+  REGEX,
+} from "@/constants";
 
 // Themes
 import { colors } from "@/themes";
 import PreviewCard from "../PreviewCard";
+import Animated from "react-native-reanimated";
 
 const REQUIRED_FIELDS: (keyof UserCard)[] = [
   "cardNumber",
@@ -109,130 +115,138 @@ const CardForm = memo(({ onSubmit }: CardFormProps) => {
   );
   return (
     <>
-      <PreviewCard data={cardData} />
+      <Animated.View entering={fadeInUp400}>
+        <PreviewCard data={cardData} />
+      </Animated.View>
 
       <View style={styles.inner}>
         <View style={styles.formWrapper}>
-          <Controller
-            control={control}
-            name="cardNumber"
-            render={({
-              field: { onChange, ...rest },
-              fieldState: { error },
-            }) => (
-              <Input
-                label="Card Number"
-                labelVariant="secondary"
-                labelSize={3.5}
-                labelFont="Montserrat_400Regular"
-                labelDistance={8}
-                inputSize={4}
-                maxLength={16}
-                inputVariant="quaternary"
-                inputMode="numeric"
-                style={styles.textInput}
-                isDisabled={isSubmitting}
-                isError={!!error?.message}
-                errorMessage={error?.message}
-                onChangeText={handleInputChange("cardNumber", onChange)}
-                {...rest}
-              />
-            )}
-            rules={CARD_FORM_VALIDATION.CARD_NUMBER}
-          />
-
-          <Controller
-            control={control}
-            name="holderName"
-            render={({
-              field: { onChange, ...rest },
-              fieldState: { error },
-            }) => (
-              <Input
-                label="Name"
-                labelVariant="secondary"
-                labelSize={3.5}
-                labelFont="Montserrat_400Regular"
-                labelDistance={8}
-                inputSize={4}
-                maxLength={50}
-                inputVariant="quaternary"
-                style={styles.textInput}
-                isDisabled={isSubmitting}
-                isError={!!error?.message}
-                errorMessage={error?.message}
-                onChangeText={handleInputChange("holderName", onChange)}
-                {...rest}
-              />
-            )}
-            rules={CARD_FORM_VALIDATION.HOLDER_NAME}
-          />
-
-          <View style={styles.inputWrapper}>
+          <Animated.View entering={fadeInDown400}>
             <Controller
               control={control}
-              name="expiresDates"
+              name="cardNumber"
               render={({
                 field: { onChange, ...rest },
                 fieldState: { error },
               }) => (
                 <Input
-                  label="Expires Dates"
+                  label="Card Number"
                   labelVariant="secondary"
                   labelSize={3.5}
                   labelFont="Montserrat_400Regular"
                   labelDistance={8}
                   inputSize={4}
-                  maxLength={5}
-                  inputVariant="quaternary"
-                  style={styles.textInput}
-                  containerStyle={styles.dateInput}
-                  isDisabled={isSubmitting}
-                  isError={!!error?.message}
-                  errorMessage={error?.message}
-                  errorStyle={{
-                    flex: 1,
-                    flexWrap: "wrap",
-                  }}
-                  onChangeText={handleInputChange("expiresDates", onChange)}
-                  {...rest}
-                />
-              )}
-              rules={CARD_FORM_VALIDATION.EXPIRES_DATES}
-            />
-
-            <Controller
-              control={control}
-              name="cvc"
-              render={({
-                field: { onChange, ...rest },
-                fieldState: { error },
-              }) => (
-                <Input
-                  label="CVC"
-                  labelVariant="secondary"
-                  labelSize={3.5}
-                  labelFont="Montserrat_400Regular"
-                  labelDistance={8}
-                  inputSize={4}
-                  maxLength={3}
+                  maxLength={16}
                   inputVariant="quaternary"
                   inputMode="numeric"
                   style={styles.textInput}
                   isDisabled={isSubmitting}
-                  containerStyle={styles.cvcInput}
                   isError={!!error?.message}
                   errorMessage={error?.message}
-                  onChangeText={handleInputChange("cvc", onChange)}
-                  onSubmitEditing={handleSubmit(onSubmit)}
+                  onChangeText={handleInputChange("cardNumber", onChange)}
                   {...rest}
                 />
               )}
-              rules={CARD_FORM_VALIDATION.CVC}
+              rules={CARD_FORM_VALIDATION.CARD_NUMBER}
             />
+          </Animated.View>
+
+          <Animated.View entering={fadeInDown400}>
+            <Controller
+              control={control}
+              name="holderName"
+              render={({
+                field: { onChange, ...rest },
+                fieldState: { error },
+              }) => (
+                <Input
+                  label="Name"
+                  labelVariant="secondary"
+                  labelSize={3.5}
+                  labelFont="Montserrat_400Regular"
+                  labelDistance={8}
+                  inputSize={4}
+                  maxLength={50}
+                  inputVariant="quaternary"
+                  style={styles.textInput}
+                  isDisabled={isSubmitting}
+                  isError={!!error?.message}
+                  errorMessage={error?.message}
+                  onChangeText={handleInputChange("holderName", onChange)}
+                  {...rest}
+                />
+              )}
+              rules={CARD_FORM_VALIDATION.HOLDER_NAME}
+            />
+          </Animated.View>
+
+          <View style={styles.inputWrapper}>
+            <Animated.View entering={fadeInDown400} style={styles.dateInput}>
+              <Controller
+                control={control}
+                name="expiresDates"
+                render={({
+                  field: { onChange, ...rest },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    label="Expires Dates"
+                    labelVariant="secondary"
+                    labelSize={3.5}
+                    labelFont="Montserrat_400Regular"
+                    labelDistance={8}
+                    inputSize={4}
+                    maxLength={5}
+                    inputVariant="quaternary"
+                    style={styles.textInput}
+                    isDisabled={isSubmitting}
+                    isError={!!error?.message}
+                    errorMessage={error?.message}
+                    errorStyle={{
+                      flex: 1,
+                      flexWrap: "wrap",
+                    }}
+                    onChangeText={handleInputChange("expiresDates", onChange)}
+                    {...rest}
+                  />
+                )}
+                rules={CARD_FORM_VALIDATION.EXPIRES_DATES}
+              />
+            </Animated.View>
+
+            <Animated.View entering={fadeInDown400} style={styles.cvcInput}>
+              <Controller
+                control={control}
+                name="cvc"
+                render={({
+                  field: { onChange, ...rest },
+                  fieldState: { error },
+                }) => (
+                  <Input
+                    label="CVC"
+                    labelVariant="secondary"
+                    labelSize={3.5}
+                    labelFont="Montserrat_400Regular"
+                    labelDistance={8}
+                    inputSize={4}
+                    maxLength={3}
+                    inputVariant="quaternary"
+                    inputMode="numeric"
+                    style={styles.textInput}
+                    isDisabled={isSubmitting}
+                    isError={!!error?.message}
+                    errorMessage={error?.message}
+                    onChangeText={handleInputChange("cvc", onChange)}
+                    onSubmitEditing={handleSubmit(onSubmit)}
+                    {...rest}
+                  />
+                )}
+                rules={CARD_FORM_VALIDATION.CVC}
+              />
+            </Animated.View>
           </View>
         </View>
-        <View style={styles.buttonWrapper}>
+        <Animated.View entering={fadeInDown400} style={styles.buttonWrapper}>
           <Button
             title="Add Credit Card"
             titleFont="Montserrat_600SemiBold"
@@ -242,7 +256,7 @@ const CardForm = memo(({ onSubmit }: CardFormProps) => {
             disabled={isDisabled || isSubmitting}
             onPress={handleSubmit(onSubmit)}
           />
-        </View>
+        </Animated.View>
       </View>
     </>
   );

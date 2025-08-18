@@ -4,13 +4,18 @@ import Carousel, {
   ICarouselInstance,
   Pagination,
 } from "react-native-reanimated-carousel";
-import { useSharedValue } from "react-native-reanimated";
+import Animated, { useSharedValue } from "react-native-reanimated";
 import { CarouselRenderItemInfo } from "react-native-reanimated-carousel/lib/typescript/types";
 import { useRouter } from "expo-router";
 import { ImageBackground } from "expo-image";
 
 // Constants
-import { EMPTY_CARD, SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
+import {
+  EMPTY_CARD,
+  fadeInUp400,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from "@/constants";
 
 // Types
 import { PaymentOption, UserCard } from "@/interfaces";
@@ -158,7 +163,7 @@ const PaymentCardCarousel = memo(
       [handleNavigateToAddCard, selectedPayment],
     );
     return (
-      <View style={styles.paymentContainer}>
+      <Animated.View entering={fadeInUp400} style={styles.paymentContainer}>
         <Carousel
           ref={ref}
           width={SCREEN_WIDTH - 110}
@@ -195,7 +200,7 @@ const PaymentCardCarousel = memo(
           horizontal
           onPress={onPressPagination}
         />
-      </View>
+      </Animated.View>
     );
   },
 );

@@ -1,7 +1,8 @@
 import { ICarouselInstance } from "react-native-reanimated-carousel";
-import Animated, { FadeInLeft, useSharedValue } from "react-native-reanimated";
+import Animated, { useSharedValue } from "react-native-reanimated";
 import { StyleSheet, View } from "react-native";
 import { useCallback, useRef, useState } from "react";
+import { router } from "expo-router";
 
 // Themes
 import { background } from "@/themes";
@@ -11,8 +12,7 @@ import { Button } from "@/components/common";
 import { OnboardingCarousel } from "@/components/ui/onboarding";
 
 // Constants
-import { ONBOARDING_SLIDES } from "@/constants";
-import { router } from "expo-router";
+import { fadeInLeft400, ONBOARDING_SLIDES } from "@/constants";
 
 const Onboarding = () => {
   const ref = useRef<ICarouselInstance | null>(null);
@@ -81,7 +81,7 @@ const Onboarding = () => {
         setCurrentIndex={setCurrentIndex}
       />
 
-      <Animated.View entering={FadeInLeft} style={styles.buttonWrapper}>
+      <Animated.View entering={fadeInLeft400} style={styles.buttonWrapper}>
         {renderBoardingButton()}
       </Animated.View>
     </View>

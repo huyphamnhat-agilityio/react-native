@@ -20,6 +20,8 @@ import { useUserStore } from "@/store";
 
 // Utils
 import { generateDeliveryInfo, isFulfilledObject } from "@/utils";
+import Animated from "react-native-reanimated";
+import { fadeInLeft400, fadeInRight400 } from "@/constants";
 
 export type AddressInfoSectionProps = {
   style?: StyleProp<ViewStyle>;
@@ -43,22 +45,24 @@ const AddressInfoSection = memo(
 
     return isFulfilledObject(userAddress) ? (
       <View style={[styles.editAddressWrapper, style]}>
-        <Text
-          numberOfLines={2}
-          textVariant="quaternary"
-          style={styles.deliveryText}
+        <Animated.View
+          entering={fadeInLeft400}
+          style={styles.deliveryTextWrapper}
         >
-          {buttonText}
-        </Text>
-
-        <Button
-          title="Change"
-          titleSize={3}
-          rounded="full"
-          style={styles.button}
-          onPress={handleNavigateToAddress}
-          disabled={disabled}
-        />
+          <Text numberOfLines={2} textVariant="quaternary">
+            {buttonText}
+          </Text>
+        </Animated.View>
+        <Animated.View entering={fadeInRight400} style={styles.buttonWrapper}>
+          <Button
+            title="Change"
+            titleSize={3}
+            rounded="full"
+            style={styles.button}
+            onPress={handleNavigateToAddress}
+            disabled={disabled}
+          />
+        </Animated.View>
       </View>
     ) : (
       <TouchableOpacity
@@ -85,13 +89,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: background.white,
     flexDirection: "row",
-    gap: 20,
   },
-  deliveryText: {
+  deliveryTextWrapper: {
     flex: 3 / 4,
   },
-  button: {
+  buttonWrapper: {
     flex: 1 / 4,
+    justifyContent: "center",
+  },
+  button: {
+    marginLeft: "auto",
+    paddingHorizontal: 20,
   },
   textCentered: {
     textAlign: "center",
