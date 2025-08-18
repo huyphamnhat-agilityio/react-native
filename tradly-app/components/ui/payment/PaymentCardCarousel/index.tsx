@@ -15,6 +15,7 @@ import {
   fadeInUp400,
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
+  TABLET_DEVICE_WIDTH,
 } from "@/constants";
 
 // Types
@@ -36,7 +37,8 @@ export type PaymentCardCarouselProps = {
   disabled?: boolean;
 };
 
-const carouselHeight = SCREEN_HEIGHT * 0.25;
+const carouselHeight =
+  SCREEN_HEIGHT * (SCREEN_WIDTH >= TABLET_DEVICE_WIDTH ? 0.35 : 0.25);
 
 const PaymentCardCarousel = memo(
   ({
@@ -219,8 +221,11 @@ const styles = StyleSheet.create({
     padding: 16,
     width: SCREEN_WIDTH - 120,
     height: SCREEN_WIDTH - 220,
+    maxWidth: 480,
+    maxHeight: 260,
     justifyContent: "space-around",
     position: "relative",
+    marginHorizontal: "auto",
   },
   image: {
     borderRadius: borderRadius[2.5],
@@ -237,6 +242,9 @@ const styles = StyleSheet.create({
     padding: 36,
     width: SCREEN_WIDTH - 120,
     height: SCREEN_WIDTH - 220,
+    maxWidth: 480,
+    maxHeight: 260,
+    marginHorizontal: "auto",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: borderRadius["2.5"],

@@ -4,7 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { captureRef } from "react-native-view-shot";
 import { Image } from "expo-image";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { useSharedValue } from "react-native-reanimated";
+import Animated, { useSharedValue } from "react-native-reanimated";
 import { useShallow } from "zustand/shallow";
 import { useRouter } from "expo-router";
 
@@ -27,7 +27,12 @@ import { useUserStore } from "@/store";
 import { useUpdateUser, useUploadImage } from "@/hooks";
 
 // Constants
-import { SUCCESS_MESSAGE } from "@/constants";
+import {
+  fadeIn400,
+  fadeInLeft400,
+  fadeInRight400,
+  SUCCESS_MESSAGE,
+} from "@/constants";
 
 const EditAvatar = () => {
   const { user, setUserAvatar } = useUserStore(
@@ -63,6 +68,10 @@ const EditAvatar = () => {
   const handleCloseSheet = useCallback(() => {
     isOpen.value = false;
   }, [isOpen]);
+
+  const handleShowOption = useCallback(() => {
+    setShowAppOptions(true);
+  }, []);
 
   const onReset = useCallback(() => {
     setShowAppOptions(false);
@@ -155,6 +164,11 @@ const EditAvatar = () => {
             <Image
               source={selectedImage || user?.avatar}
               style={styles.avatar}
+              transition={{
+                duration: 400,
+                effect: "cross-dissolve",
+                timing: "ease-in",
+              }}
             />
             {!!pickedEmoji && (
               <EmojiSticker
@@ -169,46 +183,58 @@ const EditAvatar = () => {
         {showAppOptions ? (
           <View style={styles.optionsContainer}>
             <View style={styles.optionsRow}>
-              <IconButton
-                icon="refresh"
-                label="Reset"
-                disabled={isPending}
-                onPress={onReset}
-              />
-              <Button
-                IconLeft={
-                  <MaterialIcons name="add" size={36} color={colors.white} />
-                }
-                style={styles.addIcon}
-                disabled={isPending}
-                onPress={onAddSticker}
-              />
-              <IconButton
-                icon="save-alt"
-                label="Save"
-                disabled={isPending || (!selectedImage && !pickedEmoji)}
-                onPress={onSaveImageAsync}
-              />
+              <Animated.View entering={fadeIn400}>
+                <IconButton
+                  icon="refresh"
+                  label="Reset"
+                  disabled={isPending}
+                  onPress={onReset}
+                />
+              </Animated.View>
+              <Animated.View entering={fadeIn400}>
+                <Button
+                  IconLeft={
+                    <MaterialIcons name="add" size={36} color={colors.white} />
+                  }
+                  style={styles.addIcon}
+                  disabled={isPending}
+                  onPress={onAddSticker}
+                />
+              </Animated.View>
+
+              <Animated.View entering={fadeIn400}>
+                <IconButton
+                  icon="save-alt"
+                  label="Save"
+                  disabled={isPending || (!selectedImage && !pickedEmoji)}
+                  onPress={onSaveImageAsync}
+                />
+              </Animated.View>
             </View>
           </View>
         ) : (
           <View style={styles.footerContainer}>
-            <Button
-              title="Choose a photo"
-              variant="secondary"
-              titleSize={4}
-              rounded={6}
-              onPress={handleOpenSheet}
-              style={styles.button}
-            />
-            <Button
-              title="Use this photo"
-              variant="transparent"
-              titleSize={4}
-              rounded={6}
-              onPress={() => setShowAppOptions(true)}
-              style={styles.button}
-            />
+            <Animated.View entering={fadeInLeft400}>
+              <Button
+                title="Choose a photo"
+                variant="secondary"
+                titleSize={4}
+                rounded={6}
+                onPress={handleOpenSheet}
+                style={styles.button}
+              />
+            </Animated.View>
+
+            <Animated.View entering={fadeInRight400}>
+              <Button
+                title="Use this photo"
+                variant="transparent"
+                titleSize={4}
+                rounded={6}
+                onPress={handleShowOption}
+                style={styles.button}
+              />
+            </Animated.View>
           </View>
         )}
         <EmojiPicker isVisible={isModalVisible} onClose={onModalClose}>
@@ -237,7 +263,6 @@ const styles = StyleSheet.create({
   avatar: { width: 320, height: 440, borderRadius: 18 },
   footerContainer: {
     flex: 1 / 3,
-    alignItems: "center",
     gap: 12,
   },
   optionsContainer: {

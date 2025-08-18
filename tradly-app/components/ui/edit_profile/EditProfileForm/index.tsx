@@ -17,7 +17,14 @@ import { Button, Input } from "@/components/common";
 import { clearErrorOnChange, isEnableSubmit } from "@/utils";
 
 // Constants
-import { FORM_VALIDATION_MESSAGES, REGEX } from "@/constants";
+import {
+  fadeIn400,
+  fadeInDown400,
+  fadeInUp400,
+  FORM_VALIDATION_MESSAGES,
+  REGEX,
+} from "@/constants";
+import Animated from "react-native-reanimated";
 
 export type EditUserFormData = Pick<User, "email" | "name" | "phone">;
 
@@ -101,98 +108,116 @@ const EditProfileForm = memo(
     return (
       <View style={styles.wrapper}>
         <View style={styles.formWrapper}>
-          <Image source={{ uri: data?.avatar }} style={styles.avatar} />
-          <Button
-            title="Change Avatar"
-            rounded={3}
-            style={styles.avatarButton}
-            onPress={() => navigate("/(main_stacks)/edit_avatar")}
-            disabled={isSubmitting}
-          />
-          <Controller
-            control={control}
-            name="name"
-            render={({
-              field: { onChange, ...rest },
-              fieldState: { error },
-            }) => (
-              <Input
-                label="Name"
-                labelVariant="secondary"
-                labelSize={3.5}
-                labelFont="Montserrat_400Regular"
-                labelDistance={8}
-                inputSize={4}
-                maxLength={50}
-                inputVariant="quaternary"
-                style={styles.textInput}
-                isDisabled={isSubmitting}
-                isError={!!error?.message}
-                errorMessage={error?.message}
-                onChangeText={handleInputChange("name", onChange)}
-                {...rest}
-              />
-            )}
-            rules={EDIT_USER_FORM_VALIDATION.NAME}
+          <Image
+            source={{ uri: data?.avatar }}
+            style={styles.avatar}
+            transition={{
+              duration: 400,
+              effect: "cross-dissolve",
+              timing: "ease-in",
+            }}
           />
 
-          <Controller
-            control={control}
-            name="phone"
-            render={({
-              field: { onChange, ...rest },
-              fieldState: { error },
-            }) => (
-              <Input
-                label="Phone"
-                labelVariant="secondary"
-                labelSize={3.5}
-                labelFont="Montserrat_400Regular"
-                labelDistance={8}
-                inputSize={4}
-                inputMode="tel"
-                inputVariant="quaternary"
-                maxLength={12}
-                style={styles.textInput}
-                isDisabled={isSubmitting}
-                isError={!!error?.message}
-                errorMessage={error?.message}
-                onChangeText={handleInputChange("phone", onChange)}
-                {...rest}
-              />
-            )}
-            rules={EDIT_USER_FORM_VALIDATION.PHONE}
-          />
+          <Animated.View entering={fadeIn400}>
+            <Button
+              title="Change Avatar"
+              rounded={3}
+              style={styles.avatarButton}
+              onPress={() => navigate("/(main_stacks)/edit_avatar")}
+              disabled={isSubmitting}
+            />
+          </Animated.View>
 
-          <Controller
-            control={control}
-            name="email"
-            render={({
-              field: { onChange, ...rest },
-              fieldState: { error },
-            }) => (
-              <Input
-                label="Email"
-                labelVariant="secondary"
-                labelSize={3.5}
-                labelFont="Montserrat_400Regular"
-                labelDistance={8}
-                inputSize={4}
-                maxLength={50}
-                inputVariant="quaternary"
-                style={styles.textInput}
-                isDisabled={isSubmitting}
-                isError={!!error?.message}
-                errorMessage={error?.message}
-                onChangeText={handleInputChange("email", onChange)}
-                {...rest}
-              />
-            )}
-            rules={EDIT_USER_FORM_VALIDATION.EMAIL}
-          />
+          <Animated.View entering={fadeInUp400}>
+            <Controller
+              control={control}
+              name="name"
+              render={({
+                field: { onChange, ...rest },
+                fieldState: { error },
+              }) => (
+                <Input
+                  label="Name"
+                  labelVariant="secondary"
+                  labelSize={3.5}
+                  labelFont="Montserrat_400Regular"
+                  labelDistance={8}
+                  inputSize={4}
+                  maxLength={50}
+                  inputVariant="quaternary"
+                  style={styles.textInput}
+                  isDisabled={isSubmitting}
+                  isError={!!error?.message}
+                  errorMessage={error?.message}
+                  onChangeText={handleInputChange("name", onChange)}
+                  {...rest}
+                />
+              )}
+              rules={EDIT_USER_FORM_VALIDATION.NAME}
+            />
+          </Animated.View>
+
+          <Animated.View entering={fadeInUp400}>
+            <Controller
+              control={control}
+              name="phone"
+              render={({
+                field: { onChange, ...rest },
+                fieldState: { error },
+              }) => (
+                <Input
+                  label="Phone"
+                  labelVariant="secondary"
+                  labelSize={3.5}
+                  labelFont="Montserrat_400Regular"
+                  labelDistance={8}
+                  inputSize={4}
+                  inputMode="tel"
+                  inputVariant="quaternary"
+                  maxLength={12}
+                  style={styles.textInput}
+                  isDisabled={isSubmitting}
+                  isError={!!error?.message}
+                  errorMessage={error?.message}
+                  onChangeText={handleInputChange("phone", onChange)}
+                  {...rest}
+                />
+              )}
+              rules={EDIT_USER_FORM_VALIDATION.PHONE}
+            />
+          </Animated.View>
+
+          <Animated.View entering={fadeInUp400}>
+            <Controller
+              control={control}
+              name="email"
+              render={({
+                field: { onChange, ...rest },
+                fieldState: { error },
+              }) => (
+                <Input
+                  label="Email"
+                  labelVariant="secondary"
+                  labelSize={3.5}
+                  labelFont="Montserrat_400Regular"
+                  labelDistance={8}
+                  inputSize={4}
+                  maxLength={50}
+                  inputVariant="quaternary"
+                  style={styles.textInput}
+                  isDisabled={isSubmitting}
+                  isError={!!error?.message}
+                  errorMessage={error?.message}
+                  onChangeText={handleInputChange("email", onChange)}
+                  {...rest}
+                />
+              )}
+              rules={EDIT_USER_FORM_VALIDATION.EMAIL}
+            />
+          </Animated.View>
         </View>
 
-        <View style={styles.buttonWrapper}>
+        <Animated.View entering={fadeInDown400} style={styles.buttonWrapper}>
           <Button
             title="Save"
             titleFont="Montserrat_600SemiBold"
@@ -202,7 +227,7 @@ const EditProfileForm = memo(
             disabled={isDisabled || isSubmitting}
             onPress={handleSubmit(onSubmit)}
           />
-        </View>
+        </Animated.View>
       </View>
     );
   },

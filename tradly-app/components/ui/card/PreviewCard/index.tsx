@@ -95,11 +95,14 @@ const styles = StyleSheet.create({
     backgroundColor: background.secondary,
     justifyContent: "center",
     alignItems: "center",
+    maxHeight: 360,
   },
   cardWrapper: {
     padding: 16,
     width: SCREEN_WIDTH - 64,
     height: SCREEN_WIDTH * 0.6,
+    maxWidth: 480,
+    maxHeight: 360,
     justifyContent: "space-around",
   },
   image: {

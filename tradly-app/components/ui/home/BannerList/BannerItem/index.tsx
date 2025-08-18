@@ -10,7 +10,7 @@ import { borderRadius, colors } from "@/themes";
 import { Button, Text } from "@/components/common";
 
 // Constants
-import { fadeIn400 } from "@/constants";
+import { fadeIn400, SCREEN_WIDTH } from "@/constants";
 
 export type BannerItemProps = {
   id: string;
@@ -62,7 +62,7 @@ const BannerItem = memo(
 
 const styles = StyleSheet.create({
   container: {
-    width: 300,
+    width: SCREEN_WIDTH * 0.6,
     height: 165,
     flexDirection: "column",
     justifyContent: "center",
