@@ -63,6 +63,7 @@ const BannerItem = memo(
 const styles = StyleSheet.create({
   container: {
     width: SCREEN_WIDTH * 0.6,
+    minWidth: 300,
     height: 165,
     flexDirection: "column",
     justifyContent: "center",

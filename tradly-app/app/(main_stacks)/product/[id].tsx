@@ -9,11 +9,17 @@ import {
   ToastAndroid,
 } from "react-native";
 import { ICarouselInstance } from "react-native-reanimated-carousel";
-import Animated, { FadeIn, useSharedValue } from "react-native-reanimated";
+import Animated, {
+  FadeIn,
+  useSharedValue,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+import { Image } from "expo-image";
 import * as Notifications from "expo-notifications";
 
 // Themes
-import { background, colors } from "@/themes";
+import { background, borderRadius, colors } from "@/themes";
 
 // Components
 import { Button, Text } from "@/components/common";
@@ -94,6 +100,12 @@ const ProductDetail = () => {
 
   const queryClient = useQueryClient();
 
+  const showCartAnimation = useSharedValue(false);
+  const translateY = useSharedValue(0);
+  const translateX = useSharedValue(0);
+  const scaleValue = useSharedValue(1);
+  const opacityValue = useSharedValue(1);
+
   const handleAddToCart = useCallback(async () => {
     Notifications.scheduleNotificationAsync({
       content: {
@@ -135,12 +147,43 @@ const ProductDetail = () => {
       items: updatedItems,
     };
 
+    const resetAnimation = () => {
+      "worklet";
+      showCartAnimation.value = false;
+      translateY.value = 0;
+      translateX.value = 0;
+      scaleValue.value = 1;
+      opacityValue.value = 1;
+    };
+
     await updateCart(cartPayload, {
       onSuccess: () => {
         queryClient.setQueryData(QUERY_KEY.CARTS({ id: userId }), {
           ...queryClient.getQueryData(QUERY_KEY.CARTS({ id: userId })),
           items: updatedItems,
         });
+
+        // Start animation
+        showCartAnimation.value = true;
+        translateY.value = withSequence(
+          withTiming(0, { duration: 0 }),
+          withTiming(-150, { duration: 1000 }),
+        );
+        translateX.value = withSequence(
+          withTiming(0, { duration: 0 }),
+          withTiming(200, { duration: 1000 }),
+        );
+        scaleValue.value = withSequence(
+          withTiming(1, { duration: 0 }),
+          withTiming(0.5, { duration: 1000 }),
+        );
+        opacityValue.value = withSequence(
+          withTiming(1, { duration: 0 }),
+          withTiming(0, { duration: 1000 }, () => {
+            resetAnimation();
+          }),
+        );
+
         ToastAndroid.showWithGravity(
           SUCCESS_MESSAGE.ADD_TO_CART,
           ToastAndroid.SHORT,
@@ -166,6 +209,11 @@ const ProductDetail = () => {
     queryClient,
     updateCart,
     userId,
+    showCartAnimation,
+    translateY,
+    translateX,
+    scaleValue,
+    opacityValue,
   ]);
 
   const entering = FadeIn;
@@ -204,6 +252,24 @@ const ProductDetail = () => {
           onPressPagination={onPressPagination}
           progress={progress}
         />
+
+        {showCartAnimation.value && (
+          <Animated.View
+            style={[
+              styles.floatingImage,
+              {
+                transform: [
+                  { translateY: translateY },
+                  { translateX: translateX },
+                  { scale: scaleValue },
+                ],
+                opacity: opacityValue,
+              },
+            ]}
+          >
+            <Image source={{ uri: imageUrl }} style={styles.animatedImage} />
+          </Animated.View>
+        )}
 
         <ProductDetailTitle
           name={name}
@@ -280,6 +346,17 @@ const styles = StyleSheet.create({
   addToCartButton: {
     width: "100%",
     paddingVertical: 16,
+  },
+  floatingImage: {
+    position: "absolute",
+    top: "25%",
+    left: "35%",
+    zIndex: 1000,
+  },
+  animatedImage: {
+    width: 120,
+    height: 60,
+    borderRadius: borderRadius["10"],
   },
 });
 
