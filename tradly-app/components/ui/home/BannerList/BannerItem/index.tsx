@@ -10,7 +10,10 @@ import { borderRadius, colors } from "@/themes";
 import { Button, Text } from "@/components/common";
 
 // Constants
-import { fadeIn400, SCREEN_WIDTH } from "@/constants";
+import { fadeIn400 } from "@/constants";
+
+// Hooks
+import { useScreenDimensions } from "@/store";
 
 export type BannerItemProps = {
   id: string;
@@ -20,11 +23,17 @@ export type BannerItemProps = {
 };
 const BannerItem = memo(
   ({ id, imageUrl = "", title = "", buttonText = "" }: BannerItemProps) => {
+    const { screenWidth } = useScreenDimensions();
     return imageUrl ? (
       <Animated.View entering={fadeIn400} key={id}>
         <ImageBackground
           source={{ uri: imageUrl }}
-          style={styles.container}
+          style={[
+            styles.container,
+            {
+              width: screenWidth * 0.6,
+            },
+          ]}
           imageStyle={styles.image}
         >
           <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
@@ -42,7 +51,12 @@ const BannerItem = memo(
       </Animated.View>
     ) : (
       <Animated.View entering={fadeIn400} key={id}>
-        <View style={[styles.container, { backgroundColor: colors.black }]}>
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: colors.black, width: screenWidth * 0.6 },
+          ]}
+        >
           <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
             {title}
           </Text>
@@ -62,7 +76,6 @@ const BannerItem = memo(
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH * 0.6,
     minWidth: 300,
     height: 165,
     flexDirection: "column",

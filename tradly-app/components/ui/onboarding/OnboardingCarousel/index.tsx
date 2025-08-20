@@ -14,12 +14,8 @@ import { background, borderRadius, colors } from "@/themes";
 import { Text } from "@/components/common";
 
 // Constants
-import {
-  fadeInLeft400,
-  MEDIUM_DEVICE_HEIGHT,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-} from "@/constants";
+import { fadeInLeft400, MEDIUM_DEVICE_HEIGHT } from "@/constants";
+import { useScreenDimensions } from "@/store";
 
 export type OnboardingCarouselProps = {
   data: { image: string; description: string }[];
@@ -31,8 +27,9 @@ export type OnboardingCarouselProps = {
 const OnboardingCarousel = memo(
   forwardRef<ICarouselInstance, OnboardingCarouselProps>(
     ({ data, progress, onPressPagination, setCurrentIndex }, ref) => {
+      const { screenHeight, screenWidth } = useScreenDimensions();
       const carouselHeight =
-        SCREEN_HEIGHT * (SCREEN_HEIGHT > MEDIUM_DEVICE_HEIGHT ? 0.6 : 0.7);
+        screenHeight * (screenHeight > MEDIUM_DEVICE_HEIGHT ? 0.6 : 0.7);
 
       const handleRenderItem = useCallback(
         ({ item }: { item: { image: string; description: string } }) => (
@@ -59,10 +56,18 @@ const OnboardingCarousel = memo(
       );
 
       return (
-        <Animated.View entering={fadeInLeft400} style={styles.content}>
+        <Animated.View
+          entering={fadeInLeft400}
+          style={[
+            styles.content,
+            {
+              top: screenHeight > MEDIUM_DEVICE_HEIGHT ? "25%" : "10%",
+            },
+          ]}
+        >
           <Carousel
             ref={ref}
-            width={SCREEN_WIDTH - 60}
+            width={screenWidth - 60}
             height={carouselHeight}
             data={data}
             renderItem={handleRenderItem}
@@ -109,7 +114,6 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: 30,
     position: "absolute",
-    top: SCREEN_HEIGHT > MEDIUM_DEVICE_HEIGHT ? "25%" : "10%",
   },
   contentWrapper: {
     width: "100%",

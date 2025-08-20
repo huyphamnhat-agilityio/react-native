@@ -11,11 +11,11 @@ import { maskCardNumber } from "@/utils";
 // Themes
 import { background, borderRadius } from "@/themes";
 
-// Constants
-import { SCREEN_WIDTH } from "@/constants";
-
 // Types
 import { UserCard } from "@/interfaces";
+
+// Hooks
+import { useScreenDimensions } from "@/store";
 
 export type PreviewCardProps = {
   data: Omit<UserCard, "id">;
@@ -25,12 +25,19 @@ const PreviewCard = memo(
   ({
     data: { holderName, cardNumber, cvc, expiresDates },
   }: PreviewCardProps) => {
+    const { screenWidth } = useScreenDimensions();
     return (
       <View style={styles.imageWrapper}>
         <ImageBackground
           source="visa"
           contentFit="contain"
-          style={styles.cardWrapper}
+          style={[
+            styles.cardWrapper,
+            {
+              width: screenWidth - 64,
+              height: screenWidth * 0.6,
+            },
+          ]}
           imageStyle={styles.image}
         >
           <View>
@@ -99,8 +106,6 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     padding: 16,
-    width: SCREEN_WIDTH - 64,
-    height: SCREEN_WIDTH * 0.6,
     maxWidth: 480,
     maxHeight: 360,
     justifyContent: "space-around",

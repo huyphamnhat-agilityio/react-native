@@ -12,8 +12,8 @@ import { ICarouselInstance } from "react-native-reanimated-carousel";
 import Animated, {
   FadeIn,
   useSharedValue,
-  withSequence,
   withTiming,
+  useAnimatedStyle, // ✅ added
 } from "react-native-reanimated";
 import { Image } from "expo-image";
 import * as Notifications from "expo-notifications";
@@ -41,14 +41,15 @@ import {
 } from "@/hooks";
 
 // Store
-import { useUserStore } from "@/store";
+import { useScreenDimensions, useUserStore } from "@/store";
 
 // Constants
 import { fadeInDown400, QUERY_KEY, SUCCESS_MESSAGE } from "@/constants";
 
+import { ProductDetailHeaderRef } from "@/components/ui/product/ProductDetailHeader";
+
 const ProductDetail = () => {
   const { id } = useLocalSearchParams();
-
   const { data, isLoading, error } = useGetProductDetail(id as string);
 
   const parsedErrorMessage = useMemo(() => {
@@ -79,9 +80,8 @@ const ProductDetail = () => {
 
   const onPressPagination = useCallback(
     (index: number) => {
-      const current = progress.get();
       ref.current?.scrollTo({
-        count: index - current,
+        count: index - progress.value,
         animated: true,
       });
     },
@@ -89,31 +89,39 @@ const ProductDetail = () => {
   );
 
   const userId = useUserStore((state) => state.user?.id) ?? "";
-
   const { data: currentCart, isLoading: isLoadingCart } = useGetCart({
     id: userId,
   });
-
   const { items: currentCartItems = [] } = currentCart || {};
-
   const { mutateAsync: updateCart, isPending } = useUpdateCart();
-
   const queryClient = useQueryClient();
 
-  const showCartAnimation = useSharedValue(false);
+  const headerRef = useRef<ProductDetailHeaderRef>(null);
+
+  // animation shared values
   const translateY = useSharedValue(0);
   const translateX = useSharedValue(0);
   const scaleValue = useSharedValue(1);
-  const opacityValue = useSharedValue(1);
+  const opacityValue = useSharedValue(0);
+
+  // ✅ animated style
+  const floatingImageStyle = useAnimatedStyle(() => ({
+    transform: [
+      { translateY: translateY.value },
+      { translateX: translateX.value },
+      { scale: scaleValue.value },
+    ],
+    opacity: opacityValue.value,
+  }));
+
+  const { screenWidth, screenHeight } = useScreenDimensions();
 
   const handleAddToCart = useCallback(async () => {
     Notifications.scheduleNotificationAsync({
       content: {
         title: "Expo title",
         body: "A product have been add to cart",
-        data: {
-          url: `/(main_stacks)/product/${productId}`,
-        },
+        data: { url: `/(main_stacks)/product/${productId}` },
       },
       trigger: null,
     });
@@ -142,18 +150,14 @@ const ProductDetail = () => {
           },
         ];
 
-    const cartPayload = {
-      userId,
-      items: updatedItems,
-    };
+    const cartPayload = { userId, items: updatedItems };
 
     const resetAnimation = () => {
       "worklet";
-      showCartAnimation.value = false;
       translateY.value = 0;
       translateX.value = 0;
       scaleValue.value = 1;
-      opacityValue.value = 1;
+      opacityValue.value = 0;
     };
 
     await updateCart(cartPayload, {
@@ -163,26 +167,29 @@ const ProductDetail = () => {
           items: updatedItems,
         });
 
-        // Start animation
-        showCartAnimation.value = true;
-        translateY.value = withSequence(
-          withTiming(0, { duration: 0 }),
-          withTiming(-150, { duration: 1000 }),
-        );
-        translateX.value = withSequence(
-          withTiming(0, { duration: 0 }),
-          withTiming(200, { duration: 1000 }),
-        );
-        scaleValue.value = withSequence(
-          withTiming(1, { duration: 0 }),
-          withTiming(0.5, { duration: 1000 }),
-        );
-        opacityValue.value = withSequence(
-          withTiming(1, { duration: 0 }),
-          withTiming(0, { duration: 1000 }, () => {
+        // Get the floating image's current position
+        const floatingImageStartX = screenWidth * 0.35;
+        const floatingImageStartY = screenHeight * 0.25;
+
+        headerRef.current?.getCartPosition().then((cartPos) => {
+          // Calculate the distance to move from floating image to cart button
+          const deltaX = cartPos.x - floatingImageStartX - 60; // 60 is half the image width
+          const deltaY = cartPos.y - floatingImageStartY - 30; // 30 is half the image height
+
+          // Reset to starting position first
+          translateY.value = 0;
+          translateX.value = 0;
+          scaleValue.value = 1;
+          opacityValue.value = 1;
+
+          // Animate to cart position
+          translateX.value = withTiming(deltaX, { duration: 800 });
+          translateY.value = withTiming(deltaY, { duration: 800 });
+          scaleValue.value = withTiming(0.3, { duration: 800 });
+          opacityValue.value = withTiming(0, { duration: 800 }, () => {
             resetAnimation();
-          }),
-        );
+          });
+        });
 
         ToastAndroid.showWithGravity(
           SUCCESS_MESSAGE.ADD_TO_CART,
@@ -195,25 +202,28 @@ const ProductDetail = () => {
           "Add item to cart failed",
           error.message,
           [{ text: "Ok" }],
-          { cancelable: true },
+          {
+            cancelable: true,
+          },
         );
       },
     });
   }, [
-    currentCartItems,
-    imageUrl,
-    name,
-    originalPrice,
-    price,
     productId,
-    queryClient,
-    updateCart,
     userId,
-    showCartAnimation,
+    currentCartItems,
+    name,
+    price,
+    imageUrl,
+    originalPrice,
+    updateCart,
     translateY,
     translateX,
     scaleValue,
     opacityValue,
+    queryClient,
+    screenWidth,
+    screenHeight,
   ]);
 
   const entering = FadeIn;
@@ -238,7 +248,7 @@ const ProductDetail = () => {
 
   return (
     <Animated.View entering={entering} style={styles.wrapper}>
-      <ProductDetailHeader />
+      <ProductDetailHeader ref={headerRef} />
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -253,32 +263,25 @@ const ProductDetail = () => {
           progress={progress}
         />
 
-        {showCartAnimation.value && (
-          <Animated.View
-            style={[
-              styles.floatingImage,
-              {
-                transform: [
-                  { translateY: translateY },
-                  { translateX: translateX },
-                  { scale: scaleValue },
-                ],
-                opacity: opacityValue,
-              },
-            ]}
-          >
-            <Image source={{ uri: imageUrl }} style={styles.animatedImage} />
-          </Animated.View>
-        )}
+        <Animated.View
+          style={[
+            styles.floatingImage,
+            floatingImageStyle,
+            {
+              top: screenHeight * 0.25,
+              left: screenWidth * 0.35,
+            },
+          ]}
+        >
+          <Image source={{ uri: imageUrl }} style={styles.animatedImage} />
+        </Animated.View>
 
         <ProductDetailTitle
           name={name}
           price={price}
           originalPrice={originalPrice}
         />
-
         <ProductDetailStore />
-
         <ProductDetailDescription
           description={description}
           condition={condition}
@@ -286,7 +289,6 @@ const ProductDetail = () => {
           category={category}
           location={location}
         />
-
         <ProductDetailAdditional />
       </ScrollView>
 
@@ -311,30 +313,8 @@ const styles = StyleSheet.create({
     backgroundColor: background.secondary,
     position: "relative",
   },
-  scrollContent: {
-    paddingBottom: 80,
-  },
-  centered: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  statWrapper: {
-    flexDirection: "row",
-    gap: 40,
-  },
-  statTitleWrapper: {
-    flex: 1 / 4,
-    gap: 12,
-    flexWrap: "wrap",
-  },
-  statDetailWrapper: {
-    flex: 3 / 4,
-    gap: 12,
-    flexWrap: "wrap",
-  },
-
+  scrollContent: { paddingBottom: 80 },
+  centered: { flex: 1, justifyContent: "center", alignItems: "center" },
   buttonWrapper: {
     paddingHorizontal: 32,
     position: "absolute",
@@ -343,20 +323,15 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     zIndex: 20,
   },
-  addToCartButton: {
-    width: "100%",
-    paddingVertical: 16,
-  },
+  addToCartButton: { width: "100%", paddingVertical: 16 },
   floatingImage: {
     position: "absolute",
-    top: "25%",
-    left: "35%",
     zIndex: 1000,
   },
   animatedImage: {
     width: 120,
     height: 60,
-    borderRadius: borderRadius["10"],
+    borderRadius: borderRadius["1.5"],
   },
 });
 

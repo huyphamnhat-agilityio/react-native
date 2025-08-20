@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
-import { memo } from "react";
+import { memo, forwardRef } from "react";
 
 // Type & Interfaces
 import { BorderRadius, FontFamily, FontSize } from "@/interfaces";
@@ -33,64 +33,70 @@ export type ButtonProps = TouchableOpacityProps & {
 };
 
 const Button = memo(
-  ({
-    IconLeft,
-    IconRight,
-    disabled,
-    isLoading = false,
-    rounded = 0,
-    style,
-    variant = "primary",
-    title = "",
-    titleFont = "Montserrat_500Medium",
-    titleSize = 3.5,
-    width,
-    children,
-    ...props
-  }: ButtonProps) => {
-    const isDisabled = disabled || isLoading;
+  forwardRef<View, ButtonProps>(
+    (
+      {
+        IconLeft,
+        IconRight,
+        disabled,
+        isLoading = false,
+        rounded = 0,
+        style,
+        variant = "primary",
+        title = "",
+        titleFont = "Montserrat_500Medium",
+        titleSize = 3.5,
+        width,
+        children,
+        ...props
+      },
+      ref,
+    ) => {
+      const isDisabled = disabled || isLoading;
 
-    const opacity = isDisabled ? 0.5 : 1;
+      const opacity = isDisabled ? 0.5 : 1;
 
-    return (
-      <TouchableOpacity
-        activeOpacity={0.5}
-        style={[
-          styles.container,
-          bgVariantStyle[variant],
-          {
-            borderRadius: borderRadius[rounded],
-            borderColor: borderVariantStyle[variant].borderColor,
-            opacity,
-            width,
-          },
-          style,
-        ]}
-        disabled={isDisabled}
-        {...props}
-      >
-        {IconLeft}
+      return (
+        <TouchableOpacity
+          ref={ref}
+          activeOpacity={0.5}
+          style={[
+            styles.container,
+            bgVariantStyle[variant],
+            {
+              borderRadius: borderRadius[rounded],
+              borderColor: borderVariantStyle[variant].borderColor,
+              opacity,
+              width,
+            },
+            style,
+          ]}
+          disabled={isDisabled}
+          {...props}
+        >
+          {IconLeft}
 
-        <View style={styles.wrapper}>
-          {!!title && isLoading && (
-            <ActivityIndicator color={textVariantStyle[variant].color} />
-          )}
-          {!!title && (
-            <Text
-              font={titleFont}
-              size={titleSize}
-              style={textVariantStyle[variant]}
-            >
-              {title}
-            </Text>
-          )}
-        </View>
-        {children}
+          <View style={styles.wrapper}>
+            {!!title && isLoading && (
+              <ActivityIndicator color={textVariantStyle[variant].color} />
+            )}
+            {!!title && (
+              <Text
+                font={titleFont}
+                size={titleSize}
+                style={textVariantStyle[variant]}
+              >
+                {title}
+              </Text>
+            )}
+          </View>
+          {children}
 
-        {IconRight}
-      </TouchableOpacity>
-    );
-  },
+          {IconRight}
+        </TouchableOpacity>
+      );
+    },
+  ),
 );
 
 const styles = StyleSheet.create({

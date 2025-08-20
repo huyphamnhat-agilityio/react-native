@@ -1,13 +1,11 @@
 import { memo } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { ImageBackground } from "expo-image";
+import { Link } from "expo-router";
 
 // Components
 import { Text } from "@/components/common";
-
-// Constants
-import { SCREEN_WIDTH } from "@/constants";
-import { Link } from "expo-router";
+import { useScreenDimensions } from "@/store";
 
 export type CategoryItemProps = {
   id: string;
@@ -16,6 +14,7 @@ export type CategoryItemProps = {
 };
 
 const CategoryItem = memo(({ id, imageUrl, title }: CategoryItemProps) => {
+  const { screenWidth } = useScreenDimensions();
   return (
     <Link
       href={{
@@ -27,7 +26,13 @@ const CategoryItem = memo(({ id, imageUrl, title }: CategoryItemProps) => {
       <TouchableOpacity key={id} activeOpacity={0.8}>
         <ImageBackground
           source={{ uri: imageUrl }}
-          style={styles.container}
+          style={[
+            styles.container,
+            {
+              width: screenWidth / 4,
+              height: screenWidth / 4 - 1,
+            },
+          ]}
           cachePolicy="memory-disk"
         >
           <Text textVariant="white" font="Montserrat_600SemiBold" size={2.5}>
@@ -41,8 +46,6 @@ const CategoryItem = memo(({ id, imageUrl, title }: CategoryItemProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH / 4,
-    height: SCREEN_WIDTH / 4 - 1,
     justifyContent: "center",
     alignItems: "center",
   },

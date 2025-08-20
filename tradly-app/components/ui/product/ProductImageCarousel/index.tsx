@@ -9,9 +9,7 @@ import Animated, { FadeIn, SharedValue } from "react-native-reanimated";
 
 // Themes
 import { colors } from "@/themes";
-
-// Constants
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
+import { useScreenDimensions } from "@/store";
 
 export type OnboardingCarouselProps = {
   data: { image: string }[];
@@ -19,27 +17,32 @@ export type OnboardingCarouselProps = {
   onPressPagination: (index: number) => void;
 };
 
-const carouselHeight = SCREEN_HEIGHT * 0.3;
-
 const ProductImageCarousel = memo(
   forwardRef<ICarouselInstance, OnboardingCarouselProps>(
     ({ data, progress, onPressPagination }, ref) => {
+      const { screenHeight, screenWidth } = useScreenDimensions();
+
+      const carouselHeight = screenHeight * 0.3;
+
       const handleRenderItem = useCallback(
         ({ item }: { item: { image: string } }) => (
           <Image
             source={{ uri: item.image }}
             contentFit="cover"
-            style={styles.image}
+            style={{
+              width: screenWidth,
+              height: screenHeight * 0.3,
+            }}
           />
         ),
-        [],
+        [screenHeight, screenWidth],
       );
 
       return (
         <Animated.View entering={FadeIn} style={styles.content}>
           <Carousel
             ref={ref}
-            width={SCREEN_WIDTH}
+            width={screenWidth}
             height={carouselHeight}
             data={data}
             renderItem={handleRenderItem}
@@ -77,11 +80,6 @@ const ProductImageCarousel = memo(
 const styles = StyleSheet.create({
   content: {
     position: "relative",
-  },
-
-  image: {
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT * 0.3,
   },
 
   pagination: {

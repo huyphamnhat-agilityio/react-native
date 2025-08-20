@@ -11,7 +11,7 @@ import Text from "../Text";
 import { background, border, borderRadius } from "@/themes";
 
 // Constants
-import { MEDIUM_DEVICE_HEIGHT, SCREEN_HEIGHT, SCREEN_WIDTH } from "@/constants";
+import { MEDIUM_DEVICE_HEIGHT } from "@/constants";
 
 // Interfaces
 import { Product } from "@/interfaces";
@@ -22,19 +22,35 @@ import { TradlyIcon } from "@/components/icons";
 // Utils
 import { formatNumberWithThousandSeparator } from "@/utils";
 
+// Hooks
+import { useScreenDimensions } from "@/store";
+
 const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
+  const { screenWidth, screenHeight } = useScreenDimensions();
   return (
     <Animated.View entering={FadeInDown} key={id}>
       <Link
         href={{ pathname: "/(main_stacks)/product/[id]", params: { id } }}
         asChild
       >
-        <TouchableOpacity activeOpacity={0.7} style={styles.container}>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          style={{
+            ...styles.container,
+            width: screenWidth / 2 - 25,
+          }}
+        >
           <Image
             source={{
               uri: imageUrl,
             }}
-            style={styles.image}
+            style={[
+              styles.image,
+              {
+                width: screenWidth / 2 - 26,
+                height: screenWidth / 2 - 65,
+              },
+            ]}
             cachePolicy="memory-disk"
             transition={{
               duration: 400,
@@ -53,7 +69,14 @@ const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
                   Tradly
                 </Text>
               </View>
-              <View style={styles.priceWrapper}>
+              <View
+                style={[
+                  styles.priceWrapper,
+                  {
+                    gap: screenHeight >= MEDIUM_DEVICE_HEIGHT ? 6 : 4,
+                  },
+                ]}
+              >
                 <Text
                   numberOfLines={1}
                   textVariant="primary"
@@ -72,7 +95,6 @@ const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH / 2 - 25,
     backgroundColor: background.white,
     borderRadius: borderRadius["2.5"],
     borderColor: border.black_opacity_10,
@@ -80,10 +102,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   image: {
-    width: SCREEN_WIDTH / 2 - 26,
-    height: SCREEN_WIDTH / 2 - 65,
-    borderTopStartRadius: borderRadius["2.5"],
-    borderTopEndRadius: borderRadius["2.5"],
+    borderTopLeftRadius: borderRadius["2.5"],
+    borderTopRightRadius: borderRadius["2.5"],
   },
   content: {
     padding: 12,
@@ -103,7 +123,6 @@ const styles = StyleSheet.create({
   priceWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    gap: SCREEN_HEIGHT >= MEDIUM_DEVICE_HEIGHT ? 6 : 4,
   },
   originalPrice: {
     textDecorationLine: "line-through",

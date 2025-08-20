@@ -8,11 +8,12 @@ import { background } from "@/themes";
 // Components
 import { Button, Text } from "@/components/common";
 
-// Constants
-import { SCREEN_WIDTH } from "@/constants";
+// Hooks
+import { useScreenDimensions } from "@/store";
 
 const Order = () => {
   const { back, canGoBack, navigate } = useRouter();
+  const { screenWidth } = useScreenDimensions();
   const handleNavigateBack = () => {
     if (canGoBack()) {
       back();
@@ -23,7 +24,14 @@ const Order = () => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
-        <Image source="order_success" contentFit="cover" style={styles.image} />
+        <Image
+          source="order_success"
+          contentFit="cover"
+          style={{
+            width: screenWidth * 0.4,
+            height: screenWidth * 0.24,
+          }}
+        />
         <Text
           font="Montserrat_700Bold"
           size={6}
@@ -58,10 +66,6 @@ const styles = StyleSheet.create({
     gap: 12,
     justifyContent: "center",
     alignItems: "center",
-  },
-  image: {
-    width: SCREEN_WIDTH * 0.4,
-    height: SCREEN_WIDTH * 0.24,
   },
   textCentered: {
     textAlign: "center",

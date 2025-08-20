@@ -6,6 +6,8 @@ import {
   View,
   ViewStyle,
 } from "react-native";
+import { useRouter } from "expo-router";
+import Animated from "react-native-reanimated";
 
 // Components
 import { Button, ProductPreviewList, Text } from "@/components/common";
@@ -14,9 +16,10 @@ import { Button, ProductPreviewList, Text } from "@/components/common";
 import { Product } from "@/interfaces";
 
 // Constants
-import { fadeInLeft400, fadeInRight400, SCREEN_WIDTH } from "@/constants";
-import { useRouter } from "expo-router";
-import Animated from "react-native-reanimated";
+import { fadeInLeft400, fadeInRight400 } from "@/constants";
+
+// Hooks
+import { useScreenDimensions } from "@/store";
 
 export type NewProductListProps = {
   style?: StyleProp<ViewStyle>;
@@ -35,6 +38,8 @@ const ProductPreview = memo(
     isLoading,
   }: NewProductListProps) => {
     const { navigate } = useRouter();
+
+    const { screenWidth } = useScreenDimensions();
 
     const handleNavigateToBrowse = useCallback(
       () => navigate("/(main_tabs)/browse"),
@@ -60,7 +65,14 @@ const ProductPreview = memo(
         </View>
 
         {isLoading ? (
-          <View style={styles.loadingWrapper}>
+          <View
+            style={[
+              styles.loadingWrapper,
+              {
+                height: screenWidth / 2,
+              },
+            ]}
+          >
             <ActivityIndicator size="large" color="primary" />
           </View>
         ) : (
@@ -82,7 +94,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   loadingWrapper: {
-    height: SCREEN_WIDTH / 2,
     justifyContent: "center",
     alignItems: "center",
   },

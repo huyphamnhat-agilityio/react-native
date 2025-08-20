@@ -1,18 +1,39 @@
-import { Button, Text } from "@/components/common";
-import { SCREEN_WIDTH } from "@/constants";
-import { Store } from "@/interfaces";
-import { background, border, borderRadius } from "@/themes";
-import { Image, ImageBackground } from "expo-image";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { Image, ImageBackground } from "expo-image";
+
+// Components
+import { Button, Text } from "@/components/common";
+
+// Types
+import { Store } from "@/interfaces";
+
+// Themes
+import { background, border, borderRadius } from "@/themes";
+
+// Hooks
+import { useScreenDimensions } from "@/store";
 
 const StoreCard = ({ id, name, avatar, background }: Store) => {
+  const { screenWidth } = useScreenDimensions();
   return (
     <ImageBackground
-      style={styles.container}
+      style={[
+        styles.container,
+        {
+          width: screenWidth / 2 - 25,
+          height: screenWidth / 2 + 15,
+        },
+      ]}
       key={id}
       source={{ uri: background }}
-      imageStyle={styles.image}
+      imageStyle={[
+        styles.image,
+        {
+          width: screenWidth / 2 - 27,
+          height: screenWidth / 4 + 5,
+        },
+      ]}
     >
       <View style={styles.wrapper}>
         <Image source={{ uri: avatar }} style={styles.avatar} />
@@ -27,8 +48,6 @@ const StoreCard = ({ id, name, avatar, background }: Store) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: SCREEN_WIDTH / 2 - 25,
-    height: SCREEN_WIDTH / 2 + 15,
     backgroundColor: background.white,
     borderRadius: borderRadius["2.5"],
     borderColor: border.black_opacity_10,
@@ -44,10 +63,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    width: SCREEN_WIDTH / 2 - 27,
-    height: SCREEN_WIDTH / 4 + 5,
-    borderTopStartRadius: borderRadius["2.5"],
-    borderTopEndRadius: borderRadius["2.5"],
+    borderTopLeftRadius: borderRadius["2.5"],
+    borderTopRightRadius: borderRadius["2.5"],
   },
   avatar: {
     width: 64,

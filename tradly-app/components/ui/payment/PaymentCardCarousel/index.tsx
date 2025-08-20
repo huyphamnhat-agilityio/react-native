@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useRef } from "react";
+import React, { memo, useCallback, useMemo, useRef } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Carousel, {
   ICarouselInstance,
@@ -10,13 +10,7 @@ import { useRouter } from "expo-router";
 import { ImageBackground } from "expo-image";
 
 // Constants
-import {
-  EMPTY_CARD,
-  fadeInUp400,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-  TABLET_DEVICE_WIDTH,
-} from "@/constants";
+import { EMPTY_CARD, fadeInUp400, TABLET_DEVICE_WIDTH } from "@/constants";
 
 // Types
 import { PaymentOption, UserCard } from "@/interfaces";
@@ -30,15 +24,15 @@ import { Text } from "@/components/common";
 // Icons
 import { CheckIcon, PlusIcon } from "@/components/icons";
 
+// Hooks
+import { useScreenDimensions } from "@/store";
+
 export type PaymentCardCarouselProps = {
   setSelectedCardIndex: React.Dispatch<React.SetStateAction<number>>;
   selectedPayment: PaymentOption;
   data: UserCard[];
   disabled?: boolean;
 };
-
-const carouselHeight =
-  SCREEN_HEIGHT * (SCREEN_WIDTH >= TABLET_DEVICE_WIDTH ? 0.35 : 0.25);
 
 const PaymentCardCarousel = memo(
   ({
@@ -47,6 +41,13 @@ const PaymentCardCarousel = memo(
     data,
     disabled = false,
   }: PaymentCardCarouselProps) => {
+    const { screenHeight, screenWidth } = useScreenDimensions();
+
+    const carouselHeight = useMemo(
+      () => screenHeight * (screenWidth >= TABLET_DEVICE_WIDTH ? 0.35 : 0.25),
+      [screenHeight, screenWidth],
+    );
+
     const ref = useRef<ICarouselInstance | null>(null);
 
     const progress = useSharedValue<number>(0);
@@ -80,7 +81,13 @@ const PaymentCardCarousel = memo(
           <ImageBackground
             source="visa"
             contentFit="cover"
-            style={styles.cardWrapper}
+            style={[
+              styles.cardWrapper,
+              {
+                width: screenWidth - 120,
+                height: screenWidth - 220,
+              },
+            ]}
             imageStyle={styles.image}
           >
             <View>
@@ -149,7 +156,13 @@ const PaymentCardCarousel = memo(
           <TouchableOpacity
             activeOpacity={0.5}
             disabled={selectedPayment === "CASH"}
-            style={styles.emptyCardWrapper}
+            style={[
+              styles.emptyCardWrapper,
+              {
+                width: screenWidth - 120,
+                height: screenWidth - 220,
+              },
+            ]}
             onPress={handleNavigateToAddCard}
           >
             <PlusIcon width={22} height={22} color={colors.gray_100} />
@@ -162,13 +175,13 @@ const PaymentCardCarousel = memo(
             </Text>
           </TouchableOpacity>
         ),
-      [handleNavigateToAddCard, selectedPayment],
+      [handleNavigateToAddCard, screenWidth, selectedPayment],
     );
     return (
       <Animated.View entering={fadeInUp400} style={styles.paymentContainer}>
         <Carousel
           ref={ref}
-          width={SCREEN_WIDTH - 110}
+          width={screenWidth - 110}
           height={carouselHeight}
           data={[...data, EMPTY_CARD]}
           renderItem={handleRenderItem}
@@ -219,8 +232,7 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     padding: 16,
-    width: SCREEN_WIDTH - 120,
-    height: SCREEN_WIDTH - 220,
+
     maxWidth: 480,
     maxHeight: 260,
     justifyContent: "space-around",
@@ -240,8 +252,7 @@ const styles = StyleSheet.create({
   },
   emptyCardWrapper: {
     padding: 36,
-    width: SCREEN_WIDTH - 120,
-    height: SCREEN_WIDTH - 220,
+
     maxWidth: 480,
     maxHeight: 260,
     marginHorizontal: "auto",
