@@ -19,7 +19,11 @@ import { background, colors } from "@/themes";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { CartIcon } from "@/components/icons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+
+// Store
+import { useScreenDimensions } from "@/store";
+import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 export type ProductDetailHeaderRef = {
   getCartPosition: () => Promise<{ x: number; y: number }>;
@@ -28,7 +32,10 @@ export type ProductDetailHeaderRef = {
 const ProductDetailHeader = memo(
   forwardRef<ProductDetailHeaderRef>((_props, ref) => {
     const { back, canGoBack, navigate } = useRouter();
+
     const insets = useSafeAreaInsets();
+
+    const { screenWidth } = useScreenDimensions();
 
     const cartButtonRef = useRef<View>(null);
 
@@ -74,20 +81,34 @@ const ProductDetailHeader = memo(
             variant="alternative"
             onPress={handleGoBack}
             IconLeft={
-              <AntDesign name="arrowleft" color={colors.white} size={24} />
+              <AntDesign
+                name="arrowleft"
+                color={colors.white}
+                size={screenWidth >= TABLET_DEVICE_WIDTH ? 32 : 24}
+              />
             }
           />
           <View style={styles.actionWrapper}>
             <Button
               rounded="full"
               variant="alternative"
-              IconRight={<Entypo name="share" color={colors.white} size={24} />}
+              IconRight={
+                <Entypo
+                  name="share"
+                  color={colors.white}
+                  size={screenWidth >= TABLET_DEVICE_WIDTH ? 32 : 24}
+                />
+              }
             />
             <Button
               rounded="full"
               variant="alternative"
               IconRight={
-                <FontAwesome name="heart-o" size={24} color={colors.white} />
+                <FontAwesome
+                  name="heart-o"
+                  size={screenWidth >= TABLET_DEVICE_WIDTH ? 32 : 24}
+                  color={colors.white}
+                />
               }
             />
             <Button
@@ -95,7 +116,13 @@ const ProductDetailHeader = memo(
               rounded="full"
               variant="alternative"
               onPress={handleNavigateToCart}
-              IconRight={<CartIcon width={24} height={24} />}
+              IconRight={
+                <FontAwesome5
+                  name="shopping-cart"
+                  size={screenWidth >= TABLET_DEVICE_WIDTH ? 32 : 24}
+                  color={colors.white}
+                />
+              }
             />
           </View>
         </View>

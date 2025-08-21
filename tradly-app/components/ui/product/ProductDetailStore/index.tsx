@@ -12,21 +12,33 @@ import { Button, Text } from "@/components/common";
 import { background } from "@/themes";
 
 // Constants
-import { fadeInLeft400, fadeInRight400 } from "@/constants";
+import {
+  fadeInLeft400,
+  fadeInRight400,
+  TABLET_DEVICE_WIDTH,
+} from "@/constants";
+
+// Store
+import { useScreenDimensions } from "@/store";
 
 const ProductDetailStore = memo(() => {
+  const { screenWidth } = useScreenDimensions();
+
   return (
     <View style={styles.storeWrapper}>
       <Animated.View entering={fadeInLeft400} style={styles.storeInfo}>
         <TradlyBigIcon />
-        <Text textVariant="quaternary" size={3.5}>
+        <Text
+          textVariant="quaternary"
+          size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+        >
           Tradly Store
         </Text>
       </Animated.View>
       <Animated.View entering={fadeInRight400}>
         <Button
           title="Follow"
-          titleSize={3}
+          titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
           rounded={6}
           style={styles.followButton}
         />

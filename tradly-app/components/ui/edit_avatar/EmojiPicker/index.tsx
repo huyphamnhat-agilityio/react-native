@@ -1,12 +1,18 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { memo, PropsWithChildren } from "react";
-import { Modal, Pressable, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 
 // Themes
 import { background, colors, text } from "@/themes";
 
 // Components
-import { Text } from "@/components/common";
+import { Button, Text } from "@/components/common";
+
+// Store
+import { useScreenDimensions } from "@/store";
+
+// Constants
+import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 export type EmojiPickerProps = PropsWithChildren<{
   isVisible: boolean;
@@ -15,19 +21,26 @@ export type EmojiPickerProps = PropsWithChildren<{
 
 const EmojiPicker = memo(
   ({ isVisible, children, onClose }: EmojiPickerProps) => {
+    const { screenWidth } = useScreenDimensions();
     return (
       <View>
         <Modal animationType="slide" transparent={true} visible={isVisible}>
           <View style={styles.modalContent}>
             <View style={styles.titleContainer}>
-              <Text>Choose a sticker</Text>
-              <Pressable onPress={onClose}>
-                <MaterialIcons
-                  name="close"
-                  color={colors.green_200}
-                  size={22}
-                />
-              </Pressable>
+              <Text size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}>
+                Choose a sticker
+              </Text>
+              <Button
+                variant="transparent"
+                IconLeft={
+                  <MaterialIcons
+                    name="close"
+                    color={colors.green_200}
+                    size={screenWidth >= TABLET_DEVICE_WIDTH ? 30 : 22}
+                  />
+                }
+                onPress={onClose}
+              />
             </View>
             {children}
           </View>

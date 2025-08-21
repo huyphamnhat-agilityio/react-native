@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated from "react-native-reanimated";
 
 // Constants
 import {
@@ -7,6 +8,7 @@ import {
   fadeInRight400,
   MEDIUM_DEVICE_HEIGHT,
   SCREEN_HEIGHT,
+  TABLET_DEVICE_WIDTH,
 } from "@/constants";
 
 // Themes
@@ -20,32 +22,55 @@ import { CartTotal } from "@/interfaces";
 
 // Utils
 import { formatNumberWithThousandSeparator } from "@/utils";
-import Animated from "react-native-reanimated";
+
+// Store
+import { useScreenDimensions } from "@/store";
 
 export type CartBillProps = CartTotal;
 
 const CartBill = memo(({ totalPrice, totalQuantity }: CartBillProps) => {
+  const { screenWidth } = useScreenDimensions();
   return (
     <View style={styles.cartBillWrapper}>
       <View style={styles.cartBillDetail}>
         <Animated.View entering={fadeInLeft400}>
-          <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
+          <Text
+            font="Montserrat_600SemiBold"
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 5.5 : 4.5}
+            textVariant="black"
+          >
             Price Details
           </Text>
         </Animated.View>
 
         <View style={styles.detailRow}>
           <Animated.View entering={fadeInLeft400} style={styles.detailLabel}>
-            <Text textVariant="black">
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+              textVariant="black"
+            >
               Price ({totalQuantity} item{totalQuantity > 1 && "s"})
             </Text>
-            <Text textVariant="black">Delivery Fee</Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+              textVariant="black"
+            >
+              Delivery Fee
+            </Text>
           </Animated.View>
           <Animated.View entering={fadeInRight400} style={styles.detailValue}>
-            <Text textVariant="black">
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+              textVariant="black"
+            >
               {formatNumberWithThousandSeparator(totalPrice)}
             </Text>
-            <Text textVariant="black">Info</Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+              textVariant="black"
+            >
+              Info
+            </Text>
           </Animated.View>
         </View>
       </View>
@@ -54,13 +79,21 @@ const CartBill = memo(({ totalPrice, totalQuantity }: CartBillProps) => {
 
       <View style={styles.cartBillTotal}>
         <Animated.View entering={fadeInLeft400}>
-          <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
+          <Text
+            font="Montserrat_600SemiBold"
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 5.5 : 4.5}
+            textVariant="black"
+          >
             Total
           </Text>
         </Animated.View>
 
         <Animated.View entering={fadeInRight400}>
-          <Text font="Montserrat_700Bold" size={4.5} textVariant="black">
+          <Text
+            font="Montserrat_700Bold"
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 5.5 : 4.5}
+            textVariant="black"
+          >
             {formatNumberWithThousandSeparator(totalPrice)}
           </Text>
         </Animated.View>

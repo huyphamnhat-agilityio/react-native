@@ -7,24 +7,38 @@ import StoreCardList from "./StoreCardList";
 
 // Mocks
 import { MOCK_STORES } from "@/mocks";
+
+// Themes
 import { background } from "@/themes";
+
+// Store
+import { useScreenDimensions } from "@/store";
+
+// Constants
+import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 export type StoreListProps = {
   style?: StyleProp<ViewStyle>;
 };
 
 const StoreList = ({ style }: StoreListProps) => {
+  const { screenWidth } = useScreenDimensions();
   return (
     <View style={[styles.container, style]}>
       <View style={styles.background} />
       <View style={[styles.wrapper]}>
         <View style={styles.header}>
-          <Text textVariant="white" font="Montserrat_700Bold" size={4.5}>
+          <Text
+            textVariant="white"
+            font="Montserrat_700Bold"
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 6 : 4.5}
+          >
             Store to follow
           </Text>
           <Button
             title="View All"
             variant="secondary"
+            titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 3.5}
             rounded={6}
             style={styles.button}
           />

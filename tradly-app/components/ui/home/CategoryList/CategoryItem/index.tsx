@@ -5,7 +5,12 @@ import { Link } from "expo-router";
 
 // Components
 import { Text } from "@/components/common";
+
+// Store
 import { useScreenDimensions } from "@/store";
+
+// Constants
+import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 export type CategoryItemProps = {
   id: string;
@@ -35,7 +40,11 @@ const CategoryItem = memo(({ id, imageUrl, title }: CategoryItemProps) => {
           ]}
           cachePolicy="memory-disk"
         >
-          <Text textVariant="white" font="Montserrat_600SemiBold" size={2.5}>
+          <Text
+            textVariant="white"
+            font="Montserrat_600SemiBold"
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 2.5}
+          >
             {title}
           </Text>
         </ImageBackground>

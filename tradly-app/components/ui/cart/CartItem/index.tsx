@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useRef } from "react";
 import { Image } from "expo-image";
 import { StyleSheet, ToastAndroid, TouchableOpacity, View } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 // Components
 import { QuantityControl, Text } from "@/components/common";
@@ -13,7 +14,10 @@ import { CartItemData } from "@/interfaces";
 
 // Hooks
 import { useDebounce } from "@/hooks";
-import Animated, { FadeInDown } from "react-native-reanimated";
+
+// Store
+import { useScreenDimensions } from "@/store";
+import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 export type CartItemProps = CartItemData & {
   quantity: number;
@@ -32,6 +36,8 @@ const CartItem = memo(
     onRemove,
     onUpdate,
   }: CartItemProps) => {
+    const { screenWidth } = useScreenDimensions();
+
     // Ref to skip effect on initial render
     // This ensures the effect only runs when debouncedQuantity changes after mount
     const didMount = useRef(false);
@@ -87,15 +93,27 @@ const CartItem = memo(
           />
 
           <View style={styles.cartItemContent}>
-            <Text textVariant="quaternary">{productName}</Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+              textVariant="quaternary"
+            >
+              {productName}
+            </Text>
             <View style={styles.cartItemPriceWrapper}>
-              <Text font="Montserrat_700Bold" size={4.5}>
+              <Text
+                font="Montserrat_700Bold"
+                size={screenWidth >= TABLET_DEVICE_WIDTH ? 5.5 : 4.5}
+              >
                 ${price}
               </Text>
-              <Text textVariant="secondary">
+              <Text
+                textVariant="secondary"
+                size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+              >
                 <Text
                   style={styles.cartItemOriginalPrice}
                   textVariant="secondary"
+                  size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
                 >
                   ${originalPrice}
                 </Text>{" "}
@@ -114,7 +132,11 @@ const CartItem = memo(
           style={styles.cartItemFooter}
           onPress={handleRemoveItem}
         >
-          <Text textVariant="secondary" style={styles.textCentered}>
+          <Text
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+            textVariant="secondary"
+            style={styles.textCentered}
+          >
             Remove
           </Text>
         </TouchableOpacity>

@@ -7,7 +7,11 @@ import { borderRadius } from "@/themes";
 // Components
 import Text from "../Text";
 import Checkbox from "../Checkbox";
+
+// Store
 import { useScreenDimensions } from "@/store";
+
+// Constants
 import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 export type SortSelectItemProps = {

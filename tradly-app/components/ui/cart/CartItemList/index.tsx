@@ -10,6 +10,8 @@ import { colors } from "@/themes";
 
 // Types & Interfaces
 import { CartItemData } from "@/interfaces";
+import { useScreenDimensions } from "@/store";
+import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 export type CartItemListProps = {
   data: CartItemData[];
@@ -27,6 +29,7 @@ const CartItemList = memo(
     onRemove,
     onUpdateQuantity,
   }: CartItemListProps) => {
+    const { screenWidth } = useScreenDimensions();
     const handleRenderItem = ({ item }: { item: CartItemData }) => {
       return (
         <CartItem {...item} onUpdate={onUpdateQuantity} onRemove={onRemove} />
@@ -62,7 +65,7 @@ const CartItemList = memo(
           <Text
             font="Montserrat_600SemiBold"
             textVariant="secondary"
-            size={4}
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 4}
             style={styles.message}
           >
             No product was added in cart.

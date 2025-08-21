@@ -11,7 +11,7 @@ import Text from "../Text";
 import { background, border, borderRadius } from "@/themes";
 
 // Constants
-import { MEDIUM_DEVICE_HEIGHT } from "@/constants";
+import { MEDIUM_DEVICE_HEIGHT, TABLET_DEVICE_WIDTH } from "@/constants";
 
 // Interfaces
 import { Product } from "@/interfaces";
@@ -59,13 +59,20 @@ const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
             }}
           />
           <View style={styles.content}>
-            <Text numberOfLines={1} textVariant="quaternary">
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 3.5}
+              numberOfLines={1}
+              textVariant="quaternary"
+            >
               {name}
             </Text>
             <View style={styles.description}>
               <View style={styles.wrapper}>
                 <TradlyIcon />
-                <Text textVariant="secondary" size={3.5}>
+                <Text
+                  textVariant="secondary"
+                  size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+                >
                   Tradly
                 </Text>
               </View>
@@ -79,6 +86,7 @@ const ProductCard = memo(({ id, name, imageUrl, price }: Product) => {
               >
                 <Text
                   numberOfLines={1}
+                  size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
                   textVariant="primary"
                   font="Montserrat_600SemiBold"
                 >

@@ -9,6 +9,10 @@ import SortModal from "../SortModal";
 // Icons
 import { CategoryIcon, LocationIcon, SortIcon } from "@/components/icons";
 
+// Store
+import { useScreenDimensions } from "@/store";
+import { TABLET_DEVICE_WIDTH } from "@/constants";
+
 export type FiltersBarProps = {
   style?: StyleProp<ViewStyle>;
   includeCategorySelection?: boolean;
@@ -18,6 +22,8 @@ const FiltersBar = memo(
   ({ style, includeCategorySelection = true }: FiltersBarProps) => {
     const [categoryModalVisible, setCategoryModalVisible] = useState(false);
     const [sortModalVisible, setSortModalVisible] = useState(false);
+
+    const { screenWidth } = useScreenDimensions();
 
     const handleToggleCategoryModal = useCallback(() => {
       setCategoryModalVisible((prev) => !prev);
@@ -47,7 +53,7 @@ const FiltersBar = memo(
         <Button
           variant="transparent"
           title="Sort by"
-          titleSize={3.5}
+          titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
           rounded={6}
           IconLeft={<SortIcon />}
           style={styles.button}
@@ -57,7 +63,7 @@ const FiltersBar = memo(
         <Button
           variant="transparent"
           title="Location"
-          titleSize={3.5}
+          titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
           rounded={6}
           IconLeft={<LocationIcon />}
           style={styles.button}
@@ -67,7 +73,7 @@ const FiltersBar = memo(
           <Button
             variant="transparent"
             title="Category"
-            titleSize={3.5}
+            titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
             rounded={6}
             IconLeft={<CategoryIcon />}
             style={styles.button}

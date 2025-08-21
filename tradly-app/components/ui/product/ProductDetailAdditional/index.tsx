@@ -7,13 +7,28 @@ import { Text } from "@/components/common";
 
 // Themes
 import { background } from "@/themes";
-import { fadeInLeft400, fadeInRight400, fadeInUp400 } from "@/constants";
+
+// Constants
+import {
+  fadeInLeft400,
+  fadeInRight400,
+  fadeInUp400,
+  TABLET_DEVICE_WIDTH,
+} from "@/constants";
+
+// Store
+import { useScreenDimensions } from "@/store";
 
 const ProductDetailAdditional = memo(() => {
+  const { screenWidth } = useScreenDimensions();
   return (
     <View style={styles.deliveryWrapper}>
       <Animated.View entering={fadeInUp400}>
-        <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
+        <Text
+          font="Montserrat_600SemiBold"
+          size={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 4.5}
+          textVariant="black"
+        >
           Additional Details
         </Text>
       </Animated.View>
@@ -27,7 +42,7 @@ const ProductDetailAdditional = memo(() => {
             style={styles.detailLabel}
             font="Montserrat_400Regular"
             textVariant="tertiary"
-            size={3.5}
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
           >
             Delivery Details
           </Text>
@@ -37,7 +52,11 @@ const ProductDetailAdditional = memo(() => {
           entering={fadeInRight400}
           style={styles.detailValueWrapper}
         >
-          <Text style={styles.detailValue} textVariant="quaternary" size={3.5}>
+          <Text
+            style={styles.detailValue}
+            textVariant="quaternary"
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+          >
             Home Delivery Available, Cash On Delivery
           </Text>
         </Animated.View>

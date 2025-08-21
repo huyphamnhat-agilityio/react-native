@@ -11,10 +11,14 @@ import {
   fadeInRight400,
   fadeInUp400,
   SCREEN_HEIGHT,
+  TABLET_DEVICE_WIDTH,
 } from "@/constants";
 
 // Themes
 import { background } from "@/themes";
+
+// Store
+import { useScreenDimensions } from "@/store";
 
 export type ProductDetailDescriptionProps = {
   description: string;
@@ -31,6 +35,8 @@ const ProductDetailDescription = memo(
     category,
     location,
   }: ProductDetailDescriptionProps) => {
+    const { screenWidth } = useScreenDimensions();
+
     return (
       <Animated.View entering={FadeIn} style={styles.contentWrapper}>
         <Animated.ScrollView
@@ -41,7 +47,7 @@ const ProductDetailDescription = memo(
           <Text
             font="Montserrat_400Regular"
             textVariant="quaternary"
-            size={3.5}
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
           >
             {description}
           </Text>
@@ -49,16 +55,56 @@ const ProductDetailDescription = memo(
 
         <View style={styles.detailRow}>
           <Animated.View entering={fadeInLeft400} style={styles.detailLabel}>
-            <Text textVariant="tertiary">Condition</Text>
-            <Text textVariant="tertiary">Price Type</Text>
-            <Text textVariant="tertiary">Category</Text>
-            <Text textVariant="tertiary">Location</Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
+              textVariant="tertiary"
+            >
+              Condition
+            </Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
+              textVariant="tertiary"
+            >
+              Price Type
+            </Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
+              textVariant="tertiary"
+            >
+              Category
+            </Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
+              textVariant="tertiary"
+            >
+              Location
+            </Text>
           </Animated.View>
           <Animated.View entering={fadeInRight400} style={styles.detailValue}>
-            <Text textVariant="quaternary">{condition}</Text>
-            <Text textVariant="quaternary">{priceType}</Text>
-            <Text textVariant="quaternary">{category}</Text>
-            <Text textVariant="quaternary">{location}</Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
+              textVariant="quaternary"
+            >
+              {condition}
+            </Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
+              textVariant="quaternary"
+            >
+              {priceType}
+            </Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
+              textVariant="quaternary"
+            >
+              {category}
+            </Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
+              textVariant="quaternary"
+            >
+              {location}
+            </Text>
           </Animated.View>
         </View>
       </Animated.View>
@@ -91,7 +137,6 @@ const styles = StyleSheet.create({
   detailValue: {
     flex: 2,
     gap: 12,
-    flexWrap: "wrap",
   },
 });
 

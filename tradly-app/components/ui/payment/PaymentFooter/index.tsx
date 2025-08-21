@@ -15,11 +15,13 @@ import {
   fadeInUp400,
   MEDIUM_DEVICE_HEIGHT,
   SCREEN_HEIGHT,
+  TABLET_DEVICE_WIDTH,
 } from "@/constants";
 
 // Themes
 import { background } from "@/themes";
 import Animated from "react-native-reanimated";
+import { useScreenDimensions } from "@/store";
 
 export type PaymentFooterProps = {
   totalQuantity: number;
@@ -36,24 +38,35 @@ const PaymentFooter = memo(
     disabled = false,
     handleCheckout,
   }: PaymentFooterProps) => {
+    const { screenWidth } = useScreenDimensions();
     return (
       <View style={styles.cartBillWrapper}>
         <View style={styles.cartBillDetail}>
           <Animated.View entering={fadeInUp400}>
-            <Text font="Montserrat_600SemiBold" size={4.5} textVariant="black">
+            <Text
+              font="Montserrat_600SemiBold"
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 5.5 : 4.5}
+              textVariant="black"
+            >
               Price Details
             </Text>
           </Animated.View>
 
           <View style={styles.detailRow}>
             <Animated.View entering={fadeInLeft400} style={styles.detailLabel}>
-              <Text textVariant="black">
+              <Text
+                size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+                textVariant="black"
+              >
                 Price ({totalQuantity} item
                 {totalQuantity > 1 && "s"})
               </Text>
             </Animated.View>
             <Animated.View entering={fadeInRight400} style={styles.detailValue}>
-              <Text textVariant="black">
+              <Text
+                size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+                textVariant="black"
+              >
                 {formatNumberWithThousandSeparator(totalPrice)}
               </Text>
             </Animated.View>

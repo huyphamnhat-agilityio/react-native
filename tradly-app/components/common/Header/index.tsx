@@ -12,22 +12,21 @@ import Input from "../Input";
 import FiltersBar from "../FiltersBar";
 
 // Icons
-import { WishlistIcon, CartIcon, SearchIcon } from "@/components/icons";
+import { SearchIcon } from "@/components/icons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import Fontisto from "@expo/vector-icons/Fontisto";
 
 // Themes
-import {
-  background,
-  borderRadius,
-  fontFamilies,
-  fontSizes,
-  text,
-} from "@/themes";
+import { background, borderRadius, fontFamilies, text } from "@/themes";
 
 // Hooks
 import { useDebounce } from "@/hooks";
 
 // Store
-import { useFilterStore } from "@/store";
+import { useFilterStore, useScreenDimensions } from "@/store";
+
+// Constants
+import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 export type HeaderProps = {
   isTitleOnly?: boolean;
@@ -63,6 +62,8 @@ const Header = memo(
       }
     }, [back, canGoBack, navigate]);
 
+    const { screenWidth } = useScreenDimensions();
+
     const handleNavigateToCart = useCallback(() => {
       navigate("/cart");
     }, [navigate]);
@@ -89,13 +90,32 @@ const Header = memo(
               />
             )}
 
-            <Text style={styles.title}>{title}</Text>
+            <Text
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 7.5 : 6}
+              style={styles.title}
+            >
+              {title}
+            </Text>
 
             {isTitleOnly ? null : (
               <View style={styles.actions}>
-                <Button IconLeft={<WishlistIcon />} />
                 <Button
-                  IconLeft={<CartIcon />}
+                  IconLeft={
+                    <Fontisto
+                      name="heart"
+                      size={screenWidth >= TABLET_DEVICE_WIDTH ? 32 : 24}
+                      color="white"
+                    />
+                  }
+                />
+                <Button
+                  IconLeft={
+                    <FontAwesome5
+                      name="shopping-cart"
+                      size={screenWidth >= TABLET_DEVICE_WIDTH ? 32 : 24}
+                      color="white"
+                    />
+                  }
                   onPress={handleNavigateToCart}
                 />
               </View>
@@ -142,7 +162,6 @@ const styles = StyleSheet.create({
   title: {
     color: background.white,
     fontFamily: fontFamilies.Montserrat_700Bold,
-    fontSize: fontSizes[6],
   },
   actions: {
     flexDirection: "row",

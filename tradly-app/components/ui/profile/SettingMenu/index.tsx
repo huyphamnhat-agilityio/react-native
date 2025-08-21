@@ -16,10 +16,14 @@ import { Text } from "@/components/common";
 import { background, borderRadius, colors } from "@/themes";
 
 // Constants
-import { fadeInDown400, SETTINGS_OPTIONS } from "@/constants";
+import {
+  fadeInDown400,
+  SETTINGS_OPTIONS,
+  TABLET_DEVICE_WIDTH,
+} from "@/constants";
 
 // Store
-import { useUserStore } from "@/store";
+import { useScreenDimensions, useUserStore } from "@/store";
 
 export type SettingMenuProps = {
   style?: StyleProp<ViewStyle>;
@@ -27,6 +31,8 @@ export type SettingMenuProps = {
 
 const SettingMenu = memo(({ style }: SettingMenuProps) => {
   const { navigate } = useRouter();
+
+  const { screenWidth } = useScreenDimensions();
 
   const clearUserSession = useUserStore((state) => state.clearUserSession);
 
@@ -57,6 +63,7 @@ const SettingMenu = memo(({ style }: SettingMenuProps) => {
             >
               <Text
                 textVariant={item.title === "Logout" ? "primary" : "quaternary"}
+                size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
               >
                 {item.title}
               </Text>

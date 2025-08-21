@@ -10,7 +10,12 @@ import { HomeIcon, ProfileIcon, SearchIcon } from "@/components/icons";
 // Themes
 import { fontFamilies, fontSizes, text } from "@/themes";
 
+// Store
+import { useScreenDimensions } from "@/store";
+import { TABLET_DEVICE_WIDTH } from "@/constants";
+
 const MainTabsLayout = () => {
+  const { screenWidth } = useScreenDimensions();
   const renderHomeTabBarIcon = useCallback(
     ({ color }: { focused: boolean; color: string; size: number }) => {
       return <HomeIcon fill={color} />;
@@ -51,7 +56,10 @@ const MainTabsLayout = () => {
         tabBarInactiveTintColor: text.secondary,
         tabBarLabelStyle: {
           fontFamily: fontFamilies.Montserrat_700Bold,
-          fontSize: fontSizes[2.5],
+          fontSize:
+            screenWidth >= TABLET_DEVICE_WIDTH
+              ? fontSizes[4.5]
+              : fontSizes[2.5],
           textAlign: "center",
         },
       }}

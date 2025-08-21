@@ -2,7 +2,6 @@ import { useRouter } from "expo-router";
 import { memo, useCallback } from "react";
 import { StyleSheet, ToastAndroid } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
-import { useSharedValue } from "react-native-reanimated";
 import { useShallow } from "zustand/shallow";
 
 // Components
@@ -34,12 +33,6 @@ const EditProfile = memo(() => {
   const { back } = useRouter();
 
   const { mutateAsync: updateUser } = useUpdateUser();
-
-  const isOpen = useSharedValue(false);
-
-  const handleOpenSheet = useCallback(() => {
-    isOpen.value = true;
-  }, [isOpen]);
 
   const handleUpdateUser = useCallback(
     async ({ email, name, phone }: EditUserFormData) => {
@@ -76,11 +69,7 @@ const EditProfile = memo(() => {
   );
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-      <EditProfileForm
-        data={user}
-        onSubmit={handleUpdateUser}
-        onOpenSheet={handleOpenSheet}
-      />
+      <EditProfileForm data={user} onSubmit={handleUpdateUser} />
     </KeyboardAwareScrollView>
   );
 });

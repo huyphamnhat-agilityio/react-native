@@ -1,5 +1,5 @@
 import { StyleSheet, ToastAndroid, View } from "react-native";
-import { useCallback, useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { captureRef } from "react-native-view-shot";
 import { Image } from "expo-image";
@@ -21,7 +21,7 @@ import {
 import { ImagePickerBottomSheet } from "@/components/ui/edit_profile";
 
 // Stores
-import { useUserStore } from "@/store";
+import { useScreenDimensions, useUserStore } from "@/store";
 
 // Hooks
 import { useUpdateUser, useUploadImage } from "@/hooks";
@@ -32,15 +32,18 @@ import {
   fadeInLeft400,
   fadeInRight400,
   SUCCESS_MESSAGE,
+  TABLET_DEVICE_WIDTH,
 } from "@/constants";
 
-const EditAvatar = () => {
+const EditAvatar = memo(() => {
   const { user, setUserAvatar } = useUserStore(
     useShallow((state) => ({
       user: state.user,
       setUserAvatar: state.setUserAvatar,
     })),
   );
+
+  const { screenWidth } = useScreenDimensions();
 
   const { back } = useRouter();
 
@@ -187,6 +190,8 @@ const EditAvatar = () => {
                 <IconButton
                   icon="refresh"
                   label="Reset"
+                  iconSize={screenWidth >= TABLET_DEVICE_WIDTH ? 32 : 24}
+                  labelSize={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
                   disabled={isPending}
                   onPress={onReset}
                 />
@@ -206,6 +211,8 @@ const EditAvatar = () => {
                 <IconButton
                   icon="save-alt"
                   label="Save"
+                  iconSize={screenWidth >= TABLET_DEVICE_WIDTH ? 32 : 24}
+                  labelSize={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
                   disabled={isPending || (!selectedImage && !pickedEmoji)}
                   onPress={onSaveImageAsync}
                 />
@@ -248,8 +255,9 @@ const EditAvatar = () => {
       />
     </>
   );
-};
+});
 
+EditAvatar.displayName = "EditAvatar";
 const styles = StyleSheet.create({
   container: {
     flex: 1,

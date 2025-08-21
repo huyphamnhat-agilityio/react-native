@@ -13,6 +13,7 @@ import { background, border, borderRadius } from "@/themes";
 
 // Hooks
 import { useScreenDimensions } from "@/store";
+import { TABLET_DEVICE_WIDTH } from "@/constants";
 
 const StoreCard = ({ id, name, avatar, background }: Store) => {
   const { screenWidth } = useScreenDimensions();
@@ -36,12 +37,29 @@ const StoreCard = ({ id, name, avatar, background }: Store) => {
       ]}
     >
       <View style={styles.wrapper}>
-        <Image source={{ uri: avatar }} style={styles.avatar} />
-        <Text textVariant="quaternary" size={3.5}>
+        <Image
+          source={{ uri: avatar }}
+          style={[
+            styles.avatar,
+            {
+              width: screenWidth / 8 + 32,
+              height: screenWidth / 8 + 32,
+            },
+          ]}
+        />
+        <Text
+          textVariant="quaternary"
+          size={screenWidth >= TABLET_DEVICE_WIDTH ? 7.5 : 3.5}
+        >
           {name}
         </Text>
       </View>
-      <Button title="Follow" titleSize={3} style={styles.button} />
+      <Button
+        title="Follow"
+        width={screenWidth >= TABLET_DEVICE_WIDTH ? "60%" : "auto"}
+        titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 7.5 : 3}
+        style={styles.button}
+      />
     </ImageBackground>
   );
 };
@@ -54,7 +72,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flexDirection: "column",
     justifyContent: "flex-end",
-    alignItems: "center",
     gap: 20,
     paddingBottom: 20,
   },
@@ -67,15 +84,12 @@ const styles = StyleSheet.create({
     borderTopRightRadius: borderRadius["2.5"],
   },
   avatar: {
-    width: 64,
-    height: 64,
     borderRadius: borderRadius.full,
     borderColor: border.white,
     borderWidth: 1,
   },
   content: {
     padding: 12,
-    flexDirection: "column",
     gap: 16,
   },
   button: {

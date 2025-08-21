@@ -7,6 +7,7 @@ import {
   View,
   ViewStyle,
 } from "react-native";
+import Animated from "react-native-reanimated";
 
 // Themes
 import { background } from "@/themes";
@@ -16,12 +17,17 @@ import Text from "../Text";
 import Button from "../Button";
 
 // Store
-import { useUserStore } from "@/store";
+import { useScreenDimensions, useUserStore } from "@/store";
 
 // Utils
 import { generateDeliveryInfo, isFulfilledObject } from "@/utils";
-import Animated from "react-native-reanimated";
-import { fadeInLeft400, fadeInRight400 } from "@/constants";
+
+// Constants
+import {
+  fadeInLeft400,
+  fadeInRight400,
+  TABLET_DEVICE_WIDTH,
+} from "@/constants";
 
 export type AddressInfoSectionProps = {
   style?: StyleProp<ViewStyle>;
@@ -30,6 +36,8 @@ export type AddressInfoSectionProps = {
 const AddressInfoSection = memo(
   ({ style, disabled }: AddressInfoSectionProps) => {
     const userAddress = useUserStore((state) => state.user?.address);
+
+    const { screenWidth } = useScreenDimensions();
 
     const { navigate } = useRouter();
 
@@ -49,14 +57,18 @@ const AddressInfoSection = memo(
           entering={fadeInLeft400}
           style={styles.deliveryTextWrapper}
         >
-          <Text numberOfLines={2} textVariant="quaternary">
+          <Text
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+            numberOfLines={2}
+            textVariant="quaternary"
+          >
             {buttonText}
           </Text>
         </Animated.View>
         <Animated.View entering={fadeInRight400} style={styles.buttonWrapper}>
           <Button
             title="Change"
-            titleSize={3}
+            titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 4 : 3}
             rounded="full"
             style={styles.button}
             onPress={handleNavigateToAddress}
@@ -71,7 +83,11 @@ const AddressInfoSection = memo(
         onPress={handleNavigateToAddress}
         disabled={disabled}
       >
-        <Text textVariant="quaternary" style={styles.textCentered}>
+        <Text
+          size={screenWidth >= TABLET_DEVICE_WIDTH ? 4.5 : 3.5}
+          textVariant="quaternary"
+          style={styles.textCentered}
+        >
           {buttonText}
         </Text>
       </TouchableOpacity>

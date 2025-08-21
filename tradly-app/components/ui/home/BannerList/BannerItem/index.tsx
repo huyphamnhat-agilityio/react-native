@@ -10,7 +10,7 @@ import { borderRadius, colors } from "@/themes";
 import { Button, Text } from "@/components/common";
 
 // Constants
-import { fadeIn400 } from "@/constants";
+import { fadeIn400, TABLET_DEVICE_WIDTH } from "@/constants";
 
 // Hooks
 import { useScreenDimensions } from "@/store";
@@ -36,13 +36,17 @@ const BannerItem = memo(
           ]}
           imageStyle={styles.image}
         >
-          <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
+          <Text
+            textVariant="white"
+            font="Montserrat_600SemiBold"
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 2.5}
+          >
             {title}
           </Text>
           <Button
             variant="transparent"
             titleFont="Montserrat_700Bold"
-            titleSize={3}
+            titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 3}
             title={buttonText}
             rounded={3.5}
             style={styles.button}
@@ -57,13 +61,17 @@ const BannerItem = memo(
             { backgroundColor: colors.black, width: screenWidth * 0.6 },
           ]}
         >
-          <Text textVariant="white" font="Montserrat_600SemiBold" size={3.5}>
+          <Text
+            textVariant="white"
+            font="Montserrat_600SemiBold"
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 3.5}
+          >
             {title}
           </Text>
           <Button
             variant="transparent"
             titleFont="Montserrat_700Bold"
-            titleSize={3}
+            titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 3}
             title={buttonText}
             rounded={3.5}
             style={styles.button}

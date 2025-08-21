@@ -16,7 +16,11 @@ import { Button, ProductPreviewList, Text } from "@/components/common";
 import { Product } from "@/interfaces";
 
 // Constants
-import { fadeInLeft400, fadeInRight400 } from "@/constants";
+import {
+  fadeInLeft400,
+  fadeInRight400,
+  TABLET_DEVICE_WIDTH,
+} from "@/constants";
 
 // Hooks
 import { useScreenDimensions } from "@/store";
@@ -50,13 +54,18 @@ const ProductPreview = memo(
       <View style={[styles.wrapper, style]}>
         <View style={styles.header}>
           <Animated.View entering={fadeInLeft400}>
-            <Text textVariant="quaternary" font="Montserrat_700Bold" size={4.5}>
+            <Text
+              textVariant="quaternary"
+              font="Montserrat_700Bold"
+              size={screenWidth >= TABLET_DEVICE_WIDTH ? 6 : 4.5}
+            >
               {title}
             </Text>
           </Animated.View>
           <Animated.View entering={fadeInRight400}>
             <Button
               title="See All"
+              titleSize={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 3.5}
               rounded={6}
               style={styles.button}
               onPress={handleNavigateToBrowse}
