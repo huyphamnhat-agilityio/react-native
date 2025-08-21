@@ -16,6 +16,7 @@ import {
   fadeInRight400,
   FORM_VALIDATION_MESSAGES,
   REGEX,
+  TABLET_DEVICE_WIDTH,
 } from "@/constants";
 
 // Types
@@ -23,6 +24,9 @@ import { LoginFormData } from "@/interfaces";
 
 // Utils
 import { clearErrorOnChange, isEnableSubmit } from "@/utils";
+
+// Store
+import { useScreenDimensions } from "@/store";
 
 const REQUIRED_FIELDS: (keyof LoginFormData)[] = ["email", "password"];
 
@@ -66,6 +70,10 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
     reValidateMode: "onBlur",
   });
 
+  const { screenWidth } = useScreenDimensions();
+
+  const textSize = screenWidth >= TABLET_DEVICE_WIDTH ? 5.5 : 4.5;
+
   const handleInputChange = useCallback(
     (name: keyof LoginFormData, onChange: (value: string) => void) => {
       return (value: string) => {
@@ -87,14 +95,12 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
     });
   }, [dirtyFieldList, errors]);
 
-  // Animation variables
-
   return (
     <View style={styles.formWrapper}>
       <Animated.View entering={fadeInLeft400}>
         <Text
           font="Montserrat_400Regular"
-          size={4}
+          size={screenWidth >= TABLET_DEVICE_WIDTH ? 5 : 4}
           textVariant="white"
           style={styles.text}
         >
@@ -115,7 +121,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
                 placeholder="Email"
                 font="Montserrat_400Regular"
                 inputVariant="white"
-                inputSize={4.5}
+                inputSize={textSize}
                 wrapperStyle={styles.input}
                 onChangeText={handleInputChange("email", onChange)}
                 isError={!!error?.message}
@@ -142,7 +148,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
                 font="Montserrat_400Regular"
                 inputVariant="white"
                 onSubmitEditing={handleSubmit(onSubmit)}
-                inputSize={4.5}
+                inputSize={textSize}
                 wrapperStyle={styles.input}
                 secureTextEntry
                 onChangeText={handleInputChange("password", onChange)}
@@ -174,7 +180,7 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
         <Text
           font="Montserrat_400Regular"
           textVariant="white"
-          size={4.5}
+          size={textSize}
           style={styles.text}
         >
           Forgot your password?
@@ -185,14 +191,14 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
         <Text
           font="Montserrat_400Regular"
           textVariant="white"
-          size={4.5}
+          size={textSize}
           style={styles.text}
         >
           Don&apos;t have an account?{" "}
           <Text
             font="Montserrat_600SemiBold"
             textVariant="white"
-            size={4.5}
+            size={textSize}
             style={styles.text}
           >
             Sign up
@@ -205,7 +211,6 @@ const LoginForm = memo(({ onSubmit }: LoginFormProps) => {
 
 const styles = StyleSheet.create({
   formWrapper: {
-    display: "flex",
     gap: 40,
     paddingHorizontal: 32,
   },

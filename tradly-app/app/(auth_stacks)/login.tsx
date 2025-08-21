@@ -15,16 +15,18 @@ import { background } from "@/themes";
 import { useLogin } from "@/hooks";
 
 // Stores
-import { useUserStore } from "@/store";
+import { useScreenDimensions, useUserStore } from "@/store";
 
 // Types
 import { LoginFormData } from "@/interfaces";
 
 // Constants
-import { fadeIn500 } from "@/constants";
+import { fadeIn500, TABLET_DEVICE_WIDTH } from "@/constants";
 
 const Login = () => {
   const { mutateAsync: login } = useLogin();
+
+  const { screenWidth } = useScreenDimensions();
 
   const { setUser, setAccessToken } = useUserStore(
     useShallow((state) => ({
@@ -78,7 +80,11 @@ const Login = () => {
     >
       <View style={styles.contentWrapper}>
         <Animated.View entering={fadeIn500}>
-          <Text size={6} textVariant="white" style={styles.text}>
+          <Text
+            size={screenWidth >= TABLET_DEVICE_WIDTH ? 7 : 6}
+            textVariant="white"
+            style={styles.text}
+          >
             Welcome to tradly
           </Text>
         </Animated.View>

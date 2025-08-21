@@ -8,6 +8,7 @@ export const fontSizes = {
   5: 20,
   5.5: 22,
   6: 24,
+  7: 28,
   7.5: 30,
   9: 36,
 } as const;
